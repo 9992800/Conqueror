@@ -24,7 +24,7 @@
 
 #import "AppController.h"
 #import "cocos2d.h"
-#import "AppDelegate.h"
+#import "AppDelegate.hpp"
 #import "RootViewController.h"
 
 @implementation AppController

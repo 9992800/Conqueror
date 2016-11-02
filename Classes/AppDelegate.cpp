@@ -1,6 +1,6 @@
-#include "AppDelegate.h"
-#include "StartingScene.h"
-#include "AppMacros.h"
+#include "AppDelegate.hpp"
+#include "SplashScene.hpp"
+#include "AppMacros.hpp"
 
 
 AppDelegate::AppDelegate()
@@ -52,7 +52,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
         FileUtils::getInstance()->setSearchPaths(searchPath);
         
-        auto scene = Starting::createScene();
+        auto scene = Splash::createScene();
         director->runWithScene(scene);
 
         return true;

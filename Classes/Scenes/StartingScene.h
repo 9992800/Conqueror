@@ -14,13 +14,9 @@ public:
         virtual bool init() override;
         CREATE_FUNC(Starting);
         
-        
         virtual void onEnter() override;
-        virtual void onExit() override;
         void update(float delta)override;
-        
-        
-        void loadingResource();
+        virtual void onExit()override;
 private:
         int _count = 0;
         LoadingBar* _loadingBar;

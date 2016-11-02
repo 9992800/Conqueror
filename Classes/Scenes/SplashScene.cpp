@@ -15,7 +15,7 @@
 Scene* Splash::createScene()
 {
         auto scene = Scene::create();
-        auto layer = Starting::create();
+        auto layer = Splash::create();
         scene->addChild(layer);
         
         return scene;

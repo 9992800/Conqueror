@@ -23,7 +23,7 @@ bool Starting::init()
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         
-        auto sprite = Sprite::create("StartingLogo.png");
+        auto sprite = Sprite::create("loading_back.png");
         sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
         this->addChild(sprite, 0);
         
@@ -41,8 +41,6 @@ bool Starting::init()
         label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
         this->addChild(label, 2);
         
-       
-    
         return true;
 }
 

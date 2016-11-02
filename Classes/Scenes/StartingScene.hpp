@@ -20,6 +20,8 @@ public:
         
 protected:
         void menuStartGame(Ref* pSender);
+        void menuHelp(Ref* pSender);
+        void menuSoundCtrl(Ref* pSender);
         
 private:
         int _count = 0;

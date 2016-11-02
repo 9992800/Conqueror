@@ -60,6 +60,7 @@ void Splash::onEnter(){
         scheduleUpdate();
         CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE);
         _count += 10;
+        //::TODO load SoundSettings.
 }
 
 void Splash::update(float delta){

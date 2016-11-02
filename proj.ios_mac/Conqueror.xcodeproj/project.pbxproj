@@ -67,6 +67,7 @@
 		7C733B1D1DC990E200098EDD /* iphone6 in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B191DC990E200098EDD /* iphone6 */; };
 		7C733B1E1DC990E200098EDD /* iphone6p in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B1A1DC990E200098EDD /* iphone6p */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
+		BBC812DE1DCA3CB000EC8874 /* GameHelpScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBC812DC1DCA3CB000EC8874 /* GameHelpScene.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -179,6 +180,8 @@
 		7C733B191DC990E200098EDD /* iphone6 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6; sourceTree = "<group>"; };
 		7C733B1A1DC990E200098EDD /* iphone6p */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6p; sourceTree = "<group>"; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		BBC812DC1DCA3CB000EC8874 /* GameHelpScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHelpScene.cpp; sourceTree = "<group>"; };
+		BBC812DD1DCA3CB000EC8874 /* GameHelpScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHelpScene.hpp; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BF1C47EA1293683800B63C5D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -330,6 +333,7 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				BBC812DB1DCA3C9200EC8874 /* Common */,
 				7C21A0D61DC9A11E0035ECC6 /* Scenes */,
 				7C21A0D31DC996F10035ECC6 /* AppMacros.hpp */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
@@ -397,6 +401,15 @@
 				7C21A0E21DC9ED930035ECC6 /* LevelSelectScene.cpp */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		BBC812DB1DCA3C9200EC8874 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				BBC812DD1DCA3CB000EC8874 /* GameHelpScene.hpp */,
+				BBC812DC1DCA3CB000EC8874 /* GameHelpScene.cpp */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -555,6 +568,7 @@
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				7C21A0E41DC9ED930035ECC6 /* LevelSelectScene.cpp in Sources */,
 				7C21A0E11DC9E9A80035ECC6 /* SplashScene.cpp in Sources */,
+				BBC812DE1DCA3CB000EC8874 /* GameHelpScene.cpp in Sources */,
 				7C21A0D91DC9A11E0035ECC6 /* StartingScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,

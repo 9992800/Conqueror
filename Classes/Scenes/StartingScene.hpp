@@ -7,11 +7,10 @@
 using namespace cocos2d::ui;
 USING_NS_CC;
 
-
 class Starting : public cocos2d::Layer
 {
 public:
-        static cocos2d::Scene* createScene();
+        static Scene* createScene();
         virtual bool init() override;
         CREATE_FUNC(Starting);
 

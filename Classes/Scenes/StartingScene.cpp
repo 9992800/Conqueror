@@ -2,6 +2,9 @@
 #include "SimpleAudioEngine.h"
 #include "AppMacros.hpp"
 #include "StartingScene.hpp"
+#include "GameHelpScene.hpp"
+
+using namespace CocosDenshion;
 
 #pragma makr - init scene
 Scene* Starting::createScene()
@@ -37,8 +40,16 @@ bool Starting::init()
         _helpBtn->setPosition(Vec2(origin.x + visibleSize.width - 2 * _helpBtn->getContentSize().width,
                                      origin.y + visibleSize.height - _helpBtn->getContentSize().height));
         
-        _soundCtrl = MenuItemImage::create("Sound_on.png", "Sound_on_sel.png",
+        
+        bool is_effect_on = UserDefault::getInstance()->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
+        
+        if (is_effect_on){
+                _soundCtrl = MenuItemImage::create("Sound_on.png", "Sound_on_sel.png",
                                            CC_CALLBACK_1(Starting::menuSoundCtrl, this));
+        }else{
+                _soundCtrl = MenuItemImage::create("Sound_off.png", "Sound_off_sel.png",
+                                                   CC_CALLBACK_1(Starting::menuSoundCtrl, this));
+        }
         _soundCtrl->setPosition(Vec2(2 * _soundCtrl->getContentSize().width,
                                      origin.y +  2 * _soundCtrl->getContentSize().height));
         
@@ -78,10 +89,22 @@ void Starting::menuStartGame(Ref* pSender){
 
 
 void Starting::menuHelp(Ref* pSender){
-        
+        Scene* scene = GameHelp::createScene();
+        Director::getInstance()->pushScene(scene);
 }
 void Starting::menuSoundCtrl(Ref* pSender){
+        bool is_effect_on = UserDefault::getInstance()->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
+        UserDefault::getInstance()->setBoolForKey(SOUND_EFFECT_SWITCH_KEY, !is_effect_on);
         
+        
+        if (is_effect_on){
+                _soundCtrl->setNormalImage(Sprite::create("Sound_off.png"));
+                _soundCtrl->setSelectedImage(Sprite::create("Sound_off_sel.png"));
+        }else{
+                _soundCtrl->setNormalImage(Sprite::create("Sound_on.png"));
+                _soundCtrl->setSelectedImage(Sprite::create("Sound_on_sel.png"));
+                SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
+        }
 }
 
 

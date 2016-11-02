@@ -90,6 +90,7 @@ enum {
 };
 
 #define AI_ATTACK_THINKING_SIZE (AREA_MAX * AREA_MAX)
-#define EFFECT_FILE        "effect1.wav"
+#define EFFECT_FILE                     "effect1.wav"
+#define SOUND_EFFECT_SWITCH_KEY         "sound_effect_switch_key"
 
 #endif /* __APPMACROS_H__ */

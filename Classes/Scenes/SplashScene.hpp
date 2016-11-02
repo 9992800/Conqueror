@@ -18,7 +18,7 @@ USING_NS_CC;
 class Splash : public cocos2d::Layer
 {
 public:
-        static cocos2d::Scene* createScene();
+        static Scene* createScene();
         virtual bool init() override;
         CREATE_FUNC(Splash);
         

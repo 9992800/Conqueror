@@ -66,7 +66,7 @@ void Splash::onEnter(){
 void Splash::update(float delta){
         
         if (_count < 100)
-                _count++;
+                _count += 10 ;
         else{
                 auto starting = Starting::createScene();
                 Director::getInstance()->replaceScene(starting);

@@ -32,7 +32,17 @@ bool Starting::init()
         
         
         
-        _startGame = MenuItemImage::create("start_game.png", "start_game_selected.png",
+        _helpBtn = MenuItemImage::create("help.png", "help_sel.png",
+                                           CC_CALLBACK_1(Starting::menuHelp, this));
+        _helpBtn->setPosition(Vec2(origin.x + visibleSize.width / 2 + 2 * _helpBtn->getContentSize().width,
+                                     origin.y + visibleSize.height / 2));
+        
+        _soundCtrl = MenuItemImage::create("sound_ctrl.png", "sound_ctrl_sel.png",
+                                           CC_CALLBACK_1(Starting::menuSoundCtrl, this));
+        _soundCtrl->setPosition(Vec2(origin.x + visibleSize.width / 2 + 2 * _soundCtrl->getContentSize().width,
+                                     origin.y + visibleSize.height / 2));
+        
+        _startGame = MenuItemImage::create("start_game.png", "start_game_sel.png",
                                            CC_CALLBACK_1(Starting::menuStartGame, this));
         _startGame->setPosition(Vec2(origin.x + visibleSize.width / 2 + 2 * _startGame->getContentSize().width,
                                      origin.y + visibleSize.height / 2));
@@ -64,6 +74,14 @@ void Starting::menuStartGame(Ref* pSender){
         this->addChild(label, 2);
         
         scheduleUpdate();
+}
+
+
+void Starting::menuHelp(Ref* pSender){
+        
+}
+void Starting::menuSoundCtrl(Ref* pSender){
+        
 }
 
 

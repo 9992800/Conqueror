@@ -293,7 +293,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         coins_back->setIgnoreAnchorPointForPosition(false);
         coins_back->setAnchorPoint(Vec2(0.5, 0.5));
         coins_back->setContentSize(Size(100, 40));
-        Vec2 coins_back_pos = Vec2(coins_pos.x - coins_show->getContentSize().width - 50, coins_pos.y);
+        Vec2 coins_back_pos = Vec2(coins_pos.x - 60, coins_pos.y);
         coins_back->setPosition(coins_back_pos);
         _coinsNum = 100;//查询消费记录 apple
         auto coins_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/Marker Felt.ttf", 24);//
@@ -323,7 +323,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         dices_back->setIgnoreAnchorPointForPosition(false);
         dices_back->setAnchorPoint(Vec2(0.5, 0.5));
         dices_back->setContentSize(Size(100, 40));
-        Vec2 dices_back_pos = Vec2(dices_pos.x - dices_show->getContentSize().width - 50, dices_pos.y);
+        Vec2 dices_back_pos = Vec2(dices_pos.x - 60, dices_pos.y);
         dices_back->setPosition(dices_back_pos);
         _dicesNum = 100;//查询消费记录 apple
         auto dices_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/Marker Felt.ttf", 24);//

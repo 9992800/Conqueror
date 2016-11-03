@@ -98,4 +98,19 @@ enum {
 #define LEVEL_6_LOCK_STATE_KEY          "_key_level_6_lock_state"
 #define LEVEL_7_LOCK_STATE_KEY          "_key_level_7_lock_state"
 
+
+#define LAST_GAME_LEVEL_PLAYED_KEY      "_key_last_game_level_played"
+
+
+enum {
+        GAME_LEVEL_INDEX_1 = 1,
+        GAME_LEVEL_INDEX_2,
+        GAME_LEVEL_INDEX_3,
+        GAME_LEVEL_INDEX_4,
+        GAME_LEVEL_INDEX_5,
+        GAME_LEVEL_INDEX_6,
+        GAME_LEVEL_INDEX_7,
+};
+
+
 #endif /* __APPMACROS_H__ */

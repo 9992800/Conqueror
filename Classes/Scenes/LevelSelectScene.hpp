@@ -5,10 +5,10 @@
 //  Created by wsli on 16/11/2.
 //
 //
-
 #ifndef LevelSelecteScene_hpp
 #define LevelSelecteScene_hpp
 
+#include "AppMacros.hpp"
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 
@@ -26,15 +26,22 @@ public:
         void update(float delta)override;
         virtual void onExit()override;
         
+        void onTouchesMoved(const std::vector<Touch*>& touches, Event* event)override;
+        
 protected:
         void menuSelectLevel(Ref* btn, int num);
         void menuBuyLevel(Ref* btn, int num);
         
 private:
         void loadLevelShow(Vec2 center, Size visibleSize);
+        void setSelectLevelBackPos();
+        void loadLevelSelectedBackGround();
 private:
-        int _count = 0;
-        LoadingBar*     _loadingBar;        
+        int             _count;
+        int             _lastLevel;
+        LoadingBar*     _loadingBar;
+        LayerColor*     _selectedBackGround;
+        LayerColor*     _levelShowBackGround;
 };
 
 

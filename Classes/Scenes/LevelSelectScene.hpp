@@ -26,6 +26,10 @@ public:
         void update(float delta)override;
         virtual void onExit()override;
         
+protected:
+        void menuSelectLevel(Ref* btn, int num);
+        void menuBuyLevel(Ref* btn, int num);
+        
 private:
         void loadLevelShow(Vec2 center, Size visibleSize);
 private:

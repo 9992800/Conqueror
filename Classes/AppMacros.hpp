@@ -91,6 +91,11 @@ enum {
 
 #define AI_ATTACK_THINKING_SIZE (AREA_MAX * AREA_MAX)
 #define EFFECT_FILE                     "effect1.wav"
-#define SOUND_EFFECT_SWITCH_KEY         "sound_effect_switch_key"
+#define SOUND_EFFECT_SWITCH_KEY         "_key_sound_effect_switch"
+
+#define LEVEL_4_LOCK_STATE_KEY          "_key_level_4_lock_state"
+#define LEVEL_5_LOCK_STATE_KEY          "_key_level_5_lock_state"
+#define LEVEL_6_LOCK_STATE_KEY          "_key_level_6_lock_state"
+#define LEVEL_7_LOCK_STATE_KEY          "_key_level_7_lock_state"
 
 #endif /* __APPMACROS_H__ */

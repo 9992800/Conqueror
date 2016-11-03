@@ -9,6 +9,7 @@
 #include "AreaData.hpp"
 #include "DiceGame.hpp"
 #include "ScreenCoordinate.hpp"
+#include "AppMacros.hpp"
 
 static Color4F _areaLineColor[] = {Color4F(1.0, 0.0, 0.0, 0.02),
         Color4F(0.0, 1.0, 0.0, 0.02),Color4F(0.0, 0.0, 1.0, 0.02),

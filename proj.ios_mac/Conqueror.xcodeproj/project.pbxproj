@@ -80,6 +80,8 @@
 		7C733B1D1DC990E200098EDD /* iphone6 in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B191DC990E200098EDD /* iphone6 */; };
 		7C733B1E1DC990E200098EDD /* iphone6p in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B1A1DC990E200098EDD /* iphone6p */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
+		BB9A4E241DCB7C6400E88C41 /* GameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E221DCB7C6400E88C41 /* GameData.cpp */; };
+		BB9A4E271DCB84A200E88C41 /* MapCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */; };
 		BBC812DE1DCA3CB000EC8874 /* GameHelpScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBC812DC1DCA3CB000EC8874 /* GameHelpScene.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -220,6 +222,10 @@
 		7C733B191DC990E200098EDD /* iphone6 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6; sourceTree = "<group>"; };
 		7C733B1A1DC990E200098EDD /* iphone6p */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6p; sourceTree = "<group>"; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		BB9A4E221DCB7C6400E88C41 /* GameData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameData.cpp; sourceTree = "<group>"; };
+		BB9A4E231DCB7C6400E88C41 /* GameData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameData.hpp; sourceTree = "<group>"; };
+		BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapCreator.cpp; sourceTree = "<group>"; };
+		BB9A4E261DCB84A200E88C41 /* MapCreator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapCreator.hpp; sourceTree = "<group>"; };
 		BBC812DC1DCA3CB000EC8874 /* GameHelpScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHelpScene.cpp; sourceTree = "<group>"; };
 		BBC812DD1DCA3CB000EC8874 /* GameHelpScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHelpScene.hpp; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -450,6 +456,10 @@
 		7C21A0ED1DCB39560035ECC6 /* GameLogic */ = {
 			isa = PBXGroup;
 			children = (
+				BB9A4E231DCB7C6400E88C41 /* GameData.hpp */,
+				BB9A4E221DCB7C6400E88C41 /* GameData.cpp */,
+				7C21A0EF1DCB39FE0035ECC6 /* DiceGame.hpp */,
+				7C21A0EE1DCB39FE0035ECC6 /* DiceGame.cpp */,
 				7C21A1041DCB4F010035ECC6 /* AreaData.cpp */,
 				7C21A1051DCB4F010035ECC6 /* AreaData.hpp */,
 				7C21A1061DCB4F010035ECC6 /* GameAI.cpp */,
@@ -459,8 +469,6 @@
 				7C21A10A1DCB4F010035ECC6 /* GamePlayer.hpp */,
 				7C21A10B1DCB4F010035ECC6 /* JoinData.cpp */,
 				7C21A10C1DCB4F010035ECC6 /* JoinData.hpp */,
-				7C21A0EF1DCB39FE0035ECC6 /* DiceGame.hpp */,
-				7C21A0EE1DCB39FE0035ECC6 /* DiceGame.cpp */,
 			);
 			path = GameLogic;
 			sourceTree = "<group>";
@@ -474,6 +482,8 @@
 				7C21A0FD1DCB3B0F0035ECC6 /* RandomMap.cpp */,
 				7C21A1001DCB3B0F0035ECC6 /* ScreenCoordinate.hpp */,
 				7C21A0FF1DCB3B0F0035ECC6 /* ScreenCoordinate.cpp */,
+				BB9A4E261DCB84A200E88C41 /* MapCreator.hpp */,
+				BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */,
 			);
 			path = RandomMap;
 			sourceTree = "<group>";
@@ -648,6 +658,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB9A4E271DCB84A200E88C41 /* MapCreator.cpp in Sources */,
 				7C21A0F81DCB3A3C0035ECC6 /* PopUpOkCancelDialog.cpp in Sources */,
 				7C21A0F01DCB39FE0035ECC6 /* DiceGame.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
@@ -667,6 +678,7 @@
 				7C21A0EC1DCB39050035ECC6 /* GameScene.cpp in Sources */,
 				7C21A1031DCB3B0F0035ECC6 /* ScreenCoordinate.cpp in Sources */,
 				7C21A1021DCB3B0F0035ECC6 /* RandomMap.cpp in Sources */,
+				BB9A4E241DCB7C6400E88C41 /* GameData.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 			);

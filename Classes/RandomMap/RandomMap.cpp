@@ -35,15 +35,15 @@ void RandomMap::initRootMap(const MapBasicBean& basic){
         
         _rootElement = this->NewElement("map");
         _rootElement->SetAttribute("version", "1.0");
-        _rootElement->SetAttribute("orientation",       basic.orientation.c_str());
-        _rootElement->SetAttribute("renderorder",       basic.renderorder.c_str());
+        _rootElement->SetAttribute("orientation",       "y");
+        _rootElement->SetAttribute("renderorder",       "odd");
         _rootElement->SetAttribute("width",             basic.widthInTiles);
         _rootElement->SetAttribute("height",            basic.heightInTiles);
         _rootElement->SetAttribute("tilewidth",         basic.tileWidth);
         _rootElement->SetAttribute("tileheight",        basic.tileHeight);
         _rootElement->SetAttribute("hexsidelength",     basic.hexsidelength);
-        _rootElement->SetAttribute("staggeraxis",       basic.staggeraxis.c_str());
-        _rootElement->SetAttribute("staggerindex",      basic.staggerindex.c_str());
+        _rootElement->SetAttribute("staggeraxis",       "hexagonal");
+        _rootElement->SetAttribute("staggerindex",      "right-down");
         _rootElement->SetAttribute("nextobjectid",      1);
         
         this->InsertFirstChild(_rootElement);

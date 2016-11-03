@@ -39,10 +39,6 @@ typedef struct MapBasicBean_s{
         int tileWidth;
         int tileHeight;
         int hexsidelength;
-        std::string staggeraxis;
-        std::string staggerindex;
-        std::string orientation;
-        std::string renderorder;
 }MapBasicBean;
 
 typedef struct SimpleMapInfoBean_s{

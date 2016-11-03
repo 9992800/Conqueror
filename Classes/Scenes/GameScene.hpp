@@ -8,7 +8,7 @@
 
 #ifndef DiceGameScene_hpp
 #define DiceGameScene_hpp
-
+#include "DiceGame.hpp"
 #include "cocos2d.h"
 USING_NS_CC;
 
@@ -27,12 +27,25 @@ private:
                 _playerNumber = _gameLevel + 1;
         }
         
+        
+protected:
+        void initMapLayer();
+        void initControlLayer();
+        void initAnimationLayer();
+        
 private:
         int _playerNumber;
         int _gameLevel;
         
 private:
+        Layer*  _controlLayer;
+        Layer*  _animationLayer;
         
+        
+private:
+        DiceGame*       _theGameLogic;
+        GameData        _clonedGameData;
+        GameData        _gameData;
 };
 
 

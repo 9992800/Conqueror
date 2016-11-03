@@ -51,7 +51,7 @@ bool Starting::init()
                                                    CC_CALLBACK_1(Starting::menuSoundCtrl, this));
         }
         _soundCtrl->setPosition(Vec2(2 * _soundCtrl->getContentSize().width,
-                                     origin.y +  2 * _soundCtrl->getContentSize().height));
+                                     origin.y +  60));
         
         _startGame = MenuItemImage::create("start_game.png", "start_game_sel.png",
                                            CC_CALLBACK_1(Starting::menuStartGame, this));

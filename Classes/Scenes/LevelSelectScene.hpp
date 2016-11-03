@@ -32,19 +32,30 @@ protected:
         void menuSelectLevel(Ref* btn, int num);
         void menuBuyLevel(Ref* btn, int num);
         
+        void menuStartGame(Ref* btn);
+        void menuSoundControl(Ref* btn);
+        void menuShowSettigns(Ref* btn);
+        void menuGetMoreCoins(Ref* btn);
+        void menuGetMoreDices(Ref* btn);
+        
 private:
         void loadLevelShow(Vec2 center, Size visibleSize);
         void setSelectLevelBackPos();
         void loadLevelSelectedBackGround();
-        
         void initActionListener();
+        
+        void initButtons(Vec2 center, Size visibleSize);
 private:
         int             _count;
         int             _lastLevel;
+        int             _coinsNum;
+        int             _dicesNum;
+        
         Vec2            _mostRight, _mostLeft;
         LoadingBar*     _loadingBar;
         LayerColor*     _selectedBackGround;
         LayerColor*     _levelShowBackGround;
+        MenuItemImage*  _soundCtrl;
 };
 
 

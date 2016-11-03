@@ -113,4 +113,6 @@ enum {
 };
 
 
+template <typename T> std::string tostr(const T& t) { std::ostringstream os; os<<t; return os.str(); }
+
 #endif /* __APPMACROS_H__ */

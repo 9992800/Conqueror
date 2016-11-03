@@ -5,6 +5,7 @@
 //  Created by wsli on 16/11/2.
 //
 //
+#include "SimpleAudioEngine.h"
 #include "LevelSelectScene.hpp"
 enum{
         kLevelShowLevel1Tag = 2,
@@ -54,6 +55,8 @@ bool LevelSelect::init()
         this->loadLevelSelectedBackGround();
         
         this->initActionListener();
+        
+        this->initButtons(origin, visibleSize);
         
         return true;
 }
@@ -120,8 +123,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         
         this->addChild(_levelShowBackGround, ZORDER_BACK_LAYERS);
         
-        
-        
+        //TODO::load receipents from apple store
         
         float btn_top_gap = 30.f;
         auto level_1_lock_btn = MenuItemImage::create("level/level_unlock.png", "level/level_unlock_sel.png",
@@ -220,7 +222,7 @@ void LevelSelect::setSelectLevelBackPos(){
                         pos = _levelShowBackGround->getChildByTag(kLevelShowLevel1Tag)->getPosition();
                         break;
         }
-        _selectedBackGround->setPosition(pos - Vec2(0, 30));
+        _selectedBackGround->setPosition(pos);
 }
 
 void LevelSelect::loadLevelSelectedBackGround(){
@@ -228,7 +230,7 @@ void LevelSelect::loadLevelSelectedBackGround(){
         Size back_size = _levelShowBackGround->getContentSize();
         
         _selectedBackGround = LayerColor::create(Color4B::GRAY);
-        _selectedBackGround->setContentSize(Size(150, back_size.height / 2 + 20));
+        _selectedBackGround->setContentSize(Size(200, back_size.height / 2 + 20));
         _selectedBackGround->setIgnoreAnchorPointForPosition(false);
         _selectedBackGround->setAnchorPoint(Vec2(0.5, 0.5));
         
@@ -245,16 +247,143 @@ void LevelSelect::initActionListener(){
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
+void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
+        
+        bool is_effect_on = UserDefault::getInstance()->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
+       
+        if (is_effect_on){
+                _soundCtrl = MenuItemImage::create("Sound_on.png", "Sound_on_sel.png",
+                                                   CC_CALLBACK_1(LevelSelect::menuSoundControl, this));
+        }else{
+                _soundCtrl = MenuItemImage::create("Sound_off.png", "Sound_off_sel.png",
+                                                   CC_CALLBACK_1(LevelSelect::menuSoundControl, this));
+        }
+        _soundCtrl->setPosition(Vec2(2 * _soundCtrl->getContentSize().width,
+                                     origin.y + 60));
+        
+        
+        
+        auto start_game = MenuItemImage::create("start_game.png", "start_game_sel.png",
+                                                  CC_CALLBACK_1(LevelSelect::menuStartGame, this));
+        start_game->setPosition(Vec2(origin.x + visibleSize.width / 2,
+                                     origin.y + 60));
+        
+        
+        
+        auto system_setting = MenuItemImage::create("level/game_setting.png", "level/game_setting_sel.png",
+                                                  CC_CALLBACK_1(LevelSelect::menuShowSettigns, this));
+        system_setting->setPosition(Vec2(origin.x + visibleSize.width -  system_setting->getContentSize().width,
+                                     origin.y + 60));
+        
+        
+        /*
+         /////////////////////////////////////////////////////////
+                        coins buttons
+         /////////////////////////////////////////////////////////
+         */
+        
+        auto coins_show = MenuItemImage::create("level/coins_show.png", "");
+        Vec2 coins_pos = Vec2(origin.x + visibleSize.width - 2 * coins_show->getContentSize().width,
+                              origin.y + visibleSize.height - coins_show->getContentSize().height);
+        coins_show->setPosition(coins_pos);
+        
+        
+        
+        auto coins_back = LayerColor::create(Color4B::GRAY);
+        coins_back->setIgnoreAnchorPointForPosition(false);
+        coins_back->setAnchorPoint(Vec2(0.5, 0.5));
+        coins_back->setContentSize(Size(100, 40));
+        Vec2 coins_back_pos = Vec2(coins_pos.x - coins_show->getContentSize().width - 50, coins_pos.y);
+        coins_back->setPosition(coins_back_pos);
+        _coinsNum = 100;//查询消费记录 apple
+        auto coins_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/Marker Felt.ttf", 24);//
+        coins_back->addChild(coins_label);
+        coins_label->setPosition(coins_back->getContentSize() / 2);
+        this->addChild(coins_back, ZORDER_BACK_LAYERS);
+        
+        
+        
+        auto add_coins = MenuItemImage::create("level/add_icon.png", "",CC_CALLBACK_1(LevelSelect::menuGetMoreCoins, this));
+        Vec2 add_coins_pos = Vec2(coins_back_pos.x - 100, coins_pos.y);
+        add_coins->setPosition(add_coins_pos);
+        
+        
+        /*
+         /////////////////////////////////////////////////////////
+                        dices buttons
+         /////////////////////////////////////////////////////////
+         */
+        auto dices_show = MenuItemImage::create("level/dice_show.png", "");
+        Vec2 dices_pos = Vec2(add_coins_pos.x - 100, coins_pos.y);
+        dices_show->setPosition(dices_pos);
+        
+        
+        
+        auto dices_back = LayerColor::create(Color4B::GRAY);
+        dices_back->setIgnoreAnchorPointForPosition(false);
+        dices_back->setAnchorPoint(Vec2(0.5, 0.5));
+        dices_back->setContentSize(Size(100, 40));
+        Vec2 dices_back_pos = Vec2(dices_pos.x - dices_show->getContentSize().width - 50, dices_pos.y);
+        dices_back->setPosition(dices_back_pos);
+        _dicesNum = 100;//查询消费记录 apple
+        auto dices_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/Marker Felt.ttf", 24);//
+        dices_back->addChild(dices_label);
+        dices_label->setPosition(dices_back->getContentSize() / 2);
+        this->addChild(dices_back, ZORDER_BACK_LAYERS);
+        
+        
+        
+        auto add_dices = MenuItemImage::create("level/add_icon.png", "", CC_CALLBACK_1(LevelSelect::menuGetMoreDices, this));
+        Vec2 add_dices_pos(dices_back_pos.x - 100, dices_pos.y);
+        add_dices->setPosition(add_dices_pos);
+
+        
+        
+        auto menu = Menu::create(start_game, _soundCtrl, system_setting, coins_show,
+                                 add_coins, dices_show, add_dices, NULL);
+        menu->setPosition(Vec2::ZERO);
+        this->addChild(menu, ZORDER_ITEM_CONTROL);
+}
+
 #pragma mark - button action callback
 void LevelSelect::menuSelectLevel(Ref* btn, int bt_indx){
-        UserDefault::getInstance()->getIntegerForKey(LAST_GAME_LEVEL_PLAYED_KEY, bt_indx);
+        
         _lastLevel = bt_indx;
         
         this->setSelectLevelBackPos();
+        
+        UserDefault::getInstance()->getIntegerForKey(LAST_GAME_LEVEL_PLAYED_KEY, bt_indx);
 }
 
 void LevelSelect::menuBuyLevel(Ref* btn, int num){
         
+}
+
+void LevelSelect::menuStartGame(Ref* btn){
+        
+}
+void LevelSelect::menuShowSettigns(Ref* btn){
+        
+}
+void LevelSelect::menuGetMoreCoins(Ref* btn){
+        
+}
+void LevelSelect::menuGetMoreDices(Ref* btn){
+        
+}
+
+void LevelSelect::menuSoundControl(Ref* btn){
+        bool is_effect_on = UserDefault::getInstance()->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
+        UserDefault::getInstance()->setBoolForKey(SOUND_EFFECT_SWITCH_KEY, !is_effect_on);
+        
+        if (is_effect_on){
+                _soundCtrl->setNormalImage(Sprite::create("Sound_off.png"));
+                _soundCtrl->setSelectedImage(Sprite::create("Sound_off_sel.png"));
+        }else{
+                _soundCtrl->setNormalImage(Sprite::create("Sound_on.png"));
+                _soundCtrl->setSelectedImage(Sprite::create("Sound_on_sel.png"));
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
+        }
 }
 
 void LevelSelect::onTouchesMoved(const std::vector<Touch*>& touches, Event* event){

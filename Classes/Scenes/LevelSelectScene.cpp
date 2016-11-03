@@ -372,6 +372,9 @@ void LevelSelect::menuStartGame(Ref* btn){
         this->addChild(label, 2);
         
         scheduleUpdate();
+        
+        auto scene = GameScene::createScene(_lastLevel);
+        Director::getInstance()->pushScene(scene);
 }
 
 void LevelSelect::menuShowSettigns(Ref* btn){
@@ -422,9 +425,9 @@ void LevelSelect::update(float delta){
         if (_count < 100)
                 _count += 3;
         else{
-                
-                auto scene = GameScene::createScene(_lastLevel);
-                Director::getInstance()->pushScene(scene);;
+//                
+//                auto scene = GameScene::createScene(_lastLevel);
+//                Director::getInstance()->pushScene(scene);
         }
         
         _loadingBar->setPercent(_count);

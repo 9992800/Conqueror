@@ -25,9 +25,12 @@ public:
         
         void update(float delta)override;
         virtual void onExit()override;
+        
+private:
+        void loadLevelShow(Vec2 center, Size visibleSize);
 private:
         int _count = 0;
-        LoadingBar* _loadingBar;
+        LoadingBar*     _loadingBar;        
 };
 
 

@@ -6,7 +6,9 @@
 //
 //
 #include "SimpleAudioEngine.h"
+#include "GameSettingsScene.hpp"
 #include "LevelSelectScene.hpp"
+
 enum{
         kLevelShowLevel1Tag = 2,
         kLevelShowLevel2Tag = 3,
@@ -362,9 +364,13 @@ void LevelSelect::menuBuyLevel(Ref* btn, int num){
 void LevelSelect::menuStartGame(Ref* btn){
         
 }
+
 void LevelSelect::menuShowSettigns(Ref* btn){
-        
+        auto scene = GameSettings::createScene();
+        Director::getInstance()->pushScene(scene);
 }
+
+
 void LevelSelect::menuGetMoreCoins(Ref* btn){
         
 }

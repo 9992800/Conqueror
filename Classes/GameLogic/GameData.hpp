@@ -14,14 +14,18 @@
 #include "JoinData.hpp"
 
 class DiceGame;
+class MapCreator;
 
 class GameData{
         friend class DiceGame;
+        friend class MapCreator;
+        
 public:
         GameData(int n = 3);
         ~GameData();
 public:
         GameData clone();
+        void reshDataByMapInfo(TMXTiledMap* map);
 private:
         int                             _userId;
         int                             _curPlayerNum;

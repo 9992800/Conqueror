@@ -17,6 +17,21 @@ GameData DiceGame::initGameData(int num){
         
         this->makeNewMapData();
         
+        for (int i = 0; i < MAX_PLAYER; i++){
+                this->set_area_tc(i);
+        }
+        
+        for (int i = 0; i < CEL_MAX; i++){
+                int area_id = _data._cel[i];
+                AreaData* area = _data._areaData[area_id];
+                int player_uid = area->getOwner();
+                GamePlayer* player = _data._player[player_uid];
+                if (area_id > 0)
+                        _data._mapData[i] = player->getGid();
+                else
+                        _data._mapData[i] = 0;
+        }
+        
         return _data;
 }
 

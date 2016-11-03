@@ -8,6 +8,7 @@
 #include "GameData.hpp"
 #include "MapCreator.hpp"
 #include "GameScene.hpp"
+#include "ScreenCoordinate.hpp"
 
 enum{
         ZORDER_MAP_GROUND = 0,
@@ -54,9 +55,13 @@ void GameScene::initMapLayer(){
         
         _gameData = _theGameLogic->initGameData(_playerNumber);
         
+        auto map = MapCreator::instance()->createMap(_gameData);
+        
+        _gameData.reshDataByMapInfo(map);
+        
         _clonedGameData = _gameData.clone();
         
-        auto map = MapCreator::instance()->createMap(_gameData);
+        ScreenCoordinate::getInstance()->configScreen(map->getContentSize());
         
         this->addChild(map, ZORDER_MAP_GROUND, key_map_tag);
 }

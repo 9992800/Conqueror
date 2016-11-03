@@ -8,7 +8,6 @@
 
 #include "GameData.hpp"
 
-
 GameData::GameData(int n):_curPlayerNum(n),_userId(0),
 _gameStatus(GAME_STATUS_INIT),_ban(0),_areaFrom(AREA_UNSELECTED),
 _areaTo(AREA_UNSELECTED){
@@ -97,4 +96,23 @@ GameData GameData::clone(){
         }
         
         return coped_obj;
+}
+
+void GameData::reshDataByMapInfo(TMXTiledMap* map){
+                
+        for (int i = 0; i < AREA_MAX; i++){
+                DrawNode* draw_node = DrawNode::create();
+                map->addChild(draw_node, 1);
+                AreaData* area = this->_areaData[i];
+                area->intDrawObject(draw_node);
+        }
+        
+        for(int i = 1; i < AREA_MAX; i++){
+                AreaData* area = this->_areaData[i];
+                if (area->getOwner() < 0){
+                        continue;
+                }
+                Sprite* dice = area->createSprite();
+                map->addChild(dice, AREA_SPRITE_ZORDER, AREA_TAG_ID_INMAP(i));
+        }
 }

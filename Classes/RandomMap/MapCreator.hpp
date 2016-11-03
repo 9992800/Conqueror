@@ -8,11 +8,19 @@
 
 #ifndef MapCreator_hpp
 #define MapCreator_hpp
-#include "GameData.hpp"
+#include "GameData.hpp" 
+#include "MapBasicInfo.hpp"
+
 class MapCreator{
 public:
         static MapCreator* instance();
+        
+protected:
+        bool init();
+        
 public:
         TMXTiledMap* createMap(const GameData& gd);
+private:
+        SimpleMapInfoBean initMapBasicInfo(std::vector<int>);
 };
 #endif /* MapCreator_hpp */

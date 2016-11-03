@@ -36,9 +36,12 @@ private:
         void loadLevelShow(Vec2 center, Size visibleSize);
         void setSelectLevelBackPos();
         void loadLevelSelectedBackGround();
+        
+        void initActionListener();
 private:
         int             _count;
         int             _lastLevel;
+        Vec2            _mostRight, _mostLeft;
         LoadingBar*     _loadingBar;
         LayerColor*     _selectedBackGround;
         LayerColor*     _levelShowBackGround;

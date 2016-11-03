@@ -50,7 +50,10 @@ bool LevelSelect::init()
         
         
         this->loadLevelShow(center, visibleSize);
+        
         this->loadLevelSelectedBackGround();
+        
+        this->initActionListener();
         
         return true;
 }
@@ -68,7 +71,9 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         
         Size back_size = Size(left_tap * 8 + leve1_1_size.width * 7, visibleSize.height / 2);
         _levelShowBackGround->setContentSize(back_size);
-        _levelShowBackGround->setPosition(Vec2(center.x + (back_size.width - visibleSize.width) / 2 ,center.y));
+        _mostRight = Vec2(center.x + (back_size.width - visibleSize.width) / 2 ,center.y);
+        _mostLeft  = Vec2(center.x - (back_size.width - visibleSize.width) / 2 ,center.y);
+        _levelShowBackGround->setPosition(_mostRight);
         
         float c = back_size.height / 2;
         
@@ -114,6 +119,9 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         
         
         this->addChild(_levelShowBackGround, ZORDER_BACK_LAYERS);
+        
+        
+        
         
         float btn_top_gap = 30.f;
         auto level_1_lock_btn = MenuItemImage::create("level/level_unlock.png", "level/level_unlock_sel.png",
@@ -220,7 +228,7 @@ void LevelSelect::loadLevelSelectedBackGround(){
         Size back_size = _levelShowBackGround->getContentSize();
         
         _selectedBackGround = LayerColor::create(Color4B::GRAY);
-        _selectedBackGround->setContentSize(Size(150, back_size.height / 2 +40));
+        _selectedBackGround->setContentSize(Size(150, back_size.height / 2 + 20));
         _selectedBackGround->setIgnoreAnchorPointForPosition(false);
         _selectedBackGround->setAnchorPoint(Vec2(0.5, 0.5));
         
@@ -230,6 +238,12 @@ void LevelSelect::loadLevelSelectedBackGround(){
         this->setSelectLevelBackPos();
 }
 
+
+void LevelSelect::initActionListener(){
+        auto listener = EventListenerTouchAllAtOnce::create();
+        listener->onTouchesMoved = CC_CALLBACK_2(LevelSelect::onTouchesMoved, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+}
 
 #pragma mark - button action callback
 void LevelSelect::menuSelectLevel(Ref* btn, int bt_indx){
@@ -248,20 +262,13 @@ void LevelSelect::onTouchesMoved(const std::vector<Touch*>& touches, Event* even
         
         auto diff = touch->getDelta();
         diff.y = 0;
-        auto currentPos = _levelShowBackGround->getPosition();
-        auto origin = Director::getInstance()->getVisibleOrigin();
+        auto current_pos = _levelShowBackGround->getPosition();
+        auto want_to_be = current_pos + diff;
         
-        auto layer_size = _levelShowBackGround->getContentSize();
-        
-//        if (origin.y < (currentPos.y + diff.y)){
-//                diff.y = origin.y - currentPos.y;
-//        }
-//        
-//        if ((currentPos.y + diff.y) < _lowestPostion_y){
-//                diff.y = _lowestPostion_y - currentPos.y;
-//        }
-        
-//        _randomMap->setPosition(currentPos + diff);
+        if (want_to_be.x < _mostLeft.x || want_to_be.x > _mostRight.x){
+                return;
+        }
+        _levelShowBackGround->setPosition(want_to_be);
 }
 
 

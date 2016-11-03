@@ -7,3 +7,7 @@
 //
 
 #include "DiceGame.hpp"
+
+bool DiceGame::init(){
+        return true;
+}

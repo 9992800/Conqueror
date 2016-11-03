@@ -17,9 +17,19 @@ class GameScene : public cocos2d::Layer
 {
         
 public:
-        static Scene* createScene();
+        static Scene* createScene(int gameLevel);
         virtual bool init() override;
         CREATE_FUNC(GameScene);
+        
+private:
+        inline void setLevel(int level){
+                _gameLevel = level;
+                _playerNumber = _gameLevel + 1;
+        }
+        
+private:
+        int _playerNumber;
+        int _gameLevel;
 };
 
 

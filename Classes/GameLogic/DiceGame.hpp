@@ -9,6 +9,13 @@
 #ifndef DiceGame_hpp
 #define DiceGame_hpp
 
-#include <stdio.h>
+#include "cocos2d.h"
+USING_NS_CC;
+
+class DiceGame : public Ref{
+public:
+        CREATE_FUNC(DiceGame);
+        bool init();
+};
 
 #endif /* DiceGame_hpp */

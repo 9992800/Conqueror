@@ -8,6 +8,8 @@
 #include "SimpleAudioEngine.h"
 #include "GameSettingsScene.hpp"
 #include "LevelSelectScene.hpp"
+#include "GameScene.hpp"
+
 
 enum{
         kLevelShowLevel1Tag = 2,
@@ -283,13 +285,10 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
                         coins buttons
          /////////////////////////////////////////////////////////
          */
-        
         auto coins_show = MenuItemImage::create("level/coins_show.png", "");
         Vec2 coins_pos = Vec2(origin.x + visibleSize.width - 2 * coins_show->getContentSize().width,
                               origin.y + visibleSize.height - coins_show->getContentSize().height);
         coins_show->setPosition(coins_pos);
-        
-        
         
         auto coins_back = LayerColor::create(Color4B::GRAY);
         coins_back->setIgnoreAnchorPointForPosition(false);
@@ -302,7 +301,6 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         coins_back->addChild(coins_label);
         coins_label->setPosition(coins_back->getContentSize() / 2);
         this->addChild(coins_back, ZORDER_BACK_LAYERS);
-        
         
         
         auto add_coins = MenuItemImage::create("level/add_icon.png", "",CC_CALLBACK_1(LevelSelect::menuGetMoreCoins, this));
@@ -319,8 +317,6 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         Vec2 dices_pos = Vec2(add_coins_pos.x - 100, coins_pos.y);
         dices_show->setPosition(dices_pos);
         
-        
-        
         auto dices_back = LayerColor::create(Color4B::GRAY);
         dices_back->setIgnoreAnchorPointForPosition(false);
         dices_back->setAnchorPoint(Vec2(0.5, 0.5));
@@ -333,13 +329,9 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         dices_label->setPosition(dices_back->getContentSize() / 2);
         this->addChild(dices_back, ZORDER_BACK_LAYERS);
         
-        
-        
         auto add_dices = MenuItemImage::create("level/add_icon.png", "", CC_CALLBACK_1(LevelSelect::menuGetMoreDices, this));
         Vec2 add_dices_pos(dices_back_pos.x - 100, dices_pos.y);
         add_dices->setPosition(add_dices_pos);
-
-        
         
         auto menu = Menu::create(start_game, _soundCtrl, system_setting, coins_show,
                                  add_coins, dices_show, add_dices, NULL);
@@ -362,7 +354,24 @@ void LevelSelect::menuBuyLevel(Ref* btn, int num){
 }
 
 void LevelSelect::menuStartGame(Ref* btn){
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        Vec2 origin = Director::getInstance()->getVisibleOrigin();
         
+        _count = 0;
+        _loadingBar = LoadingBar::create("sliderProgress.png");
+        _loadingBar->setDirection(LoadingBar::Direction::LEFT);
+        _loadingBar->setPercent(0);
+        
+        Vec2 pos = Vec2(visibleSize.width / 2 + origin.x, origin.y + visibleSize.height / 6);
+        _loadingBar->setPosition(pos);
+        this->addChild(_loadingBar, 3);
+        
+        Size bar_size = _loadingBar->getContentSize();
+        auto label = Label::createWithTTF("Loading", "fonts/Marker Felt.ttf", 24);
+        label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
+        this->addChild(label, 2);
+        
+        scheduleUpdate();
 }
 
 void LevelSelect::menuShowSettigns(Ref* btn){
@@ -411,9 +420,11 @@ void LevelSelect::onTouchesMoved(const std::vector<Touch*>& touches, Event* even
 void LevelSelect::update(float delta){
         
         if (_count < 100)
-                _count++;
+                _count += 3;
         else{
-                _count = 0;
+                
+                auto scene = GameScene::createScene(_lastLevel);
+                Director::getInstance()->pushScene(scene);;
         }
         
         _loadingBar->setPercent(_count);

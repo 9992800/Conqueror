@@ -51,6 +51,30 @@ AreaData::~AreaData(){
 }
 
 
+AreaData::AreaData (AreaData* obj){
+        this->_size = obj->_size;
+        
+        this->_size     = obj->_size;
+        this->_cpos     = obj->_cpos;
+        this->_arm      = obj->_arm;
+        this->_dice     = obj->_dice;
+        this->_left     = obj->_left;
+        this->_right    = obj->_right;
+        this->_bottom   = obj->_bottom;
+        this->_cx       = obj->_cx;
+        this->_cy       = obj->_cy;
+        this->_len_min  = obj->_len_min;
+        this->_areaId   = obj->_areaId;
+        this->_drawNode = obj->_drawNode;
+        this->_emitter  = obj->_emitter;
+        
+        this->_join     = std::vector<bool>(obj->_join);
+        this->_line_cel = std::vector<int>(obj->_line_cel);
+        this->_line_dir = std::vector<int>(obj->_line_dir);
+        this->_cell_idxs= std::vector<int>(obj->_cell_idxs);
+        this->_fight_values= std::vector<int>(obj->_fight_values);
+}
+
 void AreaData::initBound(int vertical, int horizen){
         
         if (horizen < _left){

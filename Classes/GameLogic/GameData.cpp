@@ -79,12 +79,22 @@ GameData GameData::clone(){
         coped_obj._rcel        = std::vector<int>(this->_rcel);
         coped_obj._num         = std::vector<int>(this->_num);
         coped_obj._chk         = std::vector<int>(this->_chk);
-        
-        
         coped_obj._mapData     = std::vector<int>(this->_mapData);
-        coped_obj._areaData    = std::vector<AreaData*>(this->_areaData);
-        coped_obj._player      = std::vector<GamePlayer*>(this->_player);
-        coped_obj._join        = std::vector<JoinData*>(this->_join);
+        
+        coped_obj._areaData = std::vector<AreaData*>(AREA_MAX);
+        for (int i = 0; i < this->_areaData.size(); i++){
+                coped_obj._areaData[i] = new AreaData(this->_areaData[i]);
+        }
+        
+        coped_obj._player = std::vector<GamePlayer*>(MAX_PLAYER);
+        for (int i = 0; i < this->_player.size(); i++){
+                coped_obj._player[i] = new GamePlayer(this->_player[i]);
+        }
+        
+        coped_obj._join = std::vector<JoinData*>(CEL_MAX);
+        for (int i = 0; i < this->_join.size(); i++){
+                coped_obj._join[i] = new JoinData(this->_join[i]);
+        }
         
         return coped_obj;
 }

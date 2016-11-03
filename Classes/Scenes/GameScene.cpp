@@ -22,6 +22,8 @@ enum{
         key_dialog_layer_tag
 };
 
+
+#pragma mark - constructor
 Scene* GameScene::createScene(int gameLevel)
 {
         auto scene = Scene::create();
@@ -45,6 +47,7 @@ bool GameScene::init()
         return true;
 }
 
+#pragma mark - initilization
 void GameScene::initMapLayer(){        
         
         _theGameLogic = DiceGame::create();
@@ -59,9 +62,16 @@ void GameScene::initMapLayer(){
 }
 
 void GameScene::initControlLayer(){
-        
+        _controlLayer = Layer::create();
+        //TODO:: add controll buttons
+        this->addChild(_controlLayer, ZORDER_CRTL_LAYERS, key_ctrl_layer_tag);
 }
 
 void GameScene::initAnimationLayer(){
+        _animationLayer = Layer::create();
         
+        //TODO::add fighting animaiton objects
+        this->addChild(_animationLayer, ZORDER_ANIM_LAYER, key_anim_layer_tag);
+        _animationLayer->setVisible(false);
 }
+

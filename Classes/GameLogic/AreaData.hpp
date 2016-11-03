@@ -20,6 +20,7 @@ class DiceGame;
 class AreaData: public Ref{
 public:
         AreaData(int id);
+        AreaData(AreaData* obj);
         virtual ~AreaData();
         
         inline void increaseSize(int cell) {

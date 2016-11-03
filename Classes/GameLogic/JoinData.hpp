@@ -16,6 +16,7 @@ USING_NS_CC;
 class JoinData: public Ref{
 public:
         JoinData();
+        JoinData(JoinData* obj);
         virtual ~JoinData();
         void initdir(int cellIdx);
         

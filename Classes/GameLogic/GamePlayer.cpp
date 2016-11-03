@@ -19,3 +19,14 @@ GamePlayer::GamePlayer(int id)
 
 GamePlayer::~GamePlayer(){
 }
+
+
+GamePlayer::GamePlayer(GamePlayer* obj){
+        this->_player_id        = obj->_player_id;
+        this->_area_c           = obj->_area_c;
+        this->_area_tc          = obj->_area_tc;
+        this->_dice_c           = obj->_dice_c;
+        this->_dice_jun         = obj->_dice_jun;
+        this->_stock            = obj->_stock;
+        this->_gid_inmap        = obj->_gid_inmap;
+}

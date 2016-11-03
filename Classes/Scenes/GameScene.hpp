@@ -30,6 +30,9 @@ private:
 private:
         int _playerNumber;
         int _gameLevel;
+        
+private:
+        
 };
 
 

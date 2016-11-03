@@ -64,6 +64,7 @@
 		7C21A0E11DC9E9A80035ECC6 /* SplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0DF1DC9E9A80035ECC6 /* SplashScene.cpp */; };
 		7C21A0E41DC9ED930035ECC6 /* LevelSelectScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0E21DC9ED930035ECC6 /* LevelSelectScene.cpp */; };
 		7C21A0E81DCB2F450035ECC6 /* GameSettingsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0E61DCB2F450035ECC6 /* GameSettingsScene.cpp */; };
+		7C21A0EC1DCB39050035ECC6 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0EA1DCB39050035ECC6 /* GameScene.cpp */; };
 		7C733B1C1DC990E200098EDD /* iphone5 in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B181DC990E200098EDD /* iphone5 */; };
 		7C733B1D1DC990E200098EDD /* iphone6 in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B191DC990E200098EDD /* iphone6 */; };
 		7C733B1E1DC990E200098EDD /* iphone6p in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B1A1DC990E200098EDD /* iphone6p */; };
@@ -179,6 +180,8 @@
 		7C21A0E31DC9ED930035ECC6 /* LevelSelectScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelSelectScene.hpp; sourceTree = "<group>"; };
 		7C21A0E61DCB2F450035ECC6 /* GameSettingsScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameSettingsScene.cpp; sourceTree = "<group>"; };
 		7C21A0E71DCB2F450035ECC6 /* GameSettingsScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameSettingsScene.hpp; sourceTree = "<group>"; };
+		7C21A0EA1DCB39050035ECC6 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
+		7C21A0EB1DCB39050035ECC6 /* GameScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameScene.hpp; sourceTree = "<group>"; };
 		7C733B181DC990E200098EDD /* iphone5 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone5; sourceTree = "<group>"; };
 		7C733B191DC990E200098EDD /* iphone6 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6; sourceTree = "<group>"; };
 		7C733B1A1DC990E200098EDD /* iphone6p */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6p; sourceTree = "<group>"; };
@@ -336,6 +339,7 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7C21A0ED1DCB39560035ECC6 /* GameLogic */,
 				BBC812DB1DCA3C9200EC8874 /* Common */,
 				7C21A0D61DC9A11E0035ECC6 /* Scenes */,
 				7C21A0D31DC996F10035ECC6 /* AppMacros.hpp */,
@@ -402,8 +406,17 @@
 				7C21A0D71DC9A11E0035ECC6 /* StartingScene.cpp */,
 				7C21A0E31DC9ED930035ECC6 /* LevelSelectScene.hpp */,
 				7C21A0E21DC9ED930035ECC6 /* LevelSelectScene.cpp */,
+				7C21A0EB1DCB39050035ECC6 /* GameScene.hpp */,
+				7C21A0EA1DCB39050035ECC6 /* GameScene.cpp */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		7C21A0ED1DCB39560035ECC6 /* GameLogic */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = GameLogic;
 			sourceTree = "<group>";
 		};
 		BBC812DB1DCA3C9200EC8874 /* Common */ = {
@@ -577,6 +590,7 @@
 				BBC812DE1DCA3CB000EC8874 /* GameHelpScene.cpp in Sources */,
 				7C21A0D91DC9A11E0035ECC6 /* StartingScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				7C21A0EC1DCB39050035ECC6 /* GameScene.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 			);

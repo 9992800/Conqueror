@@ -65,6 +65,10 @@
 		7C21A0E41DC9ED930035ECC6 /* LevelSelectScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0E21DC9ED930035ECC6 /* LevelSelectScene.cpp */; };
 		7C21A0E81DCB2F450035ECC6 /* GameSettingsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0E61DCB2F450035ECC6 /* GameSettingsScene.cpp */; };
 		7C21A0EC1DCB39050035ECC6 /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0EA1DCB39050035ECC6 /* GameScene.cpp */; };
+		7C21A0F01DCB39FE0035ECC6 /* DiceGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0EE1DCB39FE0035ECC6 /* DiceGame.cpp */; };
+		7C21A0F71DCB3A3C0035ECC6 /* PopUpBaseDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0F11DCB3A3C0035ECC6 /* PopUpBaseDialog.cpp */; };
+		7C21A0F81DCB3A3C0035ECC6 /* PopUpOkCancelDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0F31DCB3A3C0035ECC6 /* PopUpOkCancelDialog.cpp */; };
+		7C21A0F91DCB3A3C0035ECC6 /* PopUpOkDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0F51DCB3A3C0035ECC6 /* PopUpOkDialog.cpp */; };
 		7C733B1C1DC990E200098EDD /* iphone5 in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B181DC990E200098EDD /* iphone5 */; };
 		7C733B1D1DC990E200098EDD /* iphone6 in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B191DC990E200098EDD /* iphone6 */; };
 		7C733B1E1DC990E200098EDD /* iphone6p in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B1A1DC990E200098EDD /* iphone6p */; };
@@ -182,6 +186,14 @@
 		7C21A0E71DCB2F450035ECC6 /* GameSettingsScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameSettingsScene.hpp; sourceTree = "<group>"; };
 		7C21A0EA1DCB39050035ECC6 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
 		7C21A0EB1DCB39050035ECC6 /* GameScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameScene.hpp; sourceTree = "<group>"; };
+		7C21A0EE1DCB39FE0035ECC6 /* DiceGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiceGame.cpp; sourceTree = "<group>"; };
+		7C21A0EF1DCB39FE0035ECC6 /* DiceGame.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DiceGame.hpp; sourceTree = "<group>"; };
+		7C21A0F11DCB3A3C0035ECC6 /* PopUpBaseDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PopUpBaseDialog.cpp; sourceTree = "<group>"; };
+		7C21A0F21DCB3A3C0035ECC6 /* PopUpBaseDialog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PopUpBaseDialog.hpp; sourceTree = "<group>"; };
+		7C21A0F31DCB3A3C0035ECC6 /* PopUpOkCancelDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PopUpOkCancelDialog.cpp; sourceTree = "<group>"; };
+		7C21A0F41DCB3A3C0035ECC6 /* PopUpOkCancelDialog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PopUpOkCancelDialog.hpp; sourceTree = "<group>"; };
+		7C21A0F51DCB3A3C0035ECC6 /* PopUpOkDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PopUpOkDialog.cpp; sourceTree = "<group>"; };
+		7C21A0F61DCB3A3C0035ECC6 /* PopUpOkDialog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PopUpOkDialog.hpp; sourceTree = "<group>"; };
 		7C733B181DC990E200098EDD /* iphone5 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone5; sourceTree = "<group>"; };
 		7C733B191DC990E200098EDD /* iphone6 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6; sourceTree = "<group>"; };
 		7C733B1A1DC990E200098EDD /* iphone6p */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6p; sourceTree = "<group>"; };
@@ -415,6 +427,8 @@
 		7C21A0ED1DCB39560035ECC6 /* GameLogic */ = {
 			isa = PBXGroup;
 			children = (
+				7C21A0EE1DCB39FE0035ECC6 /* DiceGame.cpp */,
+				7C21A0EF1DCB39FE0035ECC6 /* DiceGame.hpp */,
 			);
 			path = GameLogic;
 			sourceTree = "<group>";
@@ -422,6 +436,12 @@
 		BBC812DB1DCA3C9200EC8874 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7C21A0F21DCB3A3C0035ECC6 /* PopUpBaseDialog.hpp */,
+				7C21A0F11DCB3A3C0035ECC6 /* PopUpBaseDialog.cpp */,
+				7C21A0F61DCB3A3C0035ECC6 /* PopUpOkDialog.hpp */,
+				7C21A0F51DCB3A3C0035ECC6 /* PopUpOkDialog.cpp */,
+				7C21A0F41DCB3A3C0035ECC6 /* PopUpOkCancelDialog.hpp */,
+				7C21A0F31DCB3A3C0035ECC6 /* PopUpOkCancelDialog.cpp */,
 				BBC812DD1DCA3CB000EC8874 /* GameHelpScene.hpp */,
 				BBC812DC1DCA3CB000EC8874 /* GameHelpScene.cpp */,
 				7C21A0E71DCB2F450035ECC6 /* GameSettingsScene.hpp */,
@@ -583,13 +603,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C21A0F81DCB3A3C0035ECC6 /* PopUpOkCancelDialog.cpp in Sources */,
+				7C21A0F01DCB39FE0035ECC6 /* DiceGame.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				7C21A0E81DCB2F450035ECC6 /* GameSettingsScene.cpp in Sources */,
 				7C21A0E41DC9ED930035ECC6 /* LevelSelectScene.cpp in Sources */,
 				7C21A0E11DC9E9A80035ECC6 /* SplashScene.cpp in Sources */,
 				BBC812DE1DCA3CB000EC8874 /* GameHelpScene.cpp in Sources */,
 				7C21A0D91DC9A11E0035ECC6 /* StartingScene.cpp in Sources */,
+				7C21A0F71DCB3A3C0035ECC6 /* PopUpBaseDialog.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				7C21A0F91DCB3A3C0035ECC6 /* PopUpOkDialog.cpp in Sources */,
 				7C21A0EC1DCB39050035ECC6 /* GameScene.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,

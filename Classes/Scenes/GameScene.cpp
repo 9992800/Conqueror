@@ -87,11 +87,11 @@ void GameScene::initControlLayer(){
         
         
         _controlLayer = Layer::create();
-        auto end_turn = MenuItemImage::create("NextButton.png", "NextButton.png",
+        _endTurnMenuItem = MenuItemImage::create("NextButton.png", "NextButton.png",
                                              CC_CALLBACK_1(GameScene::menuEndTurn, this));
-        end_turn->setPosition(Vec2(origin.x + visibleSize.width - end_turn->getContentSize().width,
-                                       origin.y +end_turn->getContentSize().height));
-        end_turn->setVisible(false);
+        _endTurnMenuItem->setPosition(Vec2(origin.x + visibleSize.width - _endTurnMenuItem->getContentSize().width,
+                                       origin.y + _endTurnMenuItem->getContentSize().height));
+        _endTurnMenuItem->setVisible(false);
         
         auto start_play = MenuItemImage::create("start.png", "start.png",
                                              CC_CALLBACK_1(GameScene::menuStartGame, this));
@@ -103,7 +103,7 @@ void GameScene::initControlLayer(){
         return_back->setPosition(Vec2(origin.x + return_back->getContentSize().width + 10,
                                        origin.y + visibleSize.height - return_back->getContentSize().height - 10));
         
-        auto menu = Menu::create(end_turn, start_play, return_back, NULL);
+        auto menu = Menu::create(_endTurnMenuItem, start_play, return_back, NULL);
         menu->setPosition(Vec2::ZERO);
         _controlLayer->addChild(menu);
         
@@ -151,10 +151,11 @@ void GameScene::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 
 void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event){        
         
-        if (_isMoved) {
+        if (_isMoved || _gameStatus != GAME_STATUS_INUSERTURN) {
                 _isMoved = false;
                 return;
         }
+        
         auto touch = touches[0];
         auto position = touch->getLocation();
         auto map = this->getChildByTag(key_map_tag);
@@ -194,6 +195,19 @@ void GameScene::tryAgain(){
 void GameScene::afterPlayerBattle(int result){
         _theGameLogic->cleanUpBattleField(result);
 }
+
+void GameScene::afterRobootBattle(int result){
+        _theGameLogic->cleanUpBattleField(result);
+}
+
+
+void GameScene::afterPlayerSupply(int result){
+        
+}
+void GameScene::afterRobootSupply(int result){
+        
+}
+
 void GameScene::playBattleAnimation(int res, CallFunc* callback){
         if (ATTACK_RES_WIN == res){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
@@ -216,12 +230,41 @@ void GameScene::playBattleAnimation(int res, CallFunc* callback){
         }
 }
 
+void GameScene::playSupplyAnimation(int res, CallFunc* callback){
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
+        _theGameLogic->starSupplyDice(callback);
+}
+
 #pragma mark - menu callback actions
 void GameScene::menuEndTurn(Ref* pSender){
         ((MenuItemImage*)pSender)->setVisible(false);
+        _gameStatus = GAME_STATUS_AIRUNNING;
+        _theGameLogic->clearManulAction();
+        _theGameLogic->startRobootAttack();
 }
+
 void GameScene::menuStartGame(Ref* pSender){
         ((MenuItemImage*)pSender)->setVisible(false);
+        
+        _gameStatus = GAME_STATUS_AIRUNNING;
+        int res = _theGameLogic->startRobootAttack();
+        
+        if (ATTACK_RES_WIN == res || ATTACK_RES_DEFEATED == res){
+                
+                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this, res));
+                this->playBattleAnimation(res, callback);
+                
+        }else if(ATTACK_RES_GOTSUPPLY == res){
+                
+                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootSupply, this, res));
+                this->playSupplyAnimation(res, callback);
+                
+        }else if (ATTACK_RES_NONE == res){
+                
+                 _gameStatus = GAME_STATUS_INUSERTURN;
+                _endTurnMenuItem->setVisible(true);
+                
+        }
 }
 
 void GameScene::menuExit(Ref* pSender){
@@ -233,7 +276,6 @@ void GameScene::menuExit(Ref* pSender){
                                                                   CC_CALLBACK_1(GameScene::gameOver, this, 0));
         dialog->retain();
         this->addChild(dialog, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
-        
 }
 
 void GameScene::gameOver(Ref* btn, int result){

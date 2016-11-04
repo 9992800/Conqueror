@@ -29,6 +29,8 @@ public:
         int startPlayerAttack(int cell_sel);
         int startRobootAttack();
         std::map<int, int> cleanUpBattleField(int);
+        void clearManulAction();
+        void starSupplyDice(CallFunc*);
 private:
         void makeNewMapData();
         int percolate(int pt, int cmax, int an);

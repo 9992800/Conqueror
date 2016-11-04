@@ -483,7 +483,16 @@ int DiceGame::startPlayerAttack(int cell_id){
 
 
 int DiceGame::startRobootAttack(){
-        return ATTACK_RES_GOTSUPPLY;
+        if (_data->_jun[_data->_ban] == _data->_userId){
+                return ATTACK_RES_NONE;
+        }
+        int target = GameAI::getInstance()->com_thinking(_data);
+        if (0 == target){
+                return ATTACK_RES_GOTSUPPLY;
+        }else{
+                return this->startBattle();
+        }
+        
 }
 
 std::map<int, int> DiceGame::cleanUpBattleField(int res){
@@ -518,6 +527,61 @@ std::map<int, int> DiceGame::cleanUpBattleField(int res){
         
         return ok_area;
 }
+
+
+void DiceGame::clearManulAction(){
+        if (AREA_UNSELECTED == _data->_areaFrom){
+                return;
+        }
+        
+        AreaData* area = _data->_areaData[_data->_areaFrom];
+        area->drawAsUnselected();
+        _data->_areaFrom = AREA_UNSELECTED;
+}
+
+
+void DiceGame::starSupplyDice(CallFunc* callback){
+        int player_id = _data->_jun[_data->_ban];
+        GamePlayer* player = _data->_player[player_id];
+        player->setStock();
+        
+        
+        std::set<int> affected_aread;
+        while (player->getStock() > 0){
+                
+                int list[AREA_MAX] = {0};
+                int count = 0;
+                for (int i = 0; i < AREA_MAX; i++){
+                        AreaData* area = _data->_areaData[i];
+                        if (area->isEmpty()
+                            ||area->getOwner() != player_id
+                            ||area->getDice() >= MAX_DICE_PER_AREA){
+                                continue;
+                        }
+                        
+                        list[count++] = i;
+                }
+                
+                if (count == 0){
+                        break;
+                }
+                
+                int random_area = random(0, count - 1);
+                int selected_area = list[random_area];
+                _data->_areaData[selected_area]->increaseDice();
+                player->decreaseStock();
+                affected_aread.insert(selected_area);
+        }
+        
+        for(std::set<int>::iterator it = affected_aread.begin(); it != affected_aread.end(); ++it){
+                AreaData* area = _data->_areaData[*it];
+                
+                area->updatePawn(_data->_refereMap);
+                area->drawSupply(_data->_refereMap);
+        }
+        callback->execute();
+}
+
 
 void DiceGame::occupyArea(int newOwner, int area){
         

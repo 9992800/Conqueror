@@ -18,7 +18,7 @@ USING_NS_CC;
 class GameAI: public Ref{
 public:
         static GameAI* getInstance();
-        int com_thinking(GameData& data);
+        int com_thinking(GameData* data);
 private:
         GameAI();
         bool init();

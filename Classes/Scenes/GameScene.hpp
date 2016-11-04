@@ -41,7 +41,12 @@ private:
         void tryAgain();
 
         void afterPlayerBattle(int result);
+        void afterRobootBattle(int result);
         void playBattleAnimation(int, CallFunc*);
+        void playSupplyAnimation(int, CallFunc*);
+        void afterRobootSupply(int);
+        void afterPlayerSupply(int);
+
         
         void menuEndTurn(Ref* pSender);
         void menuStartGame(Ref* pSender);
@@ -58,6 +63,7 @@ private:
         float           _lowestPostion_y;
         Sprite*         _tamara;
         int             _gameStatus;
+        MenuItemImage*  _endTurnMenuItem;
 };
 
 

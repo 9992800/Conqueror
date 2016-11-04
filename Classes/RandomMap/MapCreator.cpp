@@ -33,6 +33,7 @@ TMXTiledMap* MapCreator::createMap(GameData* data){
         
         TMXTiledMap* map = TMXTiledMap::createWithXML(map_xml_str, "maps");
         
+        data->_refereMap = map;
         return map;
 }
 
@@ -50,7 +51,7 @@ SimpleMapInfoBean MapCreator::initMapBasicInfo(std::vector<int> map_data){
         
         simpleBean.tileSetBean = tileSet;
         
-        LayerBean layer = {"map", row, columns, 1.0};
+        LayerBean layer = {LAYER_NAME_IN_TILE_MAP, row, columns, 1.0};
         layer.datas = map_data;
         simpleBean.layerBean = layer;
         

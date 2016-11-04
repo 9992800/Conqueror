@@ -53,7 +53,6 @@ bool LevelSelect::init()
         this->addChild(back_ground, ZORDER_BACK_GROUND);
         
         
-        
         this->loadLevelShow(center, visibleSize);
         
         this->loadLevelSelectedBackGround();

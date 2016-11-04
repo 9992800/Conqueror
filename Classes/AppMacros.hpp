@@ -97,6 +97,8 @@ enum {
 #define AI_ATTACK_THINKING_SIZE (AREA_MAX * AREA_MAX)
 #define EFFECT_FILE                     "effect1.wav"
 #define SOUND_EFFECT_SWITCH_KEY         "_key_sound_effect_switch"
+#define ANIMATION_SWITCH_KEY            "_key_animation_switch"
+#define GAME_SPEED_KEY                  "_key_game_speed_value"
 
 #define LEVEL_4_LOCK_STATE_KEY          "_key_level_4_lock_state"
 #define LEVEL_5_LOCK_STATE_KEY          "_key_level_5_lock_state"
@@ -137,4 +139,8 @@ return nullptr; \
 } \
 }
 
+
+
+
+#define LAYER_NAME_IN_TILE_MAP "map"
 #endif /* __APPMACROS_H__ */

@@ -28,13 +28,13 @@ public:
         GameData* resetInitData();
         int startPlayerAttack(int cell_sel);
         int startRobootAttack();
-        
+        std::map<int, int> cleanUpBattleField(int);
 private:
         void makeNewMapData();
         int percolate(int pt, int cmax, int an);
         void setAreaLine(int cell, int dir);
         int set_area_tc(int pid);
-        
+        void occupyArea(int newOwner, int area);
         
 private:
         int startBattle();

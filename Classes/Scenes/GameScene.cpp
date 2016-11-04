@@ -48,6 +48,9 @@ bool GameScene::init()
         
         this->initAnimationLayer();
         
+        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 4);
+        Director::getInstance()->getScheduler()->setTimeScale(game_speed);
+        
         return true;
 }
 
@@ -74,14 +77,13 @@ void GameScene::initMapLayer(){
         
         this->addChild(map, ZORDER_MAP_GROUND, key_map_tag);
         
-        _lowestPostion_y = visibleSize.height + origin.y - map_size.height;
+        _lowestPostion_y = visibleSize.height + origin.y - map_size.height - 6;//TODO::
 }
 
 void GameScene::initControlLayer(){
-        _controlLayer = Layer::create();
-        //TODO:: add controll buttons
-        this->addChild(_controlLayer, ZORDER_CRTL_LAYERS, key_ctrl_layer_tag);
         
+        _controlLayer = Layer::create();
+        this->addChild(_controlLayer, ZORDER_CRTL_LAYERS, key_ctrl_layer_tag); 
         
         Director::getInstance()->setDepthTest(true);
         auto listener = EventListenerTouchAllAtOnce::create();
@@ -93,9 +95,11 @@ void GameScene::initControlLayer(){
 void GameScene::initAnimationLayer(){
         _animationLayer = Layer::create();
         
-        //TODO::add fighting animaiton objects
+        _tamara = Sprite::create("anim/grossinis_sister1.png");
+        _tamara->setPosition(Vec2(100, 100));
+        _animationLayer->addChild(_tamara);
+        
         this->addChild(_animationLayer, ZORDER_ANIM_LAYER, key_anim_layer_tag);
-        _animationLayer->setVisible(false);
 }
 
 #pragma mark - touch and menu event
@@ -134,7 +138,10 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         int cell_id = ScreenCoordinate::getInstance()->getSelectedCell(pos_in_map);
         
         int result = _theGameLogic->startPlayerAttack(cell_id);
-        this->playAnimation(result);
+        if (ATTACK_RES_WIN == result|| ATTACK_RES_DEFEATED == result){
+                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this, result));
+                this->playBattleAnimation(result, callback);
+        }
 }
 
 //TODO:: need to test
@@ -159,13 +166,28 @@ void GameScene::tryAgain(){
 }
 
 #pragma mark - animation 
-void GameScene::playAnimation(int res){
-        if (ATTACK_RES_GOTSUPPLY == res){
-                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
-        }else if (ATTACK_RES_WIN == res){
+
+void GameScene::afterPlayerBattle(int result){
+        _theGameLogic->cleanUpBattleField(result);
+}
+void GameScene::playBattleAnimation(int res, CallFunc* callback){
+        if (ATTACK_RES_WIN == res){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
         }else if (ATTACK_RES_DEFEATED == res){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
         }
-        
+        bool is_anim_on = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
+        if (is_anim_on){
+                _tamara->setVisible(true);
+                
+                auto cache = AnimationCache::getInstance();
+                cache->addAnimationsWithFile("anim/animations-2.plist");
+                auto animation2 = cache->getAnimation("dance_1");
+                auto action2 = Animate::create(animation2);
+                
+                Sequence*  s = Sequence::create(action2, callback, nullptr);
+                _tamara->runAction(s);
+        }else{
+                callback->execute();
+        }
 }

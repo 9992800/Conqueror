@@ -68,7 +68,8 @@ private:
         std::vector<int>                _rcel;
         std::vector<int>                _num;
         std::vector<int>                _chk;
-        
+private:
+        TMXTiledMap*                    _refereMap;
 };
 
 #endif /* GameData_hpp */

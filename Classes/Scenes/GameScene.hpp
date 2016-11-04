@@ -28,35 +28,29 @@ public:
         
         ~GameScene(){
                 _theGameLogic->release();
-                _clonedGameData->release();
         }
         
-protected:
+private:
         void initMapLayer();
         void initControlLayer();
         void initAnimationLayer();
         
-protected:
         void onTouchesMoved(const std::vector<Touch*>& touches, Event* event)override;
         void onTouchesEnded(const std::vector<Touch*>& touches, Event *event)override;
         void tryAgain();
+
+        void afterPlayerBattle(int result);
+        void playBattleAnimation(int, CallFunc*);
         
 private:
-        void playAnimation(int);
-private:
-        int _playerNumber;
-        int _gameLevel;
-        
-private:
-        Layer*  _controlLayer;
-        Layer*  _animationLayer;
-        
-        
-private:
+        int             _playerNumber;
+        int             _gameLevel;
+        Layer*          _controlLayer;
+        Layer*          _animationLayer;
         DiceGame*       _theGameLogic;
-private:
         bool            _isMoved;
         float           _lowestPostion_y;
+        Sprite*         _tamara;
 };
 
 

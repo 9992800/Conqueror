@@ -485,3 +485,55 @@ int DiceGame::startPlayerAttack(int cell_id){
 int DiceGame::startRobootAttack(){
         return ATTACK_RES_GOTSUPPLY;
 }
+
+std::map<int, int> DiceGame::cleanUpBattleField(int res){
+        AreaData* area_from = _data->_areaData[_data->_areaFrom];
+        AreaData* area_to   = _data->_areaData[_data->_areaTo];
+        
+        area_from->drawAsUnselected();
+        area_to->drawAsUnselected();
+        
+        area_from->clearFightValue();
+        area_to->clearFightValue();
+        
+        if (ATTACK_RES_WIN == res){
+                
+                this->occupyArea(area_from->getOwner(), _data->_areaTo);
+                
+                area_to->setDice(area_from->getDice() - 1);
+                area_to->updatePawn(_data->_refereMap);
+        }
+        
+        area_from->initDice();
+        area_from->updatePawn(_data->_refereMap);
+        
+        std::map<int, int> ok_area = std::map<int, int>();
+        for (int i = 0; i < MAX_PLAYER; i++){
+                int tc = this->set_area_tc(i);
+                ok_area.insert(std::pair<int, int>(i, tc));
+        }
+        
+        _data->_areaTo    = AREA_UNSELECTED;
+        _data->_areaFrom  = AREA_UNSELECTED;
+        
+        return ok_area;
+}
+
+void DiceGame::occupyArea(int newOwner, int area){
+        
+        TMXLayer * layer = _data->_refereMap->getLayer(LAYER_NAME_IN_TILE_MAP);
+        GamePlayer* player = _data->_player[newOwner];
+        
+        for (int j = 0; j < CEL_MAX; j++){
+                if (area != _data->_cel[j]){
+                        continue;
+                }
+                
+                int col = j / XMAX;
+                int row = j % XMAX;
+                
+                layer->setTileGID(player->getGid(), Vec2(row, col));
+        }
+        
+        _data->_areaData[area]->setOwner(newOwner);
+}

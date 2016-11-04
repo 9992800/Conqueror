@@ -28,6 +28,7 @@ public:
         
         ~GameScene(){
                 _theGameLogic->release();
+                _clonedGameData->release();
         }
         
 protected:
@@ -38,7 +39,8 @@ protected:
 protected:
         void onTouchesMoved(const std::vector<Touch*>& touches, Event* event)override;
         void onTouchesEnded(const std::vector<Touch*>& touches, Event *event)override;
- 
+        void tryAgain();
+        
 private:
         void playAnimation(int);
 private:
@@ -52,7 +54,6 @@ private:
         
 private:
         DiceGame*       _theGameLogic;
-        
 private:
         bool            _isMoved;
         float           _lowestPostion_y;

@@ -44,12 +44,13 @@ public:
                 }
         }
         
-        
+        static GameData* createWithData(GameData* data);
+        GameData(){}
         GameData(int n);
         inline bool init(){return true;}
+        bool init(GameData* data);
         ~GameData();
 public:
-        GameData clone();
         void reshDataByMapInfo(TMXTiledMap* map);
 private:
         int                             _userId;

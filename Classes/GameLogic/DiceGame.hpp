@@ -21,9 +21,11 @@ public:
         bool init();
         ~DiceGame(){
                 _data->release();
+                _clonedGameData->release();
         }
 public:
         GameData* initGameData(int num);
+        GameData* resetInitData();
         int startPlayerAttack(int cell_sel);
         int startRobootAttack();
         
@@ -38,7 +40,8 @@ private:
         int startBattle();
         
 private:
-        GameData*        _data;
+        GameData*       _data;
+        GameData*       _clonedGameData;
 };
 
 #endif /* DiceGame_hpp */

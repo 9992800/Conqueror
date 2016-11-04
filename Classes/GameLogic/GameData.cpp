@@ -63,40 +63,58 @@ GameData::~GameData(){
         _mapData.clear();
 }
 
-GameData GameData::clone(){
-        GameData coped_obj(this->_curPlayerNum);
-        coped_obj._gameStatus  = this->_gameStatus;
+GameData* GameData::createWithData(GameData* data){
         
-        coped_obj._gameStatus  = this->_gameStatus;
-        coped_obj._ban         = this->_ban;
-        coped_obj._areaFrom    = this->_areaFrom;
-        coped_obj._areaTo      = this->_areaTo;
-        
-        
-        coped_obj._jun         = std::vector<int>(this->_jun);
-        coped_obj._cel         = std::vector<int>(this->_cel);
-        coped_obj._rcel        = std::vector<int>(this->_rcel);
-        coped_obj._num         = std::vector<int>(this->_num);
-        coped_obj._chk         = std::vector<int>(this->_chk);
-        coped_obj._mapData     = std::vector<int>(this->_mapData);
-        
-        coped_obj._areaData = std::vector<AreaData*>(AREA_MAX);
-        for (int i = 0; i < this->_areaData.size(); i++){
-                coped_obj._areaData[i] = new AreaData(this->_areaData[i]);
+        GameData *pRet = new(std::nothrow) GameData();
+        if (pRet && pRet->init(data))
+        {
+                pRet->autorelease();
+                return pRet;
         }
-        
-        coped_obj._player = std::vector<GamePlayer*>(MAX_PLAYER);
-        for (int i = 0; i < this->_player.size(); i++){
-                coped_obj._player[i] = new GamePlayer(this->_player[i]);
+        else
+        {
+                delete pRet;
+                pRet = nullptr;
+                return nullptr;
         }
-        
-        coped_obj._join = std::vector<JoinData*>(CEL_MAX);
-        for (int i = 0; i < this->_join.size(); i++){
-                coped_obj._join[i] = new JoinData(this->_join[i]);
-        }
-        
-        return coped_obj;
 }
+bool GameData::init(GameData* data){
+        
+        this->_curPlayerNum     = data->_curPlayerNum;
+        this->_gameStatus       = data->_gameStatus;
+        
+        this->_gameStatus       = data->_gameStatus;
+        this->_ban              = data->_ban;
+        this->_areaFrom         = data->_areaFrom;
+        this->_areaTo           = data->_areaTo;
+        
+        
+        this->_jun              = std::vector<int>(data->_jun);
+        this->_cel              = std::vector<int>(data->_cel);
+        this->_rcel             = std::vector<int>(data->_rcel);
+        this->_num              = std::vector<int>(data->_num);
+        this->_chk              = std::vector<int>(data->_chk);
+        this->_mapData          = std::vector<int>(data->_mapData);
+        
+        this->_areaData = std::vector<AreaData*>(AREA_MAX);
+        for (int i = 0; i < this->_areaData.size(); i++){
+                this->_areaData[i] = new AreaData(data->_areaData[i]);
+        }
+        
+        this->_player = std::vector<GamePlayer*>(MAX_PLAYER);
+        for (int i = 0; i < this->_player.size(); i++){
+                this->_player[i] = new GamePlayer(data->_player[i]);
+        }
+        
+        this->_join = std::vector<JoinData*>(CEL_MAX);
+        for (int i = 0; i < this->_join.size(); i++){
+                this->_join[i] = new JoinData(data->_join[i]);
+        }
+        
+        return true;
+}
+
+
 
 void GameData::reshDataByMapInfo(TMXTiledMap* map){
                 

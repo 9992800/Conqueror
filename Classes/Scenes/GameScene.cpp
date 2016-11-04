@@ -9,6 +9,8 @@
 #include "MapCreator.hpp"
 #include "GameScene.hpp"
 #include "ScreenCoordinate.hpp"
+#include "SimpleAudioEngine.h"
+
 
 enum{
         ZORDER_BACK_GROUND = 0,
@@ -51,6 +53,7 @@ bool GameScene::init()
 
 #pragma mark - initilization
 void GameScene::initMapLayer(){
+        
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         Vec2 center = origin + visibleSize / 2;
@@ -60,29 +63,24 @@ void GameScene::initMapLayer(){
         this->addChild(back_ground, ZORDER_BACK_GROUND);
         
         _theGameLogic = DiceGame::create();
-        _theGameLogic->retain();
-        
-        GameData* data = _theGameLogic->initGameData(_playerNumber);
+        _theGameLogic->retain();        
+        auto data = _theGameLogic->initGameData(_playerNumber);
         
         auto map = MapCreator::instance()->createMap(data);
+        Size map_size = map->getContentSize();
+        ScreenCoordinate::getInstance()->configScreen(map_size);
         
-        ScreenCoordinate::getInstance()->configScreen(map->getContentSize());
-        
-        data->reshDataByMapInfo(map);
-        
-//        _clonedGameData = _gameData.clone();
+        data->reshDataByMapInfo(map);       
         
         this->addChild(map, ZORDER_MAP_GROUND, key_map_tag);
         
-        Size cs = map->getContentSize();
-        _lowestPostion_y = visibleSize.height + origin.y - cs.height - 6;
+        _lowestPostion_y = visibleSize.height + origin.y - map_size.height;
 }
 
 void GameScene::initControlLayer(){
         _controlLayer = Layer::create();
         //TODO:: add controll buttons
         this->addChild(_controlLayer, ZORDER_CRTL_LAYERS, key_ctrl_layer_tag);
-        
         
         
         Director::getInstance()->setDepthTest(true);
@@ -139,7 +137,35 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         this->playAnimation(result);
 }
 
+//TODO:: need to test
+void GameScene::tryAgain(){
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        Vec2 origin = Director::getInstance()->getVisibleOrigin();
+        Vec2 center = origin + visibleSize / 2;
+        
+        auto old_map = this->getChildByTag(key_map_tag);
+        old_map->removeFromParentAndCleanup(true);
+        
+        auto data = _theGameLogic->resetInitData();
+        auto map = MapCreator::instance()->createMap(data);
+        Size map_size = map->getContentSize();
+        ScreenCoordinate::getInstance()->configScreen(map_size);
+        
+        data->reshDataByMapInfo(map);
+        
+        this->addChild(map, ZORDER_MAP_GROUND, key_map_tag);
+        
+        _lowestPostion_y = visibleSize.height + origin.y - map_size.height;
+}
+
 #pragma mark - animation 
 void GameScene::playAnimation(int res){
+        if (ATTACK_RES_GOTSUPPLY == res){
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
+        }else if (ATTACK_RES_WIN == res){
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
+        }else if (ATTACK_RES_DEFEATED == res){
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
+        }
         
 }

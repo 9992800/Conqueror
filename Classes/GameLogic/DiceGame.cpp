@@ -33,6 +33,18 @@ GameData* DiceGame::initGameData(int num){
                         _data->_mapData[i] = 0;
         }
         _data->retain();
+        
+        _clonedGameData = GameData::createWithData(_data);
+        _clonedGameData->retain();
+
+        return _data;
+}
+
+
+GameData* DiceGame::resetInitData(){
+        _data->release();
+        _data = GameData::createWithData(_clonedGameData);
+        _data->retain();
         return _data;
 }
 
@@ -404,17 +416,21 @@ int DiceGame::startBattle(){
         int from_sum = 0, to_sum = 0;
         
         area_from->clearFightValue();
+        printf("\r\n---from---");
         for (int i = 0; i < area_from->getDice(); i++){
                 int random_value = random(1, 6);
                 area_from->recordFightValue(random_value);
                 from_sum += random_value;
+                printf("\t---%d---", random_value);
         }
         
+        printf("\r\n---to---");
         area_to->clearFightValue();
         for (int i = 0; i < area_to->getDice(); i++){
                 int random_value = random(1, 6);
                 area_to->recordFightValue(random_value);
                 to_sum += random_value;
+                printf("\t---%d---", random_value);
         }
         
         if (from_sum > to_sum){

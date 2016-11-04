@@ -77,7 +77,6 @@ enum {
 enum {
         GAME_STATUS_INIT = 0,
         GAME_STATUS_AIRUNNING,
-        GAME_STATUS_AITHINKING,
         GAME_STATUS_INUSERTURN,
         GAME_STATUS_FINISHED
 };

@@ -81,9 +81,32 @@ void GameScene::initMapLayer(){
 }
 
 void GameScene::initControlLayer(){
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        Vec2 origin = Director::getInstance()->getVisibleOrigin();
+        
         
         _controlLayer = Layer::create();
-        this->addChild(_controlLayer, ZORDER_CRTL_LAYERS, key_ctrl_layer_tag); 
+        auto end_turn = MenuItemImage::create("NextButton.png", "NextButton.png",
+                                             CC_CALLBACK_1(GameScene::menuEndTurn, this));
+        end_turn->setPosition(Vec2(origin.x + visibleSize.width - end_turn->getContentSize().width,
+                                       origin.y +end_turn->getContentSize().height));
+        end_turn->setVisible(false);
+        
+        auto start_play = MenuItemImage::create("start.png", "start.png",
+                                             CC_CALLBACK_1(GameScene::menuStartGame, this));
+        start_play->setPosition(Vec2(origin.x + visibleSize.width - start_play->getContentSize().width,
+                                       origin.y +start_play->getContentSize().height));
+        
+        auto return_back = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
+                                             CC_CALLBACK_1(GameScene::menuExit, this));
+        return_back->setPosition(Vec2(origin.x + return_back->getContentSize().width + 10,
+                                       origin.y + visibleSize.height - return_back->getContentSize().height - 10));
+        
+        auto menu = Menu::create(end_turn, start_play, return_back, NULL);
+        menu->setPosition(Vec2::ZERO);
+        _controlLayer->addChild(menu);
+        
+        this->addChild(_controlLayer, ZORDER_CRTL_LAYERS, key_ctrl_layer_tag);
         
         Director::getInstance()->setDepthTest(true);
         auto listener = EventListenerTouchAllAtOnce::create();
@@ -191,3 +214,15 @@ void GameScene::playBattleAnimation(int res, CallFunc* callback){
                 callback->execute();
         }
 }
+
+#pragma mark - menu callback actions
+void GameScene::menuEndTurn(Ref* pSender){
+        
+}
+void GameScene::menuStartGame(Ref* pSender){
+        
+}
+void GameScene::menuExit(Ref* pSender){
+        
+}
+

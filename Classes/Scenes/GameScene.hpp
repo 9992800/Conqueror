@@ -21,7 +21,8 @@ public:
         virtual bool init() override;
         CREATE_FUNC2(GameScene, int, level);
         GameScene(int level):_lowestPostion_y(0.f),
-        _isMoved(false){
+        _isMoved(false),
+        _gameStatus(GAME_STATUS_INIT){
                 _gameLevel = level;
                 _playerNumber = level + 1;
         }     
@@ -42,6 +43,10 @@ private:
         void afterPlayerBattle(int result);
         void playBattleAnimation(int, CallFunc*);
         
+        void menuEndTurn(Ref* pSender);
+        void menuStartGame(Ref* pSender);
+        void menuExit(Ref* pSender);
+        
 private:
         int             _playerNumber;
         int             _gameLevel;
@@ -51,6 +56,7 @@ private:
         bool            _isMoved;
         float           _lowestPostion_y;
         Sprite*         _tamara;
+        int             _gameStatus;
 };
 
 

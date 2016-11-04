@@ -81,6 +81,11 @@
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		BB9A4E241DCB7C6400E88C41 /* GameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E221DCB7C6400E88C41 /* GameData.cpp */; };
 		BB9A4E271DCB84A200E88C41 /* MapCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */; };
+		BBBA8DD51DCCE3C6006A6471 /* DIALOG_BACKGROUND.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD01DCCE3C6006A6471 /* DIALOG_BACKGROUND.png */; };
+		BBBA8DD61DCCE3C6006A6471 /* DIALOG_CANCEL.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD11DCCE3C6006A6471 /* DIALOG_CANCEL.png */; };
+		BBBA8DD71DCCE3C6006A6471 /* DIALOG_OK.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD21DCCE3C6006A6471 /* DIALOG_OK.png */; };
+		BBBA8DD81DCCE3C6006A6471 /* NextButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD31DCCE3C6006A6471 /* NextButton.png */; };
+		BBBA8DD91DCCE3C6006A6471 /* start.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD41DCCE3C6006A6471 /* start.png */; };
 		BBC812DE1DCA3CB000EC8874 /* GameHelpScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBC812DC1DCA3CB000EC8874 /* GameHelpScene.cpp */; };
 		BBD6967F1DCC55CE00B9B145 /* GameAI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A1061DCB4F010035ECC6 /* GameAI.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -225,6 +230,11 @@
 		BB9A4E231DCB7C6400E88C41 /* GameData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameData.hpp; sourceTree = "<group>"; };
 		BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapCreator.cpp; sourceTree = "<group>"; };
 		BB9A4E261DCB84A200E88C41 /* MapCreator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapCreator.hpp; sourceTree = "<group>"; };
+		BBBA8DD01DCCE3C6006A6471 /* DIALOG_BACKGROUND.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIALOG_BACKGROUND.png; sourceTree = "<group>"; };
+		BBBA8DD11DCCE3C6006A6471 /* DIALOG_CANCEL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIALOG_CANCEL.png; sourceTree = "<group>"; };
+		BBBA8DD21DCCE3C6006A6471 /* DIALOG_OK.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIALOG_OK.png; sourceTree = "<group>"; };
+		BBBA8DD31DCCE3C6006A6471 /* NextButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NextButton.png; sourceTree = "<group>"; };
+		BBBA8DD41DCCE3C6006A6471 /* start.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start.png; sourceTree = "<group>"; };
 		BBC812DC1DCA3CB000EC8874 /* GameHelpScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHelpScene.cpp; sourceTree = "<group>"; };
 		BBC812DD1DCA3CB000EC8874 /* GameHelpScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHelpScene.hpp; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -360,6 +370,11 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BBBA8DD01DCCE3C6006A6471 /* DIALOG_BACKGROUND.png */,
+				BBBA8DD11DCCE3C6006A6471 /* DIALOG_CANCEL.png */,
+				BBBA8DD21DCCE3C6006A6471 /* DIALOG_OK.png */,
+				BBBA8DD31DCCE3C6006A6471 /* NextButton.png */,
+				BBBA8DD41DCCE3C6006A6471 /* start.png */,
 				7C21A0DB1DC9C06C0035ECC6 /* sliderProgress.png */,
 				7C733B181DC990E200098EDD /* iphone5 */,
 				7C733B191DC990E200098EDD /* iphone6 */,
@@ -621,6 +636,7 @@
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				7C733B1C1DC990E200098EDD /* iphone5 in Resources */,
 				7C733B1D1DC990E200098EDD /* iphone6 in Resources */,
+				BBBA8DD61DCCE3C6006A6471 /* DIALOG_CANCEL.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
@@ -634,7 +650,11 @@
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
+				BBBA8DD91DCCE3C6006A6471 /* start.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
+				BBBA8DD71DCCE3C6006A6471 /* DIALOG_OK.png in Resources */,
+				BBBA8DD51DCCE3C6006A6471 /* DIALOG_BACKGROUND.png in Resources */,
+				BBBA8DD81DCCE3C6006A6471 /* NextButton.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,

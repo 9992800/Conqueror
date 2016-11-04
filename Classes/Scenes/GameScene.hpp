@@ -46,6 +46,7 @@ private:
         void menuEndTurn(Ref* pSender);
         void menuStartGame(Ref* pSender);
         void menuExit(Ref* pSender);
+        void gameOver(Ref*, int);
         
 private:
         int             _playerNumber;

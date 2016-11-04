@@ -10,7 +10,8 @@
 #include "GameScene.hpp"
 #include "ScreenCoordinate.hpp"
 #include "SimpleAudioEngine.h"
-
+#include "PopUpOkCancelDialog.hpp"
+#include "PopUpOkDialog.hpp"
 
 enum{
         ZORDER_BACK_GROUND = 0,
@@ -217,12 +218,31 @@ void GameScene::playBattleAnimation(int res, CallFunc* callback){
 
 #pragma mark - menu callback actions
 void GameScene::menuEndTurn(Ref* pSender){
-        
+        ((MenuItemImage*)pSender)->setVisible(false);
 }
 void GameScene::menuStartGame(Ref* pSender){
-        
+        ((MenuItemImage*)pSender)->setVisible(false);
 }
+
 void GameScene::menuExit(Ref* pSender){
         
+        Director::getInstance()->pause();
+        BaseDialogConfig config("失败", "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香");
+        PopUpOkCancelDialog *dialog = PopUpOkCancelDialog::create(config,
+                                                                  CC_CALLBACK_1(GameScene::gameOver, this, 1),
+                                                                  CC_CALLBACK_1(GameScene::gameOver, this, 0));
+        dialog->retain();
+        this->addChild(dialog, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
+        
+}
+
+void GameScene::gameOver(Ref* btn, int result){
+        if (result == 1){
+                Director::getInstance()->popScene();
+        }else{
+                this->removeChildByTag(key_dialog_layer_tag);
+        }
+        
+        Director::getInstance()->resume();        
 }
 

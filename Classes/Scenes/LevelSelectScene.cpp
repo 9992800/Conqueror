@@ -18,7 +18,9 @@ enum{
         kLevelShowLevel4Tag = 5,
         kLevelShowLevel5Tag = 6,
         kLevelShowLevel6Tag = 7,
-        kLevelShowLevel7Tag = 8
+        kLevelShowLevel7Tag = 8,
+        key_loading_bar1,
+        key_loading_bar2
 };
 
 enum{
@@ -363,12 +365,12 @@ void LevelSelect::menuStartGame(Ref* btn){
         
         Vec2 pos = Vec2(visibleSize.width / 2 + origin.x, origin.y + visibleSize.height / 6);
         _loadingBar->setPosition(pos);
-        this->addChild(_loadingBar, 3);
+        this->addChild(_loadingBar, 3, key_loading_bar1);
         
         Size bar_size = _loadingBar->getContentSize();
         auto label = Label::createWithTTF("Loading", "fonts/Marker Felt.ttf", 24);
         label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
-        this->addChild(label, 2);
+        this->addChild(label, 4, key_loading_bar2);
         
         scheduleUpdate();
 }
@@ -421,6 +423,8 @@ void LevelSelect::update(float delta){
         if (_count < 100)
                 _count += 3;
         else{
+                _count = 0;
+                _loadingBar->setPercent(0);
                 auto scene = GameScene::createScene(_lastLevel);
                 Director::getInstance()->pushScene(scene);
         }
@@ -430,5 +434,7 @@ void LevelSelect::update(float delta){
 
 void LevelSelect::onExit(){
         Layer::onExit();
+        this->removeChildByTag(key_loading_bar1);
+        this->removeChildByTag(key_loading_bar2);
         unscheduleUpdate();
 }

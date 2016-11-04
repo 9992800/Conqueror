@@ -162,7 +162,7 @@ void DiceGame::makeNewMapData(){
                         
                         if (area_id > 0){
                                 AreaData* area = _data._areaData[area_id];
-                                area->calcLenAndPos(i, j, cell_idx, this);
+                                area->calcLenAndPos(i, j, cell_idx, _data);
                         }
                         
                         cell_idx++;
@@ -321,7 +321,7 @@ void DiceGame::setAreaLine(int cell, int dir){
         int cur_area = _data._cel[cell];
         AreaData* area = _data._areaData[cur_area];
         
-        area->initAreaLine(cell, dir, this);
+        area->initAreaLine(cell, dir, _data);
 }
 
 

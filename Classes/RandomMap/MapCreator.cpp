@@ -19,6 +19,10 @@ MapCreator* MapCreator::instance(){
         return s_SharedCreator;
 }
 
+bool MapCreator::init(){
+        return true;
+}
+
 
 TMXTiledMap* MapCreator::createMap(const GameData& data){
         

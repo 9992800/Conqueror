@@ -12,14 +12,18 @@
 #include "AreaData.hpp"
 #include "GamePlayer.hpp"
 #include "JoinData.hpp"
+#include "GameAI.hpp"
 
 class DiceGame;
 class MapCreator;
+class AreaData;
+class GameAI;
 
 class GameData{
         friend class DiceGame;
         friend class MapCreator;
-        
+        friend class AreaData;
+        friend class GameAI;
 public:
         GameData(int n = 3);
         ~GameData();

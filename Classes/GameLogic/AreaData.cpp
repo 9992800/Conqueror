@@ -10,6 +10,7 @@
 #include "DiceGame.hpp"
 #include "ScreenCoordinate.hpp"
 #include "AppMacros.hpp"
+#include "GameData.hpp"
 
 static Color4F _areaLineColor[] = {Color4F(1.0, 0.0, 0.0, 0.02),
         Color4F(0.0, 1.0, 0.0, 0.02),Color4F(0.0, 0.0, 1.0, 0.02),
@@ -71,7 +72,7 @@ AreaData::AreaData (AreaData* obj){
         this->_join     = std::vector<bool>(obj->_join);
         this->_line_cel = std::vector<int>(obj->_line_cel);
         this->_line_dir = std::vector<int>(obj->_line_dir);
-        this->_cell_idxs= std::vector<int>(obj->_cell_idxs);
+        this->_cell_idxs= std::set<int>(obj->_cell_idxs);
         this->_fight_values= std::vector<int>(obj->_fight_values);
 }
 
@@ -95,7 +96,7 @@ void AreaData::initBound(int vertical, int horizen){
 
 
 
-void AreaData::calcLenAndPos(int vertical, int horizen, int cell_idx, DiceGame* game){
+void AreaData::calcLenAndPos(int vertical, int horizen, int cell_idx, const GameData& data){
         
         int dis_h = _cx - horizen;
         if (dis_h < 0) dis_h = 0 - dis_h;
@@ -109,12 +110,12 @@ void AreaData::calcLenAndPos(int vertical, int horizen, int cell_idx, DiceGame* 
         
         for (int i = 0; i < DIR_INAREA; i++){
                 
-                int joined_cell = game->_join[cell_idx]->getJoinDir(i);
+                int joined_cell = data._join[cell_idx]->getJoinDir(i);
                 
                 if (joined_cell > 0){
                         
-                        int join_area_id = game->_cel[joined_cell];
-                        if (join_area_id != game->_cel[cell_idx]){
+                        int join_area_id = data._cel[joined_cell];
+                        if (join_area_id != data._cel[cell_idx]){
                                 near_diff_area = true;
                                 _join[join_area_id] = true;
                         }
@@ -133,12 +134,12 @@ void AreaData::calcLenAndPos(int vertical, int horizen, int cell_idx, DiceGame* 
         }
 } 
 
-void AreaData::initAreaLine(int cell, int dir, DiceGame* game){
+void AreaData::initAreaLine(int cell, int dir, const GameData& data){
         
         int cell_num = 0;
         int cur_dir = dir;
         int cur_cell = cell;
-        int cur_area = game->_cel[cell];
+        int cur_area = data._cel[cell];
         
         _line_cel[cell_num] = cur_cell;
         _line_dir[cell_num] = cur_dir;
@@ -151,10 +152,10 @@ void AreaData::initAreaLine(int cell, int dir, DiceGame* game){
                         cur_dir = 0;
                 }
                 
-                int joined_cell = game->_join[cur_cell]->getJoinDir(cur_dir);
+                int joined_cell = data._join[cur_cell]->getJoinDir(cur_dir);
                 
                 if (joined_cell >= 0 &&
-                    game->_cel[joined_cell] == cur_area){
+                    data._cel[joined_cell] == cur_area){
                         
                         cur_cell = joined_cell;
                         cur_dir -= 2;

@@ -14,8 +14,6 @@
 class MapCreator{
 public:
         static MapCreator* instance();
-        
-protected:
         bool init();
         
 public:

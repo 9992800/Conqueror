@@ -9,7 +9,7 @@
 #ifndef GamePlayer_hpp
 #define GamePlayer_hpp
 
-#include "GameConfig.hpp"
+#include "AppMacros.hpp"
 #include "cocos2d.h"
 USING_NS_CC;
 

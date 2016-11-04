@@ -7,7 +7,7 @@
 //
 
 #include "JoinData.hpp"
-#include "GameConfig.hpp"
+#include "AppMacros.hpp"
 
 JoinData::JoinData(){
         _dir = std::vector<int>(DIR_INAREA);

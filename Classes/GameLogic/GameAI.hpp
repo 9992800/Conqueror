@@ -10,14 +10,15 @@
 #define GameAI_hpp
 
 #include "cocos2d.h"
-#include "GameConfig.hpp"
+#include "AppMacros.hpp"
+#include "GameData.hpp"
 
 USING_NS_CC;
 
 class GameAI: public Ref{
 public:
         static GameAI* getInstance();
-        int com_thinking();
+        int com_thinking(GameData& data);
 private:
         GameAI();
         bool init();

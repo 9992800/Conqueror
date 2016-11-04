@@ -73,7 +73,6 @@
 		7C21A1021DCB3B0F0035ECC6 /* RandomMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0FD1DCB3B0F0035ECC6 /* RandomMap.cpp */; };
 		7C21A1031DCB3B0F0035ECC6 /* ScreenCoordinate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0FF1DCB3B0F0035ECC6 /* ScreenCoordinate.cpp */; };
 		7C21A10D1DCB4F010035ECC6 /* AreaData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A1041DCB4F010035ECC6 /* AreaData.cpp */; };
-		7C21A10E1DCB4F010035ECC6 /* GameAI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A1061DCB4F010035ECC6 /* GameAI.cpp */; };
 		7C21A10F1DCB4F010035ECC6 /* GamePlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A1091DCB4F010035ECC6 /* GamePlayer.cpp */; };
 		7C21A1101DCB4F010035ECC6 /* JoinData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A10B1DCB4F010035ECC6 /* JoinData.cpp */; };
 		7C733B1C1DC990E200098EDD /* iphone5 in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B181DC990E200098EDD /* iphone5 */; };
@@ -83,6 +82,7 @@
 		BB9A4E241DCB7C6400E88C41 /* GameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E221DCB7C6400E88C41 /* GameData.cpp */; };
 		BB9A4E271DCB84A200E88C41 /* MapCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */; };
 		BBC812DE1DCA3CB000EC8874 /* GameHelpScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBC812DC1DCA3CB000EC8874 /* GameHelpScene.cpp */; };
+		BBD6967F1DCC55CE00B9B145 /* GameAI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A1061DCB4F010035ECC6 /* GameAI.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
@@ -213,7 +213,6 @@
 		7C21A1051DCB4F010035ECC6 /* AreaData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AreaData.hpp; sourceTree = "<group>"; };
 		7C21A1061DCB4F010035ECC6 /* GameAI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameAI.cpp; sourceTree = "<group>"; };
 		7C21A1071DCB4F010035ECC6 /* GameAI.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameAI.hpp; sourceTree = "<group>"; };
-		7C21A1081DCB4F010035ECC6 /* GameConfig.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameConfig.hpp; sourceTree = "<group>"; };
 		7C21A1091DCB4F010035ECC6 /* GamePlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GamePlayer.cpp; sourceTree = "<group>"; };
 		7C21A10A1DCB4F010035ECC6 /* GamePlayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GamePlayer.hpp; sourceTree = "<group>"; };
 		7C21A10B1DCB4F010035ECC6 /* JoinData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JoinData.cpp; sourceTree = "<group>"; };
@@ -464,7 +463,6 @@
 				7C21A1051DCB4F010035ECC6 /* AreaData.hpp */,
 				7C21A1061DCB4F010035ECC6 /* GameAI.cpp */,
 				7C21A1071DCB4F010035ECC6 /* GameAI.hpp */,
-				7C21A1081DCB4F010035ECC6 /* GameConfig.hpp */,
 				7C21A1091DCB4F010035ECC6 /* GamePlayer.cpp */,
 				7C21A10A1DCB4F010035ECC6 /* GamePlayer.hpp */,
 				7C21A10B1DCB4F010035ECC6 /* JoinData.cpp */,
@@ -658,6 +656,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBD6967F1DCC55CE00B9B145 /* GameAI.cpp in Sources */,
 				BB9A4E271DCB84A200E88C41 /* MapCreator.cpp in Sources */,
 				7C21A0F81DCB3A3C0035ECC6 /* PopUpOkCancelDialog.cpp in Sources */,
 				7C21A0F01DCB39FE0035ECC6 /* DiceGame.cpp in Sources */,
@@ -673,7 +672,6 @@
 				7C21A10F1DCB4F010035ECC6 /* GamePlayer.cpp in Sources */,
 				7C21A10D1DCB4F010035ECC6 /* AreaData.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
-				7C21A10E1DCB4F010035ECC6 /* GameAI.cpp in Sources */,
 				7C21A0F91DCB3A3C0035ECC6 /* PopUpOkDialog.cpp in Sources */,
 				7C21A0EC1DCB39050035ECC6 /* GameScene.cpp in Sources */,
 				7C21A1031DCB3B0F0035ECC6 /* ScreenCoordinate.cpp in Sources */,

@@ -20,7 +20,7 @@ void MapResolustion::initConfig(int solution){
                         
                 default:
                 case MapResolustion::SMALL_SCREEN_RESOLUTION:
-                        _curConfig = {15, 17, 8, 15, 17, "test6.png", 45, 35};
+                        _curConfig = {30, 34, 16, 30, 34, "test6.png", 90, 70};
                
                         break;
         }

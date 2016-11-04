@@ -12,15 +12,15 @@ typedef struct tagResource
 }Resource;
 
 
-//static Resource smallResource  =  { cocos2d::Size(1136, 640),   "iphone5" };
-//static Resource mediumResource =  { cocos2d::Size(1334, 750),   "iphone6" };
-//static Resource largeResource  =  { cocos2d::Size(1920, 1080),  "iphone6p"};
-//static Size designResolutionSize = cocos2d::Size(1136, 640);
+static Resource smallResource  =  { cocos2d::Size(1136, 640),   "iphone5" };
+static Resource mediumResource =  { cocos2d::Size(1334, 750),   "iphone6" };
+static Resource largeResource  =  { cocos2d::Size(1920, 1080),  "iphone6p"};
+static Size designResolutionSize = cocos2d::Size(1136, 640);
 
-static Resource smallResource  =  { cocos2d::Size(480, 320),   "iphone5" };
-static Resource mediumResource =  { cocos2d::Size(1024, 768),   "iphone6" };
-static Resource largeResource  =  { cocos2d::Size(2048, 1536),  "iphone6p"};
-static Size designResolutionSize = cocos2d::Size(480, 320);
+//static Resource smallResource  =  { cocos2d::Size(480, 320),   "iphone5" };
+//static Resource mediumResource =  { cocos2d::Size(1024, 768),   "iphone6" };
+//static Resource largeResource  =  { cocos2d::Size(2048, 1536),  "iphone6p"};
+//static Size designResolutionSize = cocos2d::Size(480, 320);
 
 
 #define TITLE_FONT_SIZE(size)  (cocos2d::Director::getInstance()->getOpenGLView()->getDesignResolutionSize().width / smallResource.size.width * (size))

@@ -11,7 +11,8 @@
 #include "ScreenCoordinate.hpp"
 
 enum{
-        ZORDER_MAP_GROUND = 0,
+        ZORDER_BACK_GROUND = 0,
+        ZORDER_MAP_GROUND,
         ZORDER_CRTL_LAYERS,
         ZORDER_ANIM_LAYER,
         ZORDER_DIALOG_LAYER
@@ -49,7 +50,14 @@ bool GameScene::init()
 }
 
 #pragma mark - initilization
-void GameScene::initMapLayer(){        
+void GameScene::initMapLayer(){
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        Vec2 origin = Director::getInstance()->getVisibleOrigin();
+        Vec2 center = origin + visibleSize / 2;
+
+        auto back_ground = Sprite::create("starting_back.png");
+        back_ground->setPosition(center);
+        this->addChild(back_ground, ZORDER_BACK_GROUND);
         
         _theGameLogic = DiceGame::create();
         
@@ -57,11 +65,13 @@ void GameScene::initMapLayer(){
         
         auto map = MapCreator::instance()->createMap(data);
         
+        ScreenCoordinate::getInstance()->configScreen(map->getContentSize());
+        
         data->reshDataByMapInfo(map);
         
 //        _clonedGameData = _gameData.clone();
         
-        ScreenCoordinate::getInstance()->configScreen(map->getContentSize());
+        
         
         this->addChild(map, ZORDER_MAP_GROUND, key_map_tag);
 }

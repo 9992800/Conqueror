@@ -20,18 +20,18 @@ public:
         CREATE_FUNC(DiceGame);
         
 public:
-        GameData initGameData(int num);
-        
-        
+        GameData* initGameData(int num); 
 protected:
         bool init();
+        
 private:
         void makeNewMapData();
         int percolate(int pt, int cmax, int an);
         void setAreaLine(int cell, int dir);
         int set_area_tc(int pid);
+        
 private:
-        GameData _data;
+        GameData*        _data;
 };
 
 #endif /* DiceGame_hpp */

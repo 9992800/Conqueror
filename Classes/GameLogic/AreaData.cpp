@@ -96,7 +96,7 @@ void AreaData::initBound(int vertical, int horizen){
 
 
 
-void AreaData::calcLenAndPos(int vertical, int horizen, int cell_idx, const GameData& data){
+void AreaData::calcLenAndPos(int vertical, int horizen, int cell_idx, GameData* data){
         
         int dis_h = _cx - horizen;
         if (dis_h < 0) dis_h = 0 - dis_h;
@@ -110,12 +110,12 @@ void AreaData::calcLenAndPos(int vertical, int horizen, int cell_idx, const Game
         
         for (int i = 0; i < DIR_INAREA; i++){
                 
-                int joined_cell = data._join[cell_idx]->getJoinDir(i);
+                int joined_cell = data->_join[cell_idx]->getJoinDir(i);
                 
                 if (joined_cell > 0){
                         
-                        int join_area_id = data._cel[joined_cell];
-                        if (join_area_id != data._cel[cell_idx]){
+                        int join_area_id = data->_cel[joined_cell];
+                        if (join_area_id != data->_cel[cell_idx]){
                                 near_diff_area = true;
                                 _join[join_area_id] = true;
                         }
@@ -134,12 +134,12 @@ void AreaData::calcLenAndPos(int vertical, int horizen, int cell_idx, const Game
         }
 } 
 
-void AreaData::initAreaLine(int cell, int dir, const GameData& data){
+void AreaData::initAreaLine(int cell, int dir, GameData* data){
         
         int cell_num = 0;
         int cur_dir = dir;
         int cur_cell = cell;
-        int cur_area = data._cel[cell];
+        int cur_area = data->_cel[cell];
         
         _line_cel[cell_num] = cur_cell;
         _line_dir[cell_num] = cur_dir;
@@ -152,10 +152,10 @@ void AreaData::initAreaLine(int cell, int dir, const GameData& data){
                         cur_dir = 0;
                 }
                 
-                int joined_cell = data._join[cur_cell]->getJoinDir(cur_dir);
+                int joined_cell = data->_join[cur_cell]->getJoinDir(cur_dir);
                 
                 if (joined_cell >= 0 &&
-                    data._cel[joined_cell] == cur_area){
+                    data->_cel[joined_cell] == cur_area){
                         
                         cur_cell = joined_cell;
                         cur_dir -= 2;
@@ -227,7 +227,7 @@ void AreaData::drawPolyGon(int owner){
 
 Sprite* AreaData::createSprite(){
         std::ostringstream s;
-        s <<"maps/"<< _dice <<".png";
+        s <<"arms/"<< _dice <<".png";
         auto sprite = Sprite::create(s.str());
         Vec2 pos = ScreenCoordinate::getInstance()->getAreaCenterPos(_cpos);
         

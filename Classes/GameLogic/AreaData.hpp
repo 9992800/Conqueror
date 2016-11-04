@@ -39,7 +39,7 @@ public:
                 _cx = (_left + _right) / 2;
                 _cy = (_top + _bottom) / 2;
         }
-        void calcLenAndPos(int vertical, int horizen, int cell_idx, const GameData& game);
+        void calcLenAndPos(int vertical, int horizen, int cell_idx, GameData* game);
         
         inline bool isNeedOwner(){return _size != 0 && _arm < 0;}
         inline void setOwner(int ownerId){_arm = ownerId;}
@@ -63,7 +63,7 @@ public:
         }
         inline void increaseDice(){_dice++;}
         
-        void initAreaLine(int cell, int dir, const GameData& data);
+        void initAreaLine(int cell, int dir, GameData* data);
         
         inline void intDrawObject(DrawNode* drawNode){
                 _drawNode = drawNode;

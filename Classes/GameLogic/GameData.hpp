@@ -13,19 +13,40 @@
 #include "GamePlayer.hpp"
 #include "JoinData.hpp"
 #include "GameAI.hpp"
+#include "cocos2d.h"
+
+USING_NS_CC;
 
 class DiceGame;
 class MapCreator;
 class AreaData;
 class GameAI;
 
-class GameData{
+class GameData: public Ref{
         friend class DiceGame;
         friend class MapCreator;
         friend class AreaData;
         friend class GameAI;
 public:
-        GameData(int n = 3);
+        static GameData* create(int n = 3)
+        {
+                GameData *pRet = new(std::nothrow) GameData(n);
+                if (pRet && pRet->init())
+                {
+                        pRet->autorelease();
+                        return pRet;
+                }
+                else
+                {
+                        delete pRet;
+                        pRet = nullptr;
+                        return nullptr;
+                }
+        }
+        
+        
+        GameData(int n);
+        inline bool init(){return true;}
         ~GameData();
 public:
         GameData clone();

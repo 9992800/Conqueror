@@ -24,9 +24,9 @@ bool MapCreator::init(){
 }
 
 
-TMXTiledMap* MapCreator::createMap(const GameData& data){
+TMXTiledMap* MapCreator::createMap(GameData* data){
         
-        SimpleMapInfoBean simpleBean = this->initMapBasicInfo(data._mapData);
+        SimpleMapInfoBean simpleBean = this->initMapBasicInfo(data->_mapData);
         
         auto mapxml = RandomMap::create(simpleBean);
         std::string map_xml_str = mapxml->getXmlString();

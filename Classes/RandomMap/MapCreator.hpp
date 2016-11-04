@@ -17,7 +17,7 @@ public:
         bool init();
         
 public:
-        TMXTiledMap* createMap(const GameData& gd);
+        TMXTiledMap* createMap(GameData* gd);
 private:
         SimpleMapInfoBean initMapBasicInfo(std::vector<int>);
 };

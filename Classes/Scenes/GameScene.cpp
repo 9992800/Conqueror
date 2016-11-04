@@ -28,9 +28,9 @@ enum{
 Scene* GameScene::createScene(int gameLevel)
 {
         auto scene = Scene::create();
-        auto layer = GameScene::create();
-        scene->addChild(layer);
-        layer->setLevel(gameLevel);
+        auto layer = GameScene::create(gameLevel);
+        
+        scene->addChild(layer); 
         return scene;
 }
 
@@ -53,13 +53,13 @@ void GameScene::initMapLayer(){
         
         _theGameLogic = DiceGame::create();
         
-        _gameData = _theGameLogic->initGameData(_playerNumber);
+        GameData* data = _theGameLogic->initGameData(_playerNumber);
         
-        auto map = MapCreator::instance()->createMap(_gameData);
+        auto map = MapCreator::instance()->createMap(data);
         
-        _gameData.reshDataByMapInfo(map);
+        data->reshDataByMapInfo(map);
         
-        _clonedGameData = _gameData.clone();
+//        _clonedGameData = _gameData.clone();
         
         ScreenCoordinate::getInstance()->configScreen(map->getContentSize());
         

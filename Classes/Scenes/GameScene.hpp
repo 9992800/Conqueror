@@ -19,14 +19,11 @@ class GameScene : public cocos2d::Layer
 public:
         static Scene* createScene(int gameLevel);
         virtual bool init() override;
-        CREATE_FUNC(GameScene);
-        
-private:
-        inline void setLevel(int level){
+        CREATE_FUNC2(GameScene, int, level);
+        GameScene(int level){
                 _gameLevel = level;
-                _playerNumber = _gameLevel + 1;
-        }
-        
+                _playerNumber = level + 1;
+        }     
         
 protected:
         void initMapLayer();
@@ -44,8 +41,6 @@ private:
         
 private:
         DiceGame*       _theGameLogic;
-        GameData        _clonedGameData;
-        GameData        _gameData;
 };
 
 

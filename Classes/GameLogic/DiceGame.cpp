@@ -8,6 +8,7 @@
 
 #include "DiceGame.hpp"
 
+#pragma mark - game init
 bool DiceGame::init(){
         return true;
 }
@@ -31,7 +32,7 @@ GameData* DiceGame::initGameData(int num){
                 else
                         _data->_mapData[i] = 0;
         }
-        
+        _data->retain();
         return _data;
 }
 
@@ -390,3 +391,81 @@ int DiceGame::set_area_tc(int pid){
         return tc;
 }
 
+#pragma mark - game logic process
+
+int DiceGame::startBattle(){
+        
+        AreaData* area_from = _data->_areaData[_data->_areaFrom];
+        area_from->drawAsSelected();
+        
+        AreaData* area_to   = _data->_areaData[_data->_areaTo];
+        area_to->drawAsSelected();
+        
+        int from_sum = 0, to_sum = 0;
+        
+        area_from->clearFightValue();
+        for (int i = 0; i < area_from->getDice(); i++){
+                int random_value = random(1, 6);
+                area_from->recordFightValue(random_value);
+                from_sum += random_value;
+        }
+        
+        area_to->clearFightValue();
+        for (int i = 0; i < area_to->getDice(); i++){
+                int random_value = random(1, 6);
+                area_to->recordFightValue(random_value);
+                to_sum += random_value;
+        }
+        
+        if (from_sum > to_sum){
+                return ATTACK_RES_WIN;
+        }else{
+                return ATTACK_RES_DEFEATED;
+        }
+}
+
+int DiceGame::startPlayerAttack(int cell_id){
+        
+        int area_id = _data->_cel[cell_id];
+        
+        AreaData* area = _data->_areaData[area_id];
+        int owner_uid = area->getOwner();
+        
+        
+        if (AREA_UNSELECTED == _data->_areaFrom){
+                
+                if (area->getDice() <= 1){
+                        return ATTACK_RES_NONE;
+                }
+                
+                if (owner_uid == _data->_userId){
+                        _data->_areaFrom = area_id;
+                        area->drawAsSelected();
+                }else{
+                        return ATTACK_RES_NONE;
+                }
+                
+        }else{
+                if (area_id == _data->_areaFrom){
+                        _data->_areaFrom = AREA_UNSELECTED;
+                        area->drawAsUnselected();
+                }else {
+                        
+                        if (area->isJoinedWithArea(_data->_areaFrom)
+                            && owner_uid != _data->_userId){
+                                _data->_areaTo = area_id;
+                                area->drawAsSelected();
+                                return this->startBattle();
+                                
+                        }else{
+                                return ATTACK_RES_NONE;
+                        }
+                }
+        }
+        return ATTACK_RES_NONE;
+}
+
+
+int DiceGame::startRobootAttack(){
+        return ATTACK_RES_GOTSUPPLY;
+}

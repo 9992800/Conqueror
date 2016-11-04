@@ -60,6 +60,7 @@ void GameScene::initMapLayer(){
         this->addChild(back_ground, ZORDER_BACK_GROUND);
         
         _theGameLogic = DiceGame::create();
+        _theGameLogic->retain();
         
         GameData* data = _theGameLogic->initGameData(_playerNumber);
         
@@ -71,15 +72,24 @@ void GameScene::initMapLayer(){
         
 //        _clonedGameData = _gameData.clone();
         
-        
-        
         this->addChild(map, ZORDER_MAP_GROUND, key_map_tag);
+        
+        Size cs = map->getContentSize();
+        _lowestPostion_y = visibleSize.height + origin.y - cs.height - 6;
 }
 
 void GameScene::initControlLayer(){
         _controlLayer = Layer::create();
         //TODO:: add controll buttons
         this->addChild(_controlLayer, ZORDER_CRTL_LAYERS, key_ctrl_layer_tag);
+        
+        
+        
+        Director::getInstance()->setDepthTest(true);
+        auto listener = EventListenerTouchAllAtOnce::create();
+        listener->onTouchesMoved = CC_CALLBACK_2(GameScene::onTouchesMoved, this);
+        listener->onTouchesEnded = CC_CALLBACK_2(GameScene::onTouchesEnded, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
 void GameScene::initAnimationLayer(){
@@ -90,3 +100,46 @@ void GameScene::initAnimationLayer(){
         _animationLayer->setVisible(false);
 }
 
+#pragma mark - touch and menu event
+
+void GameScene::onTouchesMoved(const std::vector<Touch*>& touches, Event* event){
+        _isMoved = true;
+        auto touch = touches[0];
+        
+        auto diff = touch->getDelta();
+        diff.x = 0;
+        auto map = this->getChildByTag(key_map_tag);
+        auto currentPos = map->getPosition();
+        auto origin = Director::getInstance()->getVisibleOrigin(); 
+        
+        if (origin.y < (currentPos.y + diff.y)){
+                diff.y = origin.y - currentPos.y;
+        }
+        
+        if ((currentPos.y + diff.y) < _lowestPostion_y){
+                diff.y = _lowestPostion_y - currentPos.y;
+        }
+        
+        map->setPosition(currentPos + diff);
+}
+
+void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event){        
+        
+        if (_isMoved) {
+                _isMoved = false;
+                return;
+        }
+        auto touch = touches[0];
+        auto position = touch->getLocation();
+        auto map = this->getChildByTag(key_map_tag);
+        Vec2 pos_in_map = map->convertToNodeSpace(position);
+        int cell_id = ScreenCoordinate::getInstance()->getSelectedCell(pos_in_map);
+        
+        int result = _theGameLogic->startPlayerAttack(cell_id);
+        this->playAnimation(result);
+}
+
+#pragma mark - animation 
+void GameScene::playAnimation(int res){
+        
+}

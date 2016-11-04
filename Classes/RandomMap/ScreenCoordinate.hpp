@@ -16,10 +16,12 @@ class ScreenCoordinate: public Ref{
 public:
         static ScreenCoordinate* getInstance();
         void configScreen(Size mapSize);
+        
+        
         Vec2 getCellPos(int cell, int dir);
         inline Vec2 getCellPos2(int cell){return Vec2(_cpos_x[cell], _cpos_y[cell]);}
         inline Size getCellSize(){return _cellSize;}
-        int getSelectedCell(Size mapSize, Vec2 curreTouch);
+        int getSelectedCell(Vec2 curreTouch);
         
         Vec2 getAreaCenterPos(int pos);
 private:
@@ -34,7 +36,7 @@ private:
         std::vector<float> _axis_y;
         
         Size _cellSize;
-        
+        Size _mapSize;
 };
 
 #endif /* ScreenCoordinate_hpp */

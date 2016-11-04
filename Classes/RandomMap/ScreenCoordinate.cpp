@@ -40,6 +40,7 @@ void ScreenCoordinate::configScreen(Size mapSize){
         float w = mapSize.width / XMAX;
         float h = mapSize.height / YMAX;
         _cellSize = Size((int)w, h);
+        _mapSize = mapSize;
         
         int count = 0;
         for (int i = 0; i < YMAX; i++){
@@ -81,8 +82,8 @@ Vec2 ScreenCoordinate::getCellPos(int cell, int dir){
 }
 
 
-int ScreenCoordinate::getSelectedCell(Size mapSize, Vec2 curreTouch){
-        float h = mapSize.height - curreTouch.y;
+int ScreenCoordinate::getSelectedCell(Vec2 curreTouch){
+        float h = _mapSize.height - curreTouch.y;
         int row = (int)(h / _cellSize.height);
         
         if (row % 2){

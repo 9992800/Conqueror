@@ -20,16 +20,27 @@ public:
         static Scene* createScene(int gameLevel);
         virtual bool init() override;
         CREATE_FUNC2(GameScene, int, level);
-        GameScene(int level){
+        GameScene(int level):_lowestPostion_y(0.f),
+        _isMoved(false){
                 _gameLevel = level;
                 _playerNumber = level + 1;
         }     
+        
+        ~GameScene(){
+                _theGameLogic->release();
+        }
         
 protected:
         void initMapLayer();
         void initControlLayer();
         void initAnimationLayer();
         
+protected:
+        void onTouchesMoved(const std::vector<Touch*>& touches, Event* event)override;
+        void onTouchesEnded(const std::vector<Touch*>& touches, Event *event)override;
+ 
+private:
+        void playAnimation(int);
 private:
         int _playerNumber;
         int _gameLevel;
@@ -41,6 +52,10 @@ private:
         
 private:
         DiceGame*       _theGameLogic;
+        
+private:
+        bool            _isMoved;
+        float           _lowestPostion_y;
 };
 
 

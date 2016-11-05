@@ -496,6 +496,7 @@ int DiceGame::startRobootAttack(){
 }
 
 std::map<int, int> DiceGame::cleanUpBattleField(int res){
+        
         AreaData* area_from = _data->_areaData[_data->_areaFrom];
         AreaData* area_to   = _data->_areaData[_data->_areaTo];
         

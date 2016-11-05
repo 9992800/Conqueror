@@ -79,7 +79,7 @@ GameData* GameData::createWithData(GameData* data){
         }
 }
 bool GameData::init(GameData* data){
-        
+        this->_userId           = data->_userId;
         this->_curPlayerNum     = data->_curPlayerNum;
         this->_gameStatus       = data->_gameStatus;
         

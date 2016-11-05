@@ -186,9 +186,10 @@ void GameScene::tryAgain(){
         
         data->reshDataByMapInfo(map);
         
-        this->addChild(map, ZORDER_MAP_GROUND, key_map_tag);
+        this->addChild(map, ZORDER_MAP_GROUND, key_map_tag); 
         
-        _lowestPostion_y = visibleSize.height + origin.y - map_size.height;
+        _startPlayMenuItem->setVisible(true);
+        _endTurnMenuItem->setVisible(false);
 }
 
 #pragma mark - animation 

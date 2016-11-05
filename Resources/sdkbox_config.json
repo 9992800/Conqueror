@@ -25,17 +25,19 @@
             "items": {
                 "remove_ads": {
                     "type": "non_consumable", 
-                    "id": "com.cocos2dx.non1"
+                    "id": "com.bellflower.Conqueror.removeAds"
                 }, 
-                "coin_package": {
-                    "id": "com.cocos2dx.plugintest2"
+                "open_level6": {
+                    "type": "non_consumable",
+                    "id": "com.bellflower.Conqueror.open_level6"
                 }, 
-                "double_coin": {
+                "open_level7": {
                     "type": "non_consumable", 
-                    "id": "com.cocos2dx.non2"
+                    "id": "com.bellflower.Conqueror.open_level7"
                 }, 
-                "coin_package2": {
-                    "id": "com.cocos2dx.plugintest3"
+                "open_level8": {
+                    "type": "non_consumable",
+                    "id": "com.bellflower.Conqueror.open_level8"
                 }
             }
         }

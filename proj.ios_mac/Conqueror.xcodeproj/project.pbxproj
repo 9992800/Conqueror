@@ -94,6 +94,7 @@
 		BBC12E571DCE26310035A571 /* sdkbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC12E551DCE26310035A571 /* sdkbox.framework */; };
 		BBC12E591DCE26830035A571 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC12E581DCE26830035A571 /* AdSupport.framework */; };
 		BBC12E5B1DCE269C0035A571 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC12E5A1DCE269C0035A571 /* SystemConfiguration.framework */; };
+		BBC12E5E1DCE2F830035A571 /* GamePayUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBC12E5C1DCE2F830035A571 /* GamePayUtil.cpp */; };
 		BBC812DE1DCA3CB000EC8874 /* GameHelpScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBC812DC1DCA3CB000EC8874 /* GameHelpScene.cpp */; };
 		BBD6967F1DCC55CE00B9B145 /* GameAI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A1061DCB4F010035ECC6 /* GameAI.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -251,6 +252,8 @@
 		BBC12E551DCE26310035A571 /* sdkbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = sdkbox.framework; sourceTree = "<group>"; };
 		BBC12E581DCE26830035A571 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.1.sdk/System/Library/Frameworks/AdSupport.framework; sourceTree = DEVELOPER_DIR; };
 		BBC12E5A1DCE269C0035A571 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		BBC12E5C1DCE2F830035A571 /* GamePayUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GamePayUtil.cpp; sourceTree = "<group>"; };
+		BBC12E5D1DCE2F830035A571 /* GamePayUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GamePayUtil.hpp; sourceTree = "<group>"; };
 		BBC812DC1DCA3CB000EC8874 /* GameHelpScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHelpScene.cpp; sourceTree = "<group>"; };
 		BBC812DD1DCA3CB000EC8874 /* GameHelpScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHelpScene.hpp; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -543,6 +546,8 @@
 				BBC812DC1DCA3CB000EC8874 /* GameHelpScene.cpp */,
 				7C21A0E71DCB2F450035ECC6 /* GameSettingsScene.hpp */,
 				7C21A0E61DCB2F450035ECC6 /* GameSettingsScene.cpp */,
+				BBC12E5D1DCE2F830035A571 /* GamePayUtil.hpp */,
+				BBC12E5C1DCE2F830035A571 /* GamePayUtil.cpp */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -734,6 +739,7 @@
 				7C21A10F1DCB4F010035ECC6 /* GamePlayer.cpp in Sources */,
 				7C21A10D1DCB4F010035ECC6 /* AreaData.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				BBC12E5E1DCE2F830035A571 /* GamePayUtil.cpp in Sources */,
 				7C21A0F91DCB3A3C0035ECC6 /* PopUpOkDialog.cpp in Sources */,
 				7C21A0EC1DCB39050035ECC6 /* GameScene.cpp in Sources */,
 				7C21A1031DCB3B0F0035ECC6 /* ScreenCoordinate.cpp in Sources */,

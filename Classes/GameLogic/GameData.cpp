@@ -12,15 +12,15 @@ GameData::GameData(int n):_curPlayerNum(n),_userId(0),
 _gameStatus(GAME_STATUS_INIT),_ban(0),_areaFrom(AREA_UNSELECTED),
 _areaTo(AREA_UNSELECTED){
         
-        _join           = std::vector<JoinData*>(CEL_MAX);
-        _areaData       = std::vector<AreaData*>(AREA_MAX);
-        _player         = std::vector<GamePlayer*>(MAX_PLAYER);
-        _jun            = std::vector<int>(MAX_PLAYER);
-        _cel            = std::vector<int>(CEL_MAX);
-        _rcel           = std::vector<int>(CEL_MAX);
-        _num            = std::vector<int>(CEL_MAX);
-        _chk            = std::vector<int>(AREA_MAX);
-        _mapData        = std::vector<int>(CEL_MAX);
+        _join           = std::vector<JoinData*>(CEL_MAX, nullptr);
+        _areaData       = std::vector<AreaData*>(AREA_MAX, nullptr);
+        _player         = std::vector<GamePlayer*>(MAX_PLAYER, nullptr);
+        _jun            = std::vector<int>(MAX_PLAYER, 0);
+        _cel            = std::vector<int>(CEL_MAX, 0);
+        _rcel           = std::vector<int>(CEL_MAX, 0);
+        _num            = std::vector<int>(CEL_MAX, 0);
+        _chk            = std::vector<int>(AREA_MAX, 0);
+        _mapData        = std::vector<int>(CEL_MAX, 0);
         
         for (int i = 0; i < CEL_MAX; i++){
                 JoinData* join_data = new JoinData();

@@ -88,6 +88,7 @@
 		BBBA8DD71DCCE3C6006A6471 /* DIALOG_OK.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD21DCCE3C6006A6471 /* DIALOG_OK.png */; };
 		BBBA8DD81DCCE3C6006A6471 /* NextButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD31DCCE3C6006A6471 /* NextButton.png */; };
 		BBBA8DD91DCCE3C6006A6471 /* start.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD41DCCE3C6006A6471 /* start.png */; };
+		BBC12E4E1DCDFBA70035A571 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC12E4D1DCDFBA70035A571 /* StoreKit.framework */; };
 		BBC812DE1DCA3CB000EC8874 /* GameHelpScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BBC812DC1DCA3CB000EC8874 /* GameHelpScene.cpp */; };
 		BBD6967F1DCC55CE00B9B145 /* GameAI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A1061DCB4F010035ECC6 /* GameAI.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
@@ -239,6 +240,7 @@
 		BBBA8DD21DCCE3C6006A6471 /* DIALOG_OK.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIALOG_OK.png; sourceTree = "<group>"; };
 		BBBA8DD31DCCE3C6006A6471 /* NextButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NextButton.png; sourceTree = "<group>"; };
 		BBBA8DD41DCCE3C6006A6471 /* start.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start.png; sourceTree = "<group>"; };
+		BBC12E4D1DCDFBA70035A571 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.1.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		BBC812DC1DCA3CB000EC8874 /* GameHelpScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHelpScene.cpp; sourceTree = "<group>"; };
 		BBC812DD1DCA3CB000EC8874 /* GameHelpScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHelpScene.hpp; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -269,6 +271,7 @@
 				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
+				BBC12E4E1DCDFBA70035A571 /* StoreKit.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
 			);
@@ -347,6 +350,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BBC12E4D1DCDFBA70035A571 /* StoreKit.framework */,
 				294D0D631D0D56D500F7F5D4 /* CoreText.framework */,
 				ED545A7D1B68A1FA00C3958E /* libiconv.dylib */,
 				ED545A7B1B68A1F400C3958E /* libiconv.dylib */,
@@ -573,6 +577,11 @@
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = 2XYK8RBB6M;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};

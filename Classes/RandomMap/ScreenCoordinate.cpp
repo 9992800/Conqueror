@@ -92,7 +92,13 @@ int ScreenCoordinate::getSelectedCell(Vec2 curreTouch){
         
         int col = (int)(curreTouch.x / _cellSize.width);
         
-        return row * XMAX + col;
+        int cell_idx = row * XMAX + col;
+        if (cell_idx < 0){
+                cell_idx = 0;
+        }
+        if (cell_idx >= CEL_MAX){
+                cell_idx = CEL_MAX - 1;
+        }
 }
 
 Vec2 ScreenCoordinate::getAreaCenterPos(int pos){

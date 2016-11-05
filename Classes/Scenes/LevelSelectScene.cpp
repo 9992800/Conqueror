@@ -255,7 +255,6 @@ void LevelSelect::initActionListener(){
 void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         
         bool is_effect_on = UserDefault::getInstance()->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
-       
         if (is_effect_on){
                 _soundCtrl = MenuItemImage::create("Sound_on.png", "Sound_on_sel.png",
                                                    CC_CALLBACK_1(LevelSelect::menuSoundControl, this));

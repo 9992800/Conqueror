@@ -46,9 +46,11 @@ bool Starting::init()
         if (is_effect_on){
                 _soundCtrl = MenuItemImage::create("Sound_on.png", "Sound_on_sel.png",
                                            CC_CALLBACK_1(Starting::menuSoundCtrl, this));
+                CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1);
         }else{
                 _soundCtrl = MenuItemImage::create("Sound_off.png", "Sound_off_sel.png",
                                                    CC_CALLBACK_1(Starting::menuSoundCtrl, this));
+                CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0);
         }
         _soundCtrl->setPosition(Vec2(2 * _soundCtrl->getContentSize().width,
                                      origin.y +  60));

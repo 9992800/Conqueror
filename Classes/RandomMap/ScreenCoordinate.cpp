@@ -99,6 +99,7 @@ int ScreenCoordinate::getSelectedCell(Vec2 curreTouch){
         if (cell_idx >= CEL_MAX){
                 cell_idx = CEL_MAX - 1;
         }
+        return cell_idx;
 }
 
 Vec2 ScreenCoordinate::getAreaCenterPos(int pos){

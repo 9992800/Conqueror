@@ -395,10 +395,12 @@ void LevelSelect::menuSoundControl(Ref* btn){
         if (is_effect_on){
                 _soundCtrl->setNormalImage(Sprite::create("Sound_off.png"));
                 _soundCtrl->setSelectedImage(Sprite::create("Sound_off_sel.png"));
+                CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0);
         }else{
                 _soundCtrl->setNormalImage(Sprite::create("Sound_on.png"));
                 _soundCtrl->setSelectedImage(Sprite::create("Sound_on_sel.png"));
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
+                CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1);
         }
 }
 

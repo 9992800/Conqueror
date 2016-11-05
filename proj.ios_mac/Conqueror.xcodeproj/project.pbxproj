@@ -79,6 +79,8 @@
 		7C733B1D1DC990E200098EDD /* iphone6 in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B191DC990E200098EDD /* iphone6 */; };
 		7C733B1E1DC990E200098EDD /* iphone6p in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B1A1DC990E200098EDD /* iphone6p */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
+		BB62DFD31DCD9E7A0037DE0A /* anim in Resources */ = {isa = PBXBuildFile; fileRef = BB62DFD11DCD9E7A0037DE0A /* anim */; };
+		BB62DFD41DCD9E7A0037DE0A /* particles in Resources */ = {isa = PBXBuildFile; fileRef = BB62DFD21DCD9E7A0037DE0A /* particles */; };
 		BB9A4E241DCB7C6400E88C41 /* GameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E221DCB7C6400E88C41 /* GameData.cpp */; };
 		BB9A4E271DCB84A200E88C41 /* MapCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */; };
 		BBBA8DD51DCCE3C6006A6471 /* DIALOG_BACKGROUND.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD01DCCE3C6006A6471 /* DIALOG_BACKGROUND.png */; };
@@ -226,6 +228,8 @@
 		7C733B191DC990E200098EDD /* iphone6 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6; sourceTree = "<group>"; };
 		7C733B1A1DC990E200098EDD /* iphone6p */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6p; sourceTree = "<group>"; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		BB62DFD11DCD9E7A0037DE0A /* anim */ = {isa = PBXFileReference; lastKnownFileType = folder; path = anim; sourceTree = "<group>"; };
+		BB62DFD21DCD9E7A0037DE0A /* particles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particles; sourceTree = "<group>"; };
 		BB9A4E221DCB7C6400E88C41 /* GameData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameData.cpp; sourceTree = "<group>"; };
 		BB9A4E231DCB7C6400E88C41 /* GameData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameData.hpp; sourceTree = "<group>"; };
 		BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapCreator.cpp; sourceTree = "<group>"; };
@@ -370,6 +374,8 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BB62DFD11DCD9E7A0037DE0A /* anim */,
+				BB62DFD21DCD9E7A0037DE0A /* particles */,
 				BBBA8DD01DCCE3C6006A6471 /* DIALOG_BACKGROUND.png */,
 				BBBA8DD11DCCE3C6006A6471 /* DIALOG_CANCEL.png */,
 				BBBA8DD21DCCE3C6006A6471 /* DIALOG_OK.png */,
@@ -642,6 +648,7 @@
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				7C21A0DC1DC9C06C0035ECC6 /* sliderProgress.png in Resources */,
+				BB62DFD31DCD9E7A0037DE0A /* anim in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
 				7C733B1E1DC990E200098EDD /* iphone6p in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
@@ -649,6 +656,7 @@
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
+				BB62DFD41DCD9E7A0037DE0A /* particles in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				BBBA8DD91DCCE3C6006A6471 /* start.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,

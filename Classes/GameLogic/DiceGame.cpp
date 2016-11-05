@@ -432,7 +432,7 @@ int DiceGame::startBattle(){
                 to_sum += random_value;
                 printf("\t---%d---", random_value);
         }
-        
+        printf("\r\n---result:(%d)VS(%d)---", from_sum, to_sum);
         if (from_sum > to_sum){
                 return ATTACK_RES_WIN;
         }else{
@@ -517,9 +517,10 @@ std::map<int, int> DiceGame::cleanUpBattleField(int res){
         area_from->updatePawn(_data->_refereMap);
         
         std::map<int, int> ok_area = std::map<int, int>();
-        for (int i = 0; i < MAX_PLAYER; i++){
+        for (int i = 0; i < _data->_curPlayerNum; i++){
                 int tc = this->set_area_tc(i);
-                ok_area.insert(std::pair<int, int>(i, tc));
+                if (tc > 0)
+                        ok_area.insert(std::pair<int, int>(i, tc));
         }
         
         _data->_areaTo    = AREA_UNSELECTED;
@@ -579,6 +580,7 @@ void DiceGame::starSupplyDice(CallFunc* callback){
                 area->updatePawn(_data->_refereMap);
                 area->drawSupply(_data->_refereMap);
         }
+        
         callback->execute();
 }
 

@@ -31,6 +31,13 @@ public:
         std::map<int, int> cleanUpBattleField(int);
         void clearManulAction();
         void starSupplyDice(CallFunc*);
+        
+        inline int getUserTC(){return _data->_player[_data->_userId]->getAreaTc();}
+        inline void next_player(){
+                if (++_data->_ban >= _data->_curPlayerNum){
+                        _data->_ban = 0;
+                }
+        }
 private:
         void makeNewMapData();
         int percolate(int pt, int cmax, int an);

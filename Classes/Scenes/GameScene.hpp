@@ -43,14 +43,16 @@ private:
         void afterPlayerBattle(int result);
         void afterRobootBattle(int result);
         void playBattleAnimation(int, CallFunc*);
-        void playSupplyAnimation(int, CallFunc*);
-        void afterRobootSupply(int);
-        void afterPlayerSupply(int);
+        void playSupplyAnimation(CallFunc*);
+        void afterRobootSupply();
+        void afterPlayerSupply();
+        void gameAction();
 
         
         void menuEndTurn(Ref* pSender);
         void menuStartGame(Ref* pSender);
         void menuExit(Ref* pSender);
+        void gameExit(Ref*, int);
         void gameOver(Ref*, int);
         
 private:
@@ -64,6 +66,7 @@ private:
         Sprite*         _tamara;
         int             _gameStatus;
         MenuItemImage*  _endTurnMenuItem;
+        MenuItemImage*  _startPlayMenuItem;
 };
 
 

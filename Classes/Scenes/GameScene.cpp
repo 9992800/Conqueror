@@ -93,17 +93,17 @@ void GameScene::initControlLayer(){
                                        origin.y + _endTurnMenuItem->getContentSize().height));
         _endTurnMenuItem->setVisible(false);
         
-        auto start_play = MenuItemImage::create("start.png", "start.png",
+        _startPlayMenuItem = MenuItemImage::create("start.png", "start.png",
                                              CC_CALLBACK_1(GameScene::menuStartGame, this));
-        start_play->setPosition(Vec2(origin.x + visibleSize.width - start_play->getContentSize().width,
-                                       origin.y +start_play->getContentSize().height));
+        _startPlayMenuItem->setPosition(Vec2(origin.x + visibleSize.width - _startPlayMenuItem->getContentSize().width,
+                                       origin.y +_startPlayMenuItem->getContentSize().height));
         
         auto return_back = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
                                              CC_CALLBACK_1(GameScene::menuExit, this));
         return_back->setPosition(Vec2(origin.x + return_back->getContentSize().width + 10,
                                        origin.y + visibleSize.height - return_back->getContentSize().height - 10));
         
-        auto menu = Menu::create(_endTurnMenuItem, start_play, return_back, NULL);
+        auto menu = Menu::create(_endTurnMenuItem, _startPlayMenuItem, return_back, NULL);
         menu->setPosition(Vec2::ZERO);
         _controlLayer->addChild(menu);
         
@@ -169,8 +169,9 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         }
 }
 
-//TODO:: need to test
 void GameScene::tryAgain(){
+        _gameStatus = GAME_STATUS_INIT;
+        
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         Vec2 center = origin + visibleSize / 2;
@@ -193,19 +194,66 @@ void GameScene::tryAgain(){
 #pragma mark - animation 
 
 void GameScene::afterPlayerBattle(int result){
-        _theGameLogic->cleanUpBattleField(result);
+        std::map<int, int> survival = _theGameLogic->cleanUpBattleField(result);
+        if (survival.size() == 1){
+                Director::getInstance()->pause();
+                BaseDialogConfig config("胜利了!",
+                                        "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香");
+                PopUpOkCancelDialog *dialog = PopUpOkCancelDialog::create(config,
+                                                                          CC_CALLBACK_1(GameScene::gameOver, this, 1),
+                                                                          CC_CALLBACK_1(GameScene::gameOver, this, 0));
+                this->addChild(dialog, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
+                return;
+        }
 }
 
 void GameScene::afterRobootBattle(int result){
-        _theGameLogic->cleanUpBattleField(result);
+       _theGameLogic->cleanUpBattleField(result);
+        
+        int user_tc = _theGameLogic->getUserTC();
+        if (0 == user_tc){
+                Director::getInstance()->pause();
+                BaseDialogConfig config("失败，需要重试吗？",
+                                        "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香");
+                PopUpOkCancelDialog *dialog = PopUpOkCancelDialog::create(config,
+                                                                          CC_CALLBACK_1(GameScene::gameOver, this, 1),
+                                                                          CC_CALLBACK_1(GameScene::gameOver, this, 0));
+                this->addChild(dialog, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
+                return;
+        }
+        
+        this->gameAction();
 }
 
 
-void GameScene::afterPlayerSupply(int result){
-        
+void GameScene::afterPlayerSupply(){
+        _theGameLogic->next_player();
+        this->gameAction();
 }
-void GameScene::afterRobootSupply(int result){
+void GameScene::afterRobootSupply(){
+        _theGameLogic->next_player();
+        this->gameAction();
+}
+
+void GameScene::gameAction(){
+        int res = _theGameLogic->startRobootAttack();
         
+        if (ATTACK_RES_WIN == res || ATTACK_RES_DEFEATED == res){
+                
+                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this, res));
+                this->playBattleAnimation(res, callback);
+                
+        }else if(ATTACK_RES_GOTSUPPLY == res){
+                
+                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootSupply, this));
+                this->playSupplyAnimation(callback);
+                
+        }else if (ATTACK_RES_NONE == res){
+                
+                _gameStatus = GAME_STATUS_INUSERTURN;
+                _endTurnMenuItem->setVisible(true);
+                
+        }
 }
 
 void GameScene::playBattleAnimation(int res, CallFunc* callback){
@@ -230,7 +278,7 @@ void GameScene::playBattleAnimation(int res, CallFunc* callback){
         }
 }
 
-void GameScene::playSupplyAnimation(int res, CallFunc* callback){
+void GameScene::playSupplyAnimation(CallFunc* callback){
         CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
         _theGameLogic->starSupplyDice(callback);
 }
@@ -238,47 +286,30 @@ void GameScene::playSupplyAnimation(int res, CallFunc* callback){
 #pragma mark - menu callback actions
 void GameScene::menuEndTurn(Ref* pSender){
         ((MenuItemImage*)pSender)->setVisible(false);
-        _gameStatus = GAME_STATUS_AIRUNNING;
         _theGameLogic->clearManulAction();
-        _theGameLogic->startRobootAttack();
+        _gameStatus = GAME_STATUS_AIRUNNING;
+        CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootSupply, this));
+        this->playSupplyAnimation(callback);
 }
 
 void GameScene::menuStartGame(Ref* pSender){
         ((MenuItemImage*)pSender)->setVisible(false);
         
         _gameStatus = GAME_STATUS_AIRUNNING;
-        int res = _theGameLogic->startRobootAttack();
-        
-        if (ATTACK_RES_WIN == res || ATTACK_RES_DEFEATED == res){
-                
-                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this, res));
-                this->playBattleAnimation(res, callback);
-                
-        }else if(ATTACK_RES_GOTSUPPLY == res){
-                
-                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootSupply, this, res));
-                this->playSupplyAnimation(res, callback);
-                
-        }else if (ATTACK_RES_NONE == res){
-                
-                 _gameStatus = GAME_STATUS_INUSERTURN;
-                _endTurnMenuItem->setVisible(true);
-                
-        }
+        this->gameAction();
 }
 
 void GameScene::menuExit(Ref* pSender){
         
         Director::getInstance()->pause();
-        BaseDialogConfig config("失败", "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香");
+        BaseDialogConfig config("确认要退出吗？", "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香");
         PopUpOkCancelDialog *dialog = PopUpOkCancelDialog::create(config,
-                                                                  CC_CALLBACK_1(GameScene::gameOver, this, 1),
-                                                                  CC_CALLBACK_1(GameScene::gameOver, this, 0));
-        dialog->retain();
+                                                                  CC_CALLBACK_1(GameScene::gameExit, this, 1),
+                                                                  CC_CALLBACK_1(GameScene::gameExit, this, 0));
         this->addChild(dialog, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
 }
 
-void GameScene::gameOver(Ref* btn, int result){
+void GameScene::gameExit(Ref* btn, int result){
         if (result == 1){
                 Director::getInstance()->popScene();
         }else{
@@ -288,3 +319,13 @@ void GameScene::gameOver(Ref* btn, int result){
         Director::getInstance()->resume();        
 }
 
+void GameScene::gameOver(Ref* btn, int result){
+        if (result == 0){
+                Director::getInstance()->popScene();
+        }else{
+                this->removeChildByTag(key_dialog_layer_tag);
+                this->tryAgain();
+        }
+        
+        Director::getInstance()->resume();
+}

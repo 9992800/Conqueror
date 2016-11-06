@@ -69,7 +69,7 @@ void Splash::onEnter(){
                 CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.f);
         }
         
-//        GamePayUtil::getInstance()->retrieveLastProduct();
+        GamePayUtil::getInstance()->retrieveLastProduct();
 }
 
 void Splash::update(float delta){

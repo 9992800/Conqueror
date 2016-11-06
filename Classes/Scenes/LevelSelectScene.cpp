@@ -407,7 +407,7 @@ void LevelSelect::menuShowSettigns(Ref* btn){
 
 
 void LevelSelect::menuGetMoreCoins(Ref* btn){
-        
+        IAP::restore();
 }
 void LevelSelect::menuGetMoreDices(Ref* btn){
         
@@ -512,10 +512,10 @@ void LevelSelect::onSuccess(const Product& p){
         UserDefault::getInstance()->flush();       
 }
 void LevelSelect::onFailure(const Product& p, const std::string& msg){
-        
+         CCLOG("Purchase Failed: %s", msg.c_str());
 }
 void LevelSelect::onCanceled(const Product& p){
-        
+        CCLOG("Purchase Canceled: %s", p.id.c_str());
 }
 
 void LevelSelect::onProductRequestSuccess(const std::vector<Product>& products){
@@ -533,9 +533,9 @@ void LevelSelect::onProductRequestSuccess(const std::vector<Product>& products){
 }
 
 void LevelSelect::onProductRequestFailure(const std::string& msg){
-        
+        CCLOG("onProductRequestFailure Restored: %s", msg.c_str());
 }
 void LevelSelect::onRestoreComplete(bool ok, const std::string &msg){
-        
+        CCLOG("%s:%d:%s", __func__, ok, msg.data());
 }
 

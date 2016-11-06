@@ -60,7 +60,13 @@ bool Starting::init()
         _startGame->setPosition(Vec2(origin.x + visibleSize.width / 2,
                                      origin.y + 60));
         
-        auto menu = Menu::create(_startGame, _soundCtrl, _helpBtn, NULL);
+        
+        _shareIt = MenuItemImage::create("share.png", "share_sel.png",
+                                         CC_CALLBACK_1(Starting::menuShareGame, this));
+        _shareIt->setPosition(Vec2(_shareIt->getContentSize().width,
+                                     origin.y + visibleSize.height - _shareIt->getContentSize().height));
+        
+        auto menu = Menu::create(_startGame, _soundCtrl, _helpBtn, _shareIt, NULL);
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, 2);
         
@@ -89,6 +95,9 @@ void Starting::menuStartGame(Ref* pSender){
         scheduleUpdate();
 }
 
+void Starting::menuShareGame(Ref* pSender){
+        
+}
 
 void Starting::menuHelp(Ref* pSender){
         Scene* scene = GameHelp::createScene();

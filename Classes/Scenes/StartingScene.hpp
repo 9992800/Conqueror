@@ -21,11 +21,15 @@ protected:
         void menuStartGame(Ref* pSender);
         void menuHelp(Ref* pSender);
         void menuSoundCtrl(Ref* pSender);
+        void menuShareGame(Ref* pSender);
         
 private:
         int _count = 0;
         LoadingBar* _loadingBar;
-        MenuItemImage* _startGame, *_soundCtrl, *_helpBtn;
+        MenuItemImage* _startGame,
+                        *_soundCtrl,
+                        *_helpBtn,
+                        *_shareIt;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

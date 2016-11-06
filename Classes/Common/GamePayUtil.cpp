@@ -54,6 +54,7 @@ void GamePayUtil::retrieveLastProduct(){
 
 void GamePayUtil::onProductRequestSuccess(std::vector<Product> const &products){
         _requestStatus = true;
+        //TODO:: store them to local database.
         for (int i=0; i < products.size(); i++){
                 CCLOG("IAP: ========= IAP Item =========");
                 CCLOG("IAP: Name: %s", products[i].name.c_str());

@@ -25,6 +25,7 @@ public:
         virtual void onEnter() override;
         void update(float delta)override;
         virtual void onExit()override;
+
 private:
         int _count = 0;
         LoadingBar* _loadingBar;

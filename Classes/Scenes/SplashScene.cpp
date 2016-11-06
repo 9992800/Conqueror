@@ -10,6 +10,7 @@
 #include "StartingScene.hpp"
 #include "SimpleAudioEngine.h"
 #include "AppMacros.hpp"
+#include "GamePayUtil.hpp"
 
 #pragma makr - init scene
 Scene* Splash::createScene()
@@ -58,9 +59,17 @@ void Splash::onEnter(){
         Layer::onEnter();
         
         scheduleUpdate();
+        
         CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE);
         _count += 10;
-        //::TODO load SoundSettings.
+        bool is_effect_on = UserDefault::getInstance()->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
+        if (is_effect_on){
+                CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.f);
+        }else{
+                CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.f);
+        }
+        
+        GamePayUtil::getInstance()->retrieveLastProduct();
 }
 
 void Splash::update(float delta){

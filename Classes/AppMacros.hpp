@@ -103,21 +103,16 @@ enum {
 #define LEVEL_5_LOCK_STATE_KEY          "_key_level_5_lock_state"
 #define LEVEL_6_LOCK_STATE_KEY          "_key_level_6_lock_state"
 #define LEVEL_7_LOCK_STATE_KEY          "_key_level_7_lock_state"
+#define ADS_LOCK_STATE_KEY              "_key_ads_lock_state"
+
+#define LEVEL_4_PRODUCT_NAME_KEY        "open_level4"
+#define LEVEL_5_PRODUCT_NAME_KEY        "open_level5"
+#define LEVEL_6_PRODUCT_NAME_KEY        "open_level6"
+#define LEVEL_7_PRODUCT_NAME_KEY        "open_level7"
+#define REMOVE_ADS_PRODUCT_NAME_KEY     "remove_ads"
 
 
 #define LAST_GAME_LEVEL_PLAYED_KEY      "_key_last_game_level_played"
-
-
-enum {
-        GAME_LEVEL_INDEX_1 = 1,
-        GAME_LEVEL_INDEX_2,
-        GAME_LEVEL_INDEX_3,
-        GAME_LEVEL_INDEX_4,
-        GAME_LEVEL_INDEX_5,
-        GAME_LEVEL_INDEX_6,
-        GAME_LEVEL_INDEX_7,
-};
-
 
 template <typename T> std::string tostr(const T& t) { std::ostringstream os; os<<t; return os.str(); }
 

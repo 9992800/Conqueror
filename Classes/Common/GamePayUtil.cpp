@@ -62,7 +62,7 @@ void GamePayUtil::onProductRequestSuccess(std::vector<Product> const &products){
                 CCLOG("IAP: Title: %s", products[i].title.c_str());
                 CCLOG("IAP: Desc: %s", products[i].description.c_str());
                 CCLOG("IAP: Price: %s", products[i].price.c_str());
-                CCLOG("IAP: Price Value: %f", products[i].priceValue);
+                CCLOG("IAP: Price Value: %f", products[i].priceValue); 
         }
 }
 void GamePayUtil::onProductRequestFailure(const std::string &msg){

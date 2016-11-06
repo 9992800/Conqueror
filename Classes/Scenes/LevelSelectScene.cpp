@@ -10,6 +10,15 @@
 #include "LevelSelectScene.hpp"
 #include "GameScene.hpp"
 
+enum {
+        GAME_LEVEL_INDEX_1 = 1,
+        GAME_LEVEL_INDEX_2,
+        GAME_LEVEL_INDEX_3,
+        GAME_LEVEL_INDEX_4,
+        GAME_LEVEL_INDEX_5,
+        GAME_LEVEL_INDEX_6,
+        GAME_LEVEL_INDEX_7,
+};
 
 enum{
         kLevelShowLevel1Tag = 2,
@@ -20,7 +29,12 @@ enum{
         kLevelShowLevel6Tag = 7,
         kLevelShowLevel7Tag = 8,
         key_loading_bar1,
-        key_loading_bar2
+        key_loading_bar2,
+        kLevelBuyMenuTag,
+        kLevel4BuyBtnTag,
+        kLevel5BuyBtnTag,
+        kLevel6BuyBtnTag,
+        kLevel7BuyBtnTag
 };
 
 enum{
@@ -63,7 +77,15 @@ bool LevelSelect::init()
         
         this->initButtons(origin, visibleSize);
         
+        IAP::setDebug(true);
+        IAP::setListener(this);
+        IAP::init();        
+        
         return true;
+}
+void LevelSelect::onEnter(){
+        Layer::onEnter();
+        IAP::refresh();
 }
 
 void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
@@ -156,7 +178,8 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
                                                               CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_4));
         }else{
                 level_4_lock_btn = MenuItemImage::create("level/level_lock.png", "level/level_lock_sel.png",
-                                                              CC_CALLBACK_1(LevelSelect::menuBuyLevel, this, GAME_LEVEL_INDEX_4));
+                                                              CC_CALLBACK_1(LevelSelect::menuBuyLevel, this, LEVEL_4_PRODUCT_NAME_KEY));
+                level_4_lock_btn->setTag(kLevel4BuyBtnTag);
         }
         level_4_lock_btn->setPosition(Vec2(level_4_pos.x, level_4_pos.y - level_4_size.height / 2 - btn_top_gap));
         
@@ -168,28 +191,28 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
                                                          CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_5));
         }else{
                 level_5_lock_btn = MenuItemImage::create("level/level_lock.png", "level/level_lock_sel.png",
-                                                         CC_CALLBACK_1(LevelSelect::menuBuyLevel, this, GAME_LEVEL_INDEX_5));
+                                                         CC_CALLBACK_1(LevelSelect::menuBuyLevel, this, LEVEL_5_PRODUCT_NAME_KEY));
         }
         level_5_lock_btn->setPosition(Vec2(level_5_pos.x, level_5_pos.y - level_5_size.height / 2 - btn_top_gap));
         
 
-        bool level_6_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_4_LOCK_STATE_KEY, false);
+        bool level_6_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_6_LOCK_STATE_KEY, false);
         if (level_6_opened){
                 level_6_lock_btn = MenuItemImage::create("level/level_unlock.png", "level/level_unlock_sel.png",
                                                          CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_6));
         }else{
                 level_6_lock_btn = MenuItemImage::create("level/level_lock.png", "level/level_lock_sel.png",
-                                                         CC_CALLBACK_1(LevelSelect::menuBuyLevel, this, GAME_LEVEL_INDEX_6));
+                                                         CC_CALLBACK_1(LevelSelect::menuBuyLevel, this, LEVEL_6_PRODUCT_NAME_KEY));
         }
         level_6_lock_btn->setPosition(Vec2(level_6_pos.x, level_6_pos.y - level_6_size.height / 2 - btn_top_gap));
         
-        bool level_7_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_4_LOCK_STATE_KEY, false);
+        bool level_7_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_7_LOCK_STATE_KEY, false);
         if (level_7_opened){
                 level_7_lock_btn = MenuItemImage::create("level/level_unlock.png", "level/level_unlock_sel.png",
                                                          CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_7));
         }else{
                 level_7_lock_btn = MenuItemImage::create("level/level_lock.png", "level/level_lock_sel.png",
-                                                         CC_CALLBACK_1(LevelSelect::menuBuyLevel, this, GAME_LEVEL_INDEX_7));
+                                                         CC_CALLBACK_1(LevelSelect::menuBuyLevel, this, LEVEL_7_PRODUCT_NAME_KEY));
         }
         level_7_lock_btn->setPosition(Vec2(level_7_pos.x, level_7_pos.y - level_7_size.height / 2 - btn_top_gap));
         
@@ -197,7 +220,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
                                  level_5_lock_btn, level_6_lock_btn, level_7_lock_btn, NULL);
         
         menu->setPosition(Vec2::ZERO);
-        _levelShowBackGround->addChild(menu, ZORDER_ITEM_CONTROL);
+        _levelShowBackGround->addChild(menu, ZORDER_ITEM_CONTROL, kLevelBuyMenuTag);
 }
 
 void LevelSelect::setSelectLevelBackPos(){
@@ -349,8 +372,11 @@ void LevelSelect::menuSelectLevel(Ref* btn, int bt_indx){
         UserDefault::getInstance()->getIntegerForKey(LAST_GAME_LEVEL_PLAYED_KEY, bt_indx);
 }
 
-void LevelSelect::menuBuyLevel(Ref* btn, int num){
+void LevelSelect::purchaseCallBack(sdkbox::Product& p){
         
+}
+void LevelSelect::menuBuyLevel(Ref* btn, std::string name){
+        IAP::purchase(name);
 }
 
 void LevelSelect::menuStartGame(Ref* btn){
@@ -439,3 +465,77 @@ void LevelSelect::onExit(){
         this->removeChildByTag(key_loading_bar2);
         unscheduleUpdate();
 }
+
+
+#pragma mark - payment callback
+void LevelSelect::onSuccess(const Product& p){
+        auto menu = _levelShowBackGround->getChildByTag(kLevelBuyMenuTag);
+        
+        if (LEVEL_4_PRODUCT_NAME_KEY == p.name){
+                
+                MenuItemImage* btn = (MenuItemImage*)menu->getChildByTag(kLevel4BuyBtnTag);
+                btn->setNormalImage(Sprite::create("level/level_lock.png"));
+                btn->setSelectedImage(Sprite::create("level/level_lock_sel.png"));
+                UserDefault::getInstance()->setBoolForKey(LEVEL_4_LOCK_STATE_KEY, true);
+                btn->setCallback(CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_4));
+                
+                
+        }else if(LEVEL_5_PRODUCT_NAME_KEY == p.name){
+                
+                MenuItemImage* btn = (MenuItemImage*)menu->getChildByTag(kLevel5BuyBtnTag);
+                btn->setNormalImage(Sprite::create("level/level_lock.png"));
+                btn->setSelectedImage(Sprite::create("level/level_lock_sel.png"));
+                UserDefault::getInstance()->setBoolForKey(LEVEL_5_LOCK_STATE_KEY, true);
+                btn->setCallback(CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_5));
+                
+        }else if(LEVEL_6_PRODUCT_NAME_KEY == p.name){
+                
+                MenuItemImage* btn = (MenuItemImage*)menu->getChildByTag(kLevel6BuyBtnTag);
+                btn->setNormalImage(Sprite::create("level/level_lock.png"));
+                btn->setSelectedImage(Sprite::create("level/level_lock_sel.png"));
+                UserDefault::getInstance()->setBoolForKey(LEVEL_6_LOCK_STATE_KEY, true);
+                btn->setCallback(CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_6));
+                
+        }else if(LEVEL_7_PRODUCT_NAME_KEY == p.name){
+                
+                MenuItemImage* btn = (MenuItemImage*)menu->getChildByTag(kLevel7BuyBtnTag);
+                btn->setNormalImage(Sprite::create("level/level_lock.png"));
+                btn->setSelectedImage(Sprite::create("level/level_lock_sel.png"));
+                UserDefault::getInstance()->setBoolForKey(LEVEL_7_LOCK_STATE_KEY, true);
+                btn->setCallback(CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_7));
+                
+        }else if (REMOVE_ADS_PRODUCT_NAME_KEY == p.name){
+                
+                UserDefault::getInstance()->setBoolForKey(ADS_LOCK_STATE_KEY, false);
+        }
+        
+        UserDefault::getInstance()->flush();       
+}
+void LevelSelect::onFailure(const Product& p, const std::string& msg){
+        
+}
+void LevelSelect::onCanceled(const Product& p){
+        
+}
+
+void LevelSelect::onProductRequestSuccess(const std::vector<Product>& products){
+        _productsMap.clear();
+        for (int i=0; i < products.size(); i++){
+                CCLOG("IAP: ========= IAP Item =========");
+                CCLOG("IAP: Name: %s", products[i].name.c_str());
+                CCLOG("IAP: ID: %s", products[i].id.c_str());
+                CCLOG("IAP: Title: %s", products[i].title.c_str());
+                CCLOG("IAP: Desc: %s", products[i].description.c_str());
+                CCLOG("IAP: Price: %s", products[i].price.c_str());
+                CCLOG("IAP: Price Value: %f", products[i].priceValue);
+                _productsMap.insert(pair<string, Product>(products[i].name, products[i]));
+        }
+}
+
+void LevelSelect::onProductRequestFailure(const std::string& msg){
+        
+}
+void LevelSelect::onRestoreComplete(bool ok, const std::string &msg){
+        
+}
+

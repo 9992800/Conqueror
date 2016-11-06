@@ -476,6 +476,10 @@ int DiceGame::startPlayerAttack(int cell_id){
                                 area->drawAsSelected();
                                 return ATTACK_RES_NONE;
                         }else {
+                                if (AREA_UNSELECTED != _data->_areaTo){
+                                        return ATTACK_RES_NONE;
+                                }
+                                
                                 if (area->isJoinedWithArea(_data->_areaFrom)){
                                         _data->_areaTo = area_id;
                                         area->drawAsSelected();

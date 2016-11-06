@@ -122,6 +122,7 @@ void GameScene::initAnimationLayer(){
         _tamara = Sprite::create("anim/grossinis_sister1.png");
         _tamara->setPosition(Vec2(100, 100));
         _animationLayer->addChild(_tamara);
+        _tamara->setVisible(false);
         
         this->addChild(_animationLayer, ZORDER_ANIM_LAYER, key_anim_layer_tag);
 }
@@ -151,7 +152,8 @@ void GameScene::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
 
 void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event){        
         
-        if (_isMoved || _gameStatus != GAME_STATUS_INUSERTURN) {
+        if (_isMoved || _isPalyingAnim
+            ||_gameStatus != GAME_STATUS_INUSERTURN) {
                 _isMoved = false;
                 return;
         }
@@ -195,6 +197,8 @@ void GameScene::tryAgain(){
 #pragma mark - animation 
 
 void GameScene::afterPlayerBattle(int result){
+        _isPalyingAnim = false;
+        _tamara->setVisible(false);
         std::map<int, int> survival = _theGameLogic->cleanUpBattleField(result);
         if (survival.size() == 1){
                 Director::getInstance()->pause();
@@ -209,7 +213,9 @@ void GameScene::afterPlayerBattle(int result){
 }
 
 void GameScene::afterRobootBattle(int result){
-       _theGameLogic->cleanUpBattleField(result);
+        _isPalyingAnim = false;
+        _tamara->setVisible(false);
+        _theGameLogic->cleanUpBattleField(result);
         
         int user_tc = _theGameLogic->getUserTC();
         if (0 == user_tc){
@@ -266,6 +272,7 @@ void GameScene::playBattleAnimation(int res, CallFunc* callback){
         bool is_anim_on = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
         if (is_anim_on){
                 _tamara->setVisible(true);
+                _isPalyingAnim = true;
                 
                 auto cache = AnimationCache::getInstance();
                 cache->addAnimationsWithFile("anim/animations-2.plist");
@@ -286,6 +293,10 @@ void GameScene::playSupplyAnimation(CallFunc* callback){
 
 #pragma mark - menu callback actions
 void GameScene::menuEndTurn(Ref* pSender){
+        if (_isPalyingAnim){
+                return;
+        }
+        
         ((MenuItemImage*)pSender)->setVisible(false);
         _theGameLogic->clearManulAction();
         _gameStatus = GAME_STATUS_AIRUNNING;

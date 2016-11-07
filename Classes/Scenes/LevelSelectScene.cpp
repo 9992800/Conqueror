@@ -192,6 +192,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         }else{
                 level_5_lock_btn = MenuItemImage::create("level/level_lock.png", "level/level_lock_sel.png",
                                                          CC_CALLBACK_1(LevelSelect::menuBuyLevel, this, LEVEL_5_PRODUCT_NAME_KEY));
+                level_5_lock_btn->setTag(kLevel5BuyBtnTag);
         }
         level_5_lock_btn->setPosition(Vec2(level_5_pos.x, level_5_pos.y - level_5_size.height / 2 - btn_top_gap));
         
@@ -203,6 +204,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         }else{
                 level_6_lock_btn = MenuItemImage::create("level/level_lock.png", "level/level_lock_sel.png",
                                                          CC_CALLBACK_1(LevelSelect::menuBuyLevel, this, LEVEL_6_PRODUCT_NAME_KEY));
+                level_6_lock_btn->setTag(kLevel6BuyBtnTag);
         }
         level_6_lock_btn->setPosition(Vec2(level_6_pos.x, level_6_pos.y - level_6_size.height / 2 - btn_top_gap));
         
@@ -213,6 +215,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         }else{
                 level_7_lock_btn = MenuItemImage::create("level/level_lock.png", "level/level_lock_sel.png",
                                                          CC_CALLBACK_1(LevelSelect::menuBuyLevel, this, LEVEL_7_PRODUCT_NAME_KEY));
+                level_7_lock_btn->setTag(kLevel7BuyBtnTag);
         }
         level_7_lock_btn->setPosition(Vec2(level_7_pos.x, level_7_pos.y - level_7_size.height / 2 - btn_top_gap));
         
@@ -474,8 +477,8 @@ void LevelSelect::onSuccess(const Product& p){
         if (LEVEL_4_PRODUCT_NAME_KEY == p.name){
                 
                 MenuItemImage* btn = (MenuItemImage*)menu->getChildByTag(kLevel4BuyBtnTag);
-                btn->setNormalImage(Sprite::create("level/level_lock.png"));
-                btn->setSelectedImage(Sprite::create("level/level_lock_sel.png"));
+                btn->setNormalImage(Sprite::create("level/level_unlock.png"));
+                btn->setSelectedImage(Sprite::create("level/level_unlock_sel.png"));
                 UserDefault::getInstance()->setBoolForKey(LEVEL_4_LOCK_STATE_KEY, true);
                 btn->setCallback(CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_4));
                 
@@ -483,24 +486,24 @@ void LevelSelect::onSuccess(const Product& p){
         }else if(LEVEL_5_PRODUCT_NAME_KEY == p.name){
                 
                 MenuItemImage* btn = (MenuItemImage*)menu->getChildByTag(kLevel5BuyBtnTag);
-                btn->setNormalImage(Sprite::create("level/level_lock.png"));
-                btn->setSelectedImage(Sprite::create("level/level_lock_sel.png"));
+                btn->setNormalImage(Sprite::create("level/level_unlock.png"));
+                btn->setSelectedImage(Sprite::create("level/level_unlock_sel.png"));
                 UserDefault::getInstance()->setBoolForKey(LEVEL_5_LOCK_STATE_KEY, true);
                 btn->setCallback(CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_5));
                 
         }else if(LEVEL_6_PRODUCT_NAME_KEY == p.name){
                 
                 MenuItemImage* btn = (MenuItemImage*)menu->getChildByTag(kLevel6BuyBtnTag);
-                btn->setNormalImage(Sprite::create("level/level_lock.png"));
-                btn->setSelectedImage(Sprite::create("level/level_lock_sel.png"));
+                btn->setNormalImage(Sprite::create("level/level_unlock.png"));
+                btn->setSelectedImage(Sprite::create("level/level_unlock_sel.png"));
                 UserDefault::getInstance()->setBoolForKey(LEVEL_6_LOCK_STATE_KEY, true);
                 btn->setCallback(CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_6));
                 
         }else if(LEVEL_7_PRODUCT_NAME_KEY == p.name){
                 
                 MenuItemImage* btn = (MenuItemImage*)menu->getChildByTag(kLevel7BuyBtnTag);
-                btn->setNormalImage(Sprite::create("level/level_lock.png"));
-                btn->setSelectedImage(Sprite::create("level/level_lock_sel.png"));
+                btn->setNormalImage(Sprite::create("level/level_unlock.png"));
+                btn->setSelectedImage(Sprite::create("level/level_unlock_sel.png"));
                 UserDefault::getInstance()->setBoolForKey(LEVEL_7_LOCK_STATE_KEY, true);
                 btn->setCallback(CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_7));
                 

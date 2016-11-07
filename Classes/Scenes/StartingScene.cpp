@@ -130,15 +130,6 @@ void Starting::menuShareGame(Ref* pSender){
                 PluginFacebook::login(permissions);
         }else{
                 utils::captureScreen(CC_CALLBACK_2(Starting::afterCaptureScreen, this), "screen.png");
-                /*
-                FBShareInfo info;
-                info.type  = FB_LINK;
-                info.link  = "http://www.cocos2d-x.org";
-                info.title = "cocos2d-x";
-                info.text  = "Best Game Engine";
-                info.image = "http://cocos2d-x.org/images/logo.png";
-                PluginFacebook::dialog(info);
-                 */
         }
 }
 

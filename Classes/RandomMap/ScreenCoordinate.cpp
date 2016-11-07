@@ -83,6 +83,9 @@ Vec2 ScreenCoordinate::getCellPos(int cell, int dir){
 
 
 int ScreenCoordinate::getSelectedCell(Vec2 curreTouch){
+        if (curreTouch.y >= _mapSize.height || curreTouch.x >= _mapSize.width){
+                return -1;
+        }
         float h = _mapSize.height - curreTouch.y;
         int row = (int)(h / _cellSize.height);
         

@@ -162,7 +162,14 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         auto position = touch->getLocation();
         auto map = this->getChildByTag(key_map_tag);
         Vec2 pos_in_map = map->convertToNodeSpace(position);
+        
+        if (pos_in_map.x < 0 || pos_in_map.y < 0){
+                return;
+        }
         int cell_id = ScreenCoordinate::getInstance()->getSelectedCell(pos_in_map);
+        if (cell_id < 0){
+                return;
+        }
         
         int result = _theGameLogic->startPlayerAttack(cell_id);
         if (ATTACK_RES_WIN == result|| ATTACK_RES_DEFEATED == result){

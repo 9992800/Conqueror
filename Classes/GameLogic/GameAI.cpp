@@ -50,6 +50,10 @@ int GameAI::com_thinking(GameData* data){
                 total_dice += area->getDice();
         }
         
+        for (int i = 0; i < MAX_PLAYER; i++){
+                data->_player[i]->setDiceJun(i);
+        }
+        
         for (int i = 0; i < MAX_PLAYER - 1; i++) {
                 GamePlayer* player_i = data->_player[i];
                 for (int j = i + 1; j < MAX_PLAYER; j++){
@@ -91,7 +95,8 @@ int GameAI::com_thinking(GameData* data){
                         }
                         
                         if (target_uid >= 0
-                            && !(area_i->getOwner() != target_uid && area_j->getOwner() != target_uid)
+                            && !(area_i->getOwner() != target_uid
+                                 && area_j->getOwner() != target_uid)
                             && area_j->getDice() <= area_i->getDice()){
                                 
                                 if (area_j->getDice() == area_i->getDice()){

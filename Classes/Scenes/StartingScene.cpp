@@ -70,6 +70,11 @@ bool Starting::init()
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, 2);
         
+        
+        
+        PluginFacebook::setListener(this);
+        sdkbox::PluginFacebook::init();
+        
         return true;
 }
 
@@ -95,8 +100,46 @@ void Starting::menuStartGame(Ref* pSender){
         scheduleUpdate();
 }
 
-void Starting::menuShareGame(Ref* pSender){
+void Starting::afterCaptureScreen(bool yes, const std::string &outputFilename)
+{
+        if (!outputFilename.empty() && FileUtils::getInstance()->isFileExist(outputFilename)){
+                CCLOG("##FB afterCaptureScreen: %s", outputFilename.c_str());
+                if (yes) {
+                        
+                        FBShareInfo info;
+                        info.type  = FB_PHOTO;
+                        info.title = "capture screen";
+                        info.link = "http://www.cocos2d-x.org";
+                        info.image = outputFilename;
+                        PluginFacebook::dialog(info);
+                }
+        }
         
+}
+
+void Starting::menuShareGame(Ref* pSender){
+        CCLOG("##FB %s", __FUNCTION__);
+        
+        std::vector<std::string> permation = PluginFacebook::getPermissionList();
+        if (permation.size() == 0){
+                std::vector<std::string> permissions;
+                permissions.push_back(sdkbox::FB_PERM_READ_EMAIL);
+                permissions.push_back(sdkbox::FB_PERM_READ_USER_FRIENDS);
+                permissions.push_back(sdkbox::FB_PERM_PUBLISH_POST);
+
+                PluginFacebook::login(permissions);
+        }else{
+                utils::captureScreen(CC_CALLBACK_2(Starting::afterCaptureScreen, this), "screen.png");
+                /*
+                FBShareInfo info;
+                info.type  = FB_LINK;
+                info.link  = "http://www.cocos2d-x.org";
+                info.title = "cocos2d-x";
+                info.text  = "Best Game Engine";
+                info.image = "http://cocos2d-x.org/images/logo.png";
+                PluginFacebook::dialog(info);
+                 */
+        }
 }
 
 void Starting::menuHelp(Ref* pSender){
@@ -136,4 +179,109 @@ void Starting::update(float delta){
 void Starting::onExit(){
         Layer::onExit();
         unscheduleUpdate();
+}
+
+
+#pragma mark - facebook callback
+
+
+/*********************
+ * Facebook callbacks
+ *********************/
+void Starting::onLogin(bool isLogin, const std::string& error)
+{
+        CCLOG("##FB isLogin: %d, error: %s", isLogin, error.c_str());
+}
+
+void Starting::onAPI(const std::string& tag, const std::string& jsonData)
+{
+        CCLOG("##FB onAPI: tag -> %s, json -> %s", tag.c_str(), jsonData.c_str());
+}
+
+void Starting::onSharedSuccess(const std::string& message)
+{
+        CCLOG("##FB onSharedSuccess:%s", message.c_str());
+}
+
+void Starting::onSharedFailed(const std::string& message)
+{
+        CCLOG("##FB onSharedFailed:%s", message.c_str());
+}
+
+void Starting::onSharedCancel()
+{
+        CCLOG("##FB onSharedCancel");
+}
+
+void Starting::onPermission(bool isLogin, const std::string& error)
+{
+        CCLOG("##FB onPermission: %d, error: %s", isLogin, error.c_str()); }
+
+void Starting::onFetchFriends(bool ok, const std::string& msg)
+{
+        CCLOG("##FB %s: %d = %s", __FUNCTION__, ok, msg.data());
+        
+        MenuItemFont::setFontSize(20);
+        static Menu *menu = Menu::create();
+        menu->setPositionY(20);
+        menu->cleanup();
+        
+        const std::vector<sdkbox::FBGraphUser>& friends = PluginFacebook::getFriends();
+        for (int i = 0; i < friends.size(); i++)
+                {
+                const sdkbox::FBGraphUser& user = friends.at(i);
+                CCLOG("##FB> -------------------------------");
+                CCLOG("##FB>> %s", user.uid.data());
+                CCLOG("##FB>> %s", user.firstName.data());
+                CCLOG("##FB>> %s", user.lastName.data());
+                CCLOG("##FB>> %s", user.name.data());
+                CCLOG("##FB>> %s", user.isInstalled ? "app is installed" : "app is not installed");
+                CCLOG("##FB");
+                
+                MenuItemFont *item = MenuItemFont::create(user.name, [=](Ref*) {
+                        sdkbox::FBAPIParam params;
+                        params["redirect"] = "false";
+                        params["type"] = "small";
+                        std::string url(user.uid + "/picture");
+                        PluginFacebook::api(url, "GET", params, "__fetch_picture_tag__");
+                });
+                menu->addChild(item);
+                }
+        if (!menu->getParent()) {
+                menu->alignItemsHorizontally();
+                addChild(menu);
+        }
+        
+        MessageBox("", "fetch friends");
+}
+
+void Starting::onRequestInvitableFriends( const FBInvitableFriendsInfo& friends )
+{
+        CCLOG("Request Inviteable Friends Begin");
+        for (auto it = friends.begin(); it != friends.end(); ++it) {
+                CCLOG("Invitable friend: %s", it->getName().c_str());
+        }
+        CCLOG("Request Inviteable Friends End");
+}
+
+void Starting::onInviteFriendsWithInviteIdsResult( bool result, const std::string& msg )
+{
+        CCLOG("on invite friends with invite ids %s= '%s'", result?"ok":"error", msg.c_str());
+}
+
+void Starting::onInviteFriendsResult( bool result, const std::string& msg )
+{
+        CCLOG("on invite friends %s= '%s'", result?"ok":"error", msg.c_str());
+}
+
+void Starting::onGetUserInfo( const sdkbox::FBGraphUser& userInfo )
+{
+        CCLOG("Facebook id:'%s' name:'%s' last_name:'%s' first_name:'%s' email:'%s' installed:'%d'",
+              userInfo.getUserId().c_str(),
+              userInfo.getName().c_str(),
+              userInfo.getFirstName().c_str(),
+              userInfo.getLastName().c_str(),
+              userInfo.getEmail().c_str(),
+              userInfo.isInstalled ? 1 : 0
+              );
 }

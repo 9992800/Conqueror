@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "cocos2d.h"
 #include "JoinData.hpp"
+#include "AppMacros.hpp"
 
 USING_NS_CC;
 class GameData;
@@ -59,7 +60,7 @@ public:
         }
         
         inline bool needDice(int player_uid){
-                return _size != 0 && _arm == player_uid && _dice < 8;
+                return _size != 0 && _arm == player_uid && _dice < MAX_DICE_PER_AREA;
         }
         inline void increaseDice(){_dice++;}
         

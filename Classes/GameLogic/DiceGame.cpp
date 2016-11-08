@@ -111,11 +111,8 @@ void DiceGame::makeNewMapData(){
                 }
         }
         
-        for (int i = 0 ; i < AREA_MAX; i++){
+        for (int i = 0 ; i < AREA_MAX; i++){            
                 
-                if (nullptr != _data->_areaData[i]){
-                        delete _data->_areaData[i];
-                }
                 _data->_areaData[i] = new AreaData(i);
         }
         
@@ -182,6 +179,11 @@ void DiceGame::makeNewMapData(){
         }
         
         
+        for (int i = 0; i < AREA_MAX; i++){
+                _data->_areaData[i]->setOwner(-1);
+        }
+        
+        
         int tmpAreaId[AREA_MAX] = {0};
         int player_uid = 0;
         
@@ -244,9 +246,10 @@ void DiceGame::makeNewMapData(){
         player_uid = 0;
         for (int i = 0; i < total_dice; i++){
                 
-                int tempArea[AREA_MAX] = {0};
-                int available_area = 0;
+                int tempArea[AREA_MAX];
+                SET_SIZE_TOZERO(tempArea, AREA_MAX);
                 
+                int available_area = 0;
                 
                 for (int j = 1; j < AREA_MAX; j++){
                         if (_data->_areaData[j]->needDice(player_uid)){
@@ -276,7 +279,8 @@ int DiceGame::percolate(int pt, int cmax, int an){
         }
         
         int cell_in_area = pt;
-        int next_f[CEL_MAX] = {0};
+        int next_f[CEL_MAX];
+        SET_SIZE_TOZERO(next_f, CEL_MAX);
         
         int cell_num_in_area = 0;
         while (cell_num_in_area < cmax){
@@ -295,7 +299,7 @@ int DiceGame::percolate(int pt, int cmax, int an){
                 for (int j = 0; j < CEL_MAX; j++){
                         if (next_f[j] != 0 &&
                             _data->_cel[j] <= 0 &&
-                            _data->_num[j] < cell_value){
+                            _data->_num[j] <= cell_value){
                                 
                                 cell_value = _data->_num[j];
                                 cell_in_area = j;

@@ -469,12 +469,17 @@ int DiceGame::startPlayerAttack(int cell_id){
                         return ATTACK_RES_NONE;
                 }else {
                         if (owner_uid == _data->_userId){
-                                AreaData* pre_area = _data->_areaData[_data->_areaFrom];
-                                pre_area->drawAsUnselected();
                                 
-                                _data->_areaFrom = area_id;
-                                area->drawAsSelected();
+                                if (area->getDice() > 1){
+                                        AreaData* pre_area = _data->_areaData[_data->_areaFrom];
+                                        pre_area->drawAsUnselected();
+                                        
+                                        _data->_areaFrom = area_id;
+                                        area->drawAsSelected();
+                                }
+                                
                                 return ATTACK_RES_NONE;
+                                
                         }else {
                                 if (AREA_UNSELECTED != _data->_areaTo){
                                         return ATTACK_RES_NONE;

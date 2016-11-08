@@ -298,12 +298,12 @@
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				BBE0F8EC1DCEE25F00FB9EDD /* PluginFacebook.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
-				BBC12E561DCE26310035A571 /* PluginIAP.framework in Frameworks */,
 				BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */,
 				BF1712471292920000B8313A /* libz.dylib in Frameworks */,
 				BBC12E571DCE26310035A571 /* sdkbox.framework in Frameworks */,
 				BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */,
 				D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */,
+				BBC12E561DCE26310035A571 /* PluginIAP.framework in Frameworks */,
 				BBC12E4E1DCDFBA70035A571 /* StoreKit.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
@@ -623,6 +623,7 @@
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = 2XYK8RBB6M;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 1;
@@ -804,6 +805,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Li Wansheng (7983JC3HCR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Li Wansheng (7983JC3HCR)";
 				COMPRESS_PNG_FILES = NO;
 				DEVELOPMENT_TEAM = 2XYK8RBB6M;
 				ENABLE_BITCODE = NO;
@@ -821,7 +823,10 @@
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";
@@ -830,8 +835,8 @@
 					"$(_COCOS_LIB_IOS_END)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellflower.Conqueror;
-				PROVISIONING_PROFILE = "566845fe-4643-45d0-9b18-c89785040eb5";
-				PROVISIONING_PROFILE_SPECIFIER = Conqueror_debug;
+				PROVISIONING_PROFILE = "a3174618-4f66-412e-9bea-c4abdc790e9c";
+				PROVISIONING_PROFILE_SPECIFIER = Conquero_debug_pro;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -844,7 +849,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Li Wansheng (2XYK8RBB6M)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Li Wansheng (7983JC3HCR)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: gaojie@jucaicun.com (X698798T78)";
 				COMPRESS_PNG_FILES = NO;
 				DEVELOPMENT_TEAM = 2XYK8RBB6M;
 				ENABLE_BITCODE = NO;
@@ -860,7 +866,10 @@
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ios/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = "";
@@ -869,8 +878,8 @@
 					"$(_COCOS_LIB_IOS_END)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellflower.Conqueror;
-				PROVISIONING_PROFILE = "2cea4210-8779-476f-92ca-d9a76e0eea0e";
-				PROVISIONING_PROFILE_SPECIFIER = Conqueror_release;
+				PROVISIONING_PROFILE = "a3174618-4f66-412e-9bea-c4abdc790e9c";
+				PROVISIONING_PROFILE_SPECIFIER = Conquero_debug_pro;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = 1;

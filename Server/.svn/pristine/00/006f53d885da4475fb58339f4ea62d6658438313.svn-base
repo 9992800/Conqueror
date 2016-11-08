@@ -1,0 +1,73 @@
+package com.jctx.chat.controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.jctx.chat.Utils.PasswordUtil;
+import com.jctx.chat.Utils.ResultMapUtils;
+import com.jctx.chat.module.ManagerBean;
+import com.jctx.chat.module.MessageBean;
+import com.jctx.chat.service.ChatDbService;
+
+@Controller
+public class HomeController {
+	
+	@Resource
+	ChatDbService chatDbService;
+	
+	private static final Logger logger =
+		    LoggerFactory.getLogger(HomeController.class);
+
+	@RequestMapping(value="/")
+	public ModelAndView home(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		request.getSession();
+		
+		return new ModelAndView("home");
+	}
+	
+	@RequestMapping(value="/login")
+	public ModelAndView login(HttpServletRequest request, 
+			HttpServletResponse response, ManagerBean manager) throws IOException{
+		
+		logger.info("---login---"+manager.toString());
+		request.getSession();
+		
+		if(PasswordUtil.verify("lws502",manager.getPassword())){
+			return new ModelAndView("main");
+		}
+		
+		return new ModelAndView("home");
+	}
+	
+	@RequestMapping(value="/manager/flushMessage")
+	@ResponseBody
+	public Map<String, Object> flushMessage(HttpServletRequest request,
+			HttpServletResponse response) throws IOException{
+		
+		int count = chatDbService.flushMsgToDb();
+		
+		return ResultMapUtils.success(count);
+	}
+	
+	@RequestMapping(value="/manager/listMessage")
+	@ResponseBody
+	public Map<String, Object> listMessage(HttpServletRequest request,
+			HttpServletResponse response) throws IOException{
+		
+		ArrayList<MessageBean> list = chatDbService.getCurrentQueue();
+		
+		return ResultMapUtils.success(list);
+	}
+}

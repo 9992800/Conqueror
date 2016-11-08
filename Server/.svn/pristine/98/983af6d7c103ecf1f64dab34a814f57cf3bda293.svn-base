@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jctx.chat.user" >
+
+	<resultMap id="BaseResultMap" type="com.jctx.chat.module.OnlineBean" >
+		<id column="uid" property="self" jdbcType="BIGINT" />
+		<result column="userName" property="userName" jdbcType="VARCHAR" />
+		<result column="token" property="token" jdbcType="VARCHAR" />
+		<result column="deviceType" property="device" jdbcType="TINYINT" /> 
+		<result column="onlineTime" property="onlineTime" jdbcType="TIMESTAMP" /> 
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+	 	uid, userName, token, deviceType, onlineTime
+	</sql>
+	
+	<insert id="newUser" parameterType="com.jctx.chat.module.OnlineBean">
+	
+		INSERT INTO jctx_user_online
+		
+			(uid, userName, token, deviceType, onlineTime)
+		
+		values
+		
+			(#{self}, #{userName}, #{token}, #{device}, now())
+			
+	</insert>
+	
+	<update id="updateUser" parameterType="com.jctx.chat.module.OnlineBean" >
+		
+		update jctx_user_online
+    
+    	<set>
+    	
+    		userName = #{userName},
+    		
+    		token = #{token},
+    		
+    		deviceType = #{device},
+    		
+    		onlineTime = now()
+    		
+    	</set>
+    	
+    	<where>
+    		uid = #{self}
+    	</where>
+    	
+	</update>
+	
+	<select id="getUser" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		
+		select 
+		
+			<include refid="Base_Column_List" />
+			
+		from  jctx_user_online
+		
+		<where>
+			uid = #{value}
+		</where>
+		
+	</select>
+	
+</mapper>
+

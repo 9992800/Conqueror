@@ -1,0 +1,71 @@
+package com.jctx.chat.module;
+
+import java.sql.Date;
+
+public class OnlineBean {
+	
+	public static final String SYSTEM_CHANNEL = "SYS_40010086";
+	
+	public static final int DEVICE_TYPE_IOS     = 1;
+	
+	public static final int DEVICE_TYPE_ANDROID = 2;
+	
+	public static final String MESSAGE_TYPE_UNREAD = "unread";
+	public static final String MESSAGE_TYPE_LIVE = "live";
+	
+	int  device, self;
+	String userName, token, sessionId;
+
+	Date onlineTime;
+	public Date getOnlineTime() {
+		return onlineTime;
+	}
+	public void setOnlineTime(Date onlineTime) {
+		this.onlineTime = onlineTime;
+	}
+	long system; 
+	
+	public int getSelf() {
+		return self;
+	}
+	public void setSelf(int self) {
+		this.self = self;
+	}
+	public int getDevice() {
+		return device;
+	}
+	public void setDevice(int device) {
+		this.device = device;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+	public long getSystem() {
+		return system;
+	}
+	public void setSystem(long system) {
+		this.system = system;
+	}
+	
+	@Override
+	public String toString() {
+		return "OnlineBean [device=" + device + ", self=" + self + ", userName=" + userName + ", token=" + token
+				+ ", sessionId=" + sessionId + ", onlineTime=" + onlineTime + ", system=" + system + "]";
+	}
+	
+	public void setSessionId(String id) { 
+		this.sessionId = id;
+	} 
+	public String getSessionId(){
+		return this.sessionId;
+	}
+}

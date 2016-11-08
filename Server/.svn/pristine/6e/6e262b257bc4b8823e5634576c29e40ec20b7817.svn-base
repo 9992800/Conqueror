@@ -1,0 +1,14 @@
+package com.jctx.chat.module;
+
+public class MessageBean {
+
+	public MessageBean(String payload) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getTargetUid() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

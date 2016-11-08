@@ -1,0 +1,22 @@
+package com.jctx.chat.dao;
+
+import java.sql.SQLException;
+import java.util.HashMap;
+
+import org.springframework.stereotype.Repository;
+
+import com.jctx.chat.module.ChatUserBean;
+
+@Repository
+public class FriendsDao extends ChatDao {
+
+	private static final String NAME_SPACE = "com.jctx.chat.friends";
+	
+	public int applyFriends(ChatUserBean applicant, int targetUid) throws SQLException{
+		
+		HashMap<String , Object> params = new HashMap<>();
+		
+		return this.getSqlSession().insert(NAME_SPACE+".addApply", params);
+	}
+
+}

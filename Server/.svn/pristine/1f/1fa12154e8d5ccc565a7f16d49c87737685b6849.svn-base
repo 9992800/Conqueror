@@ -1,0 +1,51 @@
+package com.jctx.chat.service;
+
+import javax.annotation.Resource;
+
+import org.json.JSONObject;
+import org.springframework.stereotype.Service;
+import org.springframework.web.socket.WebSocketSession;
+
+import com.jctx.chat.module.OnlineBean;
+import com.jctx.chat.module.OnlineUserEntity;
+import com.jctx.chat.module.OnlineUsersManager;
+
+@Service("jedisService")
+public class RedisServiceImp implements RedisService {
+	
+	
+	@Resource
+	OnlineUsersManager onlineUserManager;
+
+	@Override
+	public void online(OnlineBean bean, WebSocketSession session) {
+		
+		OnlineUserEntity entity = new OnlineUserEntity(bean, session);
+		
+		onlineUserManager.OnlineUser(bean.getSelf(), entity);
+		
+	}
+	
+	
+	@Override
+	public void handleTextMessage(String fromUid, String payload) {
+		JSONObject message = new JSONObject(payload);
+		
+		String targetUid = message.getString("to");
+		
+		onlineUserManager.sendMessageToTarget(fromUid, targetUid, payload);
+	}
+
+	@Override
+	public void onffline(String sessionId) {
+		onlineUserManager.OfflineUser(sessionId);
+	}
+
+
+	@Override
+	public void keepalive(String sessionId) {
+		onlineUserManager.keepalive(sessionId);
+		
+	}
+	
+}

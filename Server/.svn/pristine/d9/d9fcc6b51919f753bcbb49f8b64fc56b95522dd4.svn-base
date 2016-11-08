@@ -1,0 +1,35 @@
+package com.jctx.chat.service;
+
+import java.util.HashMap;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.jctx.chat.dao.UserManagerDao;
+import com.jctx.chat.module.ChatUserBean;
+
+@Service
+public class UserManagerService {
+
+	@Resource UserManagerDao userManagerDao;
+	
+	public ChatUserBean getChatUserInfo(int uid) { 
+		return userManagerDao.getChatUserInfo(uid);
+	}
+
+	public void createChatUser(ChatUserBean bean) {
+		userManagerDao.createChatUser(bean);
+	}
+
+	public void updateChatUser(ChatUserBean bean) {
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("uid", bean.getUid());
+		if (null != bean.getUserName()){
+			params.put("userName", bean.getUserName());
+		}
+		
+		userManagerDao.updateChatUser(params);
+	}
+
+}

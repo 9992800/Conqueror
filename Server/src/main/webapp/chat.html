@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>聊天网页</title>
+<script type="text/javascript" src="js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript">
+	function start() {
+		if (!window.WebSocket) {
+			alert("您的浏览器不支持websocket");
+			return;
+		}
+		var query = "self=" + $("#from").val() + "&userName=huangwuwei&token=0510ee1f655c425e98c6cfda96c153a1&device=3&system=1477412007";
+		 window.websocket = new WebSocket("ws://192.168.1.208:8081/online?" + query);
+		 websocket.onopen = function (evnt) {
+			 console.log("开启了ws");
+			 console.log(evnt);
+         };
+         websocket.onmessage = function (evnt) {
+             $("#msg").append(evnt.data+"<br/>");
+         };
+         websocket.onerror = function (evnt) {
+        	 console.log("出错了!");
+        	 console.log(evnt);
+        	 alert(toString(event));
+         };
+         websocket.onclose = function (evnt) {
+         	console.log("关闭了！");
+         	console.log(evnt);
+         }
+         $("#msg").html(websocket.readyState + ",");
+	}
+	function sendMsg() {
+		var msg = {};
+		msg.from = $("#from").val();
+		msg.to = $("#to").val();
+		msg.content = $("#value").val();
+		msg.createTime = new Date().getTime();
+		msg.type = 1;
+		msg.channelType = 1;
+		websocket.send(JSON.stringify(msg));
+	}
+	function toString(o) {
+		var str = "";
+		for (var prop in o) {
+			str += prop + ":" + o[prop] + ",";
+		}
+		return str;
+	}
+</script>
+</head>
+<body>
+	<div>
+	<input id="from">
+	<input value="建立连接" onclick="start();" type="button"><br>
+	<input id="to">
+	<input id="value">
+	<input value="发送信息" onclick="sendMsg();" type="button">
+	</div>
+	<div id="msg"></div>
+</body>
+</html>

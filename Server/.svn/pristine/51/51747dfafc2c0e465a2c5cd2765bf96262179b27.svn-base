@@ -1,0 +1,26 @@
+package com.jctx.chat.dao;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.stereotype.Repository;
+
+import com.jctx.chat.Utils.ChatException;
+import com.jctx.chat.module.ChatUserBean;
+
+@Repository
+public class ChatGroupMemDao  extends ChatDao {
+	static final String NAME_SPACE = "com.jctx.chat.chatgroup.details";
+
+	public int addMember(int grpId, ChatUserBean bean) throws ChatException {
+		Map<String, Object> params = new HashMap<>();
+		params.put("groupId", grpId);
+		params.put("uid", bean.getUid());
+		
+		int affected_row =  this.getSqlSession().insert(NAME_SPACE+".addmember", params);
+		if (affected_row != 1)
+			throw new ChatException("添加用户失败");
+		
+		return (int) params.get("id");
+	}
+}

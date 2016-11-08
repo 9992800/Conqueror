@@ -1,0 +1,14 @@
+package com.jctx.chat.dao;
+
+import org.mybatis.spring.support.SqlSessionDaoSupport;
+
+import com.jctx.chat.module.ChatMessageCacheForDb;
+
+public class ChatMsgDao extends  SqlSessionDaoSupport {
+	static final String NAME_SPACE = "com.jctx.chat.message";
+	public void saveMessageList(ChatMessageCacheForDb messageQueue) {
+		
+		this.getSqlSession().insert(NAME_SPACE+".record", messageQueue);	
+	}
+
+}

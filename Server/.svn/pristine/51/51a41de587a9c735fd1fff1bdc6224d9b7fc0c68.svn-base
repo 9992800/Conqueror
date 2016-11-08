@@ -1,0 +1,31 @@
+package com.jctx.chat.module;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.socket.WebSocketSession;
+
+import redis.clients.jedis.JedisPubSub;
+
+public class RedisSubHandler extends JedisPubSub {
+	
+	private static final Logger logger =
+		    LoggerFactory.getLogger(RedisSubHandler.class);
+	
+	WebSocketSession session;
+	
+	public RedisSubHandler(WebSocketSession session) {
+		this.session = session;
+	}
+
+	public void onMessage(String channel, String message) {
+		logger.info("---redis get message---channel="+channel+" message="+message);
+	}
+	
+	public void onSubscribe(String channel, int subscribedChannels) {
+		logger.info("---subscribe success---channel:"+channel+" subscribedChannels=" + subscribedChannels);   
+	}
+	
+	public void onUnsubscribe(String channel, int subscribedChannels) {
+		logger.info("---unsubscribe success---channel:"+channel+" subscribedChannels=" + subscribedChannels);
+	}
+}

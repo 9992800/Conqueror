@@ -1,0 +1,13 @@
+.search-form-table th { text-align:right;}
+.search-form-table select { text-align:center;}
+.search-form-table td input { width:150px;text-align:left;}
+.search-form-table .private-datetimebox{width:100px;}
+
+.required-alert{
+	margin-left:5px;
+	color: red;
+}
+
+#tableDiv{
+	width: 1200px;
+}

@@ -1,0 +1,5 @@
+package com.jctx.chat.dao;
+
+public class ChatMsgDao {
+
+}

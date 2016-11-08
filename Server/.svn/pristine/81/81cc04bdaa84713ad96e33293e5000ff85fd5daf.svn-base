@@ -1,0 +1,65 @@
+package com.jctx.chat.Utils;
+
+import java.util.HashMap;
+import java.util.Map;
+ 
+
+public final class ResultMapUtils {
+	
+	public static Map<String, Object> success() {
+		Map<String, Object> success = new HashMap<String, Object>();
+		success.put("apicode", EdoErrorCode.CODE_SUCCESS);
+		success.put("message", 
+				EdoErrorCode.DESC_SUCCESS); 
+		return success;
+	}
+	
+	public static Map<String, Object> success(Object data) {
+		Map<String, Object> success = new HashMap<String, Object>();
+		success.put("apicode", EdoErrorCode.CODE_SUCCESS);
+		success.put("message", 
+				EdoErrorCode.DESC_SUCCESS); 
+
+		success.put("data", data); 
+		return success;
+	}
+	
+	public static Map<String, Object> requestParamError() {
+		return ResultMapUtils.errorWithCode(EdoErrorCode.CODE_BAD_REQUEST, 
+				EdoErrorCode.DESC_BAD_REQUEST);
+	}
+	
+	public static Map<String, Object> errorWithCode(Integer code, String message) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("apicode", code);
+		map.put("message", message); 
+		return map;
+	}
+	 
+	
+	public static Map<String, Object> commonError(String message) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		map.put("apicode", EdoErrorCode.CODE_COMMON_ERROR);
+		map.put("message", message); 
+		return map;
+	}
+	
+	
+	
+	public static Map<String, Object> systemError(){
+		Map<String, Object> error = new HashMap<String, Object>();
+		error.put("apicode", EdoErrorCode.CODE_SYSTEM_ERROR);
+		error.put("message", 
+				EdoErrorCode.DESC_SYSTEM_ERROR);
+		return error;
+	}
+	
+	public static Map<String, Object> httpSessionTimeoutError(){
+		Map<String, Object> error = new HashMap<String, Object>();
+		error.put("apicode", EdoErrorCode.CODE_HTTP_SESSION_TIMEOUT);
+		error.put("message", EdoErrorCode.DESC_HTTP_SESSION_TIMEOUT);
+		return error;
+	} 
+}

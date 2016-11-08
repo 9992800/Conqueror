@@ -1,0 +1,14 @@
+package com.jctx.chat.module;
+
+public class ChatException extends Exception { 
+	
+	private static final long serialVersionUID = -2493280170070533519L;
+	
+	public ChatException(){
+		super();
+	}
+	
+	public ChatException(String message){
+		super(message);
+	}
+}

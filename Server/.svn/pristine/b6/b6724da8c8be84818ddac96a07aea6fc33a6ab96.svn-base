@@ -1,0 +1,24 @@
+package com.jctx.chat.module;
+
+public class ChatUserBean {
+	int uid;
+	String Name;
+	
+	public int getUid() {
+		return uid;
+	}
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
+	public String getName() {
+		return Name;
+	}
+	public void setName(String name) {
+		Name = name;
+	}
+	
+	@Override
+	public String toString() {
+		return "ChatUserBean [uid=" + uid + ", Name=" + Name + "]";
+	}
+}

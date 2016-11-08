@@ -1,0 +1,15 @@
+package com.jctx.chat.service;
+
+import org.springframework.stereotype.Service;
+
+import com.jctx.chat.module.ChatUserBean;
+
+@Service
+public class UserManagerService {
+
+	public ChatUserBean getChatUserInfo(int uid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,64 @@
+package com.jctx.chat.module;
+
+import java.util.ArrayList;
+
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+
+import com.jctx.chat.dao.ChatMsgDao;
+ 
+
+@Component
+@PropertySource("classpath:system.properties")
+public class ChatMessageCacheForDb extends ArrayList<MessageBean> {
+
+	private static final long serialVersionUID = -6408973966469451526L;
+
+	@Value("${msg.cache.capacity}")
+	private static int CAPACITY;
+	
+	@Value("${msg.cache.threshold}")
+	private static int FLUSH_THRESHOLD;
+	
+	@Resource ChatMsgDao chatMsgDao;
+	
+	public ChatMessageCacheForDb(){
+		super(CAPACITY);
+	}
+
+	public ChatMessageCacheForDb(ChatMessageCacheForDb chatMessageCacheForDb) {
+		super(chatMessageCacheForDb);
+	}
+
+	public boolean needFlush() {
+		return this.size() >= FLUSH_THRESHOLD;
+	}
+
+	public void flushMessage() {
+		ChatMessageCacheForDb tmp = new ChatMessageCacheForDb(this);
+		
+		this.clear();
+		
+		FlushTask task = new FlushTask(tmp);
+		task.start();
+	}
+	
+	class FlushTask extends Thread{
+		
+		ChatMessageCacheForDb messageQueue;
+		
+		public FlushTask(ChatMessageCacheForDb queue){
+			this.messageQueue = queue;
+		}
+		
+		@Override
+		public void run(){			
+			chatMsgDao.saveMessageList(this.messageQueue);
+		}
+	};
+	
+	
+}

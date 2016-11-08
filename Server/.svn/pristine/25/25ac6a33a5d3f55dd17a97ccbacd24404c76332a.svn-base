@@ -1,0 +1,72 @@
+package com.jctx.chat.controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.jctx.chat.Utils.ResultMapUtils;
+import com.jctx.chat.module.MessageBean;
+import com.jctx.chat.service.ChatDbService;
+
+@Controller
+@RequestMapping(value="/manager")
+public class SystemManagerController {
+	@Resource
+	ChatDbService chatDbService;
+	
+	@RequestMapping(value="/flushMessage")
+	@ResponseBody
+	public Map<String, Object> flushMessage(HttpServletRequest request,
+			HttpServletResponse response) throws IOException{
+		
+		int count = chatDbService.flushMsgToDb();
+		
+		return ResultMapUtils.success(count);
+	}
+	
+	@RequestMapping(value="/listMessage")
+	@ResponseBody
+	public Map<String, Object> listMessage(HttpServletRequest request,
+			HttpServletResponse response) throws IOException{
+		
+		ArrayList<MessageBean> list = chatDbService.getCurrentQueue();
+		
+		return ResultMapUtils.success(list);
+	}
+	
+	@RequestMapping(value="/listUsers")
+	@ResponseBody
+	public Map<String, Object> listUsers(HttpServletRequest request,
+			HttpServletResponse response) throws IOException{
+		
+		ArrayList<MessageBean> list = chatDbService.getCurrentQueue();
+		
+		return ResultMapUtils.success(list);
+	}
+	
+	@RequestMapping(value="/listOnlineUsers")
+	@ResponseBody
+	public Map<String, Object> listOnlineUsers(HttpServletRequest request,
+			HttpServletResponse response) throws IOException{
+		
+		ArrayList<MessageBean> list = chatDbService.getCurrentQueue();
+		
+		return ResultMapUtils.success(list);
+	}
+	
+	@RequestMapping(value="/listGroups")
+	@ResponseBody
+	public Map<String, Object> listGroups(HttpServletRequest request,
+			HttpServletResponse response) throws IOException{
+		
+		ArrayList<MessageBean> list = chatDbService.getCurrentQueue();
+		
+		return ResultMapUtils.success(list);
+	}
+}

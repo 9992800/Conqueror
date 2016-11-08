@@ -1,0 +1,17 @@
+package com.jctx.chat.service;
+
+import org.springframework.web.socket.WebSocketSession;
+
+import com.jctx.chat.module.OnlineBean;
+
+public interface RedisService {
+
+	void online(OnlineBean bean, WebSocketSession session); 
+
+	void handleTextMessage(String fromUid, String payload);
+
+	void onffline(String sessionId);
+
+	void keepalive(String sessionId);
+
+}

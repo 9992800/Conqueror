@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jucaicun.SystemManagerMapper" >
+<!-- 
+	<resultMap id="BaseResultMap" type="" >
+		<id column="uid" property="self" jdbcType="BIGINT" />
+		<result column="userName" property="userName" jdbcType="VARCHAR" /> 
+		<result column="deviceType" property="device" jdbcType="TINYINT" /> 
+		<result column="onlineTime" property="onlineTime" jdbcType="TIMESTAMP" /> 
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+	 	
+	</sql> -->
+	 
+</mapper>

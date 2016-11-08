@@ -1,0 +1,2 @@
+msg.cache.capacity=${msg-cache-capacity}
+msg.cache.threshold=${msg-cache-threshold}

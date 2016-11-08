@@ -1,0 +1,10 @@
+package com.jctx.chat.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping(value="/friends")
+public class FriendsController {
+
+}

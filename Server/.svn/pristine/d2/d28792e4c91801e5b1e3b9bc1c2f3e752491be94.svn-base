@@ -1,0 +1,78 @@
+package com.jctx.chat.module;
+
+import java.io.IOException;
+
+import javax.annotation.Resource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.jedis.JedisConnection;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.web.socket.WebSocketSession;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPubSub;
+
+public class OnlineUserEntity  extends JedisPubSub{
+	
+	private static final Logger logger = LoggerFactory.getLogger(OnlineUserEntity.class);
+
+	@Resource
+	JedisConnectionFactory jedisFactory;
+	
+	RedisConnection subconn, pubconn;
+	Jedis subscriber, publisher;
+	
+	OnlineBean bean;
+	WebSocketSession session;
+	
+	public OnlineUserEntity(OnlineBean bean, WebSocketSession session) {
+		this.bean = bean;
+		this.session = session;
+
+		subconn =  jedisFactory.getConnection();
+		subscriber = ((JedisConnection)subconn).getNativeConnection();
+		
+		pubconn =  jedisFactory.getConnection();
+		publisher = ((JedisConnection)pubconn).getNativeConnection();
+	}
+
+	public void online() {		
+		try{	  
+			subscriber.subscribe(this, bean.getSelf(), OnlineBean.SYSTEM_CHANNEL);
+		}catch(Exception e){			
+			e.printStackTrace();			
+		}finally {			
+			subconn.close();			
+		}
+	}
+
+	public void offline() {
+		try {
+			this.unsubscribe();
+			
+			subconn.close();
+			subscriber.close();
+			
+			pubconn.close();
+			publisher.close();
+			session.close();
+		
+		} catch (IOException e) { 
+			e.printStackTrace();
+		}
+	} 
+	
+	public void onMessage(String channel, String message) {
+		logger.info("---redis get message---channel="+channel+" message="+message);
+	}
+	
+	public void onSubscribe(String channel, int subscribedChannels) {
+		logger.info("---subscribe success---channel:"+channel+" subscribedChannels=" + subscribedChannels);   
+	}
+	
+	public void onUnsubscribe(String channel, int subscribedChannels) {
+		logger.info("---unsubscribe success---channel:"+channel+" subscribedChannels=" + subscribedChannels);
+	}
+}

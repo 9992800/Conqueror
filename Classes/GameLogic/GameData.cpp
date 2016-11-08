@@ -67,7 +67,7 @@ GameData::~GameData(){
 
 GameData* GameData::createWithData(GameData* data){
         
-        GameData *pRet = new(std::nothrow) GameData();
+        GameData *pRet = new(std::nothrow) GameData(data->_curPlayerNum);
         if (pRet && pRet->init(data))
         {
                 pRet->autorelease();

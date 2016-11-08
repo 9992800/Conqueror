@@ -28,7 +28,7 @@ class GameData: public Ref{
         friend class AreaData;
         friend class GameAI;
 public:
-        static GameData* create(int n = 3)
+        static GameData* create(int n)
         {
                 GameData *pRet = new(std::nothrow) GameData(n);
                 if (pRet && pRet->init())
@@ -45,7 +45,6 @@ public:
         }
         
         static GameData* createWithData(GameData* data);
-        GameData(){}
         GameData(int n);
         inline bool init(){return true;}
         bool init(GameData* data);

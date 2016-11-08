@@ -172,7 +172,8 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         
         MenuItemImage *level_4_lock_btn, *level_5_lock_btn, *level_6_lock_btn, *level_7_lock_btn;
 
-        bool level_4_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_4_LOCK_STATE_KEY, false);
+        bool level_4_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_4_LOCK_STATE_KEY, true);
+//        bool level_4_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_4_LOCK_STATE_KEY, false);
         if (level_4_opened){
                 level_4_lock_btn = MenuItemImage::create("level/level_unlock.png", "level/level_unlock_sel.png",
                                                               CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_4));
@@ -185,7 +186,8 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         
         
         
-        bool level_5_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_5_LOCK_STATE_KEY, false);
+        bool level_5_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_5_LOCK_STATE_KEY, true);
+//        bool level_5_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_5_LOCK_STATE_KEY, false);
         if (level_5_opened){
                 level_5_lock_btn = MenuItemImage::create("level/level_unlock.png", "level/level_unlock_sel.png",
                                                          CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_5));
@@ -197,7 +199,8 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         level_5_lock_btn->setPosition(Vec2(level_5_pos.x, level_5_pos.y - level_5_size.height / 2 - btn_top_gap));
         
 
-        bool level_6_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_6_LOCK_STATE_KEY, false);
+        bool level_6_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_6_LOCK_STATE_KEY, true);
+//        bool level_6_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_6_LOCK_STATE_KEY, false);
         if (level_6_opened){
                 level_6_lock_btn = MenuItemImage::create("level/level_unlock.png", "level/level_unlock_sel.png",
                                                          CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_6));
@@ -208,7 +211,8 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         }
         level_6_lock_btn->setPosition(Vec2(level_6_pos.x, level_6_pos.y - level_6_size.height / 2 - btn_top_gap));
         
-        bool level_7_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_7_LOCK_STATE_KEY, false);
+        bool level_7_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_7_LOCK_STATE_KEY, true);
+//        bool level_7_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_7_LOCK_STATE_KEY, false);
         if (level_7_opened){
                 level_7_lock_btn = MenuItemImage::create("level/level_unlock.png", "level/level_unlock_sel.png",
                                                          CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_7));

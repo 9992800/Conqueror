@@ -75,6 +75,7 @@
 		7C21A10D1DCB4F010035ECC6 /* AreaData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A1041DCB4F010035ECC6 /* AreaData.cpp */; };
 		7C21A10F1DCB4F010035ECC6 /* GamePlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A1091DCB4F010035ECC6 /* GamePlayer.cpp */; };
 		7C21A1101DCB4F010035ECC6 /* JoinData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A10B1DCB4F010035ECC6 /* JoinData.cpp */; };
+		7C67A7B51DD1BE6B004B5151 /* WebSocktUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */; };
 		7C733B1C1DC990E200098EDD /* iphone5 in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B181DC990E200098EDD /* iphone5 */; };
 		7C733B1D1DC990E200098EDD /* iphone6 in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B191DC990E200098EDD /* iphone6 */; };
 		7C733B1E1DC990E200098EDD /* iphone6p in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B1A1DC990E200098EDD /* iphone6p */; };
@@ -237,6 +238,8 @@
 		7C21A10A1DCB4F010035ECC6 /* GamePlayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GamePlayer.hpp; sourceTree = "<group>"; };
 		7C21A10B1DCB4F010035ECC6 /* JoinData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JoinData.cpp; sourceTree = "<group>"; };
 		7C21A10C1DCB4F010035ECC6 /* JoinData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JoinData.hpp; sourceTree = "<group>"; };
+		7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocktUtil.cpp; sourceTree = "<group>"; };
+		7C67A7B41DD1BE6B004B5151 /* WebSocktUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocktUtil.hpp; sourceTree = "<group>"; };
 		7C733B181DC990E200098EDD /* iphone5 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone5; sourceTree = "<group>"; };
 		7C733B191DC990E200098EDD /* iphone6 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6; sourceTree = "<group>"; };
 		7C733B1A1DC990E200098EDD /* iphone6p */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6p; sourceTree = "<group>"; };
@@ -570,6 +573,8 @@
 				7C21A0E61DCB2F450035ECC6 /* GameSettingsScene.cpp */,
 				BBC12E5D1DCE2F830035A571 /* GamePayUtil.hpp */,
 				BBC12E5C1DCE2F830035A571 /* GamePayUtil.cpp */,
+				7C67A7B41DD1BE6B004B5151 /* WebSocktUtil.hpp */,
+				7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -763,6 +768,7 @@
 				7C21A0F71DCB3A3C0035ECC6 /* PopUpBaseDialog.cpp in Sources */,
 				7C21A10F1DCB4F010035ECC6 /* GamePlayer.cpp in Sources */,
 				7C21A10D1DCB4F010035ECC6 /* AreaData.cpp in Sources */,
+				7C67A7B51DD1BE6B004B5151 /* WebSocktUtil.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				BBC12E5E1DCE2F830035A571 /* GamePayUtil.cpp in Sources */,
 				7C21A0F91DCB3A3C0035ECC6 /* PopUpOkDialog.cpp in Sources */,

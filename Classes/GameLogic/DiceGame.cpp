@@ -48,9 +48,8 @@ GameData* DiceGame::resetInitData(){
         return _data;
 }
 
-void DiceGame::makeNewMapData(){
+void DiceGame::makeNewMapData(){        
         
-        SET_SIZE_TOIDX(_data->_num, CEL_MAX);
         for (int i = 0; i <  CEL_MAX; i++){
                 int radom = random(0, CEL_MAX - 1);
                 

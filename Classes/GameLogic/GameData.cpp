@@ -22,6 +22,8 @@ _areaTo(AREA_UNSELECTED){
         _chk            = std::vector<int>(AREA_MAX, 0);
         _mapData        = std::vector<int>(CEL_MAX, 0);
         
+        SET_SIZE_TOIDX(this->_num, CEL_MAX);
+        
         for (int i = 0; i < CEL_MAX; i++){
                 JoinData* join_data = new JoinData();
                 join_data->initdir(i);

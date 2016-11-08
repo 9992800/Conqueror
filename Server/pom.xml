@@ -263,20 +263,20 @@
 			<id>product</id>
 			<properties> 
 			
-				<redis-server-ports>26379,26380</redis-server-ports> 
-				<redis-server-hosts>chat.jucaicun.com,chat.jucaicun.com</redis-server-hosts> 
-				<sentinel-master-name>chat_server</sentinel-master-name> 
+				<redis-server-ports></redis-server-ports> 
+				<redis-server-hosts></redis-server-hosts> 
+				<sentinel-master-name></sentinel-master-name> 
 				
 				<mvn.jdbc.driver>com.mysql.jdbc.Driver</mvn.jdbc.driver>
-				<mvn.jdbc.url>jdbc:mysql://10.172.198.55/jctx_chat?useUnicode=true&amp;characterEncoding=UTF-8</mvn.jdbc.url>
-				<mvn.jdbc.username>myworker</mvn.jdbc.username>
-				<mvn.jdbc.password>SINGLE*lws502</mvn.jdbc.password>
+				<mvn.jdbc.url></mvn.jdbc.url>
+				<mvn.jdbc.username></mvn.jdbc.username>
+				<mvn.jdbc.password></mvn.jdbc.password>
 				
 				<msg-cache-capacity>10000</msg-cache-capacity>
 				<msg-cache-threshold>9000</msg-cache-threshold>
 				
-				<mvn.push.url>https://api.jucaicun.com/pushCtrl/oneByOne</mvn.push.url>
-				<mvn.push.token>369471824f71438ca61cc6efbd15e8efd35a2cab4d6040e6af3e952f8d238cfc</mvn.push.token>
+				<mvn.push.url></mvn.push.url>
+				<mvn.push.token></mvn.push.token>
 				
 				<mvn.log.level>INFO</mvn.log.level> 
 			</properties>

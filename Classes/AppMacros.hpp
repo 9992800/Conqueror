@@ -134,7 +134,10 @@ return nullptr; \
 }
 
 
-
-
 #define LAYER_NAME_IN_TILE_MAP "map"
+
+
+#define WEB_SOCKET_SERVER_URL      "ws://127.0.0.1:9900"
+
+
 #endif /* __APPMACROS_H__ */

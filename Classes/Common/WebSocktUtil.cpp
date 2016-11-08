@@ -11,7 +11,9 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-WebSocktUtil::WebSocktUtil():_wsiSendText(nullptr){
+WebSocktUtil::WebSocktUtil(wsCallBack cb)
+:_wsiSendText(nullptr),
+_msgReceiver(cb){
         
 }
 
@@ -54,8 +56,11 @@ void WebSocktUtil::onOpen(cocos2d::network::WebSocket* ws){
 
 void WebSocktUtil::onMessage(network::WebSocket* ws, const network::WebSocket::Data& data){
         std::string msg(data.bytes);
-        
         log("%s", msg.c_str());
+       
+        if (_msgReceiver){
+                _msgReceiver(msg);
+        }
 }
 
 void WebSocktUtil::onClose(network::WebSocket* ws){

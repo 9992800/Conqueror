@@ -31,6 +31,11 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-messaging</artifactId>
+		    <version>${spring.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 			<version>${spring.version}</version>
@@ -207,6 +212,7 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
+					<encoding>utf8</encoding>
 				</configuration>
 			</plugin>
 			
@@ -237,13 +243,16 @@
 				<sentinel-master-name>chat_server_debug</sentinel-master-name>
 				
 				<mvn.jdbc.driver>com.mysql.jdbc.Driver</mvn.jdbc.driver>
-				<mvn.jdbc.url>jdbc:mysql://chat.jucaicun.com/jctx_chat_test?useUnicode=true&amp;characterEncoding=UTF-8</mvn.jdbc.url>
-				<mvn.jdbc.username>chat_debug1</mvn.jdbc.username>
-				<mvn.jdbc.password>chat_debug</mvn.jdbc.password>
+				<mvn.jdbc.url>jdbc:mysql://192.168.1.10/chat?useUnicode=true&amp;characterEncoding=UTF-8</mvn.jdbc.url>
+				<mvn.jdbc.username>myroot</mvn.jdbc.username>
+				<mvn.jdbc.password>root</mvn.jdbc.password>
 				
 				
 				<msg-cache-capacity>10</msg-cache-capacity>
 				<msg-cache-threshold>8</msg-cache-threshold>
+				
+				<mvn.push.url>http://127.0.0.1:8080/pushCtrl/oneByOne</mvn.push.url>
+				<mvn.push.token>369471824f71438ca61cc6efbd15e8efd35a2cab4d6040e6af3e952f8d238cfc</mvn.push.token>
 				
 				<mvn.log.level>DEBUG</mvn.log.level> 
 				
@@ -265,6 +274,9 @@
 				
 				<msg-cache-capacity>10000</msg-cache-capacity>
 				<msg-cache-threshold>9000</msg-cache-threshold>
+				
+				<mvn.push.url>https://api.jucaicun.com/pushCtrl/oneByOne</mvn.push.url>
+				<mvn.push.token>369471824f71438ca61cc6efbd15e8efd35a2cab4d6040e6af3e952f8d238cfc</mvn.push.token>
 				
 				<mvn.log.level>INFO</mvn.log.level> 
 			</properties>

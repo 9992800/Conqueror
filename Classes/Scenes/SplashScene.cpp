@@ -60,8 +60,30 @@ void Splash::onEnter(){
         
         scheduleUpdate();
         
-        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE);
-        _count += 10;
+        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_START_GAME);
+        _count += 5;
+        
+        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_WIN);
+        _count += 5;
+        
+        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_DEFEAT);
+        _count += 5;
+        
+        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_SELECTED);
+        _count += 5;
+
+        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_DROP_DICE);
+        _count += 5;
+        
+        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_SUPPLY);
+        _count += 5;
+        
+        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_FINISH_LOSE);
+        _count += 5;
+        
+        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_FINISH_WIN);
+        _count += 5;
+        
         bool is_effect_on = UserDefault::getInstance()->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
         if (is_effect_on){
                 CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.f);
@@ -69,13 +91,14 @@ void Splash::onEnter(){
                 CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.f);
         }
         
+        //TODO::restore product
 //        GamePayUtil::getInstance()->retrieveLastProduct();
 }
 
 void Splash::update(float delta){
         
         if (_count < 100)
-                _count += 4 ;
+                _count += 1 ;
         else{
                 auto starting = Starting::createScene();
                 Director::getInstance()->replaceScene(starting);

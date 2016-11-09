@@ -49,7 +49,7 @@ bool GameScene::init()
         
         this->initAnimationLayer();
         
-        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 4);
+        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 6);
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         
         return true;
@@ -208,6 +208,7 @@ void GameScene::afterPlayerBattle(int result){
         _tamara->setVisible(false);
         std::map<int, int> survival = _theGameLogic->cleanUpBattleField(result);
         if (survival.size() == 1){
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_WIN);
                 Director::getInstance()->pause();
                 BaseDialogConfig config("胜利了!",
                                         "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香");
@@ -226,6 +227,7 @@ void GameScene::afterRobootBattle(int result){
         
         int user_tc = _theGameLogic->getUserTC();
         if (0 == user_tc){
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_LOSE);
                 Director::getInstance()->pause();
                 BaseDialogConfig config("失败，需要重试吗？",
                                         "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香");
@@ -272,9 +274,9 @@ void GameScene::gameAction(){
 
 void GameScene::playBattleAnimation(int res, CallFunc* callback){
         if (ATTACK_RES_WIN == res){
-                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_WIN);
         }else if (ATTACK_RES_DEFEATED == res){
-                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_DEFEAT);
         }
         bool is_anim_on = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
         if (is_anim_on){
@@ -289,12 +291,13 @@ void GameScene::playBattleAnimation(int res, CallFunc* callback){
                 Sequence*  s = Sequence::create(action2, callback, nullptr);
                 _tamara->runAction(s);
         }else{
+                //TODO::play a simple sequence
                 callback->execute();
         }
 }
 
 void GameScene::playSupplyAnimation(CallFunc* callback){
-        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_SUPPLY);
         _theGameLogic->starSupplyDice(callback);
 }
 
@@ -303,6 +306,8 @@ void GameScene::menuEndTurn(Ref* pSender){
         if (_isPalyingAnim){
                 return;
         }
+        
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);
         
         ((MenuItemImage*)pSender)->setVisible(false);
         _theGameLogic->clearManulAction();
@@ -313,7 +318,7 @@ void GameScene::menuEndTurn(Ref* pSender){
 
 void GameScene::menuStartGame(Ref* pSender){
         ((MenuItemImage*)pSender)->setVisible(false);
-        
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);
         _gameStatus = GAME_STATUS_AIRUNNING;
         this->gameAction();
 }

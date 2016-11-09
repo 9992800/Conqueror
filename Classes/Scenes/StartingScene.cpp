@@ -149,7 +149,7 @@ void Starting::menuSoundCtrl(Ref* pSender){
         }else{
                 _soundCtrl->setNormalImage(Sprite::create("Sound_on.png"));
                 _soundCtrl->setSelectedImage(Sprite::create("Sound_on_sel.png"));
-                SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE);
+                SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);
                 CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1);
         }
 }

@@ -93,8 +93,17 @@ enum {
         GAME_OVER_DEFEATED
 };
 
-#define AI_ATTACK_THINKING_SIZE (AREA_MAX * AREA_MAX)
-#define EFFECT_FILE                     "effect1.wav"
+#define AI_ATTACK_THINKING_SIZE (AREA_MAX * AREA_MAX) 
+
+#define EFFECT_FILE_START_GAME          "sounds/start.mp3"
+#define EFFECT_FILE_WIN                 "sounds/win.mp3"
+#define EFFECT_FILE_DEFEAT              "sounds/defeat.mp3"
+#define EFFECT_FILE_SELECTED            "sounds/selected.mp3"
+#define EFFECT_FILE_DROP_DICE           "sounds/drop_dice.mp3"
+#define EFFECT_FILE_SUPPLY              "sounds/supply.mp3"
+#define EFFECT_FILE_FINISH_LOSE         "sounds/finish_lose.mp3"
+#define EFFECT_FILE_FINISH_WIN          "sounds/finish_win.mp3"
+
 #define SOUND_EFFECT_SWITCH_KEY         "_key_sound_effect_switch"
 #define ANIMATION_SWITCH_KEY            "_key_animation_switch"
 #define GAME_SPEED_KEY                  "_key_game_speed_value"

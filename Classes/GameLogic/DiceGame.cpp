@@ -16,7 +16,9 @@ bool DiceGame::init(){
 GameData* DiceGame::initGameData(int num){
         _data =  GameData::create(num);
         
-        this->makeNewMapData();
+        for (int i = 0; i < CEL_MAX; i++){
+                this->makeNewMapData();
+        }
         
         for (int i = 0; i < MAX_PLAYER; i++){
                 this->set_area_tc(i);
@@ -48,7 +50,18 @@ GameData* DiceGame::resetInitData(){
         return _data;
 }
 
-void DiceGame::makeNewMapData(){        
+#define print_area() {\
+for (int j = 0; j < CEL_MAX; j++){\
+        int area_id = _data->_cel[j];\
+        if (j % AREA_MAX == 0){\
+                printf("]\r\n[");\
+        }\
+        printf(" %d ", area_id);\
+}\
+}
+
+static int static_int_i = 0;
+void DiceGame::makeNewMapData(){
         
         for (int i = 0; i <  CEL_MAX; i++){
                 int radom = random(0, CEL_MAX - 1);
@@ -59,10 +72,16 @@ void DiceGame::makeNewMapData(){
         }
         
         SET_SIZE_TOZERO2(_data->_cel, _data->_rcel, CEL_MAX);
-        int radom = random(0, CEL_MAX -1);
+        
+//        int radom = random(0, CEL_MAX -1);
+        int radom = static_int_i++;
         _data->_rcel[radom] = 1;
+        
+        
         /*create original area data*/
-        for (int i = 1; i < AREA_MAX; ++i){
+        
+        int i = 1;
+        do{
                 int valaible_cel = 9999;
                 int selected_cell;
                 for (int j = 0; j < CEL_MAX; j++){
@@ -84,7 +103,14 @@ void DiceGame::makeNewMapData(){
                 if (0 ==  next_cel){
                         break;
                 }
-        };
+                
+                ++i;
+        }while(i < AREA_MAX);
+        
+        printf("\r\n------1----random=%d---\r\n", radom);
+        print_area();
+        
+        
         /*make all cells around created area been in used*/
         for (int i = 0; i < CEL_MAX; i++){
                 if (_data->_cel[i] > 0){
@@ -111,6 +137,9 @@ void DiceGame::makeNewMapData(){
                 }
         }
         
+        printf("\r\n------2-------\r\n");
+        print_area();
+        
         for (int i = 0 ; i < AREA_MAX; i++){            
                 
                 _data->_areaData[i] = new AreaData(i);
@@ -134,14 +163,6 @@ void DiceGame::makeNewMapData(){
                 }
         }
         
-        for (int j = 0; j < CEL_MAX; j++){
-                int area_id = _data->_cel[j];
-                if (j % AREA_MAX == 0){
-                        printf("]\r\n[");
-                }
-                printf(" %d ", area_id);
-        }
-        
         int cell_idx = 0;
         for (int i = 0; i < YMAX; i++){
                 for (int j = 0; j < XMAX; j++){
@@ -159,6 +180,7 @@ void DiceGame::makeNewMapData(){
         for (int i = 1; i < AREA_MAX; i++){
                 AreaData* area = _data->_areaData[i];
                 area->initCenter();
+                area->setOwner(-1);
         }
         
         
@@ -179,12 +201,8 @@ void DiceGame::makeNewMapData(){
         }
         
         
-        for (int i = 0; i < AREA_MAX; i++){
-                _data->_areaData[i]->setOwner(-1);
-        }
-        
-        
-        int tmpAreaId[AREA_MAX] = {0};
+        int tmpAreaId[AREA_MAX];
+        SET_SIZE_TOZERO(tmpAreaId, AREA_MAX);
         int player_uid = 0;
         
         while(true){
@@ -202,7 +220,6 @@ void DiceGame::makeNewMapData(){
                         break;
                 }
                 
-//                int random_area = tmpAreaId[0];
                 int random_area = tmpAreaId[random<int>(0, available_area - 1)];
                 _data->_areaData[random_area]->setOwner(player_uid);
                 
@@ -284,7 +301,7 @@ int DiceGame::percolate(int pt, int cmax, int an){
         SET_SIZE_TOZERO(next_f, CEL_MAX);
         
         int cell_num_in_area = 0;
-        while (cell_num_in_area < cmax){
+        do{
                 _data->_cel[cell_in_area] = an;
                 ++cell_num_in_area;
                 
@@ -310,7 +327,7 @@ int DiceGame::percolate(int pt, int cmax, int an){
                 if (9999 == cell_value){
                         break;
                 }
-        }
+        }while (cell_num_in_area < cmax);
         
         
         for (int i = 0; i < CEL_MAX; i++){
@@ -329,7 +346,7 @@ int DiceGame::percolate(int pt, int cmax, int an){
                 }
         }
         
-        return cell_in_area;
+        return cell_num_in_area;
 }
 
 

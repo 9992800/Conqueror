@@ -98,6 +98,7 @@ int GameAI::com_thinking(GameData* data){
                         
                         if (target_uid >= 0){
                                 if (!(area_i->getOwner() != target_uid && area_j->getOwner() != target_uid)){
+                                        
                                         if (area_j->getDice() <= area_i->getDice()){
 
                                                 if (area_j->getDice() == area_i->getDice()){
@@ -126,6 +127,7 @@ int GameAI::com_thinking(GameData* data){
                                                 }
                                         }
                                 }
+                                
                         }else if (area_j->getDice() <= area_i->getDice()){
                                 
                                 if (area_j->getDice() == area_i->getDice()){

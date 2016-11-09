@@ -16,9 +16,7 @@ bool DiceGame::init(){
 GameData* DiceGame::initGameData(int num){
         _data =  GameData::create(num);
         
-        for (int i = 0; i < CEL_MAX; i++){
-                this->makeNewMapData();
-        }
+        this->makeNewMapData();
         
         for (int i = 0; i < MAX_PLAYER; i++){
                 this->set_area_tc(i);
@@ -60,7 +58,6 @@ for (int j = 0; j < CEL_MAX; j++){\
 }\
 }
 
-static int static_int_i = 0;
 void DiceGame::makeNewMapData(){
         
         for (int i = 0; i <  CEL_MAX; i++){
@@ -73,8 +70,7 @@ void DiceGame::makeNewMapData(){
         
         SET_SIZE_TOZERO2(_data->_cel, _data->_rcel, CEL_MAX);
         
-//        int radom = random(0, CEL_MAX -1);
-        int radom = static_int_i++;
+        int radom = random(0, CEL_MAX -1); 
         _data->_rcel[radom] = 1;
         
         
@@ -107,10 +103,6 @@ void DiceGame::makeNewMapData(){
                 ++i;
         }while(i < AREA_MAX);
         
-        printf("\r\n------1----random=%d---\r\n", radom);
-        print_area();
-        
-        
         /*make all cells around created area been in used*/
         for (int i = 0; i < CEL_MAX; i++){
                 if (_data->_cel[i] > 0){
@@ -137,7 +129,6 @@ void DiceGame::makeNewMapData(){
                 }
         }
         
-        printf("\r\n------2-------\r\n");
         print_area();
         
         for (int i = 0 ; i < AREA_MAX; i++){            

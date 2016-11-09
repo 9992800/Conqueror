@@ -94,36 +94,42 @@ int GameAI::com_thinking(GameData* data){
                                 continue;
                         }
                         
-                        if (target_uid >= 0
-                            && !(area_i->getOwner() != target_uid
-                                 && area_j->getOwner() != target_uid)
-                            && area_j->getDice() <= area_i->getDice()){
-                                
-                                if (area_j->getDice() == area_i->getDice()){
-                                        int owner_j = area_j->getOwner();
-                                        bool attack = false;
-                                        if (data->_player[current_player_id]->getDiceJun() == 0){
-                                                attack = true;
+                        printf("++++++target_uid=%d++++++",target_uid);
+                        
+                        if (target_uid >= 0){
+                                if (!(area_i->getOwner() != target_uid && area_j->getOwner() != target_uid)){
+                                        if (area_j->getDice() <= area_i->getDice()){
+
+                                                if (area_j->getDice() == area_i->getDice()){
+                                                        
+                                                        int owner_j = area_j->getOwner();
+                                                        bool attack = false;
+                                                        if (data->_player[current_player_id]->getDiceJun() == 0){
+                                                                attack = true;
+                                                        }
+                                                        if (data->_player[owner_j]->getDiceJun() == 0){
+                                                                attack = true;
+                                                        }
+                                                        if (random(0, 9) > 1){
+                                                                attack = true;
+                                                        }
+                                                        if (attack){
+                                                                _list_from[target_cont] = i;
+                                                                _list_to[target_cont] = j;
+                                                                ++target_cont;
+                                                        }
+                                                        
+                                                }else{
+                                                        _list_from[target_cont] = i;
+                                                        _list_to[target_cont] = j;
+                                                        ++target_cont;
+                                                }
                                         }
-                                        if (data->_player[owner_j]->getDiceJun() == 0){
-                                                attack = true;
-                                        }
-                                        if (random(0, 9) > 1){
-                                                attack = true;
-                                        }
-                                        if (attack){
-                                                _list_from[target_cont] = i;
-                                                _list_to[target_cont] = j;
-                                                ++target_cont;
-                                        }
-                                }else{
-                                        _list_from[target_cont] = i;
-                                        _list_to[target_cont] = j;
-                                        ++target_cont;
                                 }
-                                
                         }else if (area_j->getDice() <= area_i->getDice()){
+                                
                                 if (area_j->getDice() == area_i->getDice()){
+                                        
                                         int owner_j = area_j->getOwner();
                                         bool attack = false;
                                         
@@ -141,6 +147,7 @@ int GameAI::com_thinking(GameData* data){
                                                 _list_to[target_cont] = j;
                                                 ++target_cont;
                                         }
+                                        
                                 }else{
                                         _list_from[target_cont] = i;
                                         _list_to[target_cont] = j;

@@ -202,8 +202,8 @@ void DiceGame::makeNewMapData(){
                         break;
                 }
                 
-                int random_area = tmpAreaId[0];
-//                int random_area = tmpAreaId[random<int>(0, available_area - 1)];
+//                int random_area = tmpAreaId[0];
+                int random_area = tmpAreaId[random<int>(0, available_area - 1)];
                 _data->_areaData[random_area]->setOwner(player_uid);
                 
                 ++player_uid;

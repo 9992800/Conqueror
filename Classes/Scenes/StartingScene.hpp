@@ -25,17 +25,17 @@ protected:
         void menuShareGame(Ref* pSender);
         
         
-        void onLogin(bool isLogin, const std::string& msg);
-        void onSharedSuccess(const std::string& message);
-        void onSharedFailed(const std::string& message);
-        void onSharedCancel();
-        void onAPI(const std::string& key, const std::string& jsonData);
-        void onPermission(bool isLogin, const std::string& msg);
-        void onFetchFriends(bool ok, const std::string& msg);
-        void onRequestInvitableFriends( const sdkbox::FBInvitableFriendsInfo& friends );
-        void onInviteFriendsWithInviteIdsResult( bool result, const std::string& msg );
-        void onInviteFriendsResult( bool result, const std::string& msg );
-        void onGetUserInfo( const sdkbox::FBGraphUser& userInfo );
+        void onLogin(bool, const std::string&)override;
+        void onSharedSuccess(const std::string&)override;
+        void onSharedFailed(const std::string&)override;
+        void onSharedCancel()override;
+        void onAPI(const std::string&, const std::string&)override;
+        void onPermission(bool, const std::string&)override;
+        void onFetchFriends(bool, const std::string&)override;
+        void onRequestInvitableFriends(const sdkbox::FBInvitableFriendsInfo&)override;
+        void onInviteFriendsWithInviteIdsResult(bool, const std::string&)override;
+        void onInviteFriendsResult(bool, const std::string&)override;
+        void onGetUserInfo(const sdkbox::FBGraphUser&)override;
 
         
 private:

@@ -130,10 +130,16 @@ void GameScene::initAnimationLayer(){
 #pragma mark - touch and menu event
 
 void GameScene::onTouchesMoved(const std::vector<Touch*>& touches, Event* event){
-        _isMoved = true;
-        auto touch = touches[0];
         
+        auto touch = touches[0];
         auto diff = touch->getDelta();
+        
+        CCLOGWARN("------getDelta(%.4f, %.4f)---------", diff.x, diff.y);
+        if (diff.x >= 0.01f || diff.y >= 0.01
+            || diff.x <= -0.01f ||diff.y <= -0.01f){
+                _isMoved = true;
+        }
+        
         diff.x = 0;
         auto map = this->getChildByTag(key_map_tag);
         auto currentPos = map->getPosition();

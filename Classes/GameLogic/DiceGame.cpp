@@ -435,7 +435,7 @@ int DiceGame::startBattle(){
                 area_from->recordFightValue(random_value);
                 from_sum += random_value;
                 printf("\t---%d---", random_value);
-                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_DROP_DICE);
+                //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_DROP_DICE);
         }
         
         printf("\r\n---to---");
@@ -445,7 +445,7 @@ int DiceGame::startBattle(){
                 area_to->recordFightValue(random_value);
                 to_sum += random_value;
                 printf("\t---%d---", random_value);
-                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_DROP_DICE);
+                //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_DROP_DICE);
         }
         printf("\r\n---result:(%d)VS(%d)---", from_sum, to_sum);
         if (from_sum > to_sum){

@@ -133,8 +133,7 @@ void GameScene::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
         
         auto touch = touches[0];
         auto diff = touch->getDelta();
-        
-        CCLOGWARN("------getDelta(%.4f, %.4f)---------", diff.x, diff.y);
+
         if (diff.x >= 0.01f || diff.y >= 0.01
             || diff.x <= -0.01f ||diff.y <= -0.01f){
                 _isMoved = true;

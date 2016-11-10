@@ -16,22 +16,10 @@
         <meta-data android:name="android.app.lib_name"
                    android:value="MyGame" />
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-        <activity android:name="com.facebook.FacebookActivity"
-                  android:configChanges=
-                      "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
-                  android:label="@string/app_name" />
-
-
-        <provider android:authorities="com.facebook.app.FacebookContentProvider__replace_with_your_app_id__"
-                  android:name="com.facebook.FacebookContentProvider"
-                  android:exported="true" />
-
         <activity
             android:name="org.cocos2dx.cpp.AppActivity"
             android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:configChanges="keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
@@ -41,8 +29,20 @@
             </intent-filter>
         </activity>
 
-    </application>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <activity android:name="com.facebook.FacebookActivity"
+                  android:configChanges=
+                      "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                  android:label="@string/app_name" />
+
+
+        <provider android:authorities="com.facebook.app.FacebookContentProvider610710792470962"
+                  android:name="com.facebook.FacebookContentProvider"
+                  android:exported="true" />
+
+    </application>
     
 </manifest>

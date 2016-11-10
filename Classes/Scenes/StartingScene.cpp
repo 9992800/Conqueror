@@ -120,16 +120,14 @@ void Starting::afterCaptureScreen(bool yes, const std::string &outputFilename)
 void Starting::menuShareGame(Ref* pSender){
         CCLOG("##FB %s", __FUNCTION__);
         
-        std::vector<std::string> permation = PluginFacebook::getPermissionList();
-        if (permation.size() == 0){
+        
+        if (PluginFacebook::isLoggedIn()){
+                utils::captureScreen(CC_CALLBACK_2(Starting::afterCaptureScreen, this), "screen.png");
+        }else{
                 std::vector<std::string> permissions;
                 permissions.push_back(sdkbox::FB_PERM_READ_EMAIL);
                 permissions.push_back(sdkbox::FB_PERM_READ_USER_FRIENDS);
-                permissions.push_back(sdkbox::FB_PERM_PUBLISH_POST);
-
                 PluginFacebook::login(permissions);
-        }else{
-                utils::captureScreen(CC_CALLBACK_2(Starting::afterCaptureScreen, this), "screen.png");
         }
 }
 
@@ -182,6 +180,8 @@ void Starting::onExit(){
 void Starting::onLogin(bool isLogin, const std::string& error)
 {
         CCLOG("##FB isLogin: %d, error: %s", isLogin, error.c_str());
+        
+        PluginFacebook::requestPublishPermissions({FB_PERM_PUBLISH_POST});
 }
 
 void Starting::onAPI(const std::string& tag, const std::string& jsonData)

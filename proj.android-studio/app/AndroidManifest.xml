@@ -32,11 +32,11 @@
 
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
         <activity android:name="com.facebook.FacebookActivity"
                   android:configChanges=
-                      "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
-                  android:label="@string/app_name" />
+                      "keyboard|keyboardHidden|screenLayout|screenSize"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
 
         <provider android:authorities="com.facebook.app.FacebookContentProvider610710792470962"

@@ -49,6 +49,7 @@ dependencies {
     compile files('libs/facebook_lib/libs/facebook-android-4.12.1.jar')
     compile files('libs/facebook_lib/libs/android-support-v4.jar')
     compile files('libs/facebook_lib/libs/bolts-android-1.1.2.jar')
+    compile files('libs/facebook_lib/bin/classes.jar')
 }
 
 task cleanAssets(type: Delete) {

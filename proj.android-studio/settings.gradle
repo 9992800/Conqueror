@@ -1,4 +1,5 @@
-include ':libcocos2dx'
+include ':libcocos2dx', ':facebook_lib'
 project(':libcocos2dx').projectDir = new File(settingsDir, '../cocos2d/cocos/platform/android/libcocos2dx')
 include ':Conqueror'
 project(':Conqueror').projectDir = new File(settingsDir, 'app')
+project(':facebook_lib').projectDir = new File('app/libs/facebook_lib')

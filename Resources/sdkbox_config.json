@@ -35,12 +35,10 @@
     "android": {
         
         "Facebook": {
-                "debug": true,
-                "app_id":"610710792470962",
-                "url_scheme_suffix":"fb"
+                "debug": true
         },
         "iap":{
-        "key":"<put your googleplay key here>",
+        "key":"iLGKOXzrWf0i+iNudibv+zAM6mk=",
         "items":{
                 "remove_ads": {
                         "type": "non_consumable",
@@ -62,6 +60,7 @@
                         "type": "non_consumable", 
                         "id": "com.bellflower.Conqueror.open_level7"
                 }
+            }
         }
     }
 }

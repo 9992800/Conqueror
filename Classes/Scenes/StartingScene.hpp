@@ -23,7 +23,7 @@ protected:
         void menuHelp(Ref* pSender);
         void menuSoundCtrl(Ref* pSender);
         void menuShareGame(Ref* pSender);
-        
+        void menuOnlineBattle(Ref* pSender);
         
         void onLogin(bool, const std::string&)override;
         void onSharedSuccess(const std::string&)override;
@@ -47,7 +47,8 @@ private:
         MenuItemImage* _startGame,
                         *_soundCtrl,
                         *_helpBtn,
-                        *_shareIt;
+                        *_shareIt,
+                        *_onlineBattle;
         std::string _captureFilename;
 };
 

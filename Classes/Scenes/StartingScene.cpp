@@ -3,6 +3,7 @@
 #include "AppMacros.hpp"
 #include "StartingScene.hpp"
 #include "GameHelpScene.hpp"
+#include "FindPlayerScene.hpp"
 
 using namespace CocosDenshion;
 
@@ -66,7 +67,12 @@ bool Starting::init()
         _shareIt->setPosition(Vec2(_shareIt->getContentSize().width,
                                      origin.y + visibleSize.height - _shareIt->getContentSize().height));
         
-        auto menu = Menu::create(_startGame, _soundCtrl, _helpBtn, _shareIt, NULL);
+        _onlineBattle = MenuItemImage::create("online_battle.png", "online_battle_sel.png",
+                                              CC_CALLBACK_1(Starting::menuOnlineBattle, this));
+        _onlineBattle->setPosition(Vec2(origin.x + visibleSize.width - 2 * _onlineBattle->getContentSize().width,
+                                        origin.y +  _onlineBattle->getContentSize().height/ 2 + 20));
+        
+        auto menu = Menu::create(_startGame, _soundCtrl, _helpBtn, _shareIt, _onlineBattle, NULL);
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, 2);
         
@@ -112,6 +118,8 @@ void Starting::afterCaptureScreen(bool yes, const std::string &outputFilename)
                         info.link = "http://www.cocos2d-x.org";
                         info.image = outputFilename;
                         PluginFacebook::dialog(info);
+                }else{
+                        PluginFacebook::requestPublishPermissions({FB_PERM_PUBLISH_POST});
                 }
         }
         
@@ -135,6 +143,7 @@ void Starting::menuHelp(Ref* pSender){
         Scene* scene = GameHelp::createScene();
         Director::getInstance()->pushScene(scene);
 }
+
 void Starting::menuSoundCtrl(Ref* pSender){
         bool is_effect_on = UserDefault::getInstance()->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
         UserDefault::getInstance()->setBoolForKey(SOUND_EFFECT_SWITCH_KEY, !is_effect_on);
@@ -150,6 +159,11 @@ void Starting::menuSoundCtrl(Ref* pSender){
                 SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);
                 CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1);
         }
+}
+
+void Starting::menuOnlineBattle(Ref* pSender){
+        Scene* scene = FindPlayer::createScene();
+        Director::getInstance()->pushScene(scene);
 }
 
 
@@ -180,8 +194,6 @@ void Starting::onExit(){
 void Starting::onLogin(bool isLogin, const std::string& error)
 {
         CCLOG("##FB isLogin: %d, error: %s", isLogin, error.c_str());
-        
-        PluginFacebook::requestPublishPermissions({FB_PERM_PUBLISH_POST});
 }
 
 void Starting::onAPI(const std::string& tag, const std::string& jsonData)

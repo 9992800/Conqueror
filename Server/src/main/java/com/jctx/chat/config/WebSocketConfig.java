@@ -14,7 +14,6 @@ import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
-import com.jctx.chat.controller.ChatEndpointHandler;
 import com.jctx.chat.controller.MarcoHandler;
 
 @Configuration
@@ -25,8 +24,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 	@Override
 	public void registerWebSocketHandlers(
 	                                 WebSocketHandlerRegistry registry) {
-		registry.addHandler(marcoHandler(), "/marco").setAllowedOrigins("http://chat.jucaicun.com");
-		registry.addHandler(chateHandler(), "/online").setAllowedOrigins("http://chat.jucaicun.com");
+		registry.addHandler(marcoHandler(), "/marco"); 
 	} 
 	
 	@Bean
@@ -50,10 +48,5 @@ public class WebSocketConfig implements WebSocketConfigurer {
 	@Bean
 	public MarcoHandler marcoHandler() {
 	     return new MarcoHandler();
-	}
-	
-	@Bean
-	public ChatEndpointHandler chateHandler() {
-		return new ChatEndpointHandler();
 	}
 }

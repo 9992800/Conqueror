@@ -8,19 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.connection.RedisNode;
 import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
-import com.jctx.chat.service.ChatMessageCacheForDb;
-
 import redis.clients.jedis.JedisPoolConfig;
 
-@Configuration
-@ComponentScan(basePackages = { "com.jctx.*" })
+//@Configuration 
 @PropertySource("classpath:system.properties")
 public class JedisConfig {
 	private static final Logger logger =
@@ -53,11 +48,11 @@ public class JedisConfig {
 	
 	@Value("${msg.cache.threshold}")
 	private  int FLUSH_THRESHOLD;
-	
-	@Bean
-	public ChatMessageCacheForDb messageCache(){
-		return new ChatMessageCacheForDb(CAPACITY, FLUSH_THRESHOLD);
-	}
+//	
+//	@Bean
+//	public ChatMessageCacheForDb messageCache(){
+//		return new ChatMessageCacheForDb(CAPACITY, FLUSH_THRESHOLD);
+//	}
 	
 	@Bean
 	public JedisConnectionFactory jedisConnectionFactory() {

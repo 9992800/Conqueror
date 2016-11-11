@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jctx.chat.Utils.ResultMapUtils;
-import com.jctx.chat.service.ChatDbService;
+import com.jctx.chat.service.FindComponentsService; 
 
 @Controller
 public class HomeController {
 	
 	@Resource
-	ChatDbService chatDbService;
+	FindComponentsService findComponentService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 

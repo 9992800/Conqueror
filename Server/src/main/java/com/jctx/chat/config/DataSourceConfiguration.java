@@ -9,14 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
-@Configuration
+//@Configuration
 @PropertySource("classpath:system.properties") 
 public class DataSourceConfiguration {
 	private static final Logger logger =

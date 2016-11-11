@@ -19,7 +19,7 @@ public class MarcoHandler extends AbstractWebSocketHandler {
 	  
 		 logger.info("Received text  message: " + message.getPayload());
 	     
-	    session.sendMessage(new TextMessage("Polo!"));
+		 session.sendMessage(new TextMessage("......哈喽..Polo!......."));
 	  }
 	  
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {

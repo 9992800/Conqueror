@@ -38,7 +38,6 @@ bool FindPlayer::init(){
         _network->retain();
         
         _network->startConnect();
-        
         return true;
 }
 

@@ -61,11 +61,12 @@ int WebSocktUtil::sendMessage(std::string msg){
 #pragma mark - websocket delegate method
 void WebSocktUtil::onOpen(cocos2d::network::WebSocket* ws){
         log("Websocket (%p) opened", ws);
+        this->sendMessage("hello 啊");
 }
 
 void WebSocktUtil::onMessage(network::WebSocket* ws, const network::WebSocket::Data& data){
         std::string msg(data.bytes);
-        log("%s", msg.c_str());
+        log("-----------%s---------------", msg.c_str());
        
         if (_msgReceiver){
                 _msgReceiver(msg);

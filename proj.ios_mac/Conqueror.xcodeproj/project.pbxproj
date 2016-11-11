@@ -83,6 +83,7 @@
 		7C82E4261DD5768A0019C8CF /* BattleFieldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C82E4241DD5768A0019C8CF /* BattleFieldScene.cpp */; };
 		7C82E4281DD57EDD0019C8CF /* online_battle.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C82E4271DD57EDD0019C8CF /* online_battle.png */; };
 		7C82E42A1DD581610019C8CF /* online_battle_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C82E4291DD581610019C8CF /* online_battle_sel.png */; };
+		7CCB51DA1DD5AAC000810354 /* JsonUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CCB51D81DD5AAC000810354 /* JsonUtil.cpp */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		BB34FAAA1DD35B7A0070B4E4 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = BB34FAA91DD35B7A0070B4E4 /* sounds */; };
 		BB51F1091DCF66D50031296E /* share_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = BB51F1071DCF66D50031296E /* share_sel.png */; };
@@ -254,6 +255,8 @@
 		7C82E4251DD5768A0019C8CF /* BattleFieldScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BattleFieldScene.hpp; sourceTree = "<group>"; };
 		7C82E4271DD57EDD0019C8CF /* online_battle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = online_battle.png; sourceTree = "<group>"; };
 		7C82E4291DD581610019C8CF /* online_battle_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = online_battle_sel.png; sourceTree = "<group>"; };
+		7CCB51D81DD5AAC000810354 /* JsonUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JsonUtil.cpp; sourceTree = "<group>"; };
+		7CCB51D91DD5AAC000810354 /* JsonUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JsonUtil.hpp; sourceTree = "<group>"; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		BB34FAA91DD35B7A0070B4E4 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		BB51F1071DCF66D50031296E /* share_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_sel.png; sourceTree = "<group>"; };
@@ -602,6 +605,8 @@
 				BBC12E5C1DCE2F830035A571 /* GamePayUtil.cpp */,
 				7C67A7B41DD1BE6B004B5151 /* WebSocktUtil.hpp */,
 				7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */,
+				7CCB51D91DD5AAC000810354 /* JsonUtil.hpp */,
+				7CCB51D81DD5AAC000810354 /* JsonUtil.cpp */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -800,6 +805,7 @@
 				7C21A10F1DCB4F010035ECC6 /* GamePlayer.cpp in Sources */,
 				7C21A10D1DCB4F010035ECC6 /* AreaData.cpp in Sources */,
 				7C67A7B51DD1BE6B004B5151 /* WebSocktUtil.cpp in Sources */,
+				7CCB51DA1DD5AAC000810354 /* JsonUtil.cpp in Sources */,
 				7C82E4201DD572A70019C8CF /* FindPlayerScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				BBC12E5E1DCE2F830035A571 /* GamePayUtil.cpp in Sources */,

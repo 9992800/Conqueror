@@ -7,9 +7,6 @@
 //
 
 #include "FindPlayerScene.hpp"
-#include "AppMacros.hpp"
-#include "WebSocktUtil.hpp"
-
 Scene* FindPlayer::createScene()
 {
         auto scene = Scene::create();
@@ -19,6 +16,9 @@ Scene* FindPlayer::createScene()
         return scene;
 }
 
+FindPlayer::~FindPlayer(){
+        _network->release();
+}
 
 bool FindPlayer::init(){
         
@@ -33,7 +33,17 @@ bool FindPlayer::init(){
         
         this->addChild(_waitingTips);
         
+        wsCallBack callback = CC_CALLBACK_1(FindPlayer::onMessage, this);
+        _network = WebSocktUtil::create(callback);
+        _network->retain();
+        
+        _network->startConnect();
+        
         return true;
+}
+
+void FindPlayer::onMessage(std::string message){
+        CCLOGWARN("---online---=%s", message.c_str());
 }
 
 void FindPlayer::afterAnimation(){

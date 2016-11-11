@@ -13,7 +13,9 @@
 #include "extensions/cocos-ext.h"
 #include "network/WebSocket.h"
 
-typedef std::function<void(const std::string)> wsCallBack;
+USING_NS_CC;
+
+typedef std::function<void(std::string)> wsCallBack;
 
 class WebSocktUtil:public cocos2d::Ref, public cocos2d::network::WebSocket::Delegate{
 public:
@@ -23,8 +25,12 @@ public:
         CREATE_FUNC2(WebSocktUtil, wsCallBack, callback);
 public:
         void startConnect();
-        void sendMessage(std::string);
+        int  sendMessage(std::string);
         void setMessageReceiver();
+        inline network::WebSocket* getCurrentSocekt(){
+                return _wsiSendText;
+        }
+        
 protected:
         
         virtual void onOpen(cocos2d::network::WebSocket* ws)override;
@@ -33,7 +39,7 @@ protected:
         virtual void onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error)override;
         
 private:
-        cocos2d::network::WebSocket* _wsiSendText;
+        network::WebSocket* _wsiSendText;
         wsCallBack      _msgReceiver;
 };
 

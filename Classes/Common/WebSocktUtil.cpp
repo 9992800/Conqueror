@@ -25,6 +25,13 @@ WebSocktUtil::~WebSocktUtil(){
 
 
 void WebSocktUtil::startConnect(){
+        
+        if ( nullptr != _wsiSendText
+            && network::WebSocket::State::CLOSED != _wsiSendText->getReadyState()){
+                return ;
+        }
+        
+        
         _wsiSendText = new network::WebSocket();
         if (!_wsiSendText->init(*this, WEB_SOCKET_SERVER_URL)){
                 CC_SAFE_DELETE(_wsiSendText);
@@ -34,17 +41,19 @@ void WebSocktUtil::startConnect(){
 }
 
 
-void WebSocktUtil::sendMessage(std::string){
+int WebSocktUtil::sendMessage(std::string msg){
         
-        if (! _wsiSendText){
-                return;
+        if (!_wsiSendText){
+                return -1;
         }
         
         if (_wsiSendText->getReadyState() == network::WebSocket::State::OPEN){
-                _wsiSendText->send("Hello WebSocket, I'm a text message.");
+                _wsiSendText->send(msg);
+                return (int)msg.length();
         }
         else{
                 log("ERROR:failed init the websocket.");
+                return -1;
         }
 }
 

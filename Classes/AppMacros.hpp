@@ -146,7 +146,7 @@ return nullptr; \
 #define LAYER_NAME_IN_TILE_MAP "map"
 
 
-#define WEB_SOCKET_SERVER_URL      "ws://127.0.0.1:9900"
+#define WEB_SOCKET_SERVER_URL      "ws://192.168.1.35:9900/marco"
 
 
 #endif /* __APPMACROS_H__ */

@@ -1,7 +1,10 @@
 package com.jctx.chat.service;
 
 import org.springframework.stereotype.Service;
+
+import com.mongodb.Block;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import java.text.DateFormat;
@@ -40,6 +43,15 @@ public class FindComponentsService {
 	}
 	
 	public String selectOne(){
+		FindIterable<Document> iterable = db.getCollection("restaurants").find(
+				new Document("borough", "Manhattan"));//eq("grades.grade", "B")lt(<field>, <value>)
+//		gt(<field>, <value>)
+		iterable.forEach(new Block<Document>() {
+		    @Override
+		    public void apply(final Document document) {
+		        System.out.println(document);
+		    }
+		});
 		return "";
 	}
 }

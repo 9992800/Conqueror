@@ -108,7 +108,7 @@ bool ReplayLast::init(){
                 }
                 
                 const rapidjson::Value& _cell_idxs = area_d["_cell_idxs"];
-                for (int j = 0; j < _line_cel.Size(); j++){
+                for (int j = 0; j < _cell_idxs.Size(); j++){
                         int cel = _cell_idxs[j].GetInt();
                         area->_cell_idxs.insert(cel);
                 }

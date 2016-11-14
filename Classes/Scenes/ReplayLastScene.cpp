@@ -96,25 +96,20 @@ bool ReplayLast::init(){
                 area->_areaId   = basic["_areaId"].GetInt();
                 
                 const rapidjson::Value& _line_cel = area_d["_line_cel"];
-                int j = 0;
-                for (rapidjson::Value::ConstMemberIterator itr = _line_cel.MemberBegin();
-                     itr != _line_cel.MemberEnd(); ++itr){
-                        int cel = itr->value.GetInt();
+                for (int j = 0; j < _line_cel.Size(); j++){
+                        int cel = _line_cel[(rapidjson::SizeType)j].GetInt();
                         area->_line_cel[j++] = cel;
                 }
                 
                 const rapidjson::Value& _line_dir = area_d["_line_dir"];
-                j = 0;
-                for (rapidjson::Value::ConstMemberIterator itr = _line_dir.MemberBegin();
-                     itr != _line_dir.MemberEnd(); ++itr){
-                        int cel = itr->value.GetInt();
+                for (int j = 0; j < _line_cel.Size(); j++){
+                        int cel = _line_dir[j].GetInt();
                         area->_line_dir[j++] = cel;
                 }
                 
                 const rapidjson::Value& _cell_idxs = area_d["_cell_idxs"];
-                for (rapidjson::Value::ConstMemberIterator itr = _cell_idxs.MemberBegin();
-                     itr != _cell_idxs.MemberEnd(); ++itr){
-                        int cel = itr->value.GetInt();
+                for (int j = 0; j < _line_cel.Size(); j++){
+                        int cel = _cell_idxs[j].GetInt();
                         area->_cell_idxs.insert(cel);
                 }
                 

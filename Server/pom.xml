@@ -256,6 +256,8 @@
 				
 				<mvn.log.level>DEBUG</mvn.log.level> 
 				
+				<mongodb.uri.str>mongodb://userName:passWord@127.0.0.1:27017/DBname</mongodb.uri.str>
+				
 			</properties>
 		</profile>
 
@@ -279,6 +281,7 @@
 				<mvn.push.token></mvn.push.token>
 				
 				<mvn.log.level>INFO</mvn.log.level> 
+				<mongodb.uri.str>mongodb://userName:passWord@127.0.0.1:27017/DBname</mongodb.uri.str>
 			</properties>
 		</profile>
 		

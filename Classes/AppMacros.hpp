@@ -108,6 +108,16 @@ enum {
 #define ANIMATION_SWITCH_KEY            "_key_animation_switch"
 #define GAME_SPEED_KEY                  "_key_game_speed_value"
 
+
+#define GAME_HISTORY_MAP_KEY            "_key_history_map_value"
+#define GAME_HISTORY_PLAYER_NUM         "_key_history_player_num"
+#define GAME_HISTORY_CELL_INFO          "_key_history_cell_info"
+#define GAME_HISTORY_AREA_INFO          "_key_history_area_info"
+#define GAME_HISTORY_FROM_KEY           "_key_history_from_value"
+#define GAME_HISTORY_TO_KEY             "_key_history_to_value"
+#define GAME_HISTORY_RES_KEY            "_key_history_res_value"
+
+
 #define LEVEL_4_LOCK_STATE_KEY          "_key_level_4_lock_state"
 #define LEVEL_5_LOCK_STATE_KEY          "_key_level_5_lock_state"
 #define LEVEL_6_LOCK_STATE_KEY          "_key_level_6_lock_state"

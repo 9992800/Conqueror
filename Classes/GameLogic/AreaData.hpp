@@ -16,8 +16,11 @@
 
 USING_NS_CC;
 class GameData;
+class ReplayLast;
+
 
 class AreaData: public Ref{
+        friend class ReplayLast;
 public:
         AreaData(int id);
         AreaData(AreaData* obj);
@@ -108,6 +111,8 @@ public:
         void drawSupply(TMXTiledMap* map);
         
         void updatePawn(TMXTiledMap*);
+        
+        std::string serializeData();
         
 private:
         void drawBorder();

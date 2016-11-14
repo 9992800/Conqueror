@@ -27,6 +27,7 @@ class GameData: public Ref{
         friend class MapCreator;
         friend class AreaData;
         friend class GameAI;
+        friend class ReplayLast;
 public:
         static GameData* create(int n)
         {

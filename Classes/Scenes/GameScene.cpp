@@ -322,6 +322,7 @@ void GameScene::menuEndTurn(Ref* pSender){
 }
 
 void GameScene::menuStartGame(Ref* pSender){
+        _theGameLogic->initHistoryRecord();
         ((MenuItemImage*)pSender)->setVisible(false);
         CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);
         _gameStatus = GAME_STATUS_AIRUNNING;
@@ -350,6 +351,7 @@ void GameScene::gameExit(Ref* btn, int result){
 
 void GameScene::gameOver(Ref* btn, int result){
         if (result == 0){
+                _theGameLogic->finishHistoryRecord();
                 Director::getInstance()->popScene();
         }else{
                 this->removeChildByTag(key_dialog_layer_tag);

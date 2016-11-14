@@ -24,9 +24,9 @@ class LevelSelect : public cocos2d::Layer, public sdkbox::IAPListener
 public:
         static Scene* createScene();
         virtual bool init() override;
-        void onEnter() override;
         CREATE_FUNC(LevelSelect);
         
+        void onEnter() override;
         void update(float delta)override;
         virtual void onExit()override;
         
@@ -42,6 +42,7 @@ protected:
         void menuShowSettigns(Ref* btn);
         void menuGetMoreCoins(Ref* btn);
         void menuGetMoreDices(Ref* btn);
+        void menuPlayHistory(Ref* btn);
         
 private:
         void loadLevelShow(Vec2 center, Size visibleSize);
@@ -74,6 +75,7 @@ private:
         LayerColor*     _selectedBackGround;
         LayerColor*     _levelShowBackGround;
         MenuItemImage*  _soundCtrl;
+        MenuItemImage*  _historyPlayItem;
         map<string, Product> _productsMap;
 };
 

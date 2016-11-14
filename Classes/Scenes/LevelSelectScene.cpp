@@ -9,6 +9,7 @@
 #include "GameSettingsScene.hpp"
 #include "LevelSelectScene.hpp"
 #include "GameScene.hpp"
+#include "ReplayLastScene.hpp"
 
 enum {
         GAME_LEVEL_INDEX_1 = 1,
@@ -82,10 +83,6 @@ bool LevelSelect::init()
         IAP::init();        
         
         return true;
-}
-void LevelSelect::onEnter(){
-        Layer::onEnter();
-        IAP::refresh();
 }
 
 void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
@@ -310,6 +307,12 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
                                      origin.y + 60));
         
         
+        
+        _historyPlayItem = MenuItemImage::create("history.png", "history_sel.png",
+                                                 CC_CALLBACK_1(LevelSelect::menuPlayHistory, this));
+        _historyPlayItem->setPosition(Vec2(2 * _historyPlayItem->getContentSize().width,
+                                           origin.y + visibleSize.height - _historyPlayItem->getContentSize().height - 10));
+        
         /*
          /////////////////////////////////////////////////////////
                         coins buttons
@@ -364,7 +367,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         add_dices->setPosition(add_dices_pos);
         
         auto menu = Menu::create(start_game, _soundCtrl, system_setting, coins_show,
-                                 add_coins, dices_show, add_dices, NULL);
+                                 add_coins, dices_show, add_dices, _historyPlayItem, NULL);
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, ZORDER_ITEM_CONTROL);
 }
@@ -420,6 +423,14 @@ void LevelSelect::menuGetMoreDices(Ref* btn){
         
 }
 
+
+void LevelSelect::menuPlayHistory(Ref* pSender){
+        
+        auto scene = ReplayLast::createScene();
+        Director::getInstance()->pushScene(scene);
+}
+
+
 void LevelSelect::menuSoundControl(Ref* btn){
         bool is_effect_on = UserDefault::getInstance()->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
         UserDefault::getInstance()->setBoolForKey(SOUND_EFFECT_SWITCH_KEY, !is_effect_on);
@@ -452,6 +463,22 @@ void LevelSelect::onTouchesMoved(const std::vector<Touch*>& touches, Event* even
 
 
 #pragma mark - loading bar
+
+void LevelSelect::onEnter(){
+        Layer::onEnter();
+        IAP::refresh();
+        
+        Data data = UserDefault::getInstance()->getDataForKey(GAME_HISTORY_FROM_KEY);
+        Rect c(Vec2(0,0), _historyPlayItem->getContentSize());
+        if (data.isNull()){
+                _historyPlayItem->setNormalSpriteFrame(SpriteFrame::create("history.png", c));
+                _historyPlayItem->setSelectedSpriteFrame(SpriteFrame::create("history_sel.png", c));
+        }else{
+                _historyPlayItem->setNormalSpriteFrame(SpriteFrame::create("history_data.png", c));
+                _historyPlayItem->setNormalSpriteFrame(SpriteFrame::create("history_data_sel.png", c));
+        }
+}
+
 void LevelSelect::update(float delta){
         
         if (_count < 100)

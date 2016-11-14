@@ -38,7 +38,6 @@ std::vector<std::string> parseData(const char* key){
         std::istringstream f(buffer, length);
         std::string str;
         while (getline(f, str, '\n')){
-                printf("===str len=%lu====", str.length());
                 result.push_back(str);
         }
         return result;
@@ -96,16 +95,20 @@ bool ReplayLast::init(){
                 area->_len_min  = basic["_len_min"].GetInt();
                 area->_areaId   = basic["_areaId"].GetInt();
                 
+                printf("\r\n====area(%d)=====\r\n", area->_areaId);
+                printf("---cel--");
                 const rapidjson::Value& _line_cel = area_d["_line_cel"];
                 for (int j = 0; j < _line_cel.Size(); j++){
                         int cel = _line_cel[(rapidjson::SizeType)j].GetInt();
                         area->_line_cel[j++] = cel;
+                        printf("\t%d", cel);
                 }
                 
                 const rapidjson::Value& _line_dir = area_d["_line_dir"];
-                for (int j = 0; j < _line_cel.Size(); j++){
-                        int cel = _line_dir[j].GetInt();
-                        area->_line_dir[j++] = cel;
+                for (int j = 0; j < _line_dir.Size(); j++){
+                        int dir = _line_dir[j].GetInt();
+                        area->_line_dir[j++] = dir;
+                        printf("\t%d", dir);
                 }
                 
                 const rapidjson::Value& _cell_idxs = area_d["_cell_idxs"];
@@ -125,8 +128,13 @@ bool ReplayLast::init(){
         
         _gameData->reshDataByMapInfo(map);
         
-        this->addChild(map);
-
+        this->addChild(map, 0, 1);
+        
+        
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        Vec2 origin = Director::getInstance()->getVisibleOrigin();
+        
+        _lowestPostion_y = visibleSize.height + origin.y - map_size.height - 6;//TODO::
         return true;
 }
 
@@ -134,3 +142,25 @@ ReplayLast::~ReplayLast(){
         _gameData->release();
 }
 
+
+
+void ReplayLast::onTouchesMoved(const std::vector<Touch*>& touches, Event* event){
+        auto touch = touches[0];
+        auto diff = touch->getDelta();
+        
+        diff.x = 0;
+        auto map = this->getChildByTag(1);
+        auto currentPos = map->getPosition();
+        auto origin = Director::getInstance()->getVisibleOrigin();
+        
+        if (origin.y < (currentPos.y + diff.y)){
+                diff.y = origin.y - currentPos.y;
+        }
+        
+        if ((currentPos.y + diff.y) < _lowestPostion_y){
+                diff.y = _lowestPostion_y - currentPos.y;
+        }
+        
+        map->setPosition(currentPos + diff);
+
+}

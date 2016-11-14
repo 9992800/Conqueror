@@ -189,7 +189,7 @@ void AreaData::drawBorder(){
         int point_size = 0;
         
         for (int i = 1; i < MAX_LINE_INAREA; i++){
-                Vec2 start = ScreenCoordinate::getInstance()->getCellPos(cell,dir);
+                Vec2 start = ScreenCoordinate::getInstance()->getCellPos(cell, dir);
                 points[point_size++] = start;
                 
                 cell = _line_cel[i];
@@ -284,17 +284,20 @@ std::string AreaData::serializeData(){
         document.AddMember("basic", object, allocator);
         
         
-        
+        printf("\r\n====area(%d)=====\r\n", _areaId);
+        printf("---cel--");
         rapidjson::Value line_cel(rapidjson::kArrayType);
         for (int i = 0; i < this->_line_cel.size(); i++){
                 line_cel.PushBack(this->_line_cel[i], allocator);
+                printf("\t%d", this->_line_cel[i]);
         }
         document.AddMember("_line_cel", line_cel, allocator);
         
-        
+        printf("---dir--");
         rapidjson::Value line_dir(rapidjson::kArrayType);
         for (int i = 0; i < this->_line_dir.size(); i++){
                 line_dir.PushBack(this->_line_dir[i], allocator);
+                printf("\t%d", this->_line_dir[i]);
         }
         document.AddMember("_line_dir", line_dir, allocator);
         

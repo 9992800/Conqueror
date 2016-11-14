@@ -18,8 +18,13 @@ public:
         virtual bool init() override;
         CREATE_FUNC(ReplayLast);
         virtual ~ReplayLast();
+        
 private:
-        GameData* _gameData;
+        void onTouchesMoved(const std::vector<Touch*>& touches, Event* event)override;
+        
+private:
+        float           _lowestPostion_y;
+        GameData*       _gameData;
 };
 
 #endif /* ReplayLastScene_hpp */

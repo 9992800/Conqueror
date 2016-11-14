@@ -95,20 +95,16 @@ bool ReplayLast::init(){
                 area->_len_min  = basic["_len_min"].GetInt();
                 area->_areaId   = basic["_areaId"].GetInt();
                 
-                printf("\r\n====area(%d)=====\r\n", area->_areaId);
-                printf("---cel--");
+                
                 const rapidjson::Value& _line_cel = area_d["_line_cel"];
                 for (int j = 0; j < _line_cel.Size(); j++){
                         int cel = _line_cel[(rapidjson::SizeType)j].GetInt();
-                        area->_line_cel[j++] = cel;
-                        printf("\t%d", cel);
+                        area->_line_cel[j] = cel;
                 }
-                
                 const rapidjson::Value& _line_dir = area_d["_line_dir"];
                 for (int j = 0; j < _line_dir.Size(); j++){
                         int dir = _line_dir[j].GetInt();
-                        area->_line_dir[j++] = dir;
-                        printf("\t%d", dir);
+                        area->_line_dir[j] = dir;
                 }
                 
                 const rapidjson::Value& _cell_idxs = area_d["_cell_idxs"];
@@ -135,13 +131,18 @@ bool ReplayLast::init(){
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         
         _lowestPostion_y = visibleSize.height + origin.y - map_size.height - 6;//TODO::
+        
+        
+        Director::getInstance()->setDepthTest(true);
+        auto listener = EventListenerTouchAllAtOnce::create();
+        listener->onTouchesMoved = CC_CALLBACK_2(ReplayLast::onTouchesMoved, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
         return true;
 }
 
 ReplayLast::~ReplayLast(){
         _gameData->release();
 }
-
 
 
 void ReplayLast::onTouchesMoved(const std::vector<Touch*>& touches, Event* event){

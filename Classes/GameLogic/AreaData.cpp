@@ -284,20 +284,15 @@ std::string AreaData::serializeData(){
         document.AddMember("basic", object, allocator);
         
         
-        printf("\r\n====area(%d)=====\r\n", _areaId);
-        printf("---cel--");
         rapidjson::Value line_cel(rapidjson::kArrayType);
         for (int i = 0; i < this->_line_cel.size(); i++){
-                line_cel.PushBack(this->_line_cel[i], allocator);
-                printf("\t%d", this->_line_cel[i]);
+                line_cel.PushBack(this->_line_cel[i], allocator); 
         }
         document.AddMember("_line_cel", line_cel, allocator);
         
-        printf("---dir--");
         rapidjson::Value line_dir(rapidjson::kArrayType);
         for (int i = 0; i < this->_line_dir.size(); i++){
                 line_dir.PushBack(this->_line_dir[i], allocator);
-                printf("\t%d", this->_line_dir[i]);
         }
         document.AddMember("_line_dir", line_dir, allocator);
         

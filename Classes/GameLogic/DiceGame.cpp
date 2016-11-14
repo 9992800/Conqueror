@@ -646,11 +646,53 @@ void DiceGame::occupyArea(int newOwner, int area){
 
 #pragma mark - game history replay functions
 void DiceGame::initHistoryRecord(){
-        Data map_data;
-        map_data.copy((unsigned char*) _data->_mapData.data(), _data->_mapData.size() * sizeof(int));
-        UserDefault::getInstance()->setDataForKey(GAME_HISTORY_MAP_KEY, map_data);
         
         _historyFrom.clear();
         _historyTo.clear();
         _historyRes.clear();
+        
+        auto cache = UserDefault::getInstance();
+        
+        Data map_data;
+        map_data.copy((unsigned char*) _data->_mapData.data(), _data->_mapData.size() * sizeof(int));
+        cache->setDataForKey(GAME_HISTORY_MAP_KEY, map_data);
+        
+        cache->setIntegerForKey(GAME_HISTORY_PLAYER_NUM, _data->_curPlayerNum);
+        
+        Data cell_data;
+        cell_data.copy((unsigned char*)_data->_cel.data(), _data->_cel.size() * sizeof(int));
+        cache->setDataForKey(GAME_HISTORY_CELL_INFO, cell_data);
+
+        
+        Data area_data;
+        std::string area_str;
+        for ( int i = 0; i < AREA_MAX; i++){
+                area_str.append(_data->_areaData[i]->serializeData());
+                area_str.push_back('\n');
+        }
+        
+        area_data.copy((unsigned char*)area_str.data(), area_str.size() * sizeof(std::string::value_type));
+        cache->setDataForKey(GAME_HISTORY_AREA_INFO, area_data);
+        
+        cache->flush();
+
+}
+
+void DiceGame::finishHistoryRecord(){
+        
+        auto cache = UserDefault::getInstance();
+        
+        Data from_data;
+        from_data.copy((unsigned char*)_historyFrom.data(), _historyFrom.size() * sizeof(int));
+        cache->setDataForKey(GAME_HISTORY_FROM_KEY, from_data);
+        
+        Data to_data;
+        to_data.copy((unsigned char*)_historyTo.data(), _historyTo.size() * sizeof(int));
+        cache->setDataForKey(GAME_HISTORY_TO_KEY, to_data);
+        
+        Data res_data;
+        res_data.copy((unsigned char*)_historyRes.data(), _historyRes.size() * sizeof(int));
+        cache->setDataForKey(GAME_HISTORY_RES_KEY, res_data);
+        
+        cache->flush();
 }

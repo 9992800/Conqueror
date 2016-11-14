@@ -14,13 +14,12 @@ USING_NS_CC;
 
 class ReplayLast : public cocos2d::Layer{
 public:
-        static Scene* createScene(Data data);
+        static Scene* createScene();
         virtual bool init() override;
-        CREATE_FUNC2(ReplayLast, Data, data);
-        ReplayLast(Data data):_theData(data){
-        }
+        CREATE_FUNC(ReplayLast);
+        virtual ~ReplayLast();
 private:
-        Data _theData;
+        GameData* _gameData;
 };
 
 #endif /* ReplayLastScene_hpp */

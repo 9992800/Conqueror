@@ -11,6 +11,10 @@
 #include "ScreenCoordinate.hpp"
 #include "AppMacros.hpp"
 #include "GameData.hpp"
+#include "json/writer.h"
+#include "json/stringbuffer.h"
+#include "json/rapidjson.h"
+#include "json/document.h"
 
 static Color4F _areaLineColor[] = {Color4F(1.0, 0.0, 0.0, 0.02),
         Color4F(0.0, 1.0, 0.0, 0.02),Color4F(0.0, 0.0, 1.0, 0.02),
@@ -254,5 +258,58 @@ void AreaData::updatePawn(TMXTiledMap* map){
         
         sprite = this->createSprite();
         map->addChild(sprite,AREA_SPRITE_ZORDER, AREA_TAG_ID_INMAP(_areaId));
+}
 
+std::string AreaData::serializeData(){
+        
+        rapidjson::Document document;
+        document.SetObject();
+        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        
+        
+        rapidjson::Value object(rapidjson::kObjectType);
+        object.AddMember("_size",       _size,  allocator);
+        object.AddMember("_cpos",       _cpos,  allocator);
+        object.AddMember("_arm",        _arm,   allocator);
+        object.AddMember("_dice",       _dice,  allocator);
+        object.AddMember("_left",       _left,  allocator);
+        object.AddMember("_right",      _right, allocator);
+        object.AddMember("_top",        _top,   allocator);
+        object.AddMember("_bottom",     _bottom, allocator);
+        object.AddMember("_cx",         _cx,    allocator);
+        object.AddMember("_cy",         _cy,    allocator);
+        object.AddMember("_len_min",    _len_min, allocator);
+        object.AddMember("_areaId",     _areaId, allocator);
+        
+        document.AddMember("basic", object, allocator);
+        
+        
+        
+        rapidjson::Value line_cel(rapidjson::kArrayType);
+        for (int i = 0; i < this->_line_cel.size(); i++){
+                line_cel.PushBack(this->_line_cel[i], allocator);
+        }
+        document.AddMember("_line_cel", line_cel, allocator);
+        
+        
+        rapidjson::Value line_dir(rapidjson::kArrayType);
+        for (int i = 0; i < this->_line_dir.size(); i++){
+                line_dir.PushBack(this->_line_dir[i], allocator);
+        }
+        document.AddMember("_line_dir", line_dir, allocator);
+        
+
+        rapidjson::Value cell_idxs(rapidjson::kArrayType);
+        for (std::set<int>::iterator it = this->_cell_idxs.begin();
+             it != this->_cell_idxs.end(); it++){
+                cell_idxs.PushBack(*it, allocator);
+        }
+        document.AddMember("_cell_idxs", cell_idxs, allocator);
+        
+        
+        rapidjson::StringBuffer buffer;
+        rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+        document.Accept(writer);
+        
+        return buffer.GetString();
 }

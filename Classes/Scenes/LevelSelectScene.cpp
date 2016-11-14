@@ -425,11 +425,8 @@ void LevelSelect::menuGetMoreDices(Ref* btn){
 
 
 void LevelSelect::menuPlayHistory(Ref* pSender){
-        Data data = UserDefault::getInstance()->getDataForKey(GAME_HISTORY_DATA_KEY);
-        if (data.isNull()){
-                return;
-        }
-        auto scene = ReplayLast::createScene(data);
+        
+        auto scene = ReplayLast::createScene();
         Director::getInstance()->pushScene(scene);
 }
 
@@ -472,7 +469,7 @@ void LevelSelect::onEnter(){
         IAP::refresh();
         
         auto cache = SpriteFrameCache::getInstance();
-        Data data = UserDefault::getInstance()->getDataForKey(GAME_HISTORY_DATA_KEY);
+        Data data = UserDefault::getInstance()->getDataForKey(GAME_HISTORY_FROM_KEY);
         if (data.isNull()){
                 _historyPlayItem->setNormalSpriteFrame(cache->getSpriteFrameByName("history.png"));
                 _historyPlayItem->setSelectedSpriteFrame(cache->getSpriteFrameByName("history_sel.png"));

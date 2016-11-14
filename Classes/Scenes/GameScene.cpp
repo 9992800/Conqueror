@@ -351,6 +351,7 @@ void GameScene::gameExit(Ref* btn, int result){
 
 void GameScene::gameOver(Ref* btn, int result){
         if (result == 0){
+                _theGameLogic->finishHistoryRecord();
                 Director::getInstance()->popScene();
         }else{
                 this->removeChildByTag(key_dialog_layer_tag);

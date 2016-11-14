@@ -5,16 +5,136 @@
 //  Created by wsli on 16/11/14.
 //
 //
-
+#include "GameData.hpp"
 #include "ReplayLastScene.hpp"
-Scene* ReplayLast::createScene(Data data){
+#include "MapCreator.hpp"
+#include "ScreenCoordinate.hpp"
+#include "json/writer.h"
+#include "json/stringbuffer.h"
+#include "json/rapidjson.h"
+#include "json/document.h"
+
+template<typename T>
+std::vector<T> parseData(const char* key)
+{
+        Data data = UserDefault::getInstance()->getDataForKey(key);
+        T* buffer = (T*) data.getBytes();
+        ssize_t length = data.getSize() / sizeof(T);
+        
+        std::vector<T> result;
+        for (int i = 0; i < length; i++) {
+                result.push_back(buffer[i]);
+        }
+        
+        return result;
+}
+
+std::vector<std::string> parseData(const char* key){
+        Data data = UserDefault::getInstance()->getDataForKey(key);
+        std::string::value_type* buffer = (std::string::value_type*) data.getBytes();
+        ssize_t length = data.getSize() / sizeof(std::string::value_type);
+        
+        std::vector<std::string> result;
+        std::istringstream f(buffer, length);
+        std::string str;
+        while (getline(f, str, '\n')){
+                result.push_back(str);
+        }
+        return result;
+}
+
+Scene* ReplayLast::createScene(){
         auto scene = Scene::create();
-        auto layer = ReplayLast::create(data);
+        auto layer = ReplayLast::create();
         
         scene->addChild(layer);
         return scene;
 }
 
 bool ReplayLast::init(){
+        int player_num = UserDefault::getInstance()->getIntegerForKey(GAME_HISTORY_PLAYER_NUM);
+        
+        if (0 == player_num){
+                return false;
+        }
+        
+        _gameData = GameData::create(player_num);
+        _gameData->retain();
+        
+        std::vector<int>  map_data = parseData<int>(GAME_HISTORY_MAP_KEY);
+        _gameData->_mapData = map_data;
+        
+        std::vector<int>  cell_data = parseData<int>(GAME_HISTORY_CELL_INFO);
+        _gameData->_cel = cell_data;
+        
+        std::vector<std::string> area_data = parseData(GAME_HISTORY_AREA_INFO);
+        
+        for (int i = 0; i < area_data.size(); i++){
+                std::string area_str = area_data[i];
+                
+                rapidjson::Document area_d;
+                area_d.Parse<0>(area_str.c_str());
+                if (area_d.HasParseError()) {
+                        CCLOG("GetParseError %u\n",area_d.GetParseError());
+                        return false;
+                }
+                
+                AreaData* area = new AreaData(i);
+                
+                const rapidjson::Value& basic = area_d["basic"];
+                area->_arm      = basic["_arm"].GetInt();
+                area->_size     = basic["_size"].GetInt();
+                area->_cpos     = basic["_cpos"].GetInt();
+                area->_dice     = basic["_dice"].GetInt();
+                area->_left     = basic["_left"].GetInt();
+                area->_right    = basic["_right"].GetInt();
+                area->_top      = basic["_top"].GetInt();
+                area->_bottom   = basic["_bottom"].GetInt();
+                area->_cx       = basic["_cx"].GetInt();
+                area->_cy       = basic["_cy"].GetInt();
+                area->_len_min  = basic["_len_min"].GetInt();
+                area->_areaId   = basic["_areaId"].GetInt();
+                
+                const rapidjson::Value& _line_cel = area_d["_line_cel"];
+                int j = 0;
+                for (rapidjson::Value::ConstMemberIterator itr = _line_cel.MemberBegin();
+                     itr != _line_cel.MemberEnd(); ++itr){
+                        int cel = itr->value.GetInt();
+                        area->_line_cel[j++] = cel;
+                }
+                
+                const rapidjson::Value& _line_dir = area_d["_line_dir"];
+                j = 0;
+                for (rapidjson::Value::ConstMemberIterator itr = _line_dir.MemberBegin();
+                     itr != _line_dir.MemberEnd(); ++itr){
+                        int cel = itr->value.GetInt();
+                        area->_line_dir[j++] = cel;
+                }
+                
+                const rapidjson::Value& _cell_idxs = area_d["_cell_idxs"];
+                for (rapidjson::Value::ConstMemberIterator itr = _cell_idxs.MemberBegin();
+                     itr != _cell_idxs.MemberEnd(); ++itr){
+                        int cel = itr->value.GetInt();
+                        area->_cell_idxs.insert(cel);
+                }
+                
+                _gameData->_areaData[i] = area;
+        }
+        
+        
+        
+        auto map = MapCreator::instance()->createMap(_gameData);
+        Size map_size = map->getContentSize();
+        ScreenCoordinate::getInstance()->configScreen(map_size);
+        
+        _gameData->reshDataByMapInfo(map);
+        
+        this->addChild(map);
+
         return true;
 }
+
+ReplayLast::~ReplayLast(){
+        _gameData->release();
+}
+

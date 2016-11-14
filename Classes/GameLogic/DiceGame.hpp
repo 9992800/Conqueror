@@ -41,6 +41,7 @@ public:
         
 public:
         void initHistoryRecord();
+        void finishHistoryRecord();
 private:
         void makeNewMapData();
         int percolate(int pt, int cmax, int an);

@@ -88,11 +88,6 @@ enum {
         ATTACK_RES_DEFEATED
 };
 
-enum {
-        GAME_OVER_WIN = 0,
-        GAME_OVER_DEFEATED
-};
-
 #define AI_ATTACK_THINKING_SIZE (AREA_MAX * AREA_MAX) 
 
 #define EFFECT_FILE_START_GAME          "sounds/start.mp3"

@@ -76,11 +76,9 @@ public:
         }
         
         inline void drawAsSelected(){
-                printf("\r\n===drawAsSelected===area(%d)===", _areaId);
                 drawPolyGon(-1);
         }
-        inline void drawAsUnselected(){
-                printf("\r\n---drawAsUnselected---area(%d)---", _areaId);
+        inline void drawAsUnselected(){ 
                 _drawNode->clear();
                 drawBorder();
                 drawPolyGon(_arm);

@@ -28,8 +28,13 @@ private:
         void menuExit(Ref* pSender);
         void menuStartShow(Ref* pSender);
 private:
-        float           _lowestPostion_y;
-        GameData*       _gameData;
+        float                   _lowestPostion_y;
+        GameData*               _gameData;
+        std::vector<int>        _hisFrom;
+        std::vector<int>        _hisTo;
+        std::vector<int>        _hisRes;
+        int                     _timeCounter;
+        int                     _dataIdx;
 };
 
 #endif /* ReplayLastScene_hpp */

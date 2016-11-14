@@ -468,14 +468,14 @@ void LevelSelect::onEnter(){
         Layer::onEnter();
         IAP::refresh();
         
-        auto cache = SpriteFrameCache::getInstance();
         Data data = UserDefault::getInstance()->getDataForKey(GAME_HISTORY_FROM_KEY);
+        Rect c(Vec2(0,0), _historyPlayItem->getContentSize());
         if (data.isNull()){
-                _historyPlayItem->setNormalSpriteFrame(cache->getSpriteFrameByName("history.png"));
-                _historyPlayItem->setSelectedSpriteFrame(cache->getSpriteFrameByName("history_sel.png"));
+                _historyPlayItem->setNormalSpriteFrame(SpriteFrame::create("history.png", c));
+                _historyPlayItem->setSelectedSpriteFrame(SpriteFrame::create("history_sel.png", c));
         }else{
-                _historyPlayItem->setNormalSpriteFrame(cache->getSpriteFrameByName("history_data.png"));
-                _historyPlayItem->setNormalSpriteFrame(cache->getSpriteFrameByName("history_data_sel.png"));
+                _historyPlayItem->setNormalSpriteFrame(SpriteFrame::create("history_data.png", c));
+                _historyPlayItem->setNormalSpriteFrame(SpriteFrame::create("history_data_sel.png", c));
         }
 }
 

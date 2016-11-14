@@ -38,6 +38,7 @@ std::vector<std::string> parseData(const char* key){
         std::istringstream f(buffer, length);
         std::string str;
         while (getline(f, str, '\n')){
+                printf("===str len=%lu====", str.length());
                 result.push_back(str);
         }
         return result;
@@ -69,7 +70,7 @@ bool ReplayLast::init(){
         
         std::vector<std::string> area_data = parseData(GAME_HISTORY_AREA_INFO);
         
-        for (int i = 0; i < area_data.size(); i++){
+        for (int i = 0; i < AREA_MAX; i++){
                 std::string area_str = area_data[i];
                 
                 rapidjson::Document area_d;

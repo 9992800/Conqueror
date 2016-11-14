@@ -471,9 +471,11 @@ void LevelSelect::onEnter(){
         Data data = UserDefault::getInstance()->getDataForKey(GAME_HISTORY_FROM_KEY);
         Rect c(Vec2(0,0), _historyPlayItem->getContentSize());
         if (data.isNull()){
+                _historyPlayItem->setEnabled(false);
                 _historyPlayItem->setNormalSpriteFrame(SpriteFrame::create("history.png", c));
                 _historyPlayItem->setSelectedSpriteFrame(SpriteFrame::create("history_sel.png", c));
         }else{
+                _historyPlayItem->setEnabled(true);
                 _historyPlayItem->setNormalSpriteFrame(SpriteFrame::create("history_data.png", c));
                 _historyPlayItem->setNormalSpriteFrame(SpriteFrame::create("history_data_sel.png", c));
         }

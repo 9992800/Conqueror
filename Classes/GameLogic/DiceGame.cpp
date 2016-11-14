@@ -426,6 +426,9 @@ int DiceGame::startBattle(){
         AreaData* area_to   = _data->_areaData[_data->_areaTo];
         area_to->drawAsSelected();
         
+        _historyTo.push_back(_data->_areaTo);
+        _historyFrom.push_back(_data->_areaFrom);
+        
         int from_sum = 0, to_sum = 0;
         
         area_from->clearFightValue();
@@ -449,8 +452,10 @@ int DiceGame::startBattle(){
         }
         printf("\r\n---result:(%d)VS(%d)---", from_sum, to_sum);
         if (from_sum > to_sum){
+                _historyRes.push_back(ATTACK_RES_WIN);
                 return ATTACK_RES_WIN;
         }else{
+                _historyRes.push_back(ATTACK_RES_DEFEATED);
                 return ATTACK_RES_DEFEATED;
         }
 }
@@ -637,4 +642,15 @@ void DiceGame::occupyArea(int newOwner, int area){
         }
         
         _data->_areaData[area]->setOwner(newOwner);
+}
+
+#pragma mark - game history replay functions
+void DiceGame::initHistoryRecord(){
+        Data map_data;
+        map_data.copy((unsigned char*) _data->_mapData.data(), _data->_mapData.size() * sizeof(int));
+        UserDefault::getInstance()->setDataForKey(GAME_HISTORY_MAP_KEY, map_data);
+        
+        _historyFrom.clear();
+        _historyTo.clear();
+        _historyRes.clear();
 }

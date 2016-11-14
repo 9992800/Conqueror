@@ -76,6 +76,11 @@
 		7C21A10F1DCB4F010035ECC6 /* GamePlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A1091DCB4F010035ECC6 /* GamePlayer.cpp */; };
 		7C21A1101DCB4F010035ECC6 /* JoinData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A10B1DCB4F010035ECC6 /* JoinData.cpp */; };
 		7C67A7B51DD1BE6B004B5151 /* WebSocktUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */; };
+		7C6E7FFD1DD94F5300C5E374 /* ReplayLastScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */; };
+		7C6E80001DD9575A00C5E374 /* history.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFF1DD9575A00C5E374 /* history.png */; };
+		7C6E80041DD9687D00C5E374 /* history_data_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E80011DD9687D00C5E374 /* history_data_sel.png */; };
+		7C6E80051DD9687D00C5E374 /* history_data.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E80021DD9687D00C5E374 /* history_data.png */; };
+		7C6E80061DD9687D00C5E374 /* history_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E80031DD9687D00C5E374 /* history_sel.png */; };
 		7C733B1C1DC990E200098EDD /* iphone5 in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B181DC990E200098EDD /* iphone5 */; };
 		7C733B1D1DC990E200098EDD /* iphone6 in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B191DC990E200098EDD /* iphone6 */; };
 		7C733B1E1DC990E200098EDD /* iphone6p in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B1A1DC990E200098EDD /* iphone6p */; };
@@ -246,6 +251,12 @@
 		7C21A10C1DCB4F010035ECC6 /* JoinData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JoinData.hpp; sourceTree = "<group>"; };
 		7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocktUtil.cpp; sourceTree = "<group>"; };
 		7C67A7B41DD1BE6B004B5151 /* WebSocktUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocktUtil.hpp; sourceTree = "<group>"; };
+		7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReplayLastScene.cpp; sourceTree = "<group>"; };
+		7C6E7FFC1DD94F5300C5E374 /* ReplayLastScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ReplayLastScene.hpp; sourceTree = "<group>"; };
+		7C6E7FFF1DD9575A00C5E374 /* history.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = history.png; sourceTree = "<group>"; };
+		7C6E80011DD9687D00C5E374 /* history_data_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = history_data_sel.png; sourceTree = "<group>"; };
+		7C6E80021DD9687D00C5E374 /* history_data.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = history_data.png; sourceTree = "<group>"; };
+		7C6E80031DD9687D00C5E374 /* history_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = history_sel.png; sourceTree = "<group>"; };
 		7C733B181DC990E200098EDD /* iphone5 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone5; sourceTree = "<group>"; };
 		7C733B191DC990E200098EDD /* iphone6 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6; sourceTree = "<group>"; };
 		7C733B1A1DC990E200098EDD /* iphone6p */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6p; sourceTree = "<group>"; };
@@ -437,6 +448,10 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7C6E80011DD9687D00C5E374 /* history_data_sel.png */,
+				7C6E80021DD9687D00C5E374 /* history_data.png */,
+				7C6E80031DD9687D00C5E374 /* history_sel.png */,
+				7C6E7FFF1DD9575A00C5E374 /* history.png */,
 				7C82E4291DD581610019C8CF /* online_battle_sel.png */,
 				7C82E4271DD57EDD0019C8CF /* online_battle.png */,
 				BB34FAA91DD35B7A0070B4E4 /* sounds */,
@@ -539,6 +554,8 @@
 				7C21A0E21DC9ED930035ECC6 /* LevelSelectScene.cpp */,
 				7C21A0EB1DCB39050035ECC6 /* GameScene.hpp */,
 				7C21A0EA1DCB39050035ECC6 /* GameScene.cpp */,
+				7C6E7FFC1DD94F5300C5E374 /* ReplayLastScene.hpp */,
+				7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -730,6 +747,7 @@
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
+				7C6E80001DD9575A00C5E374 /* history.png in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
 				BB51F1091DCF66D50031296E /* share_sel.png in Resources */,
@@ -749,6 +767,7 @@
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
+				7C6E80051DD9687D00C5E374 /* history_data.png in Resources */,
 				BB51F10A1DCF66D50031296E /* share.png in Resources */,
 				BB34FAAA1DD35B7A0070B4E4 /* sounds in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
@@ -757,10 +776,12 @@
 				BB62DFD41DCD9E7A0037DE0A /* particles in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				BBBA8DD91DCCE3C6006A6471 /* start.png in Resources */,
+				7C6E80041DD9687D00C5E374 /* history_data_sel.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				BBBA8DD71DCCE3C6006A6471 /* DIALOG_OK.png in Resources */,
 				BBBA8DD51DCCE3C6006A6471 /* DIALOG_BACKGROUND.png in Resources */,
 				BBBA8DD81DCCE3C6006A6471 /* NextButton.png in Resources */,
+				7C6E80061DD9687D00C5E374 /* history_sel.png in Resources */,
 				7C82E42A1DD581610019C8CF /* online_battle_sel.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
@@ -797,6 +818,7 @@
 				7C21A0E81DCB2F450035ECC6 /* GameSettingsScene.cpp in Sources */,
 				7C82E4261DD5768A0019C8CF /* BattleFieldScene.cpp in Sources */,
 				7C21A0E41DC9ED930035ECC6 /* LevelSelectScene.cpp in Sources */,
+				7C6E7FFD1DD94F5300C5E374 /* ReplayLastScene.cpp in Sources */,
 				7C21A0E11DC9E9A80035ECC6 /* SplashScene.cpp in Sources */,
 				BBC812DE1DCA3CB000EC8874 /* GameHelpScene.cpp in Sources */,
 				7C21A1101DCB4F010035ECC6 /* JoinData.cpp in Sources */,

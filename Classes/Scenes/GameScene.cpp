@@ -322,6 +322,7 @@ void GameScene::menuEndTurn(Ref* pSender){
 }
 
 void GameScene::menuStartGame(Ref* pSender){
+        _theGameLogic->initHistoryRecord();
         ((MenuItemImage*)pSender)->setVisible(false);
         CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);
         _gameStatus = GAME_STATUS_AIRUNNING;

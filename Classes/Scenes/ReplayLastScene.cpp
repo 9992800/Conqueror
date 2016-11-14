@@ -137,6 +137,23 @@ bool ReplayLast::init(){
         auto listener = EventListenerTouchAllAtOnce::create();
         listener->onTouchesMoved = CC_CALLBACK_2(ReplayLast::onTouchesMoved, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        
+        
+        auto return_back = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
+                                                 CC_CALLBACK_1(ReplayLast::menuExit, this));
+        return_back->setPosition(Vec2(origin.x + return_back->getContentSize().width + 10,
+                                      origin.y + visibleSize.height - return_back->getContentSize().height - 10));
+        
+        auto  start_show = MenuItemImage::create("start.png", "start.png",
+                                                   CC_CALLBACK_1(ReplayLast::menuStartShow, this));
+        start_show->setPosition(origin + visibleSize / 2);
+        
+        
+        auto menu = Menu::create(start_show, return_back, NULL);
+        menu->setPosition(Vec2::ZERO);
+        this->addChild(menu);
+        
+        
         return true;
 }
 
@@ -163,5 +180,21 @@ void ReplayLast::onTouchesMoved(const std::vector<Touch*>& touches, Event* event
         }
         
         map->setPosition(currentPos + diff);
+}
 
+void ReplayLast::menuExit(Ref* pSender){
+        Director::getInstance()->popScene();
+}
+
+void ReplayLast::menuStartShow(Ref* pSender){
+        scheduleUpdate();
+}
+
+void ReplayLast::update(float delta){
+        
+}
+
+void ReplayLast::onExit(){
+        Layer::onExit();
+        unscheduleUpdate();
 }

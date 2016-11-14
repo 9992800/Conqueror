@@ -19,9 +19,14 @@ public:
         CREATE_FUNC(ReplayLast);
         virtual ~ReplayLast();
         
+        void update(float delta)override;
+        virtual void onExit()override;
+        
 private:
         void onTouchesMoved(const std::vector<Touch*>& touches, Event* event)override;
         
+        void menuExit(Ref* pSender);
+        void menuStartShow(Ref* pSender);
 private:
         float           _lowestPostion_y;
         GameData*       _gameData;

@@ -12,7 +12,13 @@
 #include "base/CCAsyncTaskPool.h"
 
 
-Scene* ReplayLast::createScene(GameData* data){
+enum{
+        HISTORY_STATUS_INIT = 1,
+        HISTORY_STATUS_PLAYING,
+        HISTORY_STATUS_FINISHED
+};
+
+Scene* ReplayLast::createScene(HistoryReplayData data){
         auto scene = Scene::create();
         auto layer = ReplayLast::create(data);
         
@@ -48,19 +54,30 @@ bool ReplayLast::init(){
         return_back->setPosition(Vec2(origin.x + return_back->getContentSize().width + 10,
                                       origin.y + visibleSize.height - return_back->getContentSize().height - 10));
         
-        auto  start_show = MenuItemImage::create("start.png", "start.png",
+        _startBtn = MenuItemImage::create("start.png", "start.png",
                                                  CC_CALLBACK_1(ReplayLast::menuStartShow, this));
-        start_show->setPosition(origin + visibleSize / 2);
+        _startBtn->setPosition(origin + visibleSize / 2);
         
-        auto menu = Menu::create(start_show, return_back, NULL);
+        auto menu = Menu::create(_startBtn, return_back, NULL);
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, 100);
         
         return true;
 }
 
+ReplayLast::ReplayLast(HistoryReplayData data):_gameData(data.gameData),
+_timeCounter(0),_dataIdx(0),
+_hisFrom(data.from),
+_hisTo(data.to),
+_hisRes(data.res),
+_curStatus(HISTORY_STATUS_INIT){
+        _clonedGameData = GameData::createWithData(_gameData);
+        _clonedGameData->retain();
+}
+
 ReplayLast::~ReplayLast(){
         _gameData->release();
+        _clonedGameData->release();
 }
 
 
@@ -89,10 +106,33 @@ void ReplayLast::menuExit(Ref* pSender){
         Director::getInstance()->popScene();
 }
 
+
+void ReplayLast::resetHistoryData(){
+        
+        auto map  = _gameData->_refereMap;
+        map->removeFromParentAndCleanup(true);
+        _gameData->release();
+        
+        _gameData = GameData::createWithData(_clonedGameData);
+        
+        map = MapCreator::instance()->createMap(_gameData);
+        Size map_size = map->getContentSize();
+        ScreenCoordinate::getInstance()->configScreen(map_size);
+        
+        _gameData->reshDataByMapInfo(map);
+        
+        this->addChild(map, 0, 1);
+        
+}
 void ReplayLast::menuStartShow(Ref* pSender){
-        _hisFrom = parseData<int>(GAME_HISTORY_FROM_KEY);
-        _hisTo   = parseData<int>(GAME_HISTORY_TO_KEY);
-        _hisRes  = parseData<int>(GAME_HISTORY_RES_KEY);
+        if (HISTORY_STATUS_PLAYING == _curStatus){
+                return;
+        }else if (HISTORY_STATUS_FINISHED == _curStatus){
+                this->resetHistoryData();
+        }
+        
+        _curStatus  = HISTORY_STATUS_PLAYING;
+        _startBtn->setVisible(false);
         _timeCounter = 0;
         _dataIdx = 0;
         scheduleUpdate();
@@ -106,7 +146,8 @@ void ReplayLast::onEnter(){
 
 
 void ReplayLast::update(float delta){
-        
+        if (_curStatus == HISTORY_STATUS_PLAYING)
+                this->playHistory(delta);
 }
 
 void ReplayLast::onExit(){
@@ -120,20 +161,22 @@ void ReplayLast::playHistory(float delta){
         
         
         if (_dataIdx >= _hisFrom.size()){
-                //TODO::Show Dialog and Pause;
-                Director::getInstance()->pause();
+                _curStatus  = HISTORY_STATUS_FINISHED;
+                _startBtn->setVisible(false);
+                unscheduleUpdate();
+                return;
         }
         
-        if (_timeCounter % 4 == 0){
+        if (_timeCounter % 40 == 0){
                 int from = _hisFrom[_dataIdx];
                 _gameData->_areaData[from]->drawAsSelected();
                 
         }
-        else if (_timeCounter % 4 == 1){
+        else if (_timeCounter % 40 == 10){
                 int to = _hisTo[_dataIdx];
                 _gameData->_areaData[to]->drawAsSelected();
                 
-        }else if (_timeCounter % 4 == 2){
+        }else if (_timeCounter % 40 == 20){
                 int res = _hisRes[_dataIdx];
                 int from = _hisFrom[_dataIdx];
                 int to = _hisTo[_dataIdx];
@@ -171,7 +214,7 @@ void ReplayLast::playHistory(float delta){
                         
                 }
                 
-        }else if (_timeCounter % 4 == 3){
+        }else if (_timeCounter % 40 == 30){
                 int from = _hisFrom[_dataIdx];
                 int to = _hisTo[_dataIdx];
                 _gameData->_areaData[from]->drawAsUnselected();

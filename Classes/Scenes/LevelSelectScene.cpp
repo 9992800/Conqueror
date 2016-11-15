@@ -9,7 +9,6 @@
 #include "GameSettingsScene.hpp"
 #include "LevelSelectScene.hpp"
 #include "GameScene.hpp"
-#include "ReplayLastScene.hpp"
 #include "json/writer.h"
 #include "json/stringbuffer.h"
 #include "json/rapidjson.h"
@@ -458,15 +457,15 @@ void LevelSelect::menuGetMoreDices(Ref* btn){
         
 }
 
-void LevelSelect::loadResourceInBg(int* loader, GameData* data){
+void LevelSelect::loadResourceInBg(int* loader, HistoryReplayData* data){
         
-        
+        GameData* game_data = data->gameData;
         std::vector<int>  map_data = parseData<int>(GAME_HISTORY_MAP_KEY);
-        data->_mapData = map_data;
+        game_data->_mapData = map_data;
         
         *loader += 10;
         std::vector<int>  cell_data = parseData<int>(GAME_HISTORY_CELL_INFO);
-        data->_cel = cell_data;
+        game_data->_cel = cell_data;
         
         *loader += 10;
         
@@ -516,16 +515,25 @@ void LevelSelect::loadResourceInBg(int* loader, GameData* data){
                         area->_cell_idxs.insert(cel);
                 }
                 
-                data->_areaData[i] = area;
+                game_data->_areaData[i] = area;
                 *loader += 2;
-//                usleep(100000);
         }
+        
+        
+        data->from = parseData<int>(GAME_HISTORY_FROM_KEY);
+        *loader += 10;
+        
+        data->to   = parseData<int>(GAME_HISTORY_TO_KEY);
+        *loader += 10;
+        
+        data->res  = parseData<int>(GAME_HISTORY_RES_KEY);
+        *loader += 10;
 }
 
 
 void LevelSelect::afterParseArea(void* param){
         _count = 100;
-        auto scene = ReplayLast::createScene((GameData*)param);
+        auto scene = ReplayLast::createScene(_historyData);
         Director::getInstance()->pushScene(scene);
 }
 
@@ -538,11 +546,14 @@ void LevelSelect::menuPlayHistory(Ref* pSender){
         scheduleUpdate();
         _loadingBar->setVisible(true);
         std::function<void(void*)> callback_area = CC_CALLBACK_1(LevelSelect::afterParseArea, this);
-        GameData* data = GameData::create(player_num);
-        data->retain();
+        GameData* gameData = GameData::create(player_num);
+        gameData->retain();
+        
+        _historyData.gameData = gameData;
+        HistoryReplayData* data_ptr = &_historyData;
         int *loader = &_count;
-        AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, callback_area, data, [loader, data, this](){
-                this->loadResourceInBg(loader, data);
+        AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, callback_area, nullptr, [loader, data_ptr, this](){
+                this->loadResourceInBg(loader, data_ptr);
         });
 }
 

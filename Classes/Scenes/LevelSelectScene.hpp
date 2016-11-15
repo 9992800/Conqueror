@@ -14,6 +14,7 @@
 #include "GamePayUtil.hpp"
 #include "PluginIAP/PluginIAP.h"
 #include "GameData.hpp"
+#include "ReplayLastScene.hpp"
 
 using namespace sdkbox;
 using namespace cocos2d::ui;
@@ -65,7 +66,7 @@ private:
         void onProductRequestFailure(const std::string& msg)override;
         void onRestoreComplete(bool ok, const std::string &msg)override;
         
-        void loadResourceInBg(int* loader, GameData* data);
+        void loadResourceInBg(int* loader, HistoryReplayData* data);
         void afterParseArea(void*);
         
 private:
@@ -81,6 +82,7 @@ private:
         MenuItemImage*  _soundCtrl;
         MenuItemImage*  _historyPlayItem;
         map<string, Product> _productsMap;
+        HistoryReplayData _historyData;
 };
 
 

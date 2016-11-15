@@ -14,15 +14,20 @@
 
 USING_NS_CC;
 
+typedef struct history_replay_tag{
+        GameData*         gameData;
+        std::vector<int>  from;
+        std::vector<int>  to;
+        std::vector<int>  res;
+}HistoryReplayData;
+
 class ReplayLast : public cocos2d::Layer{
 public:
-        static Scene* createScene(GameData*);
+        static Scene* createScene(HistoryReplayData data);
         virtual bool init() override;
-        CREATE_FUNC2(ReplayLast, GameData*, data);
-        ReplayLast(GameData* data):_gameData(data),
-        _timeCounter(0),_dataIdx(0){
-        }
+        CREATE_FUNC2(ReplayLast, HistoryReplayData, data);
         
+        ReplayLast(HistoryReplayData data);
         virtual ~ReplayLast();
         
         virtual void onEnter()override;
@@ -35,14 +40,18 @@ private:
         void menuExit(Ref* pSender);
         void menuStartShow(Ref* pSender);
         void playHistory(float);
+        void resetHistoryData();
 private:
         float                   _lowestPostion_y;
         GameData*               _gameData;
+        GameData*               _clonedGameData;
         std::vector<int>        _hisFrom;
         std::vector<int>        _hisTo;
         std::vector<int>        _hisRes;
         int                     _timeCounter;
         int                     _dataIdx;
+        int                     _curStatus;
+        MenuItemImage*          _startBtn;
 };
 
 #endif /* ReplayLastScene_hpp */

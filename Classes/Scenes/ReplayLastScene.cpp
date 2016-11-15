@@ -13,6 +13,14 @@
 #include "json/stringbuffer.h"
 #include "json/rapidjson.h"
 #include "json/document.h"
+#include "base/CCAsyncTaskPool.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#define usleep(t) Sleep(t)
+#else
+#include <unistd.h>
+#define usleep(t) usleep(t)
+#endif
 
 template<typename T>
 std::vector<T> parseData(const char* key)
@@ -51,21 +59,60 @@ Scene* ReplayLast::createScene(){
         return scene;
 }
 
-bool ReplayLast::init(){
-        int player_num = UserDefault::getInstance()->getIntegerForKey(GAME_HISTORY_PLAYER_NUM);
+void ReplayLast::afterParseArea(void* param){
         
-        if (0 == player_num){
-                return false;
-        }
+        auto map = MapCreator::instance()->createMap(_gameData);
+        Size map_size = map->getContentSize();
+        ScreenCoordinate::getInstance()->configScreen(map_size);
         
-        _gameData = GameData::create(player_num);
-        _gameData->retain();
+        _loadingCounter += 10;
+        
+        _gameData->reshDataByMapInfo(map);
+        
+        this->addChild(map, 0, 1);
+        
+        
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        Vec2 origin = Director::getInstance()->getVisibleOrigin();
+        
+        _lowestPostion_y = visibleSize.height + origin.y - map_size.height - 6;//TODO::
+        
+        
+        _loadingCounter += 10;
+        
+        Director::getInstance()->setDepthTest(true);
+        auto listener = EventListenerTouchAllAtOnce::create();
+        listener->onTouchesMoved = CC_CALLBACK_2(ReplayLast::onTouchesMoved, this);
+        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        
+        
+        auto return_back = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
+                                                 CC_CALLBACK_1(ReplayLast::menuExit, this));
+        return_back->setPosition(Vec2(origin.x + return_back->getContentSize().width + 10,
+                                      origin.y + visibleSize.height - return_back->getContentSize().height - 10));
+        
+        auto  start_show = MenuItemImage::create("start.png", "start.png",
+                                                 CC_CALLBACK_1(ReplayLast::menuStartShow, this));
+        start_show->setPosition(origin + visibleSize / 2);
+        
+        auto menu = Menu::create(start_show, return_back, NULL);
+        menu->setPosition(Vec2::ZERO);
+        this->addChild(menu, 100);
+        
+        _loadingCounter = 100;
+}
+
+void ReplayLast::loadResourceInBg(int* loader){
+        
         
         std::vector<int>  map_data = parseData<int>(GAME_HISTORY_MAP_KEY);
         _gameData->_mapData = map_data;
         
+        *loader += 10;
         std::vector<int>  cell_data = parseData<int>(GAME_HISTORY_CELL_INFO);
         _gameData->_cel = cell_data;
+        
+        *loader += 10;
         
         std::vector<std::string> area_data = parseData(GAME_HISTORY_AREA_INFO);
         
@@ -76,7 +123,6 @@ bool ReplayLast::init(){
                 area_d.Parse<0>(area_str.c_str());
                 if (area_d.HasParseError()) {
                         CCLOG("GetParseError %u\n",area_d.GetParseError());
-                        return false;
                 }
                 
                 AreaData* area = new AreaData(i);
@@ -101,6 +147,7 @@ bool ReplayLast::init(){
                         int cel = _line_cel[(rapidjson::SizeType)j].GetInt();
                         area->_line_cel[j] = cel;
                 }
+                
                 const rapidjson::Value& _line_dir = area_d["_line_dir"];
                 for (int j = 0; j < _line_dir.Size(); j++){
                         int dir = _line_dir[j].GetInt();
@@ -114,43 +161,45 @@ bool ReplayLast::init(){
                 }
                 
                 _gameData->_areaData[i] = area;
+                *loader += 2;
         }
+}
+
+#pragma mark - init things
+bool ReplayLast::init(){
         
+        int player_num = UserDefault::getInstance()->getIntegerForKey(GAME_HISTORY_PLAYER_NUM);
         
-        
-        auto map = MapCreator::instance()->createMap(_gameData);
-        Size map_size = map->getContentSize();
-        ScreenCoordinate::getInstance()->configScreen(map_size);
-        
-        _gameData->reshDataByMapInfo(map);
-        
-        this->addChild(map, 0, 1);
-        
+        if (0 == player_num){
+                return false;
+        }
         
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         
-        _lowestPostion_y = visibleSize.height + origin.y - map_size.height - 6;//TODO::
+        _loadingBar = ui::LoadingBar::create("sliderProgress.png");
+        _loadingBar->setDirection(ui::LoadingBar::Direction::LEFT);
+        _loadingBar->setPercent(0);
+        
+        Vec2 pos = Vec2(visibleSize.width / 2 + origin.x, origin.y + visibleSize.height / 6);
+        _loadingBar->setPosition(pos);
+        this->addChild(_loadingBar, 1);
+        
+        Size bar_size = _loadingBar->getContentSize();
+        auto label = Label::createWithTTF("Loading", "fonts/Marker Felt.ttf", 24);
+        label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
+        this->addChild(label, 2);
+        
+        _gameData = GameData::create(player_num);
+        _gameData->retain();
         
         
-        Director::getInstance()->setDepthTest(true);
-        auto listener = EventListenerTouchAllAtOnce::create();
-        listener->onTouchesMoved = CC_CALLBACK_2(ReplayLast::onTouchesMoved, this);
-        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+        std::function<void(void*)> callback_area = CC_CALLBACK_1(ReplayLast::afterParseArea, this);
+        int*    loader  = &_loadingCounter;
         
-        
-        auto return_back = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
-                                                 CC_CALLBACK_1(ReplayLast::menuExit, this));
-        return_back->setPosition(Vec2(origin.x + return_back->getContentSize().width + 10,
-                                      origin.y + visibleSize.height - return_back->getContentSize().height - 10));
-        
-        auto  start_show = MenuItemImage::create("start.png", "start.png",
-                                                   CC_CALLBACK_1(ReplayLast::menuStartShow, this));
-        start_show->setPosition(origin + visibleSize / 2);        
-        
-        auto menu = Menu::create(start_show, return_back, NULL);
-        menu->setPosition(Vec2::ZERO);
-        this->addChild(menu);
+        AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, callback_area, nullptr, [loader, this](){
+                this->loadResourceInBg(loader);
+        });
         
         return true;
 }
@@ -160,6 +209,7 @@ ReplayLast::~ReplayLast(){
 }
 
 
+#pragma mark - UI action things
 void ReplayLast::onTouchesMoved(const std::vector<Touch*>& touches, Event* event){
         auto touch = touches[0];
         auto diff = touch->getDelta();
@@ -190,11 +240,39 @@ void ReplayLast::menuStartShow(Ref* pSender){
         _hisRes  = parseData<int>(GAME_HISTORY_RES_KEY);
         _timeCounter = 0;
         _dataIdx = 0;
-        
         scheduleUpdate();
 }
 
+
+#pragma mark - update and enter or exit things
+void ReplayLast::onEnter(){
+        Layer::onEnter();
+        
+        _loadingCounter = 0;
+        scheduleUpdate();
+}
+
+
 void ReplayLast::update(float delta){
+        if (_loadingCounter >= 100){
+                _loadingCounter = 0;
+                _loadingBar->setVisible(false);
+                unscheduleUpdate();
+        }else{
+                _loadingBar->setPercent(_loadingCounter);
+        }
+}
+
+void ReplayLast::onExit(){
+        Layer::onExit();
+        unscheduleUpdate();
+        AsyncTaskPool::getInstance()->stopTasks(AsyncTaskPool::TaskType::TASK_IO);
+}
+
+
+#pragma mark - history show
+void ReplayLast::playHistory(float delta){
+        
         
         if (_dataIdx >= _hisFrom.size()){
                 //TODO::Show Dialog and Pause;
@@ -247,6 +325,7 @@ void ReplayLast::update(float delta){
                 }else if (ATTACK_RES_NONE == res){
                         
                 }
+                
         }else if (_timeCounter % 4 == 3){
                 int from = _hisFrom[_dataIdx];
                 int to = _hisTo[_dataIdx];
@@ -256,9 +335,4 @@ void ReplayLast::update(float delta){
         }
         
         ++_timeCounter;
-}
-
-void ReplayLast::onExit(){
-        Layer::onExit();
-        unscheduleUpdate();
 }

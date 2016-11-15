@@ -694,5 +694,10 @@ void DiceGame::finishHistoryRecord(){
         res_data.copy((unsigned char*)_historyRes.data(), _historyRes.size() * sizeof(int));
         cache->setDataForKey(GAME_HISTORY_RES_KEY, res_data);
         
+        Data supply_data;
+        supply_data.copy((unsigned char*)_historySup.data(), _historySup.size() * sizeof(int));
+        cache->setDataForKey(GAME_HISTORY_SUPPLY_KEY, supply_data);
+        
+        
         cache->flush();
 }

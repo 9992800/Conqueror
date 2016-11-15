@@ -111,6 +111,7 @@ enum {
 #define GAME_HISTORY_FROM_KEY           "_key_history_from_value"
 #define GAME_HISTORY_TO_KEY             "_key_history_to_value"
 #define GAME_HISTORY_RES_KEY            "_key_history_res_value"
+#define GAME_HISTORY_SUPPLY_KEY         "_key_history_supply_value"
 
 
 #define LEVEL_4_LOCK_STATE_KEY          "_key_level_4_lock_state"

@@ -21,13 +21,17 @@ class DiceGame;
 class MapCreator;
 class AreaData;
 class GameAI;
+class LevelSelect;
+class ReplayLast;
 
 class GameData: public Ref{
         friend class DiceGame;
         friend class MapCreator;
         friend class AreaData;
         friend class GameAI;
+        friend class LevelSelect;
         friend class ReplayLast;
+        
 public:
         static GameData* create(int n)
         {

@@ -154,5 +154,17 @@ return nullptr; \
 
 #define WEB_SOCKET_SERVER_URL      "ws://192.168.1.35:9900/marco"
 
+template<typename T> extern std::vector<T> parseData(const char* key);
+
+extern std::vector<std::string> parseData(const char* key);
+
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+#define usleep(t) Sleep(t)
+#else
+#include <unistd.h>
+#define usleep(t) usleep(t)
+#endif
+
 
 #endif /* __APPMACROS_H__ */

@@ -10,6 +10,10 @@
 #include "LevelSelectScene.hpp"
 #include "GameScene.hpp"
 #include "ReplayLastScene.hpp"
+#include "json/writer.h"
+#include "json/stringbuffer.h"
+#include "json/rapidjson.h"
+#include "json/document.h"
 
 enum {
         GAME_LEVEL_INDEX_1 = 1,
@@ -46,6 +50,36 @@ enum{
         ZORDER_ITEM_CONTROL
 };
 
+
+template<typename T>
+std::vector<T> parseData(const char* key)
+{
+        Data data = UserDefault::getInstance()->getDataForKey(key);
+        T* buffer = (T*) data.getBytes();
+        ssize_t length = data.getSize() / sizeof(T);
+        
+        std::vector<T> result;
+        for (int i = 0; i < length; i++) {
+                result.push_back(buffer[i]);
+        }
+        
+        return result;
+}
+
+std::vector<std::string> parseData(const char* key){
+        Data data = UserDefault::getInstance()->getDataForKey(key);
+        std::string::value_type* buffer = (std::string::value_type*) data.getBytes();
+        ssize_t length = data.getSize() / sizeof(std::string::value_type);
+        
+        std::vector<std::string> result;
+        std::istringstream f(buffer, length);
+        std::string str;
+        while (getline(f, str, '\n')){
+                result.push_back(str);
+        }
+        return result;
+}
+
 Scene* LevelSelect::createScene()
 {
         auto scene = Scene::create();
@@ -80,7 +114,21 @@ bool LevelSelect::init()
         
         IAP::setDebug(true);
         IAP::setListener(this);
-        IAP::init();        
+        IAP::init();
+        
+        _loadingBar = LoadingBar::create("sliderProgress.png");
+        _loadingBar->setDirection(LoadingBar::Direction::LEFT);
+        _loadingBar->setPercent(0);
+        
+        Vec2 pos = Vec2(visibleSize.width / 2 + origin.x, origin.y + visibleSize.height / 6);
+        _loadingBar->setPosition(pos);
+        
+        Size bar_size = _loadingBar->getContentSize();
+        auto label = Label::createWithTTF("Loading", "fonts/Marker Felt.ttf", 24);
+        label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
+        _loadingBar->addChild(label, 4, key_loading_bar2);
+        this->addChild(_loadingBar, 3, key_loading_bar1);
+        _loadingBar->setVisible(false);
         
         return true;
 }
@@ -390,24 +438,11 @@ void LevelSelect::menuBuyLevel(Ref* btn, std::string name){
 }
 
 void LevelSelect::menuStartGame(Ref* btn){
-        auto visibleSize = Director::getInstance()->getVisibleSize();
-        Vec2 origin = Director::getInstance()->getVisibleOrigin();
-        
-        _count = 0;
-        _loadingBar = LoadingBar::create("sliderProgress.png");
-        _loadingBar->setDirection(LoadingBar::Direction::LEFT);
-        _loadingBar->setPercent(0);
-        
-        Vec2 pos = Vec2(visibleSize.width / 2 + origin.x, origin.y + visibleSize.height / 6);
-        _loadingBar->setPosition(pos);
-        this->addChild(_loadingBar, 3, key_loading_bar1);
-        
-        Size bar_size = _loadingBar->getContentSize();
-        auto label = Label::createWithTTF("Loading", "fonts/Marker Felt.ttf", 24);
-        label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
-        this->addChild(label, 4, key_loading_bar2);
-        
+        _loadingBar->setVisible(true);
         scheduleUpdate();
+        
+        auto scene = GameScene::createScene(_lastLevel);
+        Director::getInstance()->pushScene(scene); 
 }
 
 void LevelSelect::menuShowSettigns(Ref* btn){
@@ -423,11 +458,92 @@ void LevelSelect::menuGetMoreDices(Ref* btn){
         
 }
 
+void LevelSelect::loadResourceInBg(int* loader, GameData* data){
+        
+        
+        std::vector<int>  map_data = parseData<int>(GAME_HISTORY_MAP_KEY);
+        data->_mapData = map_data;
+        
+        *loader += 10;
+        std::vector<int>  cell_data = parseData<int>(GAME_HISTORY_CELL_INFO);
+        data->_cel = cell_data;
+        
+        *loader += 10;
+        
+        std::vector<std::string> area_data = parseData(GAME_HISTORY_AREA_INFO);
+        
+        for (int i = 0; i < AREA_MAX; i++){
+                std::string area_str = area_data[i];
+                
+                rapidjson::Document area_d;
+                area_d.Parse<0>(area_str.c_str());
+                if (area_d.HasParseError()) {
+                        CCLOG("GetParseError %u\n",area_d.GetParseError());
+                }
+                
+                AreaData* area = new AreaData(i);
+                
+                const rapidjson::Value& basic = area_d["basic"];
+                area->_arm      = basic["_arm"].GetInt();
+                area->_size     = basic["_size"].GetInt();
+                area->_cpos     = basic["_cpos"].GetInt();
+                area->_dice     = basic["_dice"].GetInt();
+                area->_left     = basic["_left"].GetInt();
+                area->_right    = basic["_right"].GetInt();
+                area->_top      = basic["_top"].GetInt();
+                area->_bottom   = basic["_bottom"].GetInt();
+                area->_cx       = basic["_cx"].GetInt();
+                area->_cy       = basic["_cy"].GetInt();
+                area->_len_min  = basic["_len_min"].GetInt();
+                area->_areaId   = basic["_areaId"].GetInt();
+                
+                
+                const rapidjson::Value& _line_cel = area_d["_line_cel"];
+                for (int j = 0; j < _line_cel.Size(); j++){
+                        int cel = _line_cel[(rapidjson::SizeType)j].GetInt();
+                        area->_line_cel[j] = cel;
+                }
+                
+                const rapidjson::Value& _line_dir = area_d["_line_dir"];
+                for (int j = 0; j < _line_dir.Size(); j++){
+                        int dir = _line_dir[j].GetInt();
+                        area->_line_dir[j] = dir;
+                }
+                
+                const rapidjson::Value& _cell_idxs = area_d["_cell_idxs"];
+                for (int j = 0; j < _cell_idxs.Size(); j++){
+                        int cel = _cell_idxs[j].GetInt();
+                        area->_cell_idxs.insert(cel);
+                }
+                
+                data->_areaData[i] = area;
+                *loader += 2;
+//                usleep(100000);
+        }
+}
+
+
+void LevelSelect::afterParseArea(void* param){
+        _count = 100;
+        auto scene = ReplayLast::createScene((GameData*)param);
+        Director::getInstance()->pushScene(scene);
+}
 
 void LevelSelect::menuPlayHistory(Ref* pSender){
+        int player_num = UserDefault::getInstance()->getIntegerForKey(GAME_HISTORY_PLAYER_NUM);
         
-        auto scene = ReplayLast::createScene();
-        Director::getInstance()->pushScene(scene);
+        if (0 == player_num){
+                return;
+        }
+        scheduleUpdate();
+        _loadingBar->setVisible(true);
+        std::function<void(void*)> callback_area = CC_CALLBACK_1(LevelSelect::afterParseArea, this);
+        GameData* data = GameData::create(player_num);
+        data->retain();
+        int *loader = &_count;
+        AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, callback_area, data, [loader, data, this](){
+                this->loadResourceInBg(loader, data);
+        });
 }
 
 
@@ -484,22 +600,15 @@ void LevelSelect::onEnter(){
 void LevelSelect::update(float delta){
         
         if (_count < 100)
-                _count += 3;
-        else{
-                _count = 0;
-                _loadingBar->setPercent(0);
-                auto scene = GameScene::createScene(_lastLevel);
-                Director::getInstance()->pushScene(scene);
-        }
-        
-        _loadingBar->setPercent(_count);
+                _loadingBar->setPercent(_count);
 }
 
 void LevelSelect::onExit(){
         Layer::onExit();
-        this->removeChildByTag(key_loading_bar1);
-        this->removeChildByTag(key_loading_bar2);
+        _loadingBar->setVisible(false);
+        _count = 0;
         unscheduleUpdate();
+        AsyncTaskPool::getInstance()->stopTasks(AsyncTaskPool::TaskType::TASK_IO);
 }
 
 

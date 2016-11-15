@@ -16,10 +16,11 @@
 
 USING_NS_CC;
 class GameData;
+class LevelSelect;
 class ReplayLast;
 
-
 class AreaData: public Ref{
+        friend class LevelSelect;
         friend class ReplayLast;
 public:
         AreaData(int id);

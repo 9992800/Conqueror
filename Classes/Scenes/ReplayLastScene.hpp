@@ -16,9 +16,13 @@ USING_NS_CC;
 
 class ReplayLast : public cocos2d::Layer{
 public:
-        static Scene* createScene();
+        static Scene* createScene(GameData*);
         virtual bool init() override;
-        CREATE_FUNC(ReplayLast);
+        CREATE_FUNC2(ReplayLast, GameData*, data);
+        ReplayLast(GameData* data):_gameData(data),
+        _timeCounter(0),_dataIdx(0){
+        }
+        
         virtual ~ReplayLast();
         
         virtual void onEnter()override;
@@ -30,9 +34,7 @@ private:
         
         void menuExit(Ref* pSender);
         void menuStartShow(Ref* pSender);
-        void afterParseArea(void*);        
         void playHistory(float);
-        void loadResourceInBg(int*);
 private:
         float                   _lowestPostion_y;
         GameData*               _gameData;
@@ -41,8 +43,6 @@ private:
         std::vector<int>        _hisRes;
         int                     _timeCounter;
         int                     _dataIdx;
-        int                     _loadingCounter;
-        ui::LoadingBar*         _loadingBar;
 };
 
 #endif /* ReplayLastScene_hpp */

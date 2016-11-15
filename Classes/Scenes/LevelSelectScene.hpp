@@ -13,6 +13,7 @@
 #include "ui/CocosGUI.h"
 #include "GamePayUtil.hpp"
 #include "PluginIAP/PluginIAP.h"
+#include "GameData.hpp"
 
 using namespace sdkbox;
 using namespace cocos2d::ui;
@@ -63,6 +64,9 @@ private:
         void onProductRequestSuccess(const std::vector<Product>& products)override;
         void onProductRequestFailure(const std::string& msg)override;
         void onRestoreComplete(bool ok, const std::string &msg)override;
+        
+        void loadResourceInBg(int* loader, GameData* data);
+        void afterParseArea(void*);
         
 private:
         int             _count;

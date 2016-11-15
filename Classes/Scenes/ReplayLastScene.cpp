@@ -115,6 +115,7 @@ void ReplayLast::resetHistoryData(){
         _gameData->release();
         
         _gameData = GameData::createWithData(_clonedGameData);
+        _gameData->retain();
         
         map = MapCreator::instance()->createMap(_gameData);
         Size map_size = map->getContentSize();

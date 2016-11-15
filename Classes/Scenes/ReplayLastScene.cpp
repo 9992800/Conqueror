@@ -168,6 +168,27 @@ void ReplayLast::playHistory(float delta){
                 return;
         }
         
+        int res = _hisRes[_dataIdx];
+        int from = _hisFrom[_dataIdx];
+        int to = _hisTo[_dataIdx];
+        auto map = _gameData->_refereMap;
+        
+        if (ATTACK_RES_GOTSUPPLY == res){
+                
+                for (std::vector<Vec2>::iterator it = _hisSupply.begin() + from;
+                     it != _hisSupply.begin() + to; it++){
+                        Vec2 sup = *it;
+                        _gameData->_areaData[(int)sup.x]->setDice((int)sup.y);
+                        _gameData->_areaData[(int)sup.x]->updatePawn(map);
+                }
+                ++_dataIdx;
+                return;
+                
+        }else if (ATTACK_RES_NONE == res){
+                printf("---should not come here---");
+                return;
+        }
+        
         if (_timeCounter % 40 == 0){
                 int from = _hisFrom[_dataIdx];
                 _gameData->_areaData[from]->drawAsSelected();
@@ -178,14 +199,10 @@ void ReplayLast::playHistory(float delta){
                 _gameData->_areaData[to]->drawAsSelected();
                 
         }else if (_timeCounter % 40 == 20){
-                int res = _hisRes[_dataIdx];
-                int from = _hisFrom[_dataIdx];
-                int to = _hisTo[_dataIdx];
                 
                 AreaData* area_to       = _gameData->_areaData[to];
                 AreaData* area_from     = _gameData->_areaData[from];
                 
-                auto map = _gameData->_refereMap;
                 if (ATTACK_RES_WIN == res){
                         int new_owner = _gameData->_areaData[from]->getOwner();
                         TMXLayer * layer = map->getLayer(LAYER_NAME_IN_TILE_MAP);
@@ -209,17 +226,6 @@ void ReplayLast::playHistory(float delta){
                         area_from->initDice();
                         area_from->updatePawn(map);
                         
-                }else if (ATTACK_RES_GOTSUPPLY == res){
-                        
-                        for (std::vector<Vec2>::iterator it = _hisSupply.begin() + from;
-                             it != _hisSupply.begin() + to; it++){
-                                Vec2 sup = *it;
-                                _gameData->_areaData[(int)sup.x]->setDice((int)sup.y);
-                                _gameData->_areaData[(int)sup.x]->updatePawn(map);
-                        }
-                        
-                }else if (ATTACK_RES_NONE == res){
-                        printf("---should not come here---");
                 }
                 
         }else if (_timeCounter % 40 == 30){

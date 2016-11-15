@@ -614,12 +614,16 @@ void DiceGame::starSupplyDice(CallFunc* callback){
                 affected_aread.insert(selected_area);
         }
         
+        _historyFrom.push_back(_historySup.size());
+        _historyRes.push_back(ATTACK_RES_GOTSUPPLY);
         for(std::set<int>::iterator it = affected_aread.begin(); it != affected_aread.end(); ++it){
                 AreaData* area = _data->_areaData[*it];
                 
                 area->updatePawn(_data->_refereMap);
                 area->drawSupply(_data->_refereMap);
+                _historySup.push_back(Vec2(*it, area->getDice()));
         }
+        _historyTo.push_back(_historySup.size());
         
         callback->execute();
 }
@@ -650,6 +654,7 @@ void DiceGame::initHistoryRecord(){
         _historyFrom.clear();
         _historyTo.clear();
         _historyRes.clear();
+        _historySup.clear();
         
         auto cache = UserDefault::getInstance();
         
@@ -695,7 +700,7 @@ void DiceGame::finishHistoryRecord(){
         cache->setDataForKey(GAME_HISTORY_RES_KEY, res_data);
         
         Data supply_data;
-        supply_data.copy((unsigned char*)_historySup.data(), _historySup.size() * sizeof(int));
+        supply_data.copy((unsigned char*)_historySup.data(), _historySup.size() * sizeof(Vec2));
         cache->setDataForKey(GAME_HISTORY_SUPPLY_KEY, supply_data);
         
         

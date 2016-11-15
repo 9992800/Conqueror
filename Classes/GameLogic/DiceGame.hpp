@@ -53,12 +53,12 @@ private:
         
         
 private:
-        GameData*        _data;
-        GameData*        _clonedGameData;
-        std::vector<int> _historyFrom;
-        std::vector<int> _historyTo;
-        std::vector<int> _historyRes;
-        std::vector<int> _historySup;
+        GameData*               _data;
+        GameData*               _clonedGameData;
+        std::vector<int>        _historyFrom;
+        std::vector<int>        _historyTo;
+        std::vector<int>        _historyRes;
+        std::vector<Vec2>       _historySup;
 };
 
 #endif /* DiceGame_hpp */

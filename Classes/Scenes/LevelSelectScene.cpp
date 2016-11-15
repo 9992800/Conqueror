@@ -67,7 +67,7 @@ std::vector<T> parseData(const char* key)
 
 std::vector<std::string> parseData(const char* key){
         Data data = UserDefault::getInstance()->getDataForKey(key);
-        std::string::value_type* buffer = (std::string::value_type*) data.getBytes();        
+        std::string::value_type* buffer = (std::string::value_type*) data.getBytes();
         std::vector<std::string> result;
         std::istringstream f(buffer);
         std::string str;

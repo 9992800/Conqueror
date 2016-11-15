@@ -528,6 +528,9 @@ void LevelSelect::loadResourceInBg(int* loader, HistoryReplayData* data){
         
         data->res  = parseData<int>(GAME_HISTORY_RES_KEY);
         *loader += 10;
+        
+        data->sup  = parseData<Vec2>(GAME_HISTORY_SUPPLY_KEY);
+        *loader += 10;
 }
 
 

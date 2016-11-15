@@ -19,6 +19,7 @@ typedef struct history_replay_tag{
         std::vector<int>  from;
         std::vector<int>  to;
         std::vector<int>  res;
+        std::vector<Vec2> sup;
 }HistoryReplayData;
 
 class ReplayLast : public cocos2d::Layer{
@@ -48,6 +49,7 @@ private:
         std::vector<int>        _hisFrom;
         std::vector<int>        _hisTo;
         std::vector<int>        _hisRes;
+        std::vector<Vec2>       _hisSupply;
         int                     _timeCounter;
         int                     _dataIdx;
         int                     _curStatus;

@@ -70,6 +70,7 @@ _timeCounter(0),_dataIdx(0),
 _hisFrom(data.from),
 _hisTo(data.to),
 _hisRes(data.res),
+_hisSupply(data.sup),
 _curStatus(HISTORY_STATUS_INIT){
         _clonedGameData = GameData::createWithData(_gameData);
         _clonedGameData->retain();
@@ -162,7 +163,7 @@ void ReplayLast::playHistory(float delta){
         
         if (_dataIdx >= _hisFrom.size()){
                 _curStatus  = HISTORY_STATUS_FINISHED;
-                _startBtn->setVisible(false);
+                _startBtn->setVisible(true);
                 unscheduleUpdate();
                 return;
         }
@@ -210,8 +211,15 @@ void ReplayLast::playHistory(float delta){
                         
                 }else if (ATTACK_RES_GOTSUPPLY == res){
                         
-                }else if (ATTACK_RES_NONE == res){
+                        for (std::vector<Vec2>::iterator it = _hisSupply.begin() + from;
+                             it != _hisSupply.begin() + to; it++){
+                                Vec2 sup = *it;
+                                _gameData->_areaData[(int)sup.x]->setDice((int)sup.y);
+                                _gameData->_areaData[(int)sup.x]->updatePawn(map);
+                        }
                         
+                }else if (ATTACK_RES_NONE == res){
+                        printf("---should not come here---");
                 }
                 
         }else if (_timeCounter % 40 == 30){

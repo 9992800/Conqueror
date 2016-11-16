@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
-@ComponentScan(basePackages="com.jctx.chat")
+@ComponentScan(basePackages="com.bellflower.conqueror")
 @EnableWebMvc
 @EnableScheduling
 public class MvcConfiguration extends WebMvcConfigurerAdapter{

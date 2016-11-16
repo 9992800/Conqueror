@@ -1,6 +1,6 @@
 package com.bellflower.conqueror.module;
 
-public class GameServer {
+public class FaceBookInfo {
 	String		id;
 	int 		playerNum;
 	String  	serverName;

@@ -21,6 +21,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/Scenes/SplashScene.cpp \
                    ../../../Classes/Scenes/StartingScene.cpp \
                    ../../../Classes/Scenes/LevelSelectScene.cpp \
+                   ../../../Classes/Scenes/ReplayLastScene.cpp \
                    ../../../Classes/Scenes/GameScene.cpp \
                    ../../../Classes/RandomMap/RandomMap.cpp \
                    ../../../Classes/RandomMap/ScreenCoordinate.cpp \
@@ -38,13 +39,16 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/Common/PopUpBaseDialog.cpp \
                    ../../../Classes/Common/PopUpOkCancelDialog.cpp \
                    ../../../Classes/Common/PopUpOkDialog.cpp \
-                   ../../../Classes/Common/WebSocktUtil.cpp 
+                   ../../../Classes/Common/WebSocktUtil.cpp \
+                   ../../../Classes/Network/FindPlayerScene.cpp \
+                   ../../../Classes/Network/BattleFieldScene.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes \
 					$(LOCAL_PATH)/../../../Classes/Common \
 					$(LOCAL_PATH)/../../../Classes/GameLogic \
 					$(LOCAL_PATH)/../../../Classes/RandomMap \
-					$(LOCAL_PATH)/../../../Classes/Scenes
+					$(LOCAL_PATH)/../../../Classes/Scenes \
+					$(LOCAL_PATH)/../../../Classes/Network
 
 # _COCOS_HEADER_ANDROID_BEGIN
 # _COCOS_HEADER_ANDROID_END

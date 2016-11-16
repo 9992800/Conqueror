@@ -1,3 +1,0 @@
-sentinel.ports.property=${redis-server-ports}
-sentinel.hosts.property=${redis-server-hosts}
-sentinel.master.name=${sentinel-master-name}

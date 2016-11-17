@@ -34,8 +34,6 @@ bool Starting::init()
         logo->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
         this->addChild(logo, 1);
         
-        
-        
         _helpBtn = MenuItemImage::create("help.png", "help_sel.png",
                                            CC_CALLBACK_1(Starting::menuHelp, this));
         _helpBtn->setPosition(Vec2(origin.x + visibleSize.width - 2 * _helpBtn->getContentSize().width,
@@ -127,7 +125,6 @@ void Starting::afterCaptureScreen(bool yes, const std::string &outputFilename)
 
 void Starting::menuShareGame(Ref* pSender){
         CCLOG("##FB %s", __FUNCTION__);
-        
         
         if (PluginFacebook::isLoggedIn()){
                 utils::captureScreen(CC_CALLBACK_2(Starting::afterCaptureScreen, this), "screen.png");

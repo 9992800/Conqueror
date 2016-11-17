@@ -12,17 +12,17 @@ PopUpBaseDialog::PopUpBaseDialog(BaseDialogConfig config):LayerColor::LayerColor
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         Vec2 center = origin + visibleSize / 2;
+        Size  layer_size = visibleSize / 2;
+        this->setContentSize(layer_size);
         this->setPosition(center);
         this->setIgnoreAnchorPointForPosition(false);
         this->setAnchorPoint(Vec2(0.5f, 0.5f));
         
         _backGound = cocos2d::ui::Scale9Sprite::create(_baseConfig._backGroundImg);
-        Size  layer_size = visibleSize / 2;
-        this->setContentSize(layer_size);
         _backGound->setContentSize(layer_size);
         _backGound->setCapInsets(Rect(12, 12, 40, 40));
+        _backGound->setPosition(Vec2(layer_size/2));
         this->addChild(_backGound, 0, kTagBackGrd);
-        _backGound->setPosition(Vec2(layer_size.width / 2, layer_size.height / 2));
         
         
         _title = Label::createWithSystemFont(config._title, "", config._titleFontSize);

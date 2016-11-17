@@ -12,33 +12,33 @@
 
 typedef struct LayerBean_s{
         std::string name;
-        int width;
-        int height;
+        float width;
+        float height;
         float opacity;
         std::vector<int> datas;
 }LayerBean;
 
 typedef struct ImageBean_s{
         std::string source;
-        int width;
-        int height;
+        float width;
+        float height;
 }ImageBean;
 
 typedef struct TileSetBean_s{
         std::string name;
-        int tilewidth;
-        int tileheight;
-        int tilecount;
-        int columns;
+        float tilewidth;
+        float tileheight;
+        float tilecount;
+        float columns;
         ImageBean imageBean;
 }TileSetBean;
 
 typedef struct MapBasicBean_s{
-        int widthInTiles;
-        int heightInTiles;
-        int tileWidth;
-        int tileHeight;
-        int hexsidelength;
+        float widthInTiles;
+        float heightInTiles;
+        float tileWidth;
+        float tileHeight;
+        float hexsidelength;
 }MapBasicBean;
 
 typedef struct SimpleMapInfoBean_s{
@@ -49,14 +49,14 @@ typedef struct SimpleMapInfoBean_s{
 
 
 typedef struct MapResolustionConfig_s{
-        int mapTileWidth;
-        int mapTileHeight;
-        int hexsidelength;
-        int tilesetWidth;
-        int tilesetHeight;
+        float   mapTileWidth;
+        float   mapTileHeight;
+        float   hexsidelength;
+        float   tilesetWidth;
+        float   tilesetHeight;
         std::string imgSource;
-        int imageWidth;
-        int imageHeight;
+        float   imageWidth;
+        float   imageHeight;
 }MapResolustionConfig;
 
 

@@ -12,16 +12,17 @@ static MapResolustionConfig _curConfig;
 void MapResolustion::initConfig(int solution){
         switch (solution) {
                 case MapResolustion::BIG_SCREEN_RESOLUTION:
-                        _curConfig = {60, 70, 34, 60, 70, "tilemap6.png", 180, 140};
+                        _curConfig = {51.75, 52.5, 16.5, 51.75, 52.5, "tilemap7.png", 155.25, 103.5};
+                        
                         break;
                 case MapResolustion::MEDIUM_SCREEN_RESOLUTION:
-                        _curConfig = {30, 35, 17, 30, 35, "tilemap5.png", 90, 70};
+                        _curConfig = {34.5, 35, 11, 34.5, 35, "tilemap6.png", 103.5, 69};
+                        
                         break;
                         
                 default:
                 case MapResolustion::SMALL_SCREEN_RESOLUTION:
-                        _curConfig = {30, 34, 16, 30, 34, "tilemap7.png", 90, 70};
-               
+                        _curConfig = {34.5, 35, 11, 34.5, 35, "tilemap5.png", 103.5, 103.5};               
                         break;
         }
 }

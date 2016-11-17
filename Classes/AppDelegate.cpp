@@ -30,6 +30,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
                 director->setOpenGLView(glview);
         }
  
+        Size w_size = director->getOpenGLView()->getFrameSize();
         director->setDisplayStats(true);
         director->setAnimationInterval(1.0f / 60);
      

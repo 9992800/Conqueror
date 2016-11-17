@@ -39,7 +39,7 @@ TMXTiledMap* MapCreator::createMap(GameData* data){
 
 SimpleMapInfoBean MapCreator::initMapBasicInfo(std::vector<int> map_data){
         SimpleMapInfoBean simpleBean;
-        int row = XMAX, columns = YMAX;
+        float row = XMAX, columns = YMAX;
         
         MapResolustionConfig config =  MapResolustion::getConfig();
         

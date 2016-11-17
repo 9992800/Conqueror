@@ -8,9 +8,10 @@
 
 #ifndef PopUpBaseDialog_hpp
 #define PopUpBaseDialog_hpp
-
-
 #include "cocos2d.h"
+#include "ui/UIScale9Sprite.h"
+
+
 USING_NS_CC;
 
 enum{
@@ -62,7 +63,7 @@ public:
         
 protected:
         BaseDialogConfig        _baseConfig;
-        Sprite*                 _backGound;
+        ui::Scale9Sprite*       _backGound;
         Label*                  _title;
         Label*                  _content;
 

@@ -98,8 +98,6 @@
 		BB9A4E241DCB7C6400E88C41 /* GameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E221DCB7C6400E88C41 /* GameData.cpp */; };
 		BB9A4E271DCB84A200E88C41 /* MapCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */; };
 		BBBA8DD51DCCE3C6006A6471 /* DIALOG_BACKGROUND.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD01DCCE3C6006A6471 /* DIALOG_BACKGROUND.png */; };
-		BBBA8DD61DCCE3C6006A6471 /* DIALOG_CANCEL.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD11DCCE3C6006A6471 /* DIALOG_CANCEL.png */; };
-		BBBA8DD71DCCE3C6006A6471 /* DIALOG_OK.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD21DCCE3C6006A6471 /* DIALOG_OK.png */; };
 		BBBA8DD81DCCE3C6006A6471 /* NextButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD31DCCE3C6006A6471 /* NextButton.png */; };
 		BBBA8DD91DCCE3C6006A6471 /* start.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD41DCCE3C6006A6471 /* start.png */; };
 		BBC12E4E1DCDFBA70035A571 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC12E4D1DCDFBA70035A571 /* StoreKit.framework */; };
@@ -279,8 +277,6 @@
 		BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapCreator.cpp; sourceTree = "<group>"; };
 		BB9A4E261DCB84A200E88C41 /* MapCreator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapCreator.hpp; sourceTree = "<group>"; };
 		BBBA8DD01DCCE3C6006A6471 /* DIALOG_BACKGROUND.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIALOG_BACKGROUND.png; sourceTree = "<group>"; };
-		BBBA8DD11DCCE3C6006A6471 /* DIALOG_CANCEL.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIALOG_CANCEL.png; sourceTree = "<group>"; };
-		BBBA8DD21DCCE3C6006A6471 /* DIALOG_OK.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DIALOG_OK.png; sourceTree = "<group>"; };
 		BBBA8DD31DCCE3C6006A6471 /* NextButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NextButton.png; sourceTree = "<group>"; };
 		BBBA8DD41DCCE3C6006A6471 /* start.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start.png; sourceTree = "<group>"; };
 		BBC12E4D1DCDFBA70035A571 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.1.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -459,8 +455,6 @@
 				BB62DFD11DCD9E7A0037DE0A /* anim */,
 				BB62DFD21DCD9E7A0037DE0A /* particles */,
 				BBBA8DD01DCCE3C6006A6471 /* DIALOG_BACKGROUND.png */,
-				BBBA8DD11DCCE3C6006A6471 /* DIALOG_CANCEL.png */,
-				BBBA8DD21DCCE3C6006A6471 /* DIALOG_OK.png */,
 				BBBA8DD31DCCE3C6006A6471 /* NextButton.png */,
 				BBBA8DD41DCCE3C6006A6471 /* start.png */,
 				7C21A0DB1DC9C06C0035ECC6 /* sliderProgress.png */,
@@ -754,7 +748,6 @@
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				7C733B1C1DC990E200098EDD /* iphone5 in Resources */,
 				7C733B1D1DC990E200098EDD /* iphone6 in Resources */,
-				BBBA8DD61DCCE3C6006A6471 /* DIALOG_CANCEL.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				BBC12E501DCDFC470035A571 /* sdkbox_config.json in Resources */,
@@ -778,7 +771,6 @@
 				BBBA8DD91DCCE3C6006A6471 /* start.png in Resources */,
 				7C6E80041DD9687D00C5E374 /* history_data_sel.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
-				BBBA8DD71DCCE3C6006A6471 /* DIALOG_OK.png in Resources */,
 				BBBA8DD51DCCE3C6006A6471 /* DIALOG_BACKGROUND.png in Resources */,
 				BBBA8DD81DCCE3C6006A6471 /* NextButton.png in Resources */,
 				7C6E80061DD9687D00C5E374 /* history_sel.png in Resources */,

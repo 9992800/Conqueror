@@ -16,9 +16,11 @@ PopUpBaseDialog::PopUpBaseDialog(BaseDialogConfig config):LayerColor::LayerColor
         this->setIgnoreAnchorPointForPosition(false);
         this->setAnchorPoint(Vec2(0.5f, 0.5f));
         
-        _backGound = Sprite::create(_baseConfig._backGroundImg);
-        Size  layer_size = _backGound->getTexture()->getContentSize();
+        _backGound = cocos2d::ui::Scale9Sprite::create(_baseConfig._backGroundImg);
+        Size  layer_size = visibleSize / 2;
         this->setContentSize(layer_size);
+        _backGound->setContentSize(layer_size);
+        _backGound->setCapInsets(Rect(12, 12, 40, 40));
         this->addChild(_backGound, 0, kTagBackGrd);
         _backGound->setPosition(Vec2(layer_size.width / 2, layer_size.height / 2));
         

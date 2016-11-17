@@ -14,7 +14,7 @@ GamePlayer::GamePlayer(int id)
 ,_dice_c(0)
 ,_dice_jun(id)
 ,_stock(0){
-        _gid_inmap = id + 1;
+        _gid_inmap = id + 2;
 }
 
 GamePlayer::~GamePlayer(){

@@ -47,7 +47,7 @@ SimpleMapInfoBean MapCreator::initMapBasicInfo(std::vector<int> map_data){
         simpleBean.mapBasicBean = mapBasic;
         
         TileSetBean tileSet = {"game", config.tilesetWidth, config.tilesetHeight,
-                6, 3, {config.imgSource, config.imageWidth, config.imageHeight}};
+                9, 3, {config.imgSource, config.imageWidth, config.imageHeight}};
         
         simpleBean.tileSetBean = tileSet;
         

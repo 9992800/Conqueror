@@ -16,7 +16,7 @@ USING_NS_CC;
 class GamePlayer: public Ref{
 public:
         static int getGid(int owner_id){
-                return owner_id + 1;
+                return owner_id + 2;
         }
         GamePlayer(int id);
         GamePlayer(GamePlayer* obj);

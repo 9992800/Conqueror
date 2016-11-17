@@ -31,7 +31,7 @@ GameData* DiceGame::initGameData(int num){
                 if (area_id > 0)
                         _data->_mapData[i] = player->getGid();
                 else
-                        _data->_mapData[i] = 0;
+                        _data->_mapData[i] = 1;
         }
         _data->retain();
         

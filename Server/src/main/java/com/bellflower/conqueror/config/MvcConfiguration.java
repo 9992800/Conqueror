@@ -38,11 +38,17 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(sercurityInterceptor());
+		registry.addInterceptor(sessionInterceptor());
 	}
 	
 	@Bean
 	SecurityInterceptor sercurityInterceptor(){
 		return new SecurityInterceptor();
+	}
+	
+	@Bean
+	SessionInterceptor sessionInterceptor(){
+		return new SessionInterceptor();
 	}
 
 	@Bean

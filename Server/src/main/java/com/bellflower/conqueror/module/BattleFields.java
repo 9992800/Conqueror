@@ -2,21 +2,22 @@ package com.bellflower.conqueror.module;
 
 public class BattleFields {
 	String 		id;
-	String 		serverId;
+	long 		battleId;	
 	int 		playerNum;
 	int 		status;
 	String		mapId;
+	
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getServerId() {
-		return serverId;
+	public long getServerId() {
+		return battleId;
 	}
-	public void setServerId(String serverId) {
-		this.serverId = serverId;
+	public void setServerId(long bi) {
+		this.battleId = bi;
 	}
 	public int getPlayerNum() {
 		return playerNum;
@@ -39,7 +40,7 @@ public class BattleFields {
 	
 	@Override
 	public String toString() {
-		return "BattleFields [id=" + id + ", serverId=" + serverId + ", playerNum=" + playerNum + ", status=" + status
+		return "BattleFields [id=" + id + ", serverId=" + battleId + ", playerNum=" + playerNum + ", status=" + status
 				+ ", mapId=" + mapId + "]";
 	}
 }

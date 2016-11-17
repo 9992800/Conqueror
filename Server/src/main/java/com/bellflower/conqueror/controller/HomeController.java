@@ -37,6 +37,14 @@ public class HomeController {
 		return ResultMapUtils.success();
 	}
 	
+	@RequestMapping(value = "/battleMaps")
+	@ResponseBody
+	public Map<String, Object> battleMaps(HttpServletRequest request,
+			@RequestParam(value = "user_id", required = true) String user_id,
+			@RequestParam(value = "table_id", required = true) String table_id) {		
+		return ResultMapUtils.success();
+	}
+	
 	@RequestMapping(value = "/createBattle")
 	@ResponseBody
 	public Map<String, Object> createBattle(HttpServletRequest request,
@@ -48,7 +56,8 @@ public class HomeController {
 	@ResponseBody
 	public Map<String, Object> battleFields(HttpServletRequest request,
 			@RequestParam(value = "server_id", required = true) String server_id,
-			@RequestParam(value = "user_id", required = true) String user_id) {		
+			@RequestParam(value = "user_id", required = true) String user_id) {	
+		
 		return ResultMapUtils.success();
 	}
 	

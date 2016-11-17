@@ -1,6 +1,7 @@
 package com.bellflower.conqueror.Utils;
 
 import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,6 +11,8 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.springframework.web.socket.WebSocketSession;
 
 public final class SessionUtils {
+	
+	public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");
 	
 	public static void parseParam(Object bean, WebSocketSession session) throws IllegalAccessException, InvocationTargetException{
 		

@@ -75,7 +75,7 @@ void FindPlayer::menuCreateGame(Ref*){
         ModalLayer::showModalDialog(this); 
         
         HttpRequest* request = new (std::nothrow) HttpRequest();
-        std::string base_url(GAME_SERVICE_SERVER_URL"/serverHome/createBattle?");
+        std::string base_url(GAME_SERVICE_SERVER_URL"/createBattle?");
         std::string uid = UserSessionBean::getInstance()->getUserId();
         
         base_url.append("user_id=");

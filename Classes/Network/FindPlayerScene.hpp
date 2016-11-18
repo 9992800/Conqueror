@@ -12,7 +12,6 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "AppMacros.hpp"
-#include "WebSocktUtil.hpp"
 
 USING_NS_CC;
 
@@ -36,7 +35,6 @@ protected:
 private:
         Sprite*         _waitingTips;
         int             _curMapSel;
-        WebSocktUtil*   _network;
 };
 
 #endif /* FindPlayerScene_hpp */

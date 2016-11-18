@@ -18,9 +18,10 @@ Scene* FindPlayer::createScene()
         return scene;
 }
 
+
 FindPlayer::~FindPlayer(){
-        _network->release();
 }
+
 
 bool FindPlayer::init(){
         
@@ -96,12 +97,6 @@ bool FindPlayer::init(){
 
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu);
-        
-        wsCallBack callback = CC_CALLBACK_1(FindPlayer::onMessage, this);
-        _network = WebSocktUtil::create(callback);
-        _network->retain();
-        
-        _network->startConnect();
         return true;
 }
 

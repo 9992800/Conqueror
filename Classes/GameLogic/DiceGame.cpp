@@ -53,9 +53,9 @@ GameData* DiceGame::resetInitData(){
 for (int j = 0; j < CEL_MAX; j++){\
         int area_id = _data->_cel[j];\
         if (j % AREA_MAX == 0){\
-                printf("]\r\n[");\
+                printf("\r\n");\
         }\
-        printf(" %d ", area_id);\
+        printf("%d,", _data->_areaData[area_id]->getOwner() + 2);\
 }\
 }
 
@@ -129,8 +129,6 @@ void DiceGame::makeNewMapData(){
                         _data->_cel[i] = areaIdx;
                 }
         }
-        
-        print_area();
         
         for (int i = 0 ; i < AREA_MAX; i++){            
                 
@@ -280,6 +278,8 @@ void DiceGame::makeNewMapData(){
                         player_uid = 0;
                 }
         }
+        
+        print_area();
 }
 
 

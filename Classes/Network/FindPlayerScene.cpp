@@ -8,6 +8,9 @@
 
 #include "FindPlayerScene.hpp"
 #include "PopUpOkCancelDialog.hpp"
+#include "BattleFieldScene.hpp"
+
+int kDialogTag = 1;
 
 Scene* FindPlayer::createScene()
 {
@@ -97,6 +100,7 @@ bool FindPlayer::init(){
 
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu);
+        
         return true;
 }
 
@@ -119,14 +123,16 @@ void FindPlayer::menuMapSelect(Ref* menuItem, int mapIdx){
         PopUpOkCancelDialog *dialog = PopUpOkCancelDialog::create(config,
                                                                   CC_CALLBACK_1(FindPlayer::startGame, this, 1),
                                                                   CC_CALLBACK_1(FindPlayer::startGame, this, 0));
-        this->addChild(dialog, 100);
+        this->addChild(dialog, 100, kDialogTag);
 }
 
 void FindPlayer::startGame(Ref* btn, int result){
         if (result){
-                
+                auto scene = BattleField::createScene(_curMapSel);
+                Director::getInstance()->pushScene(scene);
         }else{
-                ((Node*)btn)->removeFromParentAndCleanup(true);
+                auto dialog = this->getChildByTag(kDialogTag);
+                dialog->removeFromParentAndCleanup(true);
         }
 }
 

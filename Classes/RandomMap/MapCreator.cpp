@@ -31,6 +31,8 @@ TMXTiledMap* MapCreator::createMap(GameData* data){
         auto mapxml = RandomMap::create(simpleBean);
         std::string map_xml_str = mapxml->getXmlString();
         
+//        printf("\r\n%s", map_xml_str.c_str());
+        
         TMXTiledMap* map = TMXTiledMap::createWithXML(map_xml_str, "maps");
         
         data->_refereMap = map;

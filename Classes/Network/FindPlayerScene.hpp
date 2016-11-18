@@ -12,13 +12,14 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "AppMacros.hpp"
+#include "WebSocktUtil.hpp"
 #include "network/HttpClient.h"
 
 USING_NS_CC;
 using namespace network;
 
 
-class FindPlayer : public cocos2d::Layer
+class FindPlayer : public cocos2d::Layer , public cocos2d::network::WebSocket::Delegate
 {
 public:
         static Scene* createScene();
@@ -26,16 +27,20 @@ public:
         CREATE_FUNC(FindPlayer);
         virtual ~FindPlayer();
         
-        void onHttpRequestCompleted(HttpClient*, HttpResponse*);
-        
 protected:
+        
+        virtual void onOpen(cocos2d::network::WebSocket* ws)override;
+        virtual void onMessage(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::Data& data)override;
+        virtual void onClose(cocos2d::network::WebSocket* ws)override;
+        virtual void onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error)override;
+        
+        int  sendMessage(std::string);
         void afterAnimation();
-        void onMessage(std::string);
         void menuSearching(Ref*);
-        void menuCreateGame(Ref*);
+        void sendAuthorData();
 private:
+        network::WebSocket* _wsiSendText;
         int             _curMapSel;
-        cocos2d::Label* _labelStatusCode;
 };
 
 #endif /* FindPlayerScene_hpp */

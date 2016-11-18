@@ -32,7 +32,7 @@ public:
         void update(float delta)override;
         virtual void onExit()override;
         
-        void onTouchesMoved(const std::vector<Touch*>& touches, Event* event)override;
+        void onTouchesMoved(Touch*, Event* event);
         
 protected:
         void menuSelectLevel(Ref* btn, int num);

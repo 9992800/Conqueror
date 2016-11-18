@@ -38,7 +38,9 @@ PopUpOkCancelDialog::~PopUpOkCancelDialog(){
         
 }
 bool PopUpOkCancelDialog::init(){
-        
+        if ( !LayerColor::init() ) {
+                return false;
+        }
         Size s = this->getContentSize();
         LayerColor::initWithColor(Color4B(255, 100, 100, 128), s.width, s.height);
         

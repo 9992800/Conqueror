@@ -319,8 +319,8 @@ void LevelSelect::loadLevelSelectedBackGround(){
 
 
 void LevelSelect::initActionListener(){
-        auto listener = EventListenerTouchAllAtOnce::create();
-        listener->onTouchesMoved = CC_CALLBACK_2(LevelSelect::onTouchesMoved, this);
+        auto listener = EventListenerTouchOneByOne::create();
+        listener->onTouchMoved = CC_CALLBACK_2(LevelSelect::onTouchesMoved, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
@@ -575,9 +575,7 @@ void LevelSelect::menuSoundControl(Ref* btn){
         }
 }
 
-void LevelSelect::onTouchesMoved(const std::vector<Touch*>& touches, Event* event){
-        auto touch = touches[0];
-        
+void LevelSelect::onTouchesMoved(Touch* touch, Event* event){        
         auto diff = touch->getDelta();
         diff.y = 0;
         auto current_pos = _levelShowBackGround->getPosition();

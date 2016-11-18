@@ -12,8 +12,10 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "AppMacros.hpp"
+#include "network/HttpClient.h"
 
 USING_NS_CC;
+using namespace network;
 
 
 class FindPlayer : public cocos2d::Layer
@@ -24,17 +26,16 @@ public:
         CREATE_FUNC(FindPlayer);
         virtual ~FindPlayer();
         
-        virtual void onEnter() override;
-        virtual void onExit()override;
+        void onHttpRequestCompleted(HttpClient*, HttpResponse*);
+        
 protected:
         void afterAnimation();
         void onMessage(std::string);
         void menuSearching(Ref*);
-        void menuMapSelect(Ref*,int);
-        void startGame(Ref* btn, int result);
+        void menuCreateGame(Ref*);
 private:
-        Sprite*         _waitingTips;
         int             _curMapSel;
+        cocos2d::Label* _labelStatusCode;
 };
 
 #endif /* FindPlayerScene_hpp */

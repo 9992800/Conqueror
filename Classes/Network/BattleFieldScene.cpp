@@ -17,6 +17,9 @@ Scene* BattleField::createScene(int idx){
 }
 
 bool BattleField::init(){
+        if ( !Layer::init() ) {
+                return false;
+        }
         
         this->initMap();
         

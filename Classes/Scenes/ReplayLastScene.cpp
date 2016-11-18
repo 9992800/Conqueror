@@ -30,6 +30,10 @@ Scene* ReplayLast::createScene(HistoryReplayData data){
 #pragma mark - init things
 bool ReplayLast::init(){
         
+        if ( !Layer::init() ) {
+                return false;
+        }
+        
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         

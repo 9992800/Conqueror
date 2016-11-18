@@ -77,6 +77,8 @@
 		7C21A1101DCB4F010035ECC6 /* JoinData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A10B1DCB4F010035ECC6 /* JoinData.cpp */; };
 		7C4BA1C81DDE9E8F004F9770 /* search_oppent.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4BA1C71DDE9E8F004F9770 /* search_oppent.png */; };
 		7C4BA1CB1DDEA0D2004F9770 /* search_oppent_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4BA1CA1DDEA0D2004F9770 /* search_oppent_sel.png */; };
+		7C4BA1CE1DDEEEF9004F9770 /* ModalDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C4BA1CC1DDEEEF9004F9770 /* ModalDialog.cpp */; };
+		7C4BA1D01DDEF682004F9770 /* waiting_ring.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4BA1CF1DDEF682004F9770 /* waiting_ring.png */; };
 		7C67A7B51DD1BE6B004B5151 /* WebSocktUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */; };
 		7C6E7FFD1DD94F5300C5E374 /* ReplayLastScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */; };
 		7C6E80001DD9575A00C5E374 /* history.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFF1DD9575A00C5E374 /* history.png */; };
@@ -250,6 +252,9 @@
 		7C21A10C1DCB4F010035ECC6 /* JoinData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JoinData.hpp; sourceTree = "<group>"; };
 		7C4BA1C71DDE9E8F004F9770 /* search_oppent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_oppent.png; sourceTree = "<group>"; };
 		7C4BA1CA1DDEA0D2004F9770 /* search_oppent_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_oppent_sel.png; sourceTree = "<group>"; };
+		7C4BA1CC1DDEEEF9004F9770 /* ModalDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModalDialog.cpp; sourceTree = "<group>"; };
+		7C4BA1CD1DDEEEF9004F9770 /* ModalDialog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ModalDialog.hpp; sourceTree = "<group>"; };
+		7C4BA1CF1DDEF682004F9770 /* waiting_ring.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waiting_ring.png; sourceTree = "<group>"; };
 		7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocktUtil.cpp; sourceTree = "<group>"; };
 		7C67A7B41DD1BE6B004B5151 /* WebSocktUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocktUtil.hpp; sourceTree = "<group>"; };
 		7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReplayLastScene.cpp; sourceTree = "<group>"; };
@@ -446,6 +451,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7C4BA1CF1DDEF682004F9770 /* waiting_ring.png */,
 				7C6E80011DD9687D00C5E374 /* history_data_sel.png */,
 				7C6E80021DD9687D00C5E374 /* history_data.png */,
 				7C6E80031DD9687D00C5E374 /* history_sel.png */,
@@ -605,6 +611,8 @@
 		BBC812DB1DCA3C9200EC8874 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				7C4BA1CD1DDEEEF9004F9770 /* ModalDialog.hpp */,
+				7C4BA1CC1DDEEEF9004F9770 /* ModalDialog.cpp */,
 				7C21A0F21DCB3A3C0035ECC6 /* PopUpBaseDialog.hpp */,
 				7C21A0F11DCB3A3C0035ECC6 /* PopUpBaseDialog.cpp */,
 				7C21A0F61DCB3A3C0035ECC6 /* PopUpOkDialog.hpp */,
@@ -764,6 +772,7 @@
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
+				7C4BA1D01DDEF682004F9770 /* waiting_ring.png in Resources */,
 				7C6E80051DD9687D00C5E374 /* history_data.png in Resources */,
 				BB51F10A1DCF66D50031296E /* share.png in Resources */,
 				BB34FAAA1DD35B7A0070B4E4 /* sounds in Resources */,
@@ -810,6 +819,7 @@
 				7C21A0F81DCB3A3C0035ECC6 /* PopUpOkCancelDialog.cpp in Sources */,
 				7C21A0F01DCB39FE0035ECC6 /* DiceGame.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
+				7C4BA1CE1DDEEEF9004F9770 /* ModalDialog.cpp in Sources */,
 				7C21A1011DCB3B0F0035ECC6 /* MapBasicInfo.cpp in Sources */,
 				7C21A0E81DCB2F450035ECC6 /* GameSettingsScene.cpp in Sources */,
 				7C82E4261DD5768A0019C8CF /* BattleFieldScene.cpp in Sources */,

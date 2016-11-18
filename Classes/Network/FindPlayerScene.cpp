@@ -10,6 +10,8 @@
 #include "PopUpOkCancelDialog.hpp"
 #include "BattleFieldScene.hpp"
 #include "ModalDialog.hpp"
+#include "UserSessionBean.hpp"
+
 
 #define SEARCHING_OPPENT        "searching"
 #define CREATE_BATTLEFIELD      "create_field"
@@ -73,7 +75,13 @@ void FindPlayer::menuCreateGame(Ref*){
         ModalLayer::showModalDialog(this); 
         
         HttpRequest* request = new (std::nothrow) HttpRequest();
-        request->setUrl(GAME_SERVICE_SERVER_URL"/serverHome/createBattle");
+        std::string base_url(GAME_SERVICE_SERVER_URL"/serverHome/createBattle?");
+        std::string uid = UserSessionBean::getInstance()->getUserId();
+        
+        base_url.append("user_id=");
+        base_url.append(uid);
+        
+        request->setUrl(base_url);
         request->setRequestType(HttpRequest::Type::GET);
         request->setResponseCallback(CC_CALLBACK_2(FindPlayer::onHttpRequestCompleted, this));
         request->setTag(CREATE_BATTLEFIELD);

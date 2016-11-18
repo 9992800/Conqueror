@@ -79,6 +79,7 @@
 		7C4BA1CB1DDEA0D2004F9770 /* search_oppent_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4BA1CA1DDEA0D2004F9770 /* search_oppent_sel.png */; };
 		7C4BA1CE1DDEEEF9004F9770 /* ModalDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C4BA1CC1DDEEEF9004F9770 /* ModalDialog.cpp */; };
 		7C4BA1D01DDEF682004F9770 /* waiting_ring.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4BA1CF1DDEF682004F9770 /* waiting_ring.png */; };
+		7C4BA1D41DDF0A90004F9770 /* UserSessionBean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C4BA1D21DDF0A90004F9770 /* UserSessionBean.cpp */; };
 		7C67A7B51DD1BE6B004B5151 /* WebSocktUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */; };
 		7C6E7FFD1DD94F5300C5E374 /* ReplayLastScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */; };
 		7C6E80001DD9575A00C5E374 /* history.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFF1DD9575A00C5E374 /* history.png */; };
@@ -255,6 +256,8 @@
 		7C4BA1CC1DDEEEF9004F9770 /* ModalDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModalDialog.cpp; sourceTree = "<group>"; };
 		7C4BA1CD1DDEEEF9004F9770 /* ModalDialog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ModalDialog.hpp; sourceTree = "<group>"; };
 		7C4BA1CF1DDEF682004F9770 /* waiting_ring.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waiting_ring.png; sourceTree = "<group>"; };
+		7C4BA1D21DDF0A90004F9770 /* UserSessionBean.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserSessionBean.cpp; sourceTree = "<group>"; };
+		7C4BA1D31DDF0A90004F9770 /* UserSessionBean.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = UserSessionBean.hpp; sourceTree = "<group>"; };
 		7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocktUtil.cpp; sourceTree = "<group>"; };
 		7C67A7B41DD1BE6B004B5151 /* WebSocktUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocktUtil.hpp; sourceTree = "<group>"; };
 		7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReplayLastScene.cpp; sourceTree = "<group>"; };
@@ -604,6 +607,8 @@
 				7C82E41E1DD572A70019C8CF /* FindPlayerScene.cpp */,
 				7C82E4251DD5768A0019C8CF /* BattleFieldScene.hpp */,
 				7C82E4241DD5768A0019C8CF /* BattleFieldScene.cpp */,
+				7C4BA1D31DDF0A90004F9770 /* UserSessionBean.hpp */,
+				7C4BA1D21DDF0A90004F9770 /* UserSessionBean.cpp */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -825,6 +830,7 @@
 				7C82E4261DD5768A0019C8CF /* BattleFieldScene.cpp in Sources */,
 				7C21A0E41DC9ED930035ECC6 /* LevelSelectScene.cpp in Sources */,
 				7C6E7FFD1DD94F5300C5E374 /* ReplayLastScene.cpp in Sources */,
+				7C4BA1D41DDF0A90004F9770 /* UserSessionBean.cpp in Sources */,
 				7C21A0E11DC9E9A80035ECC6 /* SplashScene.cpp in Sources */,
 				BBC812DE1DCA3CB000EC8874 /* GameHelpScene.cpp in Sources */,
 				7C21A1101DCB4F010035ECC6 /* JoinData.cpp in Sources */,

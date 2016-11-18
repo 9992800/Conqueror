@@ -51,12 +51,12 @@ bool Splash::init()
         this->addChild(label, 2);
         
         
-        BaseDialogConfig config("胜利了!",
-                                "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香");
-        PopUpOkCancelDialog *dialog = PopUpOkCancelDialog::create(config,
-                                                                  CC_CALLBACK_1(Splash::gameOver, this, 1),
-                                                                  CC_CALLBACK_1(Splash::gameOver, this, 0));
-        this->addChild(dialog, 100);
+//        BaseDialogConfig config("胜利了!",
+//                                "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香");
+//        PopUpOkCancelDialog *dialog = PopUpOkCancelDialog::create(config,
+//                                                                  CC_CALLBACK_1(Splash::gameOver, this, 1),
+//                                                                  CC_CALLBACK_1(Splash::gameOver, this, 0));
+//        this->addChild(dialog, 100);
         
         
         return true;
@@ -114,8 +114,8 @@ void Splash::update(float delta){
         if (_count < 100)
                 _count += 1 ;
         else{
-//                auto starting = Starting::createScene();
-//                Director::getInstance()->replaceScene(starting);
+                auto starting = Starting::createScene();
+                Director::getInstance()->replaceScene(starting);
         }
         
         _loadingBar->setPercent(_count);

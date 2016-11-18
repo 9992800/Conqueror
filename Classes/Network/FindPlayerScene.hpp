@@ -30,9 +30,12 @@ public:
 protected:
         void afterAnimation();
         void onMessage(std::string);
-        
+        void menuSearching(Ref*);
+        void menuMapSelect(Ref*,int);
+        void startGame(Ref* btn, int result);
 private:
         Sprite*         _waitingTips;
+        int             _curMapSel;
         WebSocktUtil*   _network;
 };
 

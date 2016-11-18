@@ -48,8 +48,11 @@ public class HomeController {
 	@RequestMapping(value = "/createBattle")
 	@ResponseBody
 	public Map<String, Object> createBattle(HttpServletRequest request,
-			@RequestParam(value = "user_id", required = true) String user_id) {		
-		return ResultMapUtils.success();
+			@RequestParam(value = "user_id", required = true) String user_id) {
+		
+		logger.info("createBattle:" + user_id);
+		
+ 		return ResultMapUtils.success();
 	}
 	
 	@RequestMapping(value = "/battleFields")

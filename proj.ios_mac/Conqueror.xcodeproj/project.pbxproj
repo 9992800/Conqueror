@@ -60,7 +60,6 @@
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
 		7C21A0D91DC9A11E0035ECC6 /* StartingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0D71DC9A11E0035ECC6 /* StartingScene.cpp */; };
 		7C21A0DC1DC9C06C0035ECC6 /* sliderProgress.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C21A0DB1DC9C06C0035ECC6 /* sliderProgress.png */; };
-		7C21A0DE1DC9D35A0035ECC6 /* effect1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7C21A0DD1DC9D35A0035ECC6 /* effect1.wav */; };
 		7C21A0E11DC9E9A80035ECC6 /* SplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0DF1DC9E9A80035ECC6 /* SplashScene.cpp */; };
 		7C21A0E41DC9ED930035ECC6 /* LevelSelectScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0E21DC9ED930035ECC6 /* LevelSelectScene.cpp */; };
 		7C21A0E81DCB2F450035ECC6 /* GameSettingsScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0E61DCB2F450035ECC6 /* GameSettingsScene.cpp */; };
@@ -220,7 +219,6 @@
 		7C21A0D71DC9A11E0035ECC6 /* StartingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StartingScene.cpp; sourceTree = "<group>"; };
 		7C21A0D81DC9A11E0035ECC6 /* StartingScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StartingScene.hpp; sourceTree = "<group>"; };
 		7C21A0DB1DC9C06C0035ECC6 /* sliderProgress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sliderProgress.png; sourceTree = "<group>"; };
-		7C21A0DD1DC9D35A0035ECC6 /* effect1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = effect1.wav; sourceTree = "<group>"; };
 		7C21A0DF1DC9E9A80035ECC6 /* SplashScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SplashScene.cpp; sourceTree = "<group>"; };
 		7C21A0E01DC9E9A80035ECC6 /* SplashScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SplashScene.hpp; sourceTree = "<group>"; };
 		7C21A0E21DC9ED930035ECC6 /* LevelSelectScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSelectScene.cpp; sourceTree = "<group>"; };
@@ -480,7 +478,6 @@
 				BB51F1081DCF66D50031296E /* share.png */,
 				46880B7719C43A67006E1F66 /* CloseSelected.png */,
 				46880B7A19C43A67006E1F66 /* HelloWorld.png */,
-				7C21A0DD1DC9D35A0035ECC6 /* effect1.wav */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -489,8 +486,8 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				7C82E41D1DD55D3B0019C8CF /* Network */,
 				7C21A0FA1DCB3B0F0035ECC6 /* RandomMap */,
+				7C82E41D1DD55D3B0019C8CF /* Network */,
 				7C21A0ED1DCB39560035ECC6 /* GameLogic */,
 				BBC812DB1DCA3C9200EC8874 /* Common */,
 				7C21A0D61DC9A11E0035ECC6 /* Scenes */,
@@ -752,7 +749,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5087E78117EB970100C73F5D /* Icon-120.png in Resources */,
-				7C21A0DE1DC9D35A0035ECC6 /* effect1.wav in Resources */,
 				5087E78617EB970100C73F5D /* Icon-76.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,

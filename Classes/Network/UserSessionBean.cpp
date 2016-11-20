@@ -62,6 +62,9 @@ bool UserSessionBean::checkResponse(HttpResponse *response, rapidjson::Value& da
                 return false;
         }
         
-        data = json_result["data"];
+        if (json_result.HasMember("data")){
+                data = json_result["data"];
+        }
+        
         return true;
 }

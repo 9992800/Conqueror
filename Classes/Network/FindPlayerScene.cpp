@@ -51,7 +51,7 @@ bool FindPlayer::init(){
                                        origin.y +  visibleSize.height/ 4));
         
         auto createBtn = MenuItemImage::create("search_oppent_sel.png", "search_oppent.png",
-                                                  CC_CALLBACK_1(FindPlayer::menuSearching, this));
+                                                  CC_CALLBACK_1(FindPlayer::menuCreateBattle, this));
         createBtn->setPosition(Vec2(origin.x + visibleSize.width / 2 + 100,
                                        origin.y +  visibleSize.height/ 4));
         
@@ -212,7 +212,7 @@ void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
         }else if (0 == tags.compare(SEARCHING_OPPENT)){
                 
         }else if (0 == tags.compare(LIST_ALL_BATTLES)){
-                
+                CCLOG("---%s---", data.GetString());
         }else{
                 CCLOGWARN("---Unkown request tag:%s---", tags.c_str());
         }

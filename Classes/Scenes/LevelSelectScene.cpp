@@ -321,6 +321,7 @@ void LevelSelect::loadLevelSelectedBackGround(){
 void LevelSelect::initActionListener(){
         auto listener = EventListenerTouchOneByOne::create();
         listener->onTouchMoved = CC_CALLBACK_2(LevelSelect::onTouchesMoved, this);
+        listener->onTouchBegan = CC_CALLBACK_2(LevelSelect::onTouchBegan, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 

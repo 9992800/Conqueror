@@ -153,7 +153,7 @@ return nullptr; \
 
 
 #define WEB_SOCKET_SERVER_URL      "ws://192.168.1.63:9900/marco"
-#define GAME_SERVICE_SERVER_URL    "http://192.168.0.101:9900/serverHome"
+#define GAME_SERVICE_SERVER_URL    "http://192.168.1.10:9900/serverHome"
 
 template<typename T> extern std::vector<T> parseData(const char* key);
 

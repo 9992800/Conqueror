@@ -33,6 +33,7 @@ public:
         virtual void onExit()override;
         
         void onTouchesMoved(Touch*, Event* event);
+        bool onTouchBegan(Touch*, Event*)override{return true;}
         
 protected:
         void menuSelectLevel(Ref* btn, int num);

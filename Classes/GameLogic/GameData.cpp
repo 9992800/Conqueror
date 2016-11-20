@@ -84,8 +84,6 @@ bool GameData::init(GameData* data){
         this->_userId           = data->_userId;
         this->_curPlayerNum     = data->_curPlayerNum;
         this->_gameStatus       = data->_gameStatus;
-        
-        this->_gameStatus       = data->_gameStatus;
         this->_ban              = data->_ban;
         this->_areaFrom         = data->_areaFrom;
         this->_areaTo           = data->_areaTo;

@@ -14,7 +14,7 @@
 #include "json/writer.h"
 #include "json/stringbuffer.h"
 #include "json/rapidjson.h"
-
+#include "OnlineGameData.hpp"
 
 
 #define SEARCHING_OPPENT        "searching"
@@ -92,15 +92,20 @@ void FindPlayer::menuRefresh(Ref* pSender){
 }
 
 void FindPlayer::menuCreateBattle(Ref*){
-        std::string base_url(GAME_SERVICE_SERVER_URL"/createBattle?");
+        
+        auto data = OnlineGameData::create();
+        
+        std::string base_url(GAME_SERVICE_SERVER_URL"/createBattle");
         std::string uid = UserSessionBean::getInstance()->getUserId();
         
         base_url.append("user_id=");
         base_url.append(uid);
+        base_url.append("&cell_data=");
+        base_url.append(data->getMapData());
         
         HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl(base_url);
-        request->setRequestType(HttpRequest::Type::GET);
+        request->setRequestType(HttpRequest::Type::POST);
         request->setResponseCallback(CC_CALLBACK_2(FindPlayer::onHttpRequestCompleted, this));
         request->setTag(CREATE_BATTLEFIELD);
         HttpClient::getInstance()->sendImmediate(request);

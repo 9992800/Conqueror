@@ -92,6 +92,8 @@
 		7C82E4261DD5768A0019C8CF /* BattleFieldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C82E4241DD5768A0019C8CF /* BattleFieldScene.cpp */; };
 		7C82E4281DD57EDD0019C8CF /* online_battle.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C82E4271DD57EDD0019C8CF /* online_battle.png */; };
 		7C82E42A1DD581610019C8CF /* online_battle_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C82E4291DD581610019C8CF /* online_battle_sel.png */; };
+		7C99A1451DE2033E005A489B /* OnlineGameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C99A1431DE2033E005A489B /* OnlineGameData.cpp */; };
+		7C99A1481DE20350005A489B /* OnlineGameEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C99A1461DE20350005A489B /* OnlineGameEngine.cpp */; };
 		7CCB51DA1DD5AAC000810354 /* JsonUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CCB51D81DD5AAC000810354 /* JsonUtil.cpp */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		BB34FAAA1DD35B7A0070B4E4 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = BB34FAA91DD35B7A0070B4E4 /* sounds */; };
@@ -273,6 +275,10 @@
 		7C82E4251DD5768A0019C8CF /* BattleFieldScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BattleFieldScene.hpp; sourceTree = "<group>"; };
 		7C82E4271DD57EDD0019C8CF /* online_battle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = online_battle.png; sourceTree = "<group>"; };
 		7C82E4291DD581610019C8CF /* online_battle_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = online_battle_sel.png; sourceTree = "<group>"; };
+		7C99A1431DE2033E005A489B /* OnlineGameData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OnlineGameData.cpp; sourceTree = "<group>"; };
+		7C99A1441DE2033E005A489B /* OnlineGameData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OnlineGameData.hpp; sourceTree = "<group>"; };
+		7C99A1461DE20350005A489B /* OnlineGameEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OnlineGameEngine.cpp; sourceTree = "<group>"; };
+		7C99A1471DE20350005A489B /* OnlineGameEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OnlineGameEngine.hpp; sourceTree = "<group>"; };
 		7CCB51D81DD5AAC000810354 /* JsonUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JsonUtil.cpp; sourceTree = "<group>"; };
 		7CCB51D91DD5AAC000810354 /* JsonUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JsonUtil.hpp; sourceTree = "<group>"; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -606,6 +612,10 @@
 				7C82E4241DD5768A0019C8CF /* BattleFieldScene.cpp */,
 				7C4BA1D31DDF0A90004F9770 /* UserSessionBean.hpp */,
 				7C4BA1D21DDF0A90004F9770 /* UserSessionBean.cpp */,
+				7C99A1431DE2033E005A489B /* OnlineGameData.cpp */,
+				7C99A1441DE2033E005A489B /* OnlineGameData.hpp */,
+				7C99A1461DE20350005A489B /* OnlineGameEngine.cpp */,
+				7C99A1471DE20350005A489B /* OnlineGameEngine.hpp */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -815,6 +825,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C99A1481DE20350005A489B /* OnlineGameEngine.cpp in Sources */,
 				BBD6967F1DCC55CE00B9B145 /* GameAI.cpp in Sources */,
 				BB9A4E271DCB84A200E88C41 /* MapCreator.cpp in Sources */,
 				7C21A0F81DCB3A3C0035ECC6 /* PopUpOkCancelDialog.cpp in Sources */,
@@ -843,6 +854,7 @@
 				7C21A0EC1DCB39050035ECC6 /* GameScene.cpp in Sources */,
 				7C21A1031DCB3B0F0035ECC6 /* ScreenCoordinate.cpp in Sources */,
 				7C21A1021DCB3B0F0035ECC6 /* RandomMap.cpp in Sources */,
+				7C99A1451DE2033E005A489B /* OnlineGameData.cpp in Sources */,
 				BB9A4E241DCB7C6400E88C41 /* GameData.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,

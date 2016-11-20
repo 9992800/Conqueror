@@ -18,6 +18,7 @@
 
 
 #define SEARCHING_OPPENT        "searching"
+#define LIST_ALL_BATTLES        "list_all_battles"
 #define CREATE_BATTLEFIELD      "create_field"
 
 Scene* FindPlayer::createScene(){
@@ -46,14 +47,64 @@ bool FindPlayer::init(){
         
         auto searchingBtn = MenuItemImage::create("search_oppent.png", "search_oppent_sel.png",
                                                   CC_CALLBACK_1(FindPlayer::menuSearching, this));
-        searchingBtn->setPosition(Vec2(origin.x + visibleSize.width / 2 ,
+        searchingBtn->setPosition(Vec2(origin.x + visibleSize.width / 2 - 100,
                                        origin.y +  visibleSize.height/ 4));
         
-        auto menu = Menu::create(searchingBtn, NULL);
+        auto createBtn = MenuItemImage::create("search_oppent_sel.png", "search_oppent.png",
+                                                  CC_CALLBACK_1(FindPlayer::menuSearching, this));
+        createBtn->setPosition(Vec2(origin.x + visibleSize.width / 2 + 100,
+                                       origin.y +  visibleSize.height/ 4));
+        
+        auto return_back = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
+                                                 CC_CALLBACK_1(FindPlayer::menuExit, this));
+        return_back->setPosition(Vec2(origin.x + return_back->getContentSize().width + 10,
+                                      origin.y + visibleSize.height - return_back->getContentSize().height - 10));
+        
+        _refreshBtn = MenuItemImage::create("waiting_ring.png","", CC_CALLBACK_1(FindPlayer::menuRefresh, this));
+        _refreshBtn->setPosition(Vec2(visibleSize.width - _refreshBtn->getContentSize().width,
+                                      _refreshBtn->getContentSize().height));
+        
+        auto menu = Menu::create(searchingBtn, createBtn, return_back, _refreshBtn, NULL);
         menu->setPosition(Vec2::ZERO);
-        this->addChild(menu);
+        this->addChild(menu, 9);
+        
+//        
+//        _loadingBar = LoadingBar::create("sliderProgress.png");
+//        _loadingBar->setDirection(LoadingBar::Direction::LEFT);
+//        _loadingBar->setPercent(0);
+//        
+//        Vec2 pos = Vec2(visibleSize.width / 2 + origin.x, origin.y + visibleSize.height / 6);
+//        _loadingBar->setPosition(pos);
+//        this->addChild(_loadingBar, 10);
 
         return true;
+}
+
+
+void FindPlayer::menuExit(Ref* pSender){
+        Director::getInstance()->popScene();
+}
+
+void FindPlayer::menuRefresh(Ref* pSender){
+        this->getBattleListFromServer();
+        _refreshBtn->runAction(RotateBy::create(4, 360*4));
+        
+}
+
+void FindPlayer::menuCreateBattle(Ref*){
+        std::string base_url(GAME_SERVICE_SERVER_URL"/createBattle?");
+        std::string uid = UserSessionBean::getInstance()->getUserId();
+        
+        base_url.append("user_id=");
+        base_url.append(uid);
+        
+        HttpRequest* request = new (std::nothrow) HttpRequest();
+        request->setUrl(base_url);
+        request->setRequestType(HttpRequest::Type::GET);
+        request->setResponseCallback(CC_CALLBACK_2(FindPlayer::onHttpRequestCompleted, this));
+        request->setTag(CREATE_BATTLEFIELD);
+        HttpClient::getInstance()->sendImmediate(request);
+        request->release();
 }
 
 void FindPlayer::menuSearching(Ref*){
@@ -84,9 +135,12 @@ void FindPlayer::afterAnimation(){
 
 void FindPlayer::sendAuthorData(){
         rapidjson::Document document;
+        document.SetObject();
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
         std::string fb_uid = UserSessionBean::getInstance()->getUserId();
-        document.AddMember("user_id", fb_uid, allocator);
+        rapidjson::Value s;
+        s.SetString(fb_uid.c_str(), (rapidjson::SizeType)fb_uid.length());
+        document.AddMember("user_id", s, allocator);
         
         rapidjson::StringBuffer buffer;
         rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
@@ -107,6 +161,60 @@ int  FindPlayer::sendMessage(std::string msg){
         else{
                 log("ERROR:failed init the websocket.");
                 return -1;
+        }
+}
+
+void FindPlayer::getBattleListFromServer(){
+        std::string base_url(GAME_SERVICE_SERVER_URL"/battleFields?");
+        std::string uid = UserSessionBean::getInstance()->getUserId();
+        
+        base_url.append("user_id=");
+        base_url.append(uid);
+        
+        HttpRequest* request = new (std::nothrow) HttpRequest();
+        request->setUrl(base_url);
+        request->setRequestType(HttpRequest::Type::GET);
+        request->setResponseCallback(CC_CALLBACK_2(FindPlayer::onHttpRequestCompleted, this));
+        request->setTag(LIST_ALL_BATTLES);
+        HttpClient::getInstance()->sendImmediate(request);
+        request->release();
+}
+
+#pragma mark - update
+void FindPlayer::onEnter(){
+        Layer::onEnter();
+        _loadingCount = 0;
+        this->getBattleListFromServer();
+        
+        
+//        scheduleUpdate();
+}
+
+void FindPlayer::update(float delta){
+//        _loadingBar->setPercent(_loadingCount++);
+}
+
+void FindPlayer::onExit(){
+        Layer::onExit();
+}
+
+void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
+                                        HttpResponse *response){
+        
+        rapidjson::Value data;
+        if (!UserSessionBean::checkResponse(response, data)){
+                return;
+        }
+        
+        std::string tags = response->getHttpRequest()->getTag();
+        if (0 == tags.compare(CREATE_BATTLEFIELD)){
+                
+        }else if (0 == tags.compare(SEARCHING_OPPENT)){
+                
+        }else if (0 == tags.compare(LIST_ALL_BATTLES)){
+                
+        }else{
+                CCLOGWARN("---Unkown request tag:%s---", tags.c_str());
         }
 }
 

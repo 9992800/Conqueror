@@ -1,5 +1,6 @@
 package com.bellflower.conqueror.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bellflower.conqueror.Utils.ResultMapUtils;
+import com.bellflower.conqueror.module.BattleFields;
+import com.bellflower.conqueror.service.BattleFiledService;
 import com.bellflower.conqueror.service.ServerListService; 
 
 @Controller
@@ -22,9 +25,9 @@ import com.bellflower.conqueror.service.ServerListService;
 public class HomeController {
 	
 	@Resource
-	ServerListService serverListService;
+	ServerListService serverListService; 
 	
-	@Autowired MongoTemplate mongoTemplate;
+	@Resource BattleFiledService battleFiledService;
 	
 	private static final Logger logger = 
 			LoggerFactory.getLogger(HomeController.class);
@@ -48,19 +51,23 @@ public class HomeController {
 	@RequestMapping(value = "/createBattle")
 	@ResponseBody
 	public Map<String, Object> createBattle(HttpServletRequest request,
-			@RequestParam(value = "user_id", required = true) String user_id) {
+			@RequestParam(value = "user_id", required = true) String user_id,
+			@RequestParam(value = "cell_data", required = true) String cell_data) {
 		
-		logger.info("createBattle:" + user_id);
+		logger.info("createBattle:" + user_id+"===cell_data:"+cell_data);
 		
- 		return ResultMapUtils.success();
+		String idString = battleFiledService.createBattle(user_id, cell_data);
+		
+ 		return ResultMapUtils.success(idString);
 	}
 	
 	@RequestMapping(value = "/battleFields")
 	@ResponseBody
 	public Map<String, Object> battleFields(HttpServletRequest request,
-			@RequestParam(value = "user_id", required = true) String user_id) {	
-		
-		return ResultMapUtils.success("成功了");
+			@RequestParam(value = "user_id", required = true) String user_id,
+			@RequestParam(value = "curPgaeNo", required = true) int curPgaeNo) {	
+		List<BattleFields> data = battleFiledService.listBattles(user_id, curPgaeNo);
+		return ResultMapUtils.success(data);
 	}
 	
 	@RequestMapping(value = "/players")

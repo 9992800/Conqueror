@@ -1,23 +1,29 @@
 package com.bellflower.conqueror.module;
 
+import org.json.JSONArray;
+
 public class BattleFields {
-	String 		id;
-	long 		battleId;	
+	
+	public static final int DEFAULT_PLAYER_NUM = 3;
+	
+	String 		id;	
 	int 		playerNum;
-	int 		status;
-	String		mapId;
+	int 		status; 
+	long		createTime;
+	private JSONArray cellData;
+	private String owner;
+	
+	public BattleFields(){
+		this.createTime = System.currentTimeMillis();
+		this.playerNum = DEFAULT_PLAYER_NUM;
+	}
+	
 	
 	public String getId() {
 		return id;
 	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public long getServerId() {
-		return battleId;
-	}
-	public void setServerId(long bi) {
-		this.battleId = bi;
+	public void setId(String bi) {
+		this.id = bi;
 	}
 	public int getPlayerNum() {
 		return playerNum;
@@ -30,17 +36,19 @@ public class BattleFields {
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	} 
+
+	public JSONArray getDataInfo(){
+		return this.cellData;
 	}
-	public String getMapId() {
-		return mapId;
+	public void setDataInfo(JSONArray cells) {
+		 this.cellData = cells;
 	}
-	public void setMapId(String mapId) {
-		this.mapId = mapId;
+
+	public String getOwner(){
+		return this.owner;
 	}
-	
-	@Override
-	public String toString() {
-		return "BattleFields [id=" + id + ", serverId=" + battleId + ", playerNum=" + playerNum + ", status=" + status
-				+ ", mapId=" + mapId + "]";
+	public void setOwner(String user_id) {
+		 this.owner = user_id;
 	}
 }

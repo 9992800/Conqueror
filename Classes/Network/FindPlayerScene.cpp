@@ -114,7 +114,6 @@ void FindPlayer::menuRefresh(Ref* pSender){
 
 void FindPlayer::menuCreateBattle(Ref*){
         
-        
         HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl(GAME_SERVICE_SERVER_URL"/createBattle");
         request->setRequestType(HttpRequest::Type::POST);
@@ -312,16 +311,8 @@ TableViewCell* FindPlayer::tableCellAtIndex(TableView *table, ssize_t idx)
         if (!cell) {
                 cell = new (std::nothrow) BattleFieldCell();
                 cell->autorelease();
-                auto sprite = Sprite::create("HelloWorld.png");
-                sprite->setAnchorPoint(Vec2::ZERO);
-                sprite->setPosition(Vec2(0, 0));
-                cell->addChild(sprite);
-                
-                auto label = Label::createWithSystemFont(string, "Helvetica", 20.0);
-                label->setPosition(Vec2::ZERO);
-                label->setAnchorPoint(Vec2::ZERO);
-                label->setTag(123);
-                cell->addChild(label);
+                auto label = (Label*)cell->getChildByTag(123);
+                label->setString(string);
         }
         else {
                 auto label = (Label*)cell->getChildByTag(123);
@@ -355,3 +346,16 @@ void BattleFieldCell::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
 // 	DrawPrimitives::drawPoly(vertices, 4, true);
 }
 
+BattleFieldCell::BattleFieldCell(){
+        
+        auto sprite = Sprite::create("HelloWorld.png");
+        sprite->setAnchorPoint(Vec2::ZERO);
+        sprite->setPosition(Vec2(0, 0));
+        this->addChild(sprite);
+        
+        auto label = Label::createWithSystemFont("s", "Helvetica", 20.0);
+        label->setPosition(Vec2::ZERO);
+        label->setAnchorPoint(Vec2::ZERO);
+        label->setTag(123);
+        this->addChild(label);
+}

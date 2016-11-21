@@ -24,6 +24,7 @@ using namespace network;
 class BattleFieldCell : public cocos2d::extension::TableViewCell
 {
 public:
+        BattleFieldCell();
         virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
 };
 

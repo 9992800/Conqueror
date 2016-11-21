@@ -14,6 +14,7 @@
 #include "AppMacros.hpp"
 #include "extensions/cocos-ext.h"
 #include "network/WebSocket.h"
+#include "BattleFieldBean.hpp"
 #include "network/HttpClient.h"
 
 USING_NS_CC;
@@ -52,6 +53,9 @@ protected:
         
 private:
         void getBattleListFromServer();
+        void parseBattleFieldBeans(rapidjson::Value&);
+        
+        
 private:
         network::WebSocket* _wsiSendText;
         int             _curMapSel;
@@ -61,6 +65,9 @@ private:
         LoadingBar*     _loadingBar;
         
         MenuItemImage* _refreshBtn;
+        
+        std::vector<BattleFieldBean*>   _battlList;
+        int                             _curPgaeNo;
 };
 
 #endif /* FindPlayerScene_hpp */

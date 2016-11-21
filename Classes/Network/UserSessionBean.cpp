@@ -39,13 +39,22 @@ bool UserSessionBean::checkResponse(HttpResponse *response, rapidjson::Value& da
         }
         
         log("response code: %ld", response->getResponseCode());
+        
         if (!response->isSucceed()){
                 log("error buffer: %s", response->getErrorBuffer());
                 return false;
         }
+        
+        
+        
         std::vector<char>* buffer = response->getResponseData();
         std::string response_str(buffer->data(), buffer->size());
         log("response string: %s", response_str.c_str());
+        
+        if (200 != response->getResponseCode()){
+                log("response not ok: %ld", response->getResponseCode());
+                return false;
+        }
         
         rapidjson::Document json_result;
         json_result.Parse<0>(response_str.c_str());

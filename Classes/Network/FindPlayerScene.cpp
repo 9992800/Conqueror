@@ -11,9 +11,6 @@
 #include "BattleFieldScene.hpp"
 #include "ModalDialog.hpp"
 #include "UserSessionBean.hpp"
-#include "json/writer.h"
-#include "json/stringbuffer.h"
-#include "json/rapidjson.h"
 #include "OnlineGameData.hpp"
 
 
@@ -175,6 +172,8 @@ void FindPlayer::getBattleListFromServer(){
         
         base_url.append("user_id=");
         base_url.append(uid);
+        base_url.append("&curPgaeNo=");
+        base_url.append(tostr(_curPgaeNo));
         
         HttpRequest* request = new (std::nothrow) HttpRequest();
         request->setUrl(base_url);
@@ -189,6 +188,8 @@ void FindPlayer::getBattleListFromServer(){
 void FindPlayer::onEnter(){
         Layer::onEnter();
         _loadingCount = 0;
+        _curPgaeNo = 0;
+        _battlList = std::vector<BattleFieldBean*>();
         this->getBattleListFromServer();
         
         
@@ -213,13 +214,24 @@ void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
         
         std::string tags = response->getHttpRequest()->getTag();
         if (0 == tags.compare(CREATE_BATTLEFIELD)){
-                
+                CCLOG("---%s---", data.GetString());
         }else if (0 == tags.compare(SEARCHING_OPPENT)){
                 
         }else if (0 == tags.compare(LIST_ALL_BATTLES)){
-                CCLOG("---%s---", data.GetString());
+                
+                this->parseBattleFieldBeans(data);
+                
+                
         }else{
                 CCLOGWARN("---Unkown request tag:%s---", tags.c_str());
+        }
+}
+
+void FindPlayer::parseBattleFieldBeans(rapidjson::Value& data){
+        for (rapidjson::Value::ConstValueIterator itr = data.Begin();
+             itr != data.End(); ++itr){
+                auto BattleFieldBean = BattleFieldBean::create(itr);
+                _battlList.insert(_battlList.begin(), BattleFieldBean);
         }
 }
 

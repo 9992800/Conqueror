@@ -21,8 +21,14 @@ USING_NS_CC;
 using namespace cocos2d::ui;
 using namespace network;
 
+class BattleFieldCell : public cocos2d::extension::TableViewCell
+{
+public:
+        virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
+};
 
-class FindPlayer : public cocos2d::Layer , public cocos2d::network::WebSocket::Delegate
+
+class FindPlayer : public cocos2d::Layer , public cocos2d::network::WebSocket::Delegate, public cocos2d::extension::TableViewDataSource, public cocos2d::extension::TableViewDelegate
 {
 public:
         static Scene* createScene();
@@ -42,6 +48,13 @@ protected:
         virtual void onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error)override;
         void onHttpRequestCompleted(HttpClient *sender,
                                HttpResponse *response);
+        
+        virtual void scrollViewDidScroll(cocos2d::extension::ScrollView* view)override {};
+        virtual void scrollViewDidZoom(cocos2d::extension::ScrollView* view)override {}
+        virtual void tableCellTouched(cocos2d::extension::TableView* table, cocos2d::extension::TableViewCell* cell)override;
+        virtual cocos2d::Size tableCellSizeForIndex(cocos2d::extension::TableView *table, ssize_t idx)override;
+        virtual cocos2d::extension::TableViewCell* tableCellAtIndex(cocos2d::extension::TableView *table, ssize_t idx)override;
+        virtual ssize_t numberOfCellsInTableView(cocos2d::extension::TableView *table)override;
         
         int  sendMessage(std::string);
         void afterAnimation();

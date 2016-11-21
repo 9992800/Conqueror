@@ -11,12 +11,14 @@
 #include "BattleFieldScene.hpp"
 #include "ModalDialog.hpp"
 #include "UserSessionBean.hpp"
-#include "OnlineGameData.hpp"
+#include "OnlineGameData.hpp" 
 
 
 #define SEARCHING_OPPENT        "searching"
 #define LIST_ALL_BATTLES        "list_all_battles"
 #define CREATE_BATTLEFIELD      "create_field"
+
+using namespace cocos2d::extension;
 
 Scene* FindPlayer::createScene(){
         auto scene = Scene::create();
@@ -73,6 +75,28 @@ bool FindPlayer::init(){
 //        Vec2 pos = Vec2(visibleSize.width / 2 + origin.x, origin.y + visibleSize.height / 6);
 //        _loadingBar->setPosition(pos);
 //        this->addChild(_loadingBar, 10);
+        
+        TableView* tableView = TableView::create(this, Size(250, 150));
+        tableView->setDirection(extension::ScrollView::Direction::HORIZONTAL);
+        tableView->setPosition(Vec2(20,winSize.height/2-30));
+        tableView->setDelegate(this);
+        this->addChild(tableView);
+        tableView->reloadData();
+        
+        auto testNode = Node::create();
+        testNode->setName("testNode");
+        tableView->addChild(testNode);
+        tableView->removeChild(testNode, true);
+        CCAssert(nullptr == tableView->getChildByName("testNode"), "The added child has been removed!");
+        
+        
+        tableView = TableView::create(this, Size(150, 250));
+        tableView->setDirection(extension::ScrollView::Direction::VERTICAL);
+        tableView->setPosition(Vec2(winSize.width-250,winSize.height/2-120));
+        tableView->setDelegate(this);
+        tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
+        this->addChild(tableView);
+        tableView->reloadData();
 
         return true;
 }
@@ -264,3 +288,70 @@ void FindPlayer::onError(network::WebSocket* ws, const network::WebSocket::Error
         ModalLayer::dismissDialog(this);
         log("Error was fired, error code: %d", static_cast<int>(error));
 }
+
+
+#pragma mark - table view delegate , datasource
+
+void FindPlayer::tableCellTouched(TableView* table, TableViewCell* cell)
+{
+        CCLOG("cell touched at index: %ld", static_cast<long>(cell->getIdx()));
+}
+
+Size FindPlayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
+{
+        if (idx == 2) {
+                return Size(200, 200);
+        }
+        return Size(200, 200);
+}
+
+TableViewCell* FindPlayer::tableCellAtIndex(TableView *table, ssize_t idx)
+{
+        auto string = StringUtils::format("%ld", static_cast<long>(idx));
+        TableViewCell *cell = table->dequeueCell();
+        if (!cell) {
+                cell = new (std::nothrow) BattleFieldCell();
+                cell->autorelease();
+                auto sprite = Sprite::create("HelloWorld.png");
+                sprite->setAnchorPoint(Vec2::ZERO);
+                sprite->setPosition(Vec2(0, 0));
+                cell->addChild(sprite);
+                
+                auto label = Label::createWithSystemFont(string, "Helvetica", 20.0);
+                label->setPosition(Vec2::ZERO);
+                label->setAnchorPoint(Vec2::ZERO);
+                label->setTag(123);
+                cell->addChild(label);
+        }
+        else {
+                auto label = (Label*)cell->getChildByTag(123);
+                label->setString(string);
+        }
+        
+        
+        return cell;
+}
+
+ssize_t FindPlayer::numberOfCellsInTableView(TableView *table)
+{
+        return 20;
+}
+
+
+#pragma mark - battle field table view cell
+
+void BattleFieldCell::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+{
+        TableViewCell::draw(renderer, transform, flags);
+        // draw bounding box
+// 	auto pos = getPosition();
+// 	auto size = Size(178, 200);
+// 	Vec2 vertices[4]={
+// 		Vec2(pos.x+1, pos.y+1),
+// 		Vec2(pos.x+size.width-1, pos.y+1),
+// 		Vec2(pos.x+size.width-1, pos.y+size.height-1),
+// 		Vec2(pos.x+1, pos.y+size.height-1),
+// 	};
+// 	DrawPrimitives::drawPoly(vertices, 4, true);
+}
+

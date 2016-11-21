@@ -93,20 +93,20 @@ void FindPlayer::menuRefresh(Ref* pSender){
 
 void FindPlayer::menuCreateBattle(Ref*){
         
-        auto data = OnlineGameData::create();
-        
-        std::string base_url(GAME_SERVICE_SERVER_URL"/createBattle");
-        std::string uid = UserSessionBean::getInstance()->getUserId();
-        
-        base_url.append("user_id=");
-        base_url.append(uid);
-        base_url.append("&cell_data=");
-        base_url.append(data->getMapData());
         
         HttpRequest* request = new (std::nothrow) HttpRequest();
-        request->setUrl(base_url);
+        request->setUrl(GAME_SERVICE_SERVER_URL"/createBattle");
         request->setRequestType(HttpRequest::Type::POST);
-        request->setResponseCallback(CC_CALLBACK_2(FindPlayer::onHttpRequestCompleted, this));
+        request->setResponseCallback(CC_CALLBACK_2(FindPlayer::onHttpRequestCompleted, this));       
+        
+        std::string uid = UserSessionBean::getInstance()->getUserId();
+        std::string parameters("user_id=");
+        parameters.append(uid);
+        parameters.append("&cell_data=");
+        auto data = OnlineGameData::create();
+        parameters.append(data->getMapData());
+        request->setRequestData(parameters.c_str(), parameters.length());
+        
         request->setTag(CREATE_BATTLEFIELD);
         HttpClient::getInstance()->sendImmediate(request);
         request->release();

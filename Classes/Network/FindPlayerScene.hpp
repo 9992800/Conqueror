@@ -24,7 +24,7 @@ using namespace network;
 class BattleFieldCell : public cocos2d::extension::TableViewCell
 {
 public:
-        BattleFieldCell();
+        BattleFieldCell(Size);
         virtual void draw(cocos2d::Renderer *renderer, const cocos2d::Mat4 &transform, uint32_t flags) override;
 };
 
@@ -64,6 +64,7 @@ protected:
         void menuExit(Ref* pSender);
         void menuRefresh(Ref*);
         void sendAuthorData();
+        void initTableView(Size, Vec2);
         
 private:
         void getBattleListFromServer();
@@ -80,6 +81,7 @@ private:
         
         MenuItemImage* _refreshBtn;
         
+        extension::TableView*           _battleTableView;
         std::vector<BattleFieldBean*>   _battlList;
         int                             _curPgaeNo;
 };

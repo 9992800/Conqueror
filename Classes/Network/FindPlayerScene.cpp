@@ -67,36 +67,7 @@ bool FindPlayer::init(){
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, 9);
         
-//        
-//        _loadingBar = LoadingBar::create("sliderProgress.png");
-//        _loadingBar->setDirection(LoadingBar::Direction::LEFT);
-//        _loadingBar->setPercent(0);
-//        
-//        Vec2 pos = Vec2(visibleSize.width / 2 + origin.x, origin.y + visibleSize.height / 6);
-//        _loadingBar->setPosition(pos);
-//        this->addChild(_loadingBar, 10);
-        
-        TableView* tableView = TableView::create(this, Size(250, 150));
-        tableView->setDirection(extension::ScrollView::Direction::HORIZONTAL);
-        tableView->setPosition(Vec2(20,winSize.height/2-30));
-        tableView->setDelegate(this);
-        this->addChild(tableView);
-        tableView->reloadData();
-        
-        auto testNode = Node::create();
-        testNode->setName("testNode");
-        tableView->addChild(testNode);
-        tableView->removeChild(testNode, true);
-        CCAssert(nullptr == tableView->getChildByName("testNode"), "The added child has been removed!");
-        
-        
-        tableView = TableView::create(this, Size(150, 250));
-        tableView->setDirection(extension::ScrollView::Direction::VERTICAL);
-        tableView->setPosition(Vec2(winSize.width-250,winSize.height/2-120));
-        tableView->setDelegate(this);
-        tableView->setVerticalFillOrder(TableView::VerticalFillOrder::TOP_DOWN);
-        this->addChild(tableView);
-        tableView->reloadData();
+        this->initTableView(visibleSize, center);
 
         return true;
 }
@@ -241,10 +212,7 @@ void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
         }else if (0 == tags.compare(SEARCHING_OPPENT)){
                 
         }else if (0 == tags.compare(LIST_ALL_BATTLES)){
-                
                 this->parseBattleFieldBeans(data);
-                
-                
         }else{
                 CCLOGWARN("---Unkown request tag:%s---", tags.c_str());
         }
@@ -256,6 +224,8 @@ void FindPlayer::parseBattleFieldBeans(rapidjson::Value& data){
                 auto BattleFieldBean = BattleFieldBean::create(itr);
                 _battlList.insert(_battlList.begin(), BattleFieldBean);
         }
+        
+        _battleTableView->reloadData();
 }
 
 #pragma mark - websocket delegate method
@@ -328,13 +298,31 @@ ssize_t FindPlayer::numberOfCellsInTableView(TableView *table)
         return 20;
 }
 
+void FindPlayer::initTableView(Size visibleSize, Vec2 center){
+        _battleTableView = TableView::create(this, visibleSize * 0.75);
+        _battleTableView->setDirection(extension::ScrollView::Direction::HORIZONTAL);
+        _battleTableView->setIgnoreAnchorPointForPosition(false);
+        _battleTableView->setAnchorPoint(Vec2(0.5, 0.5));
+        _battleTableView->setPosition(center);
+        _battleTableView->setDelegate(this);
+        
+        auto bg = LayerColor::create(Color4B::RED);
+        bg->setIgnoreAnchorPointForPosition(false);
+        bg->setAnchorPoint(Vec2(0.5, 0.5));
+        bg->setPosition(center);
+        _battleTableView->addChild(bg);
+        
+        
+        this->addChild(_battleTableView);
+        _battleTableView->reloadData();
+}
 
 #pragma mark - battle field table view cell
 
 void BattleFieldCell::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
 {
         TableViewCell::draw(renderer, transform, flags);
-        // draw bounding box
+        
 // 	auto pos = getPosition();
 // 	auto size = Size(178, 200);
 // 	Vec2 vertices[4]={
@@ -346,11 +334,11 @@ void BattleFieldCell::draw(Renderer *renderer, const Mat4 &transform, uint32_t f
 // 	DrawPrimitives::drawPoly(vertices, 4, true);
 }
 
-BattleFieldCell::BattleFieldCell(){
+BattleFieldCell::BattleFieldCell(Size size){ 
         
         auto sprite = Sprite::create("HelloWorld.png");
         sprite->setAnchorPoint(Vec2::ZERO);
-        sprite->setPosition(Vec2(0, 0));
+        sprite->setPosition(Vec2(size/2));
         this->addChild(sprite);
         
         auto label = Label::createWithSystemFont("s", "Helvetica", 20.0);

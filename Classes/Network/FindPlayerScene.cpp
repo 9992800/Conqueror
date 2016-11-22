@@ -30,6 +30,10 @@ Scene* FindPlayer::createScene(){
 
 
 FindPlayer::~FindPlayer(){
+        for(auto& v: _battlList){
+                v->release();
+        }
+        _battlList.clear();
 }
 
 
@@ -222,6 +226,7 @@ void FindPlayer::parseBattleFieldBeans(rapidjson::Value& data){
         for (rapidjson::Value::ConstValueIterator itr = data.Begin();
              itr != data.End(); ++itr){
                 auto BattleFieldBean = BattleFieldBean::create(itr);
+                BattleFieldBean->retain();
                 _battlList.insert(_battlList.begin(), BattleFieldBean);
         }
         
@@ -279,20 +284,25 @@ void FindPlayer::initPageViews(Size visibleSize, Vec2 center){
         this->addChild(_batllePageViews);
 }
 
+#define BATTLE_ROWS  2
+#define BATTLE_COLUM 3
+
 void FindPlayer::reloadPageData(){
         
         _batllePageViews->removeAllPages();
         
-        int pageCount = 4;//_battlList.size();
+        int total_cnt = _battlList.size();
+        int pageCount =  total_cnt / (BATTLE_ROWS * BATTLE_COLUM) + 1;
         auto size = _batllePageViews->getContentSize();
         for (int i = 0; i < pageCount; ++i) {
                 HBox* outerBox = HBox::create();
                 outerBox->setContentSize(size);
                 
-                for (int k = 0; k < 3; ++k) {
+                for (int k = 0; k < BATTLE_COLUM && total_cnt > 0; ++k) {
                         VBox* innerBox = VBox::create();
                         
-                        for (int j = 0; j < 2; j++) {
+                        for (int j = 0; j < BATTLE_ROWS && total_cnt > 0; j++) {
+                                total_cnt--;
                                 Button *btn = Button::create("HelloWorld.png","");
                                 btn->setName(StringUtils::format("button %d", j));
                                 btn->addTouchEventListener( CC_CALLBACK_2(FindPlayer::onBattleSelected, this));

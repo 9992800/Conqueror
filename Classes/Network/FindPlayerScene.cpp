@@ -48,6 +48,9 @@ bool FindPlayer::init(){
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         Vec2 center = origin + visibleSize / 2;
         
+        auto bg = LayerColor::create(Color4B::WHITE);
+        this->addChild(bg);
+        
         auto searchingBtn = MenuItemImage::create("search_oppent.png", "search_oppent_sel.png",
                                                   CC_CALLBACK_1(FindPlayer::menuSearching, this));
         searchingBtn->setPosition(Vec2(origin.x + visibleSize.width / 2 - 100,
@@ -223,6 +226,9 @@ void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
 }
 
 void FindPlayer::parseBattleFieldBeans(rapidjson::Value& data){
+        
+        _battlList.clear();
+        
         for (rapidjson::Value::ConstValueIterator itr = data.Begin();
              itr != data.End(); ++itr){
                 auto BattleFieldBean = BattleFieldBean::create(itr);
@@ -285,7 +291,7 @@ void FindPlayer::initPageViews(Size visibleSize, Vec2 center){
         _batllePageViews->setIndicatorSpaceBetweenIndexNodes(5);
         _batllePageViews->setIndicatorIndexNodesScale(0.5);
         _batllePageViews->setIndicatorIndexNodesTexture("green_edit.png");
-        _batllePageViews->setIndicatorIndexNodesColor(Color3B::RED);
+        _batllePageViews->setIndicatorIndexNodesColor(Color3B::BLACK);
         
         this->addChild(_batllePageViews);
 }
@@ -298,19 +304,22 @@ void FindPlayer::reloadPageData(){
         _batllePageViews->removeAllPages();
         
         int total_cnt = (int)_battlList.size();
+        int battle_idx = 1;
         int pageCount =  total_cnt / (BATTLE_ROWS * BATTLE_COLUM) + 1;
         auto size = _batllePageViews->getContentSize();
         for (int i = 0; i < pageCount; ++i) {
                 HBox* outerBox = HBox::create();
                 outerBox->setContentSize(size);
                 
-                for (int k = 0; k < BATTLE_COLUM && total_cnt > 0; ++k) {
+                for (int k = 0; k < BATTLE_COLUM && total_cnt > battle_idx; ++k) {
                         VBox* innerBox = VBox::create();
                         
-                        for (int j = 0; j < BATTLE_ROWS && total_cnt > 0; j++) {
-                                total_cnt--;
-                                Button *btn = Button::create("HelloWorld.png","");
+                        for (int j = 0; j < BATTLE_ROWS && total_cnt > battle_idx; j++) {
+                                BattleFieldBean* bean = _battlList.at(battle_idx - 1);
+                                battle_idx++;
+                                Button *btn = Button::create("battle_field.png","");
                                 btn->setName(StringUtils::format("button %d", j));
+                                btn->setTitleText(bean->getCreator());
                                 btn->addTouchEventListener( CC_CALLBACK_2(FindPlayer::onBattleSelected, this));
                                 
                                 innerBox->addChild(btn);

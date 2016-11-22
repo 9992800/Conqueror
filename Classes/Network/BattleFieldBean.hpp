@@ -19,8 +19,12 @@ public:
         BattleFieldBean(rapidjson::Value::ConstValueIterator vptr);
         virtual ~BattleFieldBean(){}
         bool init();
+        
+        inline std::string getCreator(){
+                return _battleCreator;
+        }
+        
 private:
-        std::vector<int> _cells;
         std::string     _battleId;
         std::string     _battleCreator;
         int             _playerNum;

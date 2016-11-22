@@ -81,6 +81,7 @@
 		7C4BA1D41DDF0A90004F9770 /* UserSessionBean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C4BA1D21DDF0A90004F9770 /* UserSessionBean.cpp */; };
 		7C4DA6A51DE2E973001CC255 /* BattleFieldBean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C4DA6A31DE2E973001CC255 /* BattleFieldBean.cpp */; };
 		7C4DA6A81DE43C1B001CC255 /* green_edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DA6A71DE43C1B001CC255 /* green_edit.png */; };
+		7C4DA6AA1DE44548001CC255 /* battle_field.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DA6A91DE44548001CC255 /* battle_field.png */; };
 		7C67A7B51DD1BE6B004B5151 /* WebSocktUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */; };
 		7C6E7FFD1DD94F5300C5E374 /* ReplayLastScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */; };
 		7C6E80001DD9575A00C5E374 /* history.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFF1DD9575A00C5E374 /* history.png */; };
@@ -263,6 +264,7 @@
 		7C4DA6A31DE2E973001CC255 /* BattleFieldBean.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleFieldBean.cpp; sourceTree = "<group>"; };
 		7C4DA6A41DE2E973001CC255 /* BattleFieldBean.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BattleFieldBean.hpp; sourceTree = "<group>"; };
 		7C4DA6A71DE43C1B001CC255 /* green_edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_edit.png; sourceTree = "<group>"; };
+		7C4DA6A91DE44548001CC255 /* battle_field.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = battle_field.png; sourceTree = "<group>"; };
 		7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocktUtil.cpp; sourceTree = "<group>"; };
 		7C67A7B41DD1BE6B004B5151 /* WebSocktUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocktUtil.hpp; sourceTree = "<group>"; };
 		7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReplayLastScene.cpp; sourceTree = "<group>"; };
@@ -463,6 +465,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7C4DA6A91DE44548001CC255 /* battle_field.png */,
 				7C4DA6A71DE43C1B001CC255 /* green_edit.png */,
 				7C4BA1CF1DDEF682004F9770 /* waiting_ring.png */,
 				7C6E80011DD9687D00C5E374 /* history_data_sel.png */,
@@ -794,6 +797,7 @@
 				7C4BA1D01DDEF682004F9770 /* waiting_ring.png in Resources */,
 				7C6E80051DD9687D00C5E374 /* history_data.png in Resources */,
 				BB51F10A1DCF66D50031296E /* share.png in Resources */,
+				7C4DA6AA1DE44548001CC255 /* battle_field.png in Resources */,
 				BB34FAAA1DD35B7A0070B4E4 /* sounds in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				7C82E4281DD57EDD0019C8CF /* online_battle.png in Resources */,

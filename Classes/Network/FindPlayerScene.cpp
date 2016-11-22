@@ -65,9 +65,9 @@ bool FindPlayer::init(){
         
         auto menu = Menu::create(searchingBtn, createBtn, return_back, _refreshBtn, NULL);
         menu->setPosition(Vec2::ZERO);
-        this->addChild(menu, 9);
+        this->addChild(menu, 3);
         
-        this->initTableView(visibleSize, center);
+        this->initPageViews(visibleSize, center);
 
         return true;
 }
@@ -225,7 +225,8 @@ void FindPlayer::parseBattleFieldBeans(rapidjson::Value& data){
                 _battlList.insert(_battlList.begin(), BattleFieldBean);
         }
         
-        _battleTableView->reloadData();
+//        _battleTableView->reloadData();
+        this->reloadPageData();
 }
 
 #pragma mark - websocket delegate method
@@ -258,92 +259,151 @@ void FindPlayer::onError(network::WebSocket* ws, const network::WebSocket::Error
         log("Error was fired, error code: %d", static_cast<int>(error));
 }
 
-
-#pragma mark - table view delegate , datasource
-
-void FindPlayer::tableCellTouched(TableView* table, TableViewCell* cell)
-{
-        CCLOG("cell touched at index: %ld", static_cast<long>(cell->getIdx()));
-}
-
-Size FindPlayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
-{
-        if (idx == 2) {
-                return Size(200, 200);
-        }
-        return Size(200, 200);
-}
-
-TableViewCell* FindPlayer::tableCellAtIndex(TableView *table, ssize_t idx)
-{
-        auto string = StringUtils::format("%ld", static_cast<long>(idx));
-        TableViewCell *cell = table->dequeueCell();
-        if (!cell) {
-                cell = new (std::nothrow) BattleFieldCell();
-                cell->autorelease();
-                auto label = (Label*)cell->getChildByTag(123);
-                label->setString(string);
-        }
-        else {
-                auto label = (Label*)cell->getChildByTag(123);
-                label->setString(string);
-        }
+#pragma mark - page view actions
+void FindPlayer::initPageViews(Size visibleSize, Vec2 center){
         
-        
-        return cell;
-}
-
-ssize_t FindPlayer::numberOfCellsInTableView(TableView *table)
-{
-        return 20;
-}
-
-void FindPlayer::initTableView(Size visibleSize, Vec2 center){
-        _battleTableView = TableView::create(this, visibleSize * 0.75);
-        _battleTableView->setDirection(extension::ScrollView::Direction::HORIZONTAL);
-        _battleTableView->setIgnoreAnchorPointForPosition(false);
-        _battleTableView->setAnchorPoint(Vec2(0.5, 0.5));
-        _battleTableView->setPosition(center);
-        _battleTableView->setDelegate(this);
+        _batllePageViews = PageView::create();
+        _batllePageViews->setContentSize(visibleSize * 0.85);
+        _batllePageViews->setIgnoreAnchorPointForPosition(false);
+        _batllePageViews->setAnchorPoint(Vec2(0.5, 0.5));
+        _batllePageViews->setPosition(center);
+        _batllePageViews->removeAllItems();
+        _batllePageViews->addEventListener((PageView::ccPageViewCallback)CC_CALLBACK_2(FindPlayer::pageViewEvent, this));
         
         auto bg = LayerColor::create(Color4B::RED);
         bg->setIgnoreAnchorPointForPosition(false);
         bg->setAnchorPoint(Vec2(0.5, 0.5));
         bg->setPosition(center);
-        _battleTableView->addChild(bg);
+        _batllePageViews->addChild(bg);
         
-        
-        this->addChild(_battleTableView);
-        _battleTableView->reloadData();
+        this->addChild(_batllePageViews);
 }
 
-#pragma mark - battle field table view cell
-
-void BattleFieldCell::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-{
-        TableViewCell::draw(renderer, transform, flags);
+void FindPlayer::reloadPageData(){
         
-// 	auto pos = getPosition();
-// 	auto size = Size(178, 200);
-// 	Vec2 vertices[4]={
-// 		Vec2(pos.x+1, pos.y+1),
-// 		Vec2(pos.x+size.width-1, pos.y+1),
-// 		Vec2(pos.x+size.width-1, pos.y+size.height-1),
-// 		Vec2(pos.x+1, pos.y+size.height-1),
-// 	};
-// 	DrawPrimitives::drawPoly(vertices, 4, true);
+        _batllePageViews->removeAllPages();
+        
+        int pageCount = 4;//_battlList.size();
+        auto size = _batllePageViews->getContentSize();
+        for (int i = 0; i < pageCount; ++i) {
+                HBox* outerBox = HBox::create();
+                outerBox->setContentSize(size);
+                
+                for (int k = 0; k < 3; ++k) {
+                        VBox* innerBox = VBox::create();
+                        
+                        for (int j = 0; j < 2; j++) {
+                                Button *btn = Button::create("HelloWorld.png","");
+                                btn->setName(StringUtils::format("button %d", j));
+                                btn->addTouchEventListener( CC_CALLBACK_2(FindPlayer::onBattleSelected, this));
+                                
+                                innerBox->addChild(btn);
+                        }
+                        
+                        LinearLayoutParameter *parameter = LinearLayoutParameter::create();
+                        parameter->setMargin(Margin(size.width/8,0,size.width/8,0));
+                        innerBox->setLayoutParameter(parameter);
+                        
+                        outerBox->addChild(innerBox);
+                }
+                _batllePageViews->insertCustomItem(outerBox, i);
+        }
 }
 
-BattleFieldCell::BattleFieldCell(Size size){ 
+void FindPlayer::pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type){
         
-        auto sprite = Sprite::create("HelloWorld.png");
-        sprite->setAnchorPoint(Vec2::ZERO);
-        sprite->setPosition(Vec2(size/2));
-        this->addChild(sprite);
-        
-        auto label = Label::createWithSystemFont("s", "Helvetica", 20.0);
-        label->setPosition(Vec2::ZERO);
-        label->setAnchorPoint(Vec2::ZERO);
-        label->setTag(123);
-        this->addChild(label);
 }
+void FindPlayer::onBattleSelected(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type){
+        
+}
+
+
+
+//#pragma mark - table view delegate , datasource
+//
+//void FindPlayer::tableCellTouched(TableView* table, TableViewCell* cell)
+//{
+//        CCLOG("cell touched at index: %ld", static_cast<long>(cell->getIdx()));
+//}
+//
+//Size FindPlayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
+//{
+//        if (idx == 2) {
+//                return Size(200, 200);
+//        }
+//        return Size(200, 200);
+//}
+//
+//TableViewCell* FindPlayer::tableCellAtIndex(TableView *table, ssize_t idx)
+//{
+//        auto string = StringUtils::format("%ld", static_cast<long>(idx));
+//        TableViewCell *cell = table->dequeueCell();
+//        if (!cell) {
+//                cell = new (std::nothrow) BattleFieldCell(table->cocos2d::Node::getContentSize());
+//                cell->autorelease();
+//                auto label = (Label*)cell->getChildByTag(123);
+//                label->setString(string);
+//        }
+//        else {
+//                auto label = (Label*)cell->getChildByTag(123);
+//                label->setString(string);
+//        }
+//        
+//        
+//        return cell;
+//}
+//
+//ssize_t FindPlayer::numberOfCellsInTableView(TableView *table)
+//{
+//        return 20;
+//}
+//
+//void FindPlayer::initTableView(Size visibleSize, Vec2 center){
+//        _battleTableView = TableView::create(this, visibleSize * 0.75);
+//        _battleTableView->setDirection(extension::ScrollView::Direction::HORIZONTAL);
+//        _battleTableView->setIgnoreAnchorPointForPosition(false);
+//        _battleTableView->setAnchorPoint(Vec2(0.5, 0.5));
+//        _battleTableView->setPosition(center);
+//        _battleTableView->setDelegate(this);
+//        
+//        auto bg = LayerColor::create(Color4B::RED);
+//        bg->setIgnoreAnchorPointForPosition(false);
+//        bg->setAnchorPoint(Vec2(0.5, 0.5));
+//        bg->setPosition(center);
+//        _battleTableView->addChild(bg);
+//        
+//        
+//        this->addChild(_battleTableView);
+//        _battleTableView->reloadData();
+//}
+//
+//#pragma mark - battle field table view cell
+//
+//void BattleFieldCell::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
+//{
+//        TableViewCell::draw(renderer, transform, flags);
+//        
+//// 	auto pos = getPosition();
+//// 	auto size = Size(178, 200);
+//// 	Vec2 vertices[4]={
+//// 		Vec2(pos.x+1, pos.y+1),
+//// 		Vec2(pos.x+size.width-1, pos.y+1),
+//// 		Vec2(pos.x+size.width-1, pos.y+size.height-1),
+//// 		Vec2(pos.x+1, pos.y+size.height-1),
+//// 	};
+//// 	DrawPrimitives::drawPoly(vertices, 4, true);
+//}
+//
+//BattleFieldCell::BattleFieldCell(Size size){ 
+//        
+//        auto sprite = Sprite::create("HelloWorld.png");
+//        sprite->setAnchorPoint(Vec2::ZERO);
+//        sprite->setPosition(Vec2(size/2));
+//        this->addChild(sprite);
+//        
+//        auto label = Label::createWithSystemFont("s", "Helvetica", 20.0);
+//        label->setPosition(Vec2::ZERO);
+//        label->setAnchorPoint(Vec2::ZERO);
+//        label->setTag(123);
+//        this->addChild(label);
+//}

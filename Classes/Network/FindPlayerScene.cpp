@@ -275,11 +275,17 @@ void FindPlayer::initPageViews(Size visibleSize, Vec2 center){
         _batllePageViews->removeAllItems();
         _batllePageViews->addEventListener((PageView::ccPageViewCallback)CC_CALLBACK_2(FindPlayer::pageViewEvent, this));
         
-        auto bg = LayerColor::create(Color4B::RED);
-        bg->setIgnoreAnchorPointForPosition(false);
-        bg->setAnchorPoint(Vec2(0.5, 0.5));
-        bg->setPosition(center);
-        _batllePageViews->addChild(bg);
+//        auto bg = LayerColor::create(Color4B::RED);
+//        bg->setIgnoreAnchorPointForPosition(false);
+//        bg->setAnchorPoint(Vec2(0.5, 0.5));
+//        bg->setPosition(center);
+//        _batllePageViews->addChild(bg);
+        
+        _batllePageViews->setIndicatorEnabled(true);
+        _batllePageViews->setIndicatorSpaceBetweenIndexNodes(5);
+        _batllePageViews->setIndicatorIndexNodesScale(0.5);
+        _batllePageViews->setIndicatorIndexNodesTexture("green_edit.png");
+        _batllePageViews->setIndicatorIndexNodesColor(Color3B::RED);
         
         this->addChild(_batllePageViews);
 }
@@ -291,7 +297,7 @@ void FindPlayer::reloadPageData(){
         
         _batllePageViews->removeAllPages();
         
-        int total_cnt = _battlList.size();
+        int total_cnt = (int)_battlList.size();
         int pageCount =  total_cnt / (BATTLE_ROWS * BATTLE_COLUM) + 1;
         auto size = _batllePageViews->getContentSize();
         for (int i = 0; i < pageCount; ++i) {

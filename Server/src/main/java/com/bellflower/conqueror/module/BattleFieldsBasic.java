@@ -2,7 +2,7 @@ package com.bellflower.conqueror.module;
 
 import org.json.JSONArray;
 
-public class BattleFields {
+public class BattleFieldsBasic {
 	
 	public static final int DEFAULT_PLAYER_NUM = 3;
 	
@@ -10,10 +10,9 @@ public class BattleFields {
 	int 		playerNum;
 	int 		status; 
 	long		createTime;
-	private JSONArray cellData;
 	private String owner;
 	
-	public BattleFields(){
+	public BattleFieldsBasic(){
 		this.createTime = System.currentTimeMillis();
 		this.playerNum = DEFAULT_PLAYER_NUM;
 	}
@@ -37,14 +36,6 @@ public class BattleFields {
 	public void setStatus(int status) {
 		this.status = status;
 	} 
-
-	public JSONArray getDataInfo(){
-		return this.cellData;
-	}
-	public void setDataInfo(JSONArray cells) {
-		 this.cellData = cells;
-	}
-
 	public String getOwner(){
 		return this.owner;
 	}

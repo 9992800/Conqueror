@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bellflower.conqueror.Utils.ResultMapUtils;
-import com.bellflower.conqueror.module.BattleFields;
+import com.bellflower.conqueror.module.BattleFieldsBasic;
 import com.bellflower.conqueror.service.BattleFiledService;
 import com.bellflower.conqueror.service.ServerListService; 
 
@@ -64,7 +64,7 @@ public class HomeController {
 	public Map<String, Object> battleFields(HttpServletRequest request,
 			@RequestParam(value = "user_id", required = true) String user_id,
 			@RequestParam(value = "curPgaeNo", required = true) int curPgaeNo) {	
-		List<BattleFields> data = battleFiledService.listBattles(user_id, curPgaeNo);
+		List<BattleFieldsBasic> data = battleFiledService.listBattles(user_id, curPgaeNo);
 		return ResultMapUtils.success(data);
 	}
 	

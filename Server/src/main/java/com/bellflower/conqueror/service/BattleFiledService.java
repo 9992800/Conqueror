@@ -29,9 +29,9 @@ public class BattleFiledService {
 	
 	public String createBattle(String user_id, String cell_data) {
 		
-		Query query = new Query(Criteria.where("owner").is(user_id));
-		WriteResult result = this.mongoService.remove(query, BattleFields.class);
-		logger.info("battles need to delete: " + result.getN()); 
+//		Query query = new Query(Criteria.where("owner").is(user_id));
+//		WriteResult result = this.mongoService.remove(query, BattleFields.class);
+//		logger.info("battles need to delete: " + result.getN()); 
 		
 		JSONObject cell_json = new JSONObject(cell_data);
 		JSONArray cells = cell_json.getJSONArray("_cells");

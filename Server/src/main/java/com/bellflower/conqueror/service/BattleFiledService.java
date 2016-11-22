@@ -49,7 +49,7 @@ public class BattleFiledService {
 	}
 
 	public List<BattleFields> listBattles(String user_id, int start_page) {
-		final Pageable pageableRequest = new PageRequest(start_page, 1);
+		final Pageable pageableRequest = new PageRequest(start_page, 60);
 		Query query = new Query();
 		query.with(new Sort(Sort.Direction.DESC, "createTime")).with(pageableRequest);
 		List<BattleFields> rest = mongoService.find(query, BattleFields.class);

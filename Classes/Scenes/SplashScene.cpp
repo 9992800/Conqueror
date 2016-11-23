@@ -12,6 +12,7 @@
 #include "AppMacros.hpp"
 #include "GamePayUtil.hpp"
 #include "PopUpOkCancelDialog.hpp"
+#include "UserSessionBean.hpp"
 
 #pragma makr - init scene
 Scene* Splash::createScene()
@@ -49,15 +50,6 @@ bool Splash::init()
         auto label = Label::createWithTTF("Loading", "fonts/Marker Felt.ttf", 24);
         label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
         this->addChild(label, 2);
-        
-        
-//        BaseDialogConfig config("胜利了!",
-//                                "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香");
-//        PopUpOkCancelDialog *dialog = PopUpOkCancelDialog::create(config,
-//                                                                  CC_CALLBACK_1(Splash::gameOver, this, 1),
-//                                                                  CC_CALLBACK_1(Splash::gameOver, this, 0));
-//        this->addChild(dialog, 100);
-        
         
         return true;
 }
@@ -105,8 +97,15 @@ void Splash::onEnter(){
                 CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.f);
         }
         
-        //TODO::restore product
-//        GamePayUtil::getInstance()->retrieveLastProduct();
+        _count += 5;
+        
+        std::string fb_uid = UserDefault::getInstance()->getStringForKey(FACEBOOK_INFO_USER_ID_KEY, "");
+        UserSessionBean::getInstance()->setUserId(fb_uid);
+        
+        std::string img_path = UserDefault::getInstance()->getStringForKey(FACEBOOK_INFO_USER_AVATAR_KEY, "");
+        UserSessionBean::getInstance()->setUserAvatar(img_path);
+        
+        _count += 5;
 }
 
 void Splash::update(float delta){

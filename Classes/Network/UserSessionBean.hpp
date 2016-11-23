@@ -23,17 +23,31 @@ public:
         ~UserSessionBean();
         bool init();
         
-        static bool checkResponse(HttpResponse*, rapidjson::Value&);
-        
+        static bool checkResponse(HttpResponse*, rapidjson::Value&); 
 public:
+        void setUserId(std::string);
+        inline void setAccessToken(std::string token){
+                this->_accessToken = token;
+        }
         inline std::string getUserId(){
                 return _fbUserId;
         }
         
+        inline bool needLoadPicture(){
+                return _picturePath.length() == 0;
+        }
+        
+        inline void setUserAvatar(std::string ip){
+                this->_picturePath = ip;
+        }
+        
+        inline bool needReloadFB(){
+                return this->_fbUserId.length() == 0;
+        }
 private:
-        std::string     _fbUserId;
-        std::string     _sessionId;
-        std::string     _userToken;
+        std::string     _fbUserId; 
+        std::string     _accessToken;
+        std::string     _picturePath;
 };
 
 #endif /* UserSessionBean_hpp */

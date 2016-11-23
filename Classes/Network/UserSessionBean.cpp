@@ -26,13 +26,26 @@ bool UserSessionBean::init(){
 }
 
 UserSessionBean::UserSessionBean(){
-        //TODO::add facebook signIn functions
-        _fbUserId = StringUtils::format("this_is_test_%d", random(1, 10));
+        _fbUserId       = "";
+        _accessToken    = "";
+        _picturePath    = "";
 }
 
 UserSessionBean::~UserSessionBean(){
 }
 
+#pragma mark - intance functions
+
+void UserSessionBean::setUserId(std::string fb_uid){
+        if (_fbUserId.compare(fb_uid)){
+                _fbUserId = fb_uid;
+                _accessToken = "";
+                _picturePath = "";
+        }
+}
+
+
+#pragma mark - utils functions
 
 bool UserSessionBean::checkResponse(HttpResponse *response, rapidjson::Value& data){
         if (!response){

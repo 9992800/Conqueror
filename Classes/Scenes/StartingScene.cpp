@@ -4,6 +4,7 @@
 #include "StartingScene.hpp"
 #include "GameHelpScene.hpp"
 #include "FindPlayerScene.hpp"
+#include "UserSessionBean.hpp"
 
 using namespace CocosDenshion;
 
@@ -130,6 +131,7 @@ void Starting::menuShareGame(Ref* pSender){
                 utils::captureScreen(CC_CALLBACK_2(Starting::afterCaptureScreen, this), "screen.png");
         }else{
                 std::vector<std::string> permissions;
+                permissions.push_back(FB_PERM_READ_PUBLIC_PROFILE);
                 permissions.push_back(sdkbox::FB_PERM_READ_EMAIL);
                 permissions.push_back(sdkbox::FB_PERM_READ_USER_FRIENDS);
                 PluginFacebook::login(permissions);
@@ -159,8 +161,24 @@ void Starting::menuSoundCtrl(Ref* pSender){
 }
 
 void Starting::menuOnlineBattle(Ref* pSender){
-        Scene* scene = FindPlayer::createScene();
-        Director::getInstance()->pushScene(scene);
+//        MessageBox("title", "fetch friends");
+        
+        
+        if (!PluginFacebook::isLoggedIn()){
+                std::vector<std::string> permissions;
+                permissions.push_back(FB_PERM_READ_PUBLIC_PROFILE);
+                permissions.push_back(sdkbox::FB_PERM_READ_EMAIL);
+                permissions.push_back(sdkbox::FB_PERM_READ_USER_FRIENDS);
+                PluginFacebook::login(permissions);
+       }else{
+               if (UserSessionBean::getInstance()->needReloadFB()){
+                       UserSessionBean::getInstance()->setUserId(PluginFacebook::getUserID());
+                       UserSessionBean::getInstance()->setAccessToken(PluginFacebook::getAccessToken());
+               }
+               
+               Scene* scene = FindPlayer::createScene();
+               Director::getInstance()->pushScene(scene);
+       }
 }
 
 
@@ -190,12 +208,24 @@ void Starting::onExit(){
  *********************/
 void Starting::onLogin(bool isLogin, const std::string& error)
 {
-        CCLOG("##FB isLogin: %d, error: %s", isLogin, error.c_str());
+        CCLOG("##FB isLogin: %d, error: %s id=%s", isLogin, error.c_str(), PluginFacebook::getUserID().c_str());
+        UserSessionBean::getInstance()->setUserId(PluginFacebook::getUserID());
+        UserSessionBean::getInstance()->setAccessToken(PluginFacebook::getAccessToken());
+        if (UserSessionBean::getInstance()->needLoadPicture()){
+                sdkbox::FBAPIParam params;
+                params["fields"] = "picture";
+                params["type"] = "small";
+                params["redirect"] = "false";
+                PluginFacebook::api("me", "GET", params, "__fetch_picture_tag__");
+        }
 }
 
 void Starting::onAPI(const std::string& tag, const std::string& jsonData)
 {
         CCLOG("##FB onAPI: tag -> %s, json -> %s", tag.c_str(), jsonData.c_str());
+        if (tag == "__fetch_picture_tag__"){
+                //TODO:: move face book to user bean;
+        }
 }
 
 void Starting::onSharedSuccess(const std::string& message)
@@ -220,39 +250,6 @@ void Starting::onPermission(bool isLogin, const std::string& error)
 void Starting::onFetchFriends(bool ok, const std::string& msg)
 {
         CCLOG("##FB %s: %d = %s", __FUNCTION__, ok, msg.data());
-        
-        MenuItemFont::setFontSize(20);
-        static Menu *menu = Menu::create();
-        menu->setPositionY(20);
-        menu->cleanup();
-        
-        const std::vector<sdkbox::FBGraphUser>& friends = PluginFacebook::getFriends();
-        for (int i = 0; i < friends.size(); i++)
-                {
-                const sdkbox::FBGraphUser& user = friends.at(i);
-                CCLOG("##FB> -------------------------------");
-                CCLOG("##FB>> %s", user.uid.data());
-                CCLOG("##FB>> %s", user.firstName.data());
-                CCLOG("##FB>> %s", user.lastName.data());
-                CCLOG("##FB>> %s", user.name.data());
-                CCLOG("##FB>> %s", user.isInstalled ? "app is installed" : "app is not installed");
-                CCLOG("##FB");
-                
-                MenuItemFont *item = MenuItemFont::create(user.name, [=](Ref*) {
-                        sdkbox::FBAPIParam params;
-                        params["redirect"] = "false";
-                        params["type"] = "small";
-                        std::string url(user.uid + "/picture");
-                        PluginFacebook::api(url, "GET", params, "__fetch_picture_tag__");
-                });
-                menu->addChild(item);
-                }
-        if (!menu->getParent()) {
-                menu->alignItemsHorizontally();
-                addChild(menu);
-        }
-        
-        MessageBox("", "fetch friends");
 }
 
 void Starting::onRequestInvitableFriends( const FBInvitableFriendsInfo& friends )

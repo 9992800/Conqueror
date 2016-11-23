@@ -75,6 +75,13 @@ bool FindPlayer::init(){
         this->addChild(menu, 3);
         
         this->initPageViews(visibleSize, center);
+        
+        
+//        if (UserSessionBean::getInstance()->needLoadPicture()){
+//                FBAPIParam params;
+//                PluginFacebook::api("/me", "GET", params, "/me  ");
+//        }
+
 
         return true;
 }

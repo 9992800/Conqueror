@@ -10,6 +10,7 @@
 #define BattleFieldScene_hpp
 
 #include "cocos2d.h"
+#include "OnlineGameData.hpp"
 #include "AppMacros.hpp"
 
 USING_NS_CC;
@@ -17,17 +18,17 @@ USING_NS_CC;
 class BattleField: public Layer{
         
 public:
-        static Scene* createScene(int mapIdx);
+        static Scene* createScene(OnlineGameData*);
         virtual bool init() override;
-        CREATE_FUNC2(BattleField, int, idx);
-        BattleField(int idx):_mapIdx(idx){};
+        CREATE_FUNC2(BattleField, OnlineGameData*, data);
+        BattleField(OnlineGameData* data):_onlineMapData(data){
+                
+        }
         virtual ~BattleField();
         
 private:
-        void initMap();
-        
-private:
-        int _mapIdx;
+        float           _lowestPostion_y;
+        OnlineGameData* _onlineMapData;
 };
 
 #endif /* BattleFieldScene_hpp */

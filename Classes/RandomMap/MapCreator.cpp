@@ -24,19 +24,15 @@ bool MapCreator::init(){
 }
 
 
-TMXTiledMap* MapCreator::createMap(GameData* data){
+TMXTiledMap* MapCreator::createMap(std::vector<int> data){
         
-        SimpleMapInfoBean simpleBean = this->initMapBasicInfo(data->_mapData);
+        SimpleMapInfoBean simpleBean = this->initMapBasicInfo(data);
         
         auto mapxml = RandomMap::create(simpleBean);
         std::string map_xml_str = mapxml->getXmlString();
         
-//        printf("\r\n%s", map_xml_str.c_str());
-        
-        TMXTiledMap* map = TMXTiledMap::createWithXML(map_xml_str, "maps");
-        
-        data->_refereMap = map;
-        return map;
+//        printf("\r\n%s", map_xml_str.c_str()); 
+        return TMXTiledMap::createWithXML(map_xml_str, "maps");
 }
 
 SimpleMapInfoBean MapCreator::initMapBasicInfo(std::vector<int> map_data){
@@ -58,4 +54,4 @@ SimpleMapInfoBean MapCreator::initMapBasicInfo(std::vector<int> map_data){
         simpleBean.layerBean = layer;
         
         return simpleBean;
-}
+} 

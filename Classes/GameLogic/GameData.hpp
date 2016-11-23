@@ -54,6 +54,11 @@ public:
         inline bool init(){return true;}
         bool init(GameData* data);
         ~GameData();
+        
+        inline std::vector<int>& getMapData(){
+                return _mapData;
+        }
+        
 public:
         void reshDataByMapInfo(TMXTiledMap* map);
 private:

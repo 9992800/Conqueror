@@ -70,7 +70,7 @@ void GameScene::initMapLayer(){
         _theGameLogic->retain();        
         auto data = _theGameLogic->initGameData(_playerNumber);
         
-        auto map = MapCreator::instance()->createMap(data);
+        auto map = MapCreator::instance()->createMap(data->getMapData());
         Size map_size = map->getContentSize();
         ScreenCoordinate::getInstance()->configScreen(map_size);
         
@@ -194,7 +194,7 @@ void GameScene::tryAgain(){
         old_map->removeFromParentAndCleanup(true);
         
         auto data = _theGameLogic->resetInitData();
-        auto map = MapCreator::instance()->createMap(data);
+        auto map = MapCreator::instance()->createMap(data->getMapData());
         Size map_size = map->getContentSize();
         ScreenCoordinate::getInstance()->configScreen(map_size);
         

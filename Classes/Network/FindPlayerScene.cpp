@@ -102,8 +102,10 @@ void FindPlayer::menuCreateBattle(Ref*){
         parameters.append(uid);
         parameters.append("&cell_data=");
         auto data = OnlineGameData::create();
+        data->retain();
         parameters.append(data->getMapData());
         request->setRequestData(parameters.c_str(), parameters.length());
+        request->setUserData(data);
         
         request->setTag(CREATE_BATTLEFIELD);
         HttpClient::getInstance()->sendImmediate(request);
@@ -210,12 +212,19 @@ void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
         
         rapidjson::Value data;
         if (!UserSessionBean::checkResponse(response, data)){
+                auto data = (Ref*)response->getHttpRequest()->getUserData();
+                if (data){
+                        data->release();
+                }
                 return;
         }
         
         std::string tags = response->getHttpRequest()->getTag();
         if (0 == tags.compare(CREATE_BATTLEFIELD)){
                 CCLOG("---%s---", data.GetString());
+                auto data = (OnlineGameData*)response->getHttpRequest()->getUserData();
+                BattleField::create(data);
+                
         }else if (0 == tags.compare(SEARCHING_OPPENT)){
                 
         }else if (0 == tags.compare(LIST_ALL_BATTLES)){
@@ -304,7 +313,7 @@ void FindPlayer::reloadPageData(){
         _batllePageViews->removeAllPages();
         
         int total_cnt = (int)_battlList.size();
-        int battle_idx = 1;
+        int battle_idx = 0;
         int pageCount =  total_cnt / (BATTLE_ROWS * BATTLE_COLUM) + 1;
         auto size = _batllePageViews->getContentSize();
         for (int i = 0; i < pageCount; ++i) {
@@ -315,7 +324,7 @@ void FindPlayer::reloadPageData(){
                         VBox* innerBox = VBox::create();
                         
                         for (int j = 0; j < BATTLE_ROWS && total_cnt > battle_idx; j++) {
-                                BattleFieldBean* bean = _battlList.at(battle_idx - 1);
+                                BattleFieldBean* bean = _battlList.at(battle_idx);
                                 battle_idx++;
                                 Button *btn = Button::create("battle_field.png","");
                                 btn->setName(StringUtils::format("button %d", j));

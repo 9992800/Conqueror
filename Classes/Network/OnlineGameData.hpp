@@ -17,6 +17,8 @@
 
 USING_NS_CC;
 class OnlineGameData : public Ref{
+        
+        friend class MapCreator;
 public:
         CREATE_FUNC(OnlineGameData);
         bool init();
@@ -24,8 +26,16 @@ public:
         ~OnlineGameData();
         
         std::string getMapData();
+        inline std::vector<int> getIntMapData(){
+                return _mapIntData;
+        }
+        
+        void reshDataByMapInfo(TMXTiledMap*);
 private:
-        int _playerNum;
-        rapidjson::Document _battleData;
+        int                     _playerNum;
+        std::vector<int>        _mapIntData;
+        rapidjson::Document     _battleData;
+        
+        TMXTiledMap*            _refereMap;
 };
 #endif /* OnlineGameData_hpp */

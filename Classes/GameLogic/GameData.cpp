@@ -117,6 +117,8 @@ bool GameData::init(GameData* data){
 
 
 void GameData::reshDataByMapInfo(TMXTiledMap* map){
+        
+        this->_refereMap = map;
                 
         for (int i = 0; i < AREA_MAX; i++){
                 DrawNode* draw_node = DrawNode::create();

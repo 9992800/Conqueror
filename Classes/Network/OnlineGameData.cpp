@@ -8,7 +8,8 @@
 #include "JoinData.hpp"
 #include "AppMacros.hpp"
 #include "OnlineGameData.hpp"
-OnlineGameData::OnlineGameData():_playerNum(3){
+OnlineGameData::OnlineGameData():_playerNum(3), _refereMap(nullptr){
+        _mapIntData = std::vector<int>(CEL_MAX, 0);
 }
 
 OnlineGameData::~OnlineGameData(){
@@ -173,3 +174,6 @@ std::string OnlineGameData::getMapData(){
 }
 
 
+void OnlineGameData::reshDataByMapInfo(TMXTiledMap* map){
+        this->_refereMap = map;
+}

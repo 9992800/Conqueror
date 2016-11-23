@@ -16,10 +16,12 @@ import com.bellflower.conqueror.Utils.SessionUtils;
 import com.bellflower.conqueror.module.OnlineBean;
 import com.bellflower.conqueror.service.GameQueueService;
 
-public class MarcoHandler extends AbstractWebSocketHandler {
+public class RealTimeBattleServer extends AbstractWebSocketHandler {
 	private static final Logger logger =
-	    LoggerFactory.getLogger(MarcoHandler.class);
+	    LoggerFactory.getLogger(RealTimeBattleServer.class);
 	  @Resource GameQueueService gameQueue;
+	  
+	  
 	 protected void handleTextMessage(
 	     WebSocketSession session, TextMessage message) throws Exception {
 	  

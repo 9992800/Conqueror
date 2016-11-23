@@ -13,7 +13,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.HandshakeInterceptor;
-import com.bellflower.conqueror.controller.MarcoHandler;
+import com.bellflower.conqueror.controller.RealTimeBattleServer;
 
 @Configuration
 @EnableWebSocket
@@ -45,7 +45,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 	}
 	
 	@Bean
-	public MarcoHandler marcoHandler() {
-	     return new MarcoHandler();
+	public RealTimeBattleServer marcoHandler() {
+	     return new RealTimeBattleServer();
 	}
 }

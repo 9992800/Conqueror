@@ -174,8 +174,10 @@ void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
         std::string tags = response->getHttpRequest()->getTag();
         if (0 == tags.compare(CREATE_BATTLEFIELD)){
                 CCLOG("---%s---", data.GetString());
-                auto data = (OnlineGameData*)response->getHttpRequest()->getUserData();
-                auto scene = BattleField::createScene(data);
+                auto game_data = (OnlineGameData*)response->getHttpRequest()->getUserData();
+                game_data->setBattleFieldId(data.GetString());
+                game_data->setRole(BATTLE_FIELD_ROLE_CREATOR);
+                auto scene = BattleField::createScene(game_data);
                 Director::getInstance()->pushScene(scene);
                 
         }else if (0 == tags.compare(SEARCHING_OPPENT)){
@@ -232,6 +234,9 @@ void FindPlayer::initPageViews(Size visibleSize, Vec2 center){
 #define BATTLE_COLUM 3
 
 void FindPlayer::reloadPageData(){
+        if (!_batllePageViews){
+                return;
+        }
         
         _batllePageViews->removeAllPages();
         

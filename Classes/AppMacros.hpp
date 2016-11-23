@@ -152,8 +152,8 @@ return nullptr; \
 #define LAYER_NAME_IN_TILE_MAP "map"
 
 
-#define WEB_SOCKET_SERVER_URL      "ws://192.168.1.39:9900/marco"
-#define GAME_SERVICE_SERVER_URL    "http://192.168.1.39:9900/serverHome"
+#define WEB_SOCKET_SERVER_URL      "ws://192.168.1.9:9900/battleField"
+#define GAME_SERVICE_SERVER_URL    "http://192.168.1.9:9900/serverHome"
 
 template<typename T> extern std::vector<T> parseData(const char* key);
 
@@ -174,5 +174,14 @@ extern std::vector<std::string> parseData(const char* key);
 
 #define NETWORK_WORK_WELL 10000
 
+
+enum{
+        WEB_SOCKET_MSG_TYPE_KA = 1,
+};
+
+enum{
+        BATTLE_FIELD_ROLE_CREATOR = 1,
+        BATTLE_FIELD_ROLE_JOINER
+};
 
 #endif /* __APPMACROS_H__ */

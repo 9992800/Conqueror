@@ -41,7 +41,6 @@ protected:
         void startBattle();
         void menuExit(Ref*);
         void sendKeepAliveData();
-        void startTimerKeepAlive();
         int  sendMessage(std::string);
 private:
         network::WebSocket* _wsiSendText;

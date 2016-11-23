@@ -122,10 +122,21 @@ void BattleField::sendKeepAliveData(){
         rapidjson::Document document;
         document.SetObject();
         rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
+        
+        rapidjson::Value data(rapidjson::kObjectType);
         std::string fb_uid = UserSessionBean::getInstance()->getUserId();
-        rapidjson::Value s;
-        s.SetString(fb_uid.c_str(), (rapidjson::SizeType)fb_uid.length());
-        document.AddMember("user_id", s, allocator);
+        rapidjson::Value uid;
+        uid.SetString(fb_uid.c_str(), (rapidjson::SizeType)fb_uid.length());
+        data.AddMember("fb_uid", uid, allocator);
+        
+        rapidjson::Value s_id;
+        s_id.SetString(_onlineMapData->getServerId().c_str(),
+                       (rapidjson::SizeType)_onlineMapData->getServerId().length());
+        data.AddMember("server_id", uid, allocator);
+        
+        document.AddMember("data", uid, allocator);
+        document.AddMember("type", WEB_SOCKET_MSG_TYPE_KA, allocator);
+        
         
         rapidjson::StringBuffer buffer;
         rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
@@ -152,7 +163,6 @@ int  BattleField::sendMessage(std::string msg){
 
 void BattleField::onOpen(cocos2d::network::WebSocket* ws){
         log("Websocket (%p) opened", ws);
-        this->startTimerKeepAlive();
 }
 
 void BattleField::onMessage(network::WebSocket* ws, const network::WebSocket::Data& data){

@@ -31,11 +31,27 @@ public:
         }
         
         void reshDataByMapInfo(TMXTiledMap*);
+        inline void setBattleFieldId(std::string id){
+                this->_serverId = id;
+        }
+        inline std::string getServerId(){
+                return this->_serverId;
+        }
+        
+        inline void setRole(int r){
+                this->_mapRoler = r;
+        }
+        inline int getRole(){
+                return this->_mapRoler;
+        }
+        
 private:
         int                     _playerNum;
         std::vector<int>        _mapIntData;
         rapidjson::Document     _battleData;
         
         TMXTiledMap*            _refereMap;
+        std::string             _serverId;
+        int                     _mapRoler;
 };
 #endif /* OnlineGameData_hpp */

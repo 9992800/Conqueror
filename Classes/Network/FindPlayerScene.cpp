@@ -108,65 +108,17 @@ void FindPlayer::menuCreateBattle(Ref*){
         request->setUserData(data);
         
         request->setTag(CREATE_BATTLEFIELD);
-        HttpClient::getInstance()->sendImmediate(request);
+        HttpClient::getInstance()->send(request);
         request->release();
 }
 
 void FindPlayer::menuSearching(Ref*){
         ModalLayer::showModalDialog(this);
-        
-        if ( nullptr != _wsiSendText
-            && network::WebSocket::State::CLOSED != _wsiSendText->getReadyState()){
-                return ModalLayer::dismissDialog(this);
-        }
-        
-        
-        _wsiSendText = new network::WebSocket();
-        std::string socket_url = WEB_SOCKET_SERVER_URL"?userId=";
-        std::string fb_uid = UserSessionBean::getInstance()->getUserId();
-        socket_url.append(fb_uid);
-        
-        if (!_wsiSendText->init(*this, socket_url)){
-                CC_SAFE_DELETE(_wsiSendText);
-        }else{
-                ModalLayer::dismissDialog(this);
-                log("ERROR:failed init the websocket.");
-        }
+        //TODO::
 }
 
 void FindPlayer::afterAnimation(){
         
-}
-
-void FindPlayer::sendAuthorData(){
-        rapidjson::Document document;
-        document.SetObject();
-        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
-        std::string fb_uid = UserSessionBean::getInstance()->getUserId();
-        rapidjson::Value s;
-        s.SetString(fb_uid.c_str(), (rapidjson::SizeType)fb_uid.length());
-        document.AddMember("user_id", s, allocator);
-        
-        rapidjson::StringBuffer buffer;
-        rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-        document.Accept(writer);
-        
-        this->sendMessage(buffer.GetString());
-}
-
-int  FindPlayer::sendMessage(std::string msg){
-        if (!_wsiSendText){
-                return -1;
-        }
-        
-        if (_wsiSendText->getReadyState() == network::WebSocket::State::OPEN){
-                _wsiSendText->send(msg);
-                return (int)msg.length();
-        }
-        else{
-                log("ERROR:failed init the websocket.");
-                return -1;
-        }
 }
 
 void FindPlayer::getBattleListFromServer(){
@@ -223,7 +175,8 @@ void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
         if (0 == tags.compare(CREATE_BATTLEFIELD)){
                 CCLOG("---%s---", data.GetString());
                 auto data = (OnlineGameData*)response->getHttpRequest()->getUserData();
-                BattleField::create(data);
+                auto scene = BattleField::createScene(data);
+                Director::getInstance()->pushScene(scene);
                 
         }else if (0 == tags.compare(SEARCHING_OPPENT)){
                 
@@ -247,36 +200,6 @@ void FindPlayer::parseBattleFieldBeans(rapidjson::Value& data){
         
 //        _battleTableView->reloadData();
         this->reloadPageData();
-}
-
-#pragma mark - websocket delegate method
-void FindPlayer::onOpen(cocos2d::network::WebSocket* ws){
-        log("Websocket (%p) opened", ws);
-        this->sendAuthorData();
-}
-
-void FindPlayer::onMessage(network::WebSocket* ws, const network::WebSocket::Data& data){
-        std::string msg(data.bytes);
-        log("-----------%s---------------", msg.c_str());
-        
-        rapidjson::Document msg_d;
-        msg_d.Parse<0>(msg.c_str());
-        if (msg_d.HasParseError()) {
-                CCLOG("GetParseError %u\n",msg_d.GetParseError());
-        }
-}
-
-void FindPlayer::onClose(network::WebSocket* ws){
-        log("websocket instance (%p) closed.", ws);
-        
-        _wsiSendText = nullptr;
-        ModalLayer::dismissDialog(this);
-        CC_SAFE_DELETE(ws);
-}
-
-void FindPlayer::onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error){
-        ModalLayer::dismissDialog(this);
-        log("Error was fired, error code: %d", static_cast<int>(error));
 }
 
 #pragma mark - page view actions

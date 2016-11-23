@@ -13,7 +13,6 @@
 #include "ui/CocosGUI.h"
 #include "AppMacros.hpp"
 #include "extensions/cocos-ext.h"
-#include "network/WebSocket.h"
 #include "BattleFieldBean.hpp"
 #include "network/HttpClient.h"
 
@@ -29,8 +28,7 @@ public:
 };
 
 
-class FindPlayer : public cocos2d::Layer , public cocos2d::network::WebSocket::Delegate
-//, public cocos2d::extension::TableViewDataSource, public cocos2d::extension::TableViewDelegate
+class FindPlayer : public cocos2d::Layer 
 {
 public:
         static Scene* createScene();
@@ -44,50 +42,33 @@ protected:
         void update(float delta)override;
         void onExit()override;
         
-        virtual void onOpen(cocos2d::network::WebSocket* ws)override;
-        virtual void onMessage(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::Data& data)override;
-        virtual void onClose(cocos2d::network::WebSocket* ws)override;
-        virtual void onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error)override;
         void onHttpRequestCompleted(HttpClient *sender,
-                               HttpResponse *response);
-        
-//        virtual void scrollViewDidScroll(cocos2d::extension::ScrollView* view)override {};
-//        virtual void scrollViewDidZoom(cocos2d::extension::ScrollView* view)override {}
-//        virtual void tableCellTouched(cocos2d::extension::TableView* table, cocos2d::extension::TableViewCell* cell)override;
-//        virtual cocos2d::Size tableCellSizeForIndex(cocos2d::extension::TableView *table, ssize_t idx)override;
-//        virtual cocos2d::extension::TableViewCell* tableCellAtIndex(cocos2d::extension::TableView *table, ssize_t idx)override;
-//        virtual ssize_t numberOfCellsInTableView(cocos2d::extension::TableView *table)override;
+                                    HttpResponse *response);
         
         void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
         void onBattleSelected(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
         
-        int  sendMessage(std::string);
+        
         void afterAnimation();
         void menuSearching(Ref*);
         void menuCreateBattle(Ref*);
         void menuExit(Ref* pSender);
         void menuRefresh(Ref*);
-        void sendAuthorData();
-//        void initTableView(Size, Vec2);
-        
         void initPageViews(Size, Vec2);
         void reloadPageData();
+        
 private:
         void getBattleListFromServer();
         void parseBattleFieldBeans(rapidjson::Value&);
         
         
 private:
-        network::WebSocket* _wsiSendText;
         int             _curMapSel;
-        
         
         int             _loadingCount;
         LoadingBar*     _loadingBar;
         
         MenuItemImage* _refreshBtn;
-        
-//        extension::TableView*           _battleTableView;
         PageView*                       _batllePageViews;
         std::vector<BattleFieldBean*>   _battlList;
         int                             _curPgaeNo;

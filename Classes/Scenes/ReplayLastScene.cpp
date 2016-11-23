@@ -37,7 +37,7 @@ bool ReplayLast::init(){
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         
-        auto map = MapCreator::instance()->createMap(_gameData);
+        auto map = MapCreator::instance()->createMap(_gameData->getMapData());
         Size map_size = map->getContentSize();
         ScreenCoordinate::getInstance()->configScreen(map_size);
         
@@ -121,7 +121,7 @@ void ReplayLast::resetHistoryData(){
         _gameData = GameData::createWithData(_clonedGameData);
         _gameData->retain();
         
-        map = MapCreator::instance()->createMap(_gameData);
+        map = MapCreator::instance()->createMap(_gameData->getMapData());
         Size map_size = map->getContentSize();
         ScreenCoordinate::getInstance()->configScreen(map_size);
         

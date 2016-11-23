@@ -26,7 +26,8 @@ bool UserSessionBean::init(){
 }
 
 UserSessionBean::UserSessionBean(){
-        _fbUserId = "this_is_test";
+        //TODO::add facebook signIn functions
+        _fbUserId = StringUtils::format("this_is_test_%d", random(1, 10));
 }
 
 UserSessionBean::~UserSessionBean(){

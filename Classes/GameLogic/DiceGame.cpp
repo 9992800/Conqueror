@@ -614,7 +614,7 @@ void DiceGame::starSupplyDice(CallFunc* callback){
                 affected_aread.insert(selected_area);
         }
         
-        _historyFrom.push_back(_historySup.size());
+        _historyFrom.push_back((int)_historySup.size());
         _historyRes.push_back(ATTACK_RES_GOTSUPPLY);
         for(std::set<int>::iterator it = affected_aread.begin(); it != affected_aread.end(); ++it){
                 AreaData* area = _data->_areaData[*it];
@@ -623,7 +623,7 @@ void DiceGame::starSupplyDice(CallFunc* callback){
                 area->drawSupply(_data->_refereMap);
                 _historySup.push_back(Vec2(*it, area->getDice()));
         }
-        _historyTo.push_back(_historySup.size());
+        _historyTo.push_back((int)_historySup.size());
         
         callback->execute();
 }

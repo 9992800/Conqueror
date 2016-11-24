@@ -43,8 +43,6 @@ bool FindPlayer::init(){
                 return false;
         }
         
-        UserSessionBean::getInstance()->initSession();
-        
         auto winSize = Director::getInstance()->getWinSize();
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -76,14 +74,7 @@ bool FindPlayer::init(){
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, 3);
         
-        this->initPageViews(visibleSize, center);
-        
-        
-//        if (UserSessionBean::getInstance()->needLoadPicture()){
-//                FBAPIParam params;
-//                PluginFacebook::api("/me", "GET", params, "/me  ");
-//        }
-
+        this->initPageViews(visibleSize, center); 
 
         return true;
 }
@@ -127,12 +118,14 @@ void FindPlayer::menuSearching(Ref*){
 }
 
 void FindPlayer::afterAnimation(){
-        
 }
 
 void FindPlayer::getBattleListFromServer(){
         std::string base_url(GAME_SERVICE_SERVER_URL"/battleFields?");
         std::string uid = UserSessionBean::getInstance()->getUserId();
+        if (uid.length() == 0){
+                return;
+        }
         
         base_url.append("user_id=");
         base_url.append(uid);

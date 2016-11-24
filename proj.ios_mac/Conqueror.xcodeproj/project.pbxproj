@@ -265,6 +265,7 @@
 		7C4DA6A41DE2E973001CC255 /* BattleFieldBean.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BattleFieldBean.hpp; sourceTree = "<group>"; };
 		7C4DA6A71DE43C1B001CC255 /* green_edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_edit.png; sourceTree = "<group>"; };
 		7C4DA6A91DE44548001CC255 /* battle_field.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = battle_field.png; sourceTree = "<group>"; };
+		7C4DA6AD1DE69258001CC255 /* picojson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = picojson.h; sourceTree = "<group>"; };
 		7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocktUtil.cpp; sourceTree = "<group>"; };
 		7C67A7B41DD1BE6B004B5151 /* WebSocktUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocktUtil.hpp; sourceTree = "<group>"; };
 		7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReplayLastScene.cpp; sourceTree = "<group>"; };
@@ -507,6 +508,7 @@
 				BBC812DB1DCA3C9200EC8874 /* Common */,
 				7C21A0D61DC9A11E0035ECC6 /* Scenes */,
 				7C21A0D31DC996F10035ECC6 /* AppMacros.hpp */,
+				7C4DA6AD1DE69258001CC255 /* picojson.h */,
 				46880B8419C43A87006E1F66 /* AppDelegate.cpp */,
 				46880B8519C43A87006E1F66 /* AppDelegate.hpp */,
 			);
@@ -935,8 +937,8 @@
 					"$(_COCOS_LIB_IOS_END)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellflower.Conqueror;
-				PROVISIONING_PROFILE = "a3174618-4f66-412e-9bea-c4abdc790e9c";
-				PROVISIONING_PROFILE_SPECIFIER = Conqueror_debug;
+				PROVISIONING_PROFILE = "308af586-b2ab-46e2-9b58-083043f8a891";
+				PROVISIONING_PROFILE_SPECIFIER = Conquero_debug_pro;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -978,8 +980,8 @@
 					"$(_COCOS_LIB_IOS_END)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellflower.Conqueror;
-				PROVISIONING_PROFILE = "a3174618-4f66-412e-9bea-c4abdc790e9c";
-				PROVISIONING_PROFILE_SPECIFIER = Conqueror_debug;
+				PROVISIONING_PROFILE = "308af586-b2ab-46e2-9b58-083043f8a891";
+				PROVISIONING_PROFILE_SPECIFIER = Conquero_debug_pro;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = 1;

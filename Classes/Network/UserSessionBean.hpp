@@ -27,8 +27,7 @@ public:
         static bool checkResponse(HttpResponse*, rapidjson::Value&); 
 public:
         std::string getUserId();
-        void initSession();
-        
+        void initSession(); 
         
         void onLogin(bool, const std::string&)override;
         void onSharedSuccess(const std::string&)override;
@@ -42,13 +41,16 @@ public:
         void onInviteFriendsResult(bool, const std::string&)override;
         void onGetUserInfo(const sdkbox::FBGraphUser&)override;
         
+        void onHttpRequestCompleted(HttpClient *sender,
+                                    HttpResponse *response);
+        
 private:
         void fillSessionByFBInfo();
 private:
         std::string     _fbUserId; 
         std::string     _accessToken;
-        std::string     _fbUserAvatar;
-        std::string     _captureFilename;
+        std::string     _fbUserAvatarPath;
+        std::string     _fbAvatarUrl; 
 };
 
 #endif /* UserSessionBean_hpp */

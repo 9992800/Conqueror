@@ -6,6 +6,7 @@
 //
 //
 #include "AppMacros.hpp"
+#include "picojson.h"
 #include "UserSessionBean.hpp"
 
 using namespace sdkbox;
@@ -33,7 +34,8 @@ bool UserSessionBean::init(){
 UserSessionBean::UserSessionBean(){
         _fbUserId       = "";
         _accessToken    = "";
-        _fbUserAvatar    = "";
+        _fbUserAvatarPath    = "";
+        _fbAvatarUrl = "";
 }
 
 UserSessionBean::~UserSessionBean(){
@@ -56,25 +58,39 @@ void UserSessionBean::initSession(){
 void UserSessionBean::fillSessionByFBInfo(){
         this->_fbUserId = PluginFacebook::getUserID();
         this->_accessToken = PluginFacebook::getAccessToken();
-        if (_fbUserAvatar.length() == 0){
+        if (_fbUserAvatarPath.length() == 0){
                 sdkbox::FBAPIParam params;
                 params["fields"] = "picture";
                 params["type"] = "small";
                 params["redirect"] = "false";
                 PluginFacebook::api("me", "GET", params, "__fetch_picture_tag__");
         }else{
-                this->_fbUserAvatar = UserDefault::getInstance()->getStringForKey(FACEBOOK_INFO_USER_AVATAR_KEY, "");
+                this->_fbUserAvatarPath = UserDefault::getInstance()->getStringForKey(FACEBOOK_INFO_USER_AVATAR_KEY, "");
         }
 }
 
-std::string UserSessionBean::getUserId(){
-        if (_fbUserId.length() == 0){
-                this->initSession();
-        }
-        
+std::string UserSessionBean::getUserId(){        
         return this->_fbUserId;
 }
 
+void UserSessionBean::onHttpRequestCompleted(HttpClient *sender,
+                            HttpResponse *response){
+        
+        if (!response->isSucceed()) {
+                CCLOG("ERROR, remote sprite load image failed");
+                return ;
+        }
+        std::vector<char> *buffer = response->getResponseData();
+        Image img;
+        img.initWithImageData(reinterpret_cast<unsigned char*>(&(buffer->front())), buffer->size());
+        
+        // save image file to device.
+        std::string path = FileUtils::getInstance()->getWritablePath()+"p.png";
+        CCLOG("save image path = %s", path.data());
+        bool ret = img.saveToFile(path);
+        CCLOG("save file %s", ret ? "success" : "failure");
+        this->_fbUserAvatarPath = path;
+} 
 #pragma mark - facebook callback
 
 
@@ -91,7 +107,20 @@ void UserSessionBean::onAPI(const std::string& tag, const std::string& jsonData)
 {
         CCLOG("##FB onAPI: tag -> %s, json -> %s", tag.c_str(), jsonData.c_str());
         if (tag == "__fetch_picture_tag__"){
-                //TODO:: move face book to user bean;
+                picojson::value v;
+                picojson::parse(v, jsonData);
+                if (!v.contains("picture")){
+                        return;
+                }
+                std::string url = v.get("picture").get("data").get("url").to_str();
+                CCLOG("picture's url = %s", url.data());
+                
+                this->_fbAvatarUrl = url;
+                network::HttpRequest* request = new network::HttpRequest();
+//                request->setUrl(url.data());
+                request->setUrl("https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/14991841_108886102926398_68236423953484457_n.jpg?oh=9898af016fdd3c19bafeb2e0cc7f5925&oe=58B5BE1B");
+                request->setRequestType(network::HttpRequest::Type::GET);
+                request->setResponseCallback(CC_CALLBACK_2(UserSessionBean::onHttpRequestCompleted, this));
         }
 }
 

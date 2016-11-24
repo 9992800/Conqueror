@@ -220,8 +220,10 @@ bool UserSessionBean::checkResponse(HttpResponse *response, picojson::value& dat
                 return false;
         }
         
-        int api_code = json_result.get("apicode").get<int>();
-        std::string  message = json_result.get("message").to_str();
+        picojson::object result = json_result.get<picojson::object>();
+        
+        int api_code = result["apicode"].get<double>();
+        std::string  message = result["message"].get<std::string>();
         CCLOGINFO("[api code:%d message:%s]", api_code, message);
         if (NETWORK_WORK_WELL != api_code){
                 CCLOGWARN("---game server network faild(%d):%s", api_code, response_str.c_str());
@@ -229,7 +231,7 @@ bool UserSessionBean::checkResponse(HttpResponse *response, picojson::value& dat
         }
         
         if (json_result.contains("data")){
-                data = json_result.get("data");
+                data = result["data"];
         }
         
         return true;

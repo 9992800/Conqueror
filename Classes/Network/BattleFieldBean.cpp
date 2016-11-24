@@ -14,6 +14,6 @@ BattleFieldBean::BattleFieldBean(picojson::object& obj){
 
         _battleId       = obj["id"].get<std::string>();
         _battleCreator  = obj["owner"].get<std::string>();
-        _playerNum      = obj["playerNum"].get<int>();
-        _status         = obj["status"].get<int>();
+        _playerNum      = (int)obj["playerNum"].get<double>();
+        _status         = (int)obj["status"].get<double>();
 }

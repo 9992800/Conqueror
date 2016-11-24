@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -54,14 +56,16 @@ public class HomeController {
 			@RequestParam(value = "user_id", required = true) String user_id,
 			@RequestParam(value = "cell_data", required = true) String cell_data) {
 		
-		if (user_id.length() == 0 || cell_data.length() != MAP_CELL_SIZE){
+		logger.info("createBattle:" + user_id+"===cell_data:"+cell_data);		
+		JSONObject cell_json = new JSONObject(cell_data);
+		JSONArray cells = cell_json.getJSONArray("_cells");
+		
+		logger.info("===length:"+cells.length());
+		if (user_id.length() == 0 || cells.length() != MAP_CELL_SIZE){
 			return ResultMapUtils.commonError("数据格式不正确");
 		}
 		
-		logger.info("createBattle:" + user_id+"===cell_data:"+cell_data);
-		
-		String idString = battleFiledService.createBattle(user_id, cell_data);
-		
+		String idString = battleFiledService.createBattle(user_id, cells);
  		return ResultMapUtils.success(idString);
 	}
 	

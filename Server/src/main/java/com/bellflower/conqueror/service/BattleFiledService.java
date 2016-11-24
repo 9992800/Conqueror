@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
@@ -28,7 +27,7 @@ public class BattleFiledService {
 	@Resource
 	MongoTemplate mongoService;
 	
-	public String createBattle(String user_id, String cell_data) {
+	public String createBattle(String user_id, JSONArray cells) {
 		
 		Query query = new Query(Criteria.where("owner").is(user_id));
 		WriteResult result = this.mongoService.remove(query, BattleFieldsBasic.class);
@@ -38,8 +37,7 @@ public class BattleFiledService {
 		WriteResult result2 = this.mongoService.remove(query2, BattleFieldsMap.class);
 		logger.info("battles maps need to delete: " + result2.getN());
 		
-		JSONObject cell_json = new JSONObject(cell_data);
-		JSONArray cells = cell_json.getJSONArray("_cells");
+		
 		
 		BattleFieldsBasic fields = new BattleFieldsBasic();
 		fields.setOwner(user_id);

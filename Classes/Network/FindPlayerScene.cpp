@@ -257,13 +257,15 @@ void FindPlayer::reloadPageData(){
                                 Button *btn = Button::create("battle_field.png","");
                                 btn->setName(StringUtils::format("button %d", j));
                                 btn->setTitleText(bean->getCreator());
+                                btn->setTitleColor(Color3B::RED);
+                                btn->setTitleFontSize(24);
                                 btn->addTouchEventListener( CC_CALLBACK_2(FindPlayer::onBattleSelected, this));
                                 
                                 innerBox->addChild(btn);
                         }
                         
                         LinearLayoutParameter *parameter = LinearLayoutParameter::create();
-                        parameter->setMargin(Margin(size.width/8,0,size.width/8,0));
+                        parameter->setMargin(Margin(size.width/8, 5,size.width/8, 5));
                         innerBox->setLayoutParameter(parameter);
                         
                         outerBox->addChild(innerBox);

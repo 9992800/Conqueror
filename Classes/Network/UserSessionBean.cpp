@@ -32,9 +32,7 @@ bool UserSessionBean::init(){
 
 UserSessionBean::UserSessionBean(){
         _fbUserId       = "";
-        _accessToken    = "";
         _fbUserAvatarPath    = "";
-        _fbAvatarUrl = "";
 }
 
 UserSessionBean::~UserSessionBean(){
@@ -43,32 +41,26 @@ UserSessionBean::~UserSessionBean(){
 #pragma mark - intance functions
 
 void UserSessionBean::initSession(){
-        if (!PluginFacebook::isLoggedIn()){
+        std::string basic_info = UserDefault::getInstance()->getStringForKey(FACEBOOK_INFO_USER_FB_BASIC, "");
+        
+        if (!PluginFacebook::isLoggedIn() || basic_info.length() == 0){
                 std::vector<std::string> permissions;
                 permissions.push_back(FB_PERM_READ_PUBLIC_PROFILE);
                 permissions.push_back(sdkbox::FB_PERM_READ_EMAIL);
                 permissions.push_back(sdkbox::FB_PERM_READ_USER_FRIENDS);
                 PluginFacebook::login(permissions);
         }else{
-                this->fillSessionByFBInfo();
-        }
-}
-
-void UserSessionBean::fillSessionByFBInfo(){
-        this->_fbUserId = PluginFacebook::getUserID();
-        this->_accessToken = PluginFacebook::getAccessToken();
-        if (_fbUserAvatarPath.length() == 0){
-                sdkbox::FBAPIParam params;
-                params["fields"] = "picture";
-                params["type"] = "small";
-                params["redirect"] = "false";
-                PluginFacebook::api("me", "GET", params, "__fetch_picture_tag__");
-        }else{
+                this->_fbBasiceInfo = FBGraphUser(basic_info);
+                this->_fbUserId = PluginFacebook::getUserID();
                 this->_fbUserAvatarPath = UserDefault::getInstance()->getStringForKey(FACEBOOK_INFO_USER_AVATAR_KEY, "");
+                
+                if (_fbUserAvatarPath.length() == 0){
+                        this->reloadFBAvatar();
+                }
         }
 }
 
-std::string UserSessionBean::getUserId(){        
+std::string UserSessionBean::getUserId(){
         return this->_fbUserId;
 }
 
@@ -90,16 +82,26 @@ void UserSessionBean::onHttpRequestCompleted(HttpClient *sender,
         CCLOG("save file %s", ret ? "success" : "failure");
         this->_fbUserAvatarPath = path;
         UserDefault::getInstance()->setStringForKey(FACEBOOK_INFO_USER_AVATAR_KEY, path);
+        UserDefault::getInstance()->setStringForKey(FACEBOOK_INFO_USER_FB_BASIC, this->_fbUserName);
+        
         UserDefault::getInstance()->flush();
 }
 
 void UserSessionBean::reloadFBAvatar(){
-        sdkbox::FBAPIParam params;
-        params["fields"] = "picture";
-        params["type"] = "small";
-        params["redirect"] = "false";
-        PluginFacebook::api("me", "GET", params, "__fetch_picture_tag__");
+//        sdkbox::FBAPIParam params;
+//        params["fields"] = "picture,name";
+//        params["type"] = "small";
+//        params["redirect"] = "false";
+//        PluginFacebook::api("me", "GET", params, "__fetch_picture_tag__");
+        
+        network::HttpRequest* request = new network::HttpRequest();
+        request->setUrl(this->_fbBasiceInfo.getPictureURL().data());
+        request->setRequestType(network::HttpRequest::Type::GET);
+        request->setResponseCallback(CC_CALLBACK_2(UserSessionBean::onHttpRequestCompleted, this));
+        network::HttpClient::getInstance()->send(request);
+        request->release();
 }
+
 #pragma mark - facebook callback
 
 
@@ -109,29 +111,11 @@ void UserSessionBean::reloadFBAvatar(){
 void UserSessionBean::onLogin(bool isLogin, const std::string& error)
 {
         CCLOG("##FB isLogin: %d, error: %s id=%s", isLogin, error.c_str(), PluginFacebook::getUserID().c_str());
-        this->fillSessionByFBInfo();
 }
 
 void UserSessionBean::onAPI(const std::string& tag, const std::string& jsonData)
 {
         CCLOG("##FB onAPI: tag -> %s, json -> %s", tag.c_str(), jsonData.c_str());
-        if (tag == "__fetch_picture_tag__"){
-                picojson::value v;
-                picojson::parse(v, jsonData);
-                if (!v.contains("picture")){
-                        return;
-                }
-                std::string url = v.get("picture").get("data").get("url").to_str();
-                CCLOG("picture's url = %s", url.data());
-                
-                this->_fbAvatarUrl = url;
-                network::HttpRequest* request = new network::HttpRequest();
-                request->setUrl(url.data()); 
-                request->setRequestType(network::HttpRequest::Type::GET);
-                request->setResponseCallback(CC_CALLBACK_2(UserSessionBean::onHttpRequestCompleted, this));
-                network::HttpClient::getInstance()->send(request);
-                request->release();
-        }
 }
 
 void UserSessionBean::onSharedSuccess(const std::string& message)
@@ -179,14 +163,15 @@ void UserSessionBean::onInviteFriendsResult( bool result, const std::string& msg
 
 void UserSessionBean::onGetUserInfo( const sdkbox::FBGraphUser& userInfo )
 {
-        CCLOG("Facebook id:'%s' name:'%s' last_name:'%s' first_name:'%s' email:'%s' installed:'%d'",
-              userInfo.getUserId().c_str(),
-              userInfo.getName().c_str(),
-              userInfo.getFirstName().c_str(),
-              userInfo.getLastName().c_str(),
-              userInfo.getEmail().c_str(),
-              userInfo.isInstalled ? 1 : 0
-              );
+        if (userInfo.getUserId() == PluginFacebook::getUserID()){
+                CCLOG("on onGetUserInfo friends.....................");
+        }
+        this->_fbBasiceInfo = userInfo;
+        this->_fbUserId = userInfo.getUserId();
+        this->_fbUserName = userInfo.getName();
+        this->reloadFBAvatar();
+        CCLOG("Facebook josn:'%s' ", userInfo.toJSONString().c_str());
+        UserDefault::getInstance()->setStringForKey(FACEBOOK_INFO_USER_FB_BASIC, userInfo.toJSONString());
 }
 
 

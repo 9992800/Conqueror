@@ -50,12 +50,10 @@ public:
                                     HttpResponse *response);
         
 private:
-        void fillSessionByFBInfo();
-private:
-        std::string     _fbUserId; 
-        std::string     _accessToken;
+        std::string     _fbUserId;
+        std::string     _fbUserName;
         std::string     _fbUserAvatarPath;
-        std::string     _fbAvatarUrl; 
+        sdkbox::FBGraphUser _fbBasiceInfo;
 };
 
 #endif /* UserSessionBean_hpp */

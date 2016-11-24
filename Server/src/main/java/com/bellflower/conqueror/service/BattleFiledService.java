@@ -27,7 +27,7 @@ public class BattleFiledService {
 	@Resource
 	MongoTemplate mongoService;
 	
-	public String createBattle(String user_id, JSONArray cells) {
+	public String createBattle(String user_id,String user_name,  JSONArray cells) {
 		
 		Query query = new Query(Criteria.where("owner").is(user_id));
 		WriteResult result = this.mongoService.remove(query, BattleFieldsBasic.class);
@@ -41,6 +41,7 @@ public class BattleFiledService {
 		
 		BattleFieldsBasic fields = new BattleFieldsBasic();
 		fields.setOwner(user_id);
+		fields.setOwnerName(user_name);
 		mongoService.insert(fields);
 		
 		

@@ -66,7 +66,7 @@ public class HomeController {
 			return ResultMapUtils.commonError("数据格式不正确");
 		}
 		
-		String idString = battleFiledService.createBattle(user_id, cells);
+		String idString = battleFiledService.createBattle(user_id,user_name, cells);
  		return ResultMapUtils.success(idString);
 	}
 	

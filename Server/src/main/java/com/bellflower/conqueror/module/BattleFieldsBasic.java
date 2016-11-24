@@ -11,6 +11,7 @@ public class BattleFieldsBasic {
 	int 		status; 
 	long		createTime;
 	private String owner;
+	String ownerName;
 	
 	public BattleFieldsBasic(){
 		this.createTime = System.currentTimeMillis();
@@ -41,5 +42,13 @@ public class BattleFieldsBasic {
 	}
 	public void setOwner(String user_id) {
 		 this.owner = user_id;
+	}
+
+
+	public void setOwnerName(String user_name) {
+		this.ownerName = user_name;
+	}
+	public String getOwnerName(){
+		return this.ownerName;
 	}
 }

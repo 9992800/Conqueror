@@ -127,7 +127,6 @@ enum {
 #define REMOVE_ADS_PRODUCT_NAME_KEY     "remove_ads"
 
 
-#define FACEBOOK_INFO_USER_ID_KEY         "_key_facebook_user_id"
 #define FACEBOOK_INFO_USER_AVATAR_KEY     "_key_facebook_avatar_id"
 
 

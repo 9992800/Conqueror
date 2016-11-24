@@ -61,24 +61,19 @@ bool Starting::init()
                                      origin.y + 60));
         
         
-        _shareIt = MenuItemImage::create("share.png", "share_sel.png",
+        auto share_it = MenuItemImage::create("share.png", "share_sel.png",
                                          CC_CALLBACK_1(Starting::menuShareGame, this));
-        _shareIt->setPosition(Vec2(_shareIt->getContentSize().width,
-                                     origin.y + visibleSize.height - _shareIt->getContentSize().height));
+        share_it->setPosition(Vec2(share_it->getContentSize().width,
+                                     origin.y + visibleSize.height - share_it->getContentSize().height));
         
         _onlineBattle = MenuItemImage::create("online_battle.png", "online_battle_sel.png",
                                               CC_CALLBACK_1(Starting::menuOnlineBattle, this));
         _onlineBattle->setPosition(Vec2(origin.x + visibleSize.width - 2 * _onlineBattle->getContentSize().width,
                                         origin.y +  _onlineBattle->getContentSize().height/ 2 + 20));
         
-        auto menu = Menu::create(_startGame, _soundCtrl, _helpBtn, _shareIt, _onlineBattle, NULL);
+        auto menu = Menu::create(_startGame, _soundCtrl, _helpBtn, share_it, _onlineBattle, NULL);
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, 2);
-        
-        
-        
-        PluginFacebook::setListener(this);
-        sdkbox::PluginFacebook::init();
         
         return true;
 }
@@ -130,11 +125,7 @@ void Starting::menuShareGame(Ref* pSender){
         if (PluginFacebook::isLoggedIn()){
                 utils::captureScreen(CC_CALLBACK_2(Starting::afterCaptureScreen, this), "screen.png");
         }else{
-                std::vector<std::string> permissions;
-                permissions.push_back(FB_PERM_READ_PUBLIC_PROFILE);
-                permissions.push_back(sdkbox::FB_PERM_READ_EMAIL);
-                permissions.push_back(sdkbox::FB_PERM_READ_USER_FRIENDS);
-                PluginFacebook::login(permissions);
+                UserSessionBean::getInstance()->initSession();
         }
 }
 
@@ -162,23 +153,9 @@ void Starting::menuSoundCtrl(Ref* pSender){
 
 void Starting::menuOnlineBattle(Ref* pSender){
 //        MessageBox("title", "fetch friends");
-        
-        
-        if (!PluginFacebook::isLoggedIn()){
-                std::vector<std::string> permissions;
-                permissions.push_back(FB_PERM_READ_PUBLIC_PROFILE);
-                permissions.push_back(sdkbox::FB_PERM_READ_EMAIL);
-                permissions.push_back(sdkbox::FB_PERM_READ_USER_FRIENDS);
-                PluginFacebook::login(permissions);
-       }else{
-               if (UserSessionBean::getInstance()->needReloadFB()){
-                       UserSessionBean::getInstance()->setUserId(PluginFacebook::getUserID());
-                       UserSessionBean::getInstance()->setAccessToken(PluginFacebook::getAccessToken());
-               }
                
-               Scene* scene = FindPlayer::createScene();
-               Director::getInstance()->pushScene(scene);
-       }
+       Scene* scene = FindPlayer::createScene();
+       Director::getInstance()->pushScene(scene);
 }
 
 
@@ -197,88 +174,4 @@ void Starting::update(float delta){
 void Starting::onExit(){
         Layer::onExit();
         unscheduleUpdate();
-}
-
-
-#pragma mark - facebook callback
-
-
-/*********************
- * Facebook callbacks
- *********************/
-void Starting::onLogin(bool isLogin, const std::string& error)
-{
-        CCLOG("##FB isLogin: %d, error: %s id=%s", isLogin, error.c_str(), PluginFacebook::getUserID().c_str());
-        UserSessionBean::getInstance()->setUserId(PluginFacebook::getUserID());
-        UserSessionBean::getInstance()->setAccessToken(PluginFacebook::getAccessToken());
-        if (UserSessionBean::getInstance()->needLoadPicture()){
-                sdkbox::FBAPIParam params;
-                params["fields"] = "picture";
-                params["type"] = "small";
-                params["redirect"] = "false";
-                PluginFacebook::api("me", "GET", params, "__fetch_picture_tag__");
-        }
-}
-
-void Starting::onAPI(const std::string& tag, const std::string& jsonData)
-{
-        CCLOG("##FB onAPI: tag -> %s, json -> %s", tag.c_str(), jsonData.c_str());
-        if (tag == "__fetch_picture_tag__"){
-                //TODO:: move face book to user bean;
-        }
-}
-
-void Starting::onSharedSuccess(const std::string& message)
-{
-        CCLOG("##FB onSharedSuccess:%s", message.c_str());
-}
-
-void Starting::onSharedFailed(const std::string& message)
-{
-        CCLOG("##FB onSharedFailed:%s", message.c_str());
-}
-
-void Starting::onSharedCancel()
-{
-        CCLOG("##FB onSharedCancel");
-}
-
-void Starting::onPermission(bool isLogin, const std::string& error)
-{
-        CCLOG("##FB onPermission: %d, error: %s", isLogin, error.c_str()); }
-
-void Starting::onFetchFriends(bool ok, const std::string& msg)
-{
-        CCLOG("##FB %s: %d = %s", __FUNCTION__, ok, msg.data());
-}
-
-void Starting::onRequestInvitableFriends( const FBInvitableFriendsInfo& friends )
-{
-        CCLOG("Request Inviteable Friends Begin");
-        for (auto it = friends.begin(); it != friends.end(); ++it) {
-                CCLOG("Invitable friend: %s", it->getName().c_str());
-        }
-        CCLOG("Request Inviteable Friends End");
-}
-
-void Starting::onInviteFriendsWithInviteIdsResult( bool result, const std::string& msg )
-{
-        CCLOG("on invite friends with invite ids %s= '%s'", result?"ok":"error", msg.c_str());
-}
-
-void Starting::onInviteFriendsResult( bool result, const std::string& msg )
-{
-        CCLOG("on invite friends %s= '%s'", result?"ok":"error", msg.c_str());
-}
-
-void Starting::onGetUserInfo( const sdkbox::FBGraphUser& userInfo )
-{
-        CCLOG("Facebook id:'%s' name:'%s' last_name:'%s' first_name:'%s' email:'%s' installed:'%d'",
-              userInfo.getUserId().c_str(),
-              userInfo.getName().c_str(),
-              userInfo.getFirstName().c_str(),
-              userInfo.getLastName().c_str(),
-              userInfo.getEmail().c_str(),
-              userInfo.isInstalled ? 1 : 0
-              );
 }

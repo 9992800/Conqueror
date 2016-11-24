@@ -43,6 +43,8 @@ bool FindPlayer::init(){
                 return false;
         }
         
+        UserSessionBean::getInstance()->initSession();
+        
         auto winSize = Director::getInstance()->getWinSize();
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();

@@ -3,12 +3,11 @@
 
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
-#include "PluginFacebook/PluginFacebook.h"
 
 using namespace cocos2d::ui;
 USING_NS_CC;
 
-class Starting : public cocos2d::Layer, sdkbox::FacebookListener
+class Starting : public cocos2d::Layer
 {
 public:
         static Scene* createScene();
@@ -25,19 +24,6 @@ protected:
         void menuShareGame(Ref* pSender);
         void menuOnlineBattle(Ref* pSender);
         
-        void onLogin(bool, const std::string&)override;
-        void onSharedSuccess(const std::string&)override;
-        void onSharedFailed(const std::string&)override;
-        void onSharedCancel()override;
-        void onAPI(const std::string&, const std::string&)override;
-        void onPermission(bool, const std::string&)override;
-        void onFetchFriends(bool, const std::string&)override;
-        void onRequestInvitableFriends(const sdkbox::FBInvitableFriendsInfo&)override;
-        void onInviteFriendsWithInviteIdsResult(bool, const std::string&)override;
-        void onInviteFriendsResult(bool, const std::string&)override;
-        void onGetUserInfo(const sdkbox::FBGraphUser&)override;
-
-        
 private:
         void afterCaptureScreen(bool, const std::string&);
         
@@ -47,9 +33,7 @@ private:
         MenuItemImage* _startGame,
                         *_soundCtrl,
                         *_helpBtn,
-                        *_shareIt,
                         *_onlineBattle;
-        std::string _captureFilename;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

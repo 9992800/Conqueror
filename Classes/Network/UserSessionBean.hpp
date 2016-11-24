@@ -12,11 +12,12 @@
 #include "extensions/cocos-ext.h"
 #include "network/WebSocket.h"
 #include "network/HttpClient.h"
+#include "PluginFacebook/PluginFacebook.h"
 
 using namespace network;
 USING_NS_CC;
 
-class UserSessionBean:public Ref{
+class UserSessionBean:public Ref, sdkbox::FacebookListener{
 public:
         static UserSessionBean* getInstance();
         UserSessionBean();
@@ -25,29 +26,29 @@ public:
         
         static bool checkResponse(HttpResponse*, rapidjson::Value&); 
 public:
-        void setUserId(std::string);
-        inline void setAccessToken(std::string token){
-                this->_accessToken = token;
-        }
-        inline std::string getUserId(){
-                return _fbUserId;
-        }
+        std::string getUserId();
+        void initSession();
         
-        inline bool needLoadPicture(){
-                return _picturePath.length() == 0;
-        }
         
-        inline void setUserAvatar(std::string ip){
-                this->_picturePath = ip;
-        }
+        void onLogin(bool, const std::string&)override;
+        void onSharedSuccess(const std::string&)override;
+        void onSharedFailed(const std::string&)override;
+        void onSharedCancel()override;
+        void onAPI(const std::string&, const std::string&)override;
+        void onPermission(bool, const std::string&)override;
+        void onFetchFriends(bool, const std::string&)override;
+        void onRequestInvitableFriends(const sdkbox::FBInvitableFriendsInfo&)override;
+        void onInviteFriendsWithInviteIdsResult(bool, const std::string&)override;
+        void onInviteFriendsResult(bool, const std::string&)override;
+        void onGetUserInfo(const sdkbox::FBGraphUser&)override;
         
-        inline bool needReloadFB(){
-                return this->_fbUserId.length() == 0;
-        }
+private:
+        void fillSessionByFBInfo();
 private:
         std::string     _fbUserId; 
         std::string     _accessToken;
-        std::string     _picturePath;
+        std::string     _fbUserAvatar;
+        std::string     _captureFilename;
 };
 
 #endif /* UserSessionBean_hpp */

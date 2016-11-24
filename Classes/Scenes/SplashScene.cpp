@@ -11,8 +11,7 @@
 #include "SimpleAudioEngine.h"
 #include "AppMacros.hpp"
 #include "GamePayUtil.hpp"
-#include "PopUpOkCancelDialog.hpp"
-#include "UserSessionBean.hpp"
+#include "PopUpOkCancelDialog.hpp" 
 
 #pragma makr - init scene
 Scene* Splash::createScene()
@@ -96,14 +95,6 @@ void Splash::onEnter(){
         }else{
                 CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.f);
         }
-        
-        _count += 5;
-        
-        std::string fb_uid = UserDefault::getInstance()->getStringForKey(FACEBOOK_INFO_USER_ID_KEY, "");
-        UserSessionBean::getInstance()->setUserId(fb_uid);
-        
-        std::string img_path = UserDefault::getInstance()->getStringForKey(FACEBOOK_INFO_USER_AVATAR_KEY, "");
-        UserSessionBean::getInstance()->setUserAvatar(img_path);
         
         _count += 5;
 }

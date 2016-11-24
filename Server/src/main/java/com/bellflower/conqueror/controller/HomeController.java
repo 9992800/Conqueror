@@ -54,9 +54,10 @@ public class HomeController {
 	@ResponseBody
 	public Map<String, Object> createBattle(HttpServletRequest request,
 			@RequestParam(value = "user_id", required = true) String user_id,
+			@RequestParam(value = "user_name", required = true) String user_name, 
 			@RequestParam(value = "cell_data", required = true) String cell_data) {
 		
-		logger.info("createBattle:" + user_id+"===cell_data:"+cell_data);		
+		logger.info("createBattle:" + user_id+"===user_name:"+user_name+"===cell_data:"+cell_data);		
 		JSONObject cell_json = new JSONObject(cell_data);
 		JSONArray cells = cell_json.getJSONArray("_cells");
 		

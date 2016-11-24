@@ -27,13 +27,24 @@ public:
         
         static bool checkResponse(HttpResponse*, picojson::value&); 
 public:
-        std::string getUserId();
-        void initSession();
+        inline std::string getUserId(){
+                return this->_fbUserId;
+        }
+        inline std::string getUserName(){
+                return this->_fbUserName;
+        }
+        inline std::string getUserURL(){
+                return this->_fbBasiceInfo.getPictureURL();
+        }
         inline std::string getUserAvatarImgPath(){
                 return this->_fbUserAvatarPath;
         }
+        
+        void initSession(); 
         void reloadFBAvatar();
         
+
+protected:
         void onLogin(bool, const std::string&)override;
         void onSharedSuccess(const std::string&)override;
         void onSharedFailed(const std::string&)override;

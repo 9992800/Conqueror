@@ -60,10 +60,6 @@ void UserSessionBean::initSession(){
         }
 }
 
-std::string UserSessionBean::getUserId(){
-        return this->_fbUserId;
-}
-
 void UserSessionBean::onHttpRequestCompleted(HttpClient *sender,
                             HttpResponse *response){
         
@@ -82,8 +78,6 @@ void UserSessionBean::onHttpRequestCompleted(HttpClient *sender,
         CCLOG("save file %s", ret ? "success" : "failure");
         this->_fbUserAvatarPath = path;
         UserDefault::getInstance()->setStringForKey(FACEBOOK_INFO_USER_AVATAR_KEY, path);
-        UserDefault::getInstance()->setStringForKey(FACEBOOK_INFO_USER_FB_BASIC, this->_fbUserName);
-        
         UserDefault::getInstance()->flush();
 }
 
@@ -172,6 +166,7 @@ void UserSessionBean::onGetUserInfo( const sdkbox::FBGraphUser& userInfo )
         this->reloadFBAvatar();
         CCLOG("Facebook josn:'%s' ", userInfo.toJSONString().c_str());
         UserDefault::getInstance()->setStringForKey(FACEBOOK_INFO_USER_FB_BASIC, userInfo.toJSONString());
+        UserDefault::getInstance()->flush();
 }
 
 

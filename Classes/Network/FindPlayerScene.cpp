@@ -97,13 +97,13 @@ void FindPlayer::menuCreateBattle(Ref*){
         request->setRequestType(HttpRequest::Type::POST);
         request->setResponseCallback(CC_CALLBACK_2(FindPlayer::onHttpRequestCompleted, this));       
         
-        std::string uid = UserSessionBean::getInstance()->getUserId();
-        std::string parameters("user_id=");
-        parameters.append(uid);
-        parameters.append("&cell_data=");
+        std::string uid         = UserSessionBean::getInstance()->getUserId();
+        std::string uname       = UserSessionBean::getInstance()->getUserName();
+        
         auto data = OnlineGameData::create();
         data->retain();
-        parameters.append(data->getMapData());
+        
+        std::string parameters = "user_id=" +uid +"&user_name="+ uname +"&cell_data=" + data->getMapData();
         request->setRequestData(parameters.c_str(), parameters.length());
         request->setUserData(data);
         

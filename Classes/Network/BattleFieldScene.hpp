@@ -13,6 +13,7 @@
 #include "network/WebSocket.h"
 #include "OnlineGameData.hpp"
 #include "AppMacros.hpp"
+#include "network/HttpClient.h"
 
 USING_NS_CC;
 
@@ -31,17 +32,19 @@ public:
         void update(float delta)override;
         void onExit()override;
         
-        virtual void onOpen(cocos2d::network::WebSocket* ws)override;
-        virtual void onMessage(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::Data& data)override;
-        virtual void onClose(cocos2d::network::WebSocket* ws)override;
-        virtual void onError(cocos2d::network::WebSocket* ws, const cocos2d::network::WebSocket::ErrorCode& error)override;
+        virtual void onOpen(network::WebSocket* ws)override;
+        virtual void onMessage(network::WebSocket* ws, const network::WebSocket::Data& data)override;
+        virtual void onClose(network::WebSocket* ws)override;
+        virtual void onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error)override;
         
-        
+        void onHttpRequestCompleted(network::HttpClient*,
+                                    network::HttpResponse*);
 protected:
         void startBattle();
         void menuExit(Ref*);
         void sendKeepAliveData();
         int  sendMessage(std::string);
+        void exitGame();
 private:
         network::WebSocket* _wsiSendText;
         float           _lowestPostion_y;

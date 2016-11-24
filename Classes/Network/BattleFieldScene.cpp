@@ -26,6 +26,8 @@ enum{
         key_dialog_layer_tag
 };
 
+#define key_EXIT_BATTLEFIELD "exit_current_battle"
+
 Scene* BattleField::createScene(OnlineGameData* data){
         auto scene = Scene::create();
         auto layer = BattleField::create(data);
@@ -107,9 +109,31 @@ void BattleField::update(float delta){
 
 void BattleField::onExit(){
         Layer::onExit();
+        
+        this->exitGame();
 }
 
-
+void BattleField::exitGame(){
+        HttpRequest* request = new (std::nothrow) HttpRequest();
+        request->setUrl(GAME_SERVICE_SERVER_URL"/exitBattle");
+        request->setRequestType(HttpRequest::Type::POST);
+        request->setResponseCallback(CC_CALLBACK_2(BattleField::onHttpRequestCompleted, this));
+        
+        std::string uid = UserSessionBean::getInstance()->getUserId();
+        std::string parameters("user_id=");
+        parameters.append(uid);
+        parameters.append("&server_id=");
+        parameters.append(_onlineMapData->getServerId());
+        request->setRequestData(parameters.c_str(), parameters.length());
+        
+        request->setTag(key_EXIT_BATTLEFIELD);
+        HttpClient::getInstance()->send(request);
+        request->release();
+}
+void BattleField::onHttpRequestCompleted(network::HttpClient *sender,
+                            network::HttpResponse *response){
+        
+}
 #pragma mark - websocket delegate method
 void BattleField::sendKeepAliveData(){
         

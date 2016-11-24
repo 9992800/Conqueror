@@ -182,7 +182,7 @@ void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
         if (0 == tags.compare(CREATE_BATTLEFIELD)){
                 CCLOG("---%s---", data.GetString());
                 auto game_data = (OnlineGameData*)response->getHttpRequest()->getUserData();
-                game_data->setBattleFieldId(data.GetString());
+                game_data->setServerId(data.GetString());
                 game_data->setRole(BATTLE_FIELD_ROLE_CREATOR);
                 auto scene = BattleField::createScene(game_data);
                 Director::getInstance()->pushScene(scene);

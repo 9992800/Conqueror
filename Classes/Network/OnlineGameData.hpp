@@ -31,7 +31,7 @@ public:
         }
         
         void reshDataByMapInfo(TMXTiledMap*);
-        inline void setBattleFieldId(std::string id){
+        inline void setServerId(std::string id){
                 this->_serverId = id;
         }
         inline std::string getServerId(){

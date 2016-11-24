@@ -30,6 +30,8 @@ public class HomeController {
 	private static final Logger logger = 
 			LoggerFactory.getLogger(HomeController.class);
 
+	private static final int MAP_CELL_SIZE = 32*28;
+
 	@RequestMapping(value = "/loginByFacebook")
 	@ResponseBody
 	public Map<String, Object> loginByFacebook(HttpServletRequest request,
@@ -52,6 +54,10 @@ public class HomeController {
 			@RequestParam(value = "user_id", required = true) String user_id,
 			@RequestParam(value = "cell_data", required = true) String cell_data) {
 		
+		if (user_id.length() == 0 || cell_data.length() != MAP_CELL_SIZE){
+			return ResultMapUtils.commonError("数据格式不正确");
+		}
+		
 		logger.info("createBattle:" + user_id+"===cell_data:"+cell_data);
 		
 		String idString = battleFiledService.createBattle(user_id, cell_data);
@@ -73,6 +79,14 @@ public class HomeController {
 	public Map<String, Object> playerList(HttpServletRequest request,
 			@RequestParam(value = "user_id", required = true) String user_id,
 			@RequestParam(value = "table_id", required = true) String table_id) {		
+		return ResultMapUtils.success();
+	}
+	
+	@RequestMapping(value = "/exitBattle")
+	@ResponseBody
+	public Map<String, Object> exitBattle(HttpServletRequest request,
+			@RequestParam(value = "user_id", required = true) String user_id,
+			@RequestParam(value = "server_id", required = true) String table_id) {		
 		return ResultMapUtils.success();
 	}
 }

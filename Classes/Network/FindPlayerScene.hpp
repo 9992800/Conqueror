@@ -15,6 +15,7 @@
 #include "extensions/cocos-ext.h"
 #include "BattleFieldBean.hpp"
 #include "network/HttpClient.h"
+#include "picojson.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;
@@ -59,7 +60,7 @@ protected:
         
 private:
         void getBattleListFromServer();
-        void parseBattleFieldBeans(rapidjson::Value&);
+        void parseBattleFieldBeans(picojson::value&);
         
         
 private:

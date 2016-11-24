@@ -164,7 +164,7 @@ void FindPlayer::onExit(){
 void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
                                         HttpResponse *response){
         
-        rapidjson::Value data;
+        picojson::value data;
         if (!UserSessionBean::checkResponse(response, data)){
                 auto data = (Ref*)response->getHttpRequest()->getUserData();
                 if (data){
@@ -175,9 +175,9 @@ void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
         
         std::string tags = response->getHttpRequest()->getTag();
         if (0 == tags.compare(CREATE_BATTLEFIELD)){
-                CCLOG("---%s---", data.GetString());
+                CCLOG("---%s---", data.to_str().c_str());
                 auto game_data = (OnlineGameData*)response->getHttpRequest()->getUserData();
-                game_data->setServerId(data.GetString());
+                game_data->setServerId(data.to_str());
                 game_data->setRole(BATTLE_FIELD_ROLE_CREATOR);
                 auto scene = BattleField::createScene(game_data);
                 Director::getInstance()->pushScene(scene);
@@ -191,18 +191,16 @@ void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
         }
 }
 
-void FindPlayer::parseBattleFieldBeans(rapidjson::Value& data){
+void FindPlayer::parseBattleFieldBeans(picojson::value& data){
         
         _battlList.clear();
-        
-        for (rapidjson::Value::ConstValueIterator itr = data.Begin();
-             itr != data.End(); ++itr){
-                auto BattleFieldBean = BattleFieldBean::create(itr);
+        picojson::array& array = data.get<picojson::array>();
+        for (picojson::array::iterator it = array.begin(); it != array.end(); it++){
+                picojson::object& tmpObject = it->get<picojson::object>();
+                auto BattleFieldBean = BattleFieldBean::create(tmpObject);
                 BattleFieldBean->retain();
                 _battlList.insert(_battlList.begin(), BattleFieldBean);
         }
-        
-//        _battleTableView->reloadData();
         this->reloadPageData();
 }
 

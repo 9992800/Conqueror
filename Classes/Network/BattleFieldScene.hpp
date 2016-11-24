@@ -44,7 +44,7 @@ protected:
         void menuExit(Ref*);
         void sendKeepAliveData();
         int  sendMessage(std::string);
-        void exitGame();
+        void exitGame(); 
 private:
         network::WebSocket* _wsiSendText;
         float           _lowestPostion_y;

@@ -13,10 +13,11 @@
 #include "network/WebSocket.h"
 #include "network/HttpClient.h"
 #include "PluginFacebook/PluginFacebook.h"
+#include "picojson.h"
 
 using namespace network;
 USING_NS_CC;
-
+typedef std::function<void(std::string)> ccReloadAvatarCallback;
 class UserSessionBean:public Ref, sdkbox::FacebookListener{
 public:
         static UserSessionBean* getInstance();
@@ -24,10 +25,14 @@ public:
         ~UserSessionBean();
         bool init();
         
-        static bool checkResponse(HttpResponse*, rapidjson::Value&); 
+        static bool checkResponse(HttpResponse*, picojson::value&); 
 public:
         std::string getUserId();
-        void initSession(); 
+        void initSession();
+        inline std::string getUserAvatarImgPath(){
+                return this->_fbUserAvatarPath;
+        }
+        void reloadFBAvatar();
         
         void onLogin(bool, const std::string&)override;
         void onSharedSuccess(const std::string&)override;

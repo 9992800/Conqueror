@@ -15,6 +15,7 @@
 enum{
         ZORDER_BACK_GROUND = 0,
         ZORDER_MAP_GROUND,
+        ZORDER_AVATAR_LAYERS,
         ZORDER_CRTL_LAYERS,
         ZORDER_ANIM_LAYER,
         ZORDER_DIALOG_LAYER
@@ -23,7 +24,9 @@ enum{
         key_map_tag             = 1,
         key_ctrl_layer_tag,
         key_anim_layer_tag,
-        key_dialog_layer_tag
+        key_dialog_layer_tag,
+        key_my_avatar_tag,
+        key_my_default_avatar_tag
 };
 
 #define key_EXIT_BATTLEFIELD "exit_current_battle"
@@ -75,8 +78,22 @@ bool BattleField::init(){
                 log("ERROR:failed init the websocket.");
         }
         
+        
+        Vec2 my_avatar_pos = Vec2(origin.x + visibleSize.width/2, 60);
+        std::string img_path = UserSessionBean::getInstance()->getUserAvatarImgPath();
+        if (img_path.length() == 0){
+                UserSessionBean::getInstance()->reloadFBAvatar();
+                auto my_avatar = Sprite::create("deault_avatar.png");
+                my_avatar->setPosition(my_avatar_pos);
+                this->addChild(my_avatar, ZORDER_AVATAR_LAYERS, key_my_default_avatar_tag);
+        }else{
+                auto my_avatar = Sprite::create(img_path);
+                my_avatar->setPosition(my_avatar_pos);
+                this->addChild(my_avatar, ZORDER_AVATAR_LAYERS, key_my_avatar_tag);
+        }
+        
         return true;
-}
+} 
 
 void BattleField::menuExit(Ref* pSender){
         //TODO::show pop dialog

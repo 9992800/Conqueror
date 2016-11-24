@@ -11,12 +11,14 @@
 
 #include "cocos2d.h"
 #include "AppMacros.hpp"
+#include "picojson.h"
+
 USING_NS_CC;
 
 class BattleFieldBean: public Ref{
 public:
-        CREATE_FUNC2(BattleFieldBean, rapidjson::Value::ConstValueIterator, vptr);
-        BattleFieldBean(rapidjson::Value::ConstValueIterator vptr);
+        CREATE_FUNC2(BattleFieldBean, picojson::object&, obj);
+        BattleFieldBean(picojson::object& obj);
         virtual ~BattleFieldBean(){}
         bool init();
         

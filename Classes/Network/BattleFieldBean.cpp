@@ -10,9 +10,10 @@ bool BattleFieldBean::init(){
         return true;
 }
 
-BattleFieldBean::BattleFieldBean(rapidjson::Value::ConstValueIterator vptr){
-        _battleId       = ((*vptr)["id"].GetString());
-        _battleCreator  = ((*vptr)["owner"].GetString());
-        _playerNum      = ((*vptr)["playerNum"].GetInt());
-        _status         = ((*vptr)["status"].GetInt());
+BattleFieldBean::BattleFieldBean(picojson::object& obj){ 
+
+        _battleId       = obj["id"].get<std::string>();
+        _battleCreator  = obj["owner"].get<std::string>();
+        _playerNum      = obj["playerNum"].get<int>();
+        _status         = obj["status"].get<int>();
 }

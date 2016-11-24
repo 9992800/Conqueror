@@ -6,7 +6,6 @@
 //
 //
 #include "AppMacros.hpp"
-#include "picojson.h"
 #include "UserSessionBean.hpp"
 
 using namespace sdkbox;
@@ -85,12 +84,22 @@ void UserSessionBean::onHttpRequestCompleted(HttpClient *sender,
         img.initWithImageData(reinterpret_cast<unsigned char*>(&(buffer->front())), buffer->size());
         
         // save image file to device.
-        std::string path = FileUtils::getInstance()->getWritablePath()+"p.png";
+        std::string path = FileUtils::getInstance()->getWritablePath() + this->_fbUserId + ".png";
         CCLOG("save image path = %s", path.data());
         bool ret = img.saveToFile(path);
         CCLOG("save file %s", ret ? "success" : "failure");
         this->_fbUserAvatarPath = path;
-} 
+        UserDefault::getInstance()->setStringForKey(FACEBOOK_INFO_USER_AVATAR_KEY, path);
+        UserDefault::getInstance()->flush();
+}
+
+void UserSessionBean::reloadFBAvatar(){
+        sdkbox::FBAPIParam params;
+        params["fields"] = "picture";
+        params["type"] = "small";
+        params["redirect"] = "false";
+        PluginFacebook::api("me", "GET", params, "__fetch_picture_tag__");
+}
 #pragma mark - facebook callback
 
 
@@ -117,10 +126,11 @@ void UserSessionBean::onAPI(const std::string& tag, const std::string& jsonData)
                 
                 this->_fbAvatarUrl = url;
                 network::HttpRequest* request = new network::HttpRequest();
-//                request->setUrl(url.data());
-                request->setUrl("https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/14991841_108886102926398_68236423953484457_n.jpg?oh=9898af016fdd3c19bafeb2e0cc7f5925&oe=58B5BE1B");
+                request->setUrl(url.data()); 
                 request->setRequestType(network::HttpRequest::Type::GET);
                 request->setResponseCallback(CC_CALLBACK_2(UserSessionBean::onHttpRequestCompleted, this));
+                network::HttpClient::getInstance()->send(request);
+                request->release();
         }
 }
 
@@ -183,7 +193,7 @@ void UserSessionBean::onGetUserInfo( const sdkbox::FBGraphUser& userInfo )
 
 #pragma mark - utils functions
 
-bool UserSessionBean::checkResponse(HttpResponse *response, rapidjson::Value& data){
+bool UserSessionBean::checkResponse(HttpResponse *response, picojson::value& data){
         if (!response){
                 return false;
         }
@@ -203,23 +213,23 @@ bool UserSessionBean::checkResponse(HttpResponse *response, rapidjson::Value& da
                 return false;
         }
         
-        rapidjson::Document json_result;
-        json_result.Parse<0>(response_str.c_str());
-        if (json_result.HasParseError()) {
-                CCLOGWARN("---data from game server failed: %u\n",json_result.GetParseError());
+        picojson::value json_result;
+        std::string error = picojson::parse(json_result, response_str);
+        if (error.length() > 0) {
+                CCLOGWARN("---data from game server failed: %s\n",error.c_str());
                 return false;
         }
         
-        int api_code = json_result["apicode"].GetInt();
-        std::string  message = json_result["message"].GetString();
+        int api_code = json_result.get("apicode").get<int>();
+        std::string  message = json_result.get("message").to_str();
         CCLOGINFO("[api code:%d message:%s]", api_code, message);
         if (NETWORK_WORK_WELL != api_code){
                 CCLOGWARN("---game server network faild(%d):%s", api_code, response_str.c_str());
                 return false;
         }
         
-        if (json_result.HasMember("data")){
-                data = json_result["data"];
+        if (json_result.contains("data")){
+                data = json_result.get("data");
         }
         
         return true;

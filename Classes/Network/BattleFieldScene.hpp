@@ -42,6 +42,7 @@ public:
 protected:
         void startBattle();
         void menuExit(Ref*);
+        void menuShareGame(Ref* pSender);
         void sendKeepAliveData();
         int  sendMessage(std::string);
         void exitGame(); 

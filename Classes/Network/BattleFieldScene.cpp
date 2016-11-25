@@ -61,6 +61,11 @@ bool BattleField::init(){
         return_back->setPosition(Vec2(origin.x + return_back->getContentSize().width + 10,
                                       origin.y + visibleSize.height - return_back->getContentSize().height - 10));
         
+        auto share_it = MenuItemImage::create("share.png", "share_sel.png",
+                                              CC_CALLBACK_1(BattleField::menuShareGame, this));
+        share_it->setPosition(Vec2(share_it->getContentSize().width,
+                                   origin.y + visibleSize.height - share_it->getContentSize().height));
+        
         auto menu = Menu::create(return_back, NULL);
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, ZORDER_CRTL_LAYERS);
@@ -102,6 +107,9 @@ bool BattleField::init(){
 void BattleField::menuExit(Ref* pSender){
         //TODO::show pop dialog
         Director::getInstance()->popScene();
+}
+void BattleField::menuShareGame(Ref* pSender){
+        UserSessionBean::getInstance()->inviteMyFriendToThisBattle();
 }
 
 void BattleField::startBattle(){

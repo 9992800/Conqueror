@@ -32,8 +32,7 @@ bool UserSessionBean::init(){
 
 UserSessionBean::UserSessionBean(){
         _fbUserId       = "";
-        _fbUserAvatarPath    = "";
-        _cachedPlayersInfos = std::map<std::string, sdkbox::FBGraphUser>();
+        _fbUserAvatarPath    = ""; 
 }
 
 UserSessionBean::~UserSessionBean(){
@@ -92,19 +91,8 @@ void UserSessionBean::reloadFBAvatar(){
         request->release();
 }
 
-sdkbox::FBGraphUser UserSessionBean::getPlayerInfo(std::string fbid){
-        std::map<std::string, sdkbox::FBGraphUser>::iterator it = this->_cachedPlayersInfos.find(fbid);
-        if (it != this->_cachedPlayersInfos.end()){
-                return it->second;
-        }
+void UserSessionBean::inviteMyFriendToThisBattle(){
         
-        sdkbox::FBAPIParam params;
-        params["fields"] = "picture,name";
-        params["type"] = "small";
-        params["redirect"] = "false";
-        PluginFacebook::api("me", "GET", params, "__fetch_picture_tag__");
-        
-        return sdkbox::FBGraphUser();
 }
 
 #pragma mark - facebook callback

@@ -26,7 +26,6 @@ public:
         bool init();
         
         static bool checkResponse(HttpResponse*, picojson::value&);
-        sdkbox::FBGraphUser getPlayerInfo(std::string fbid);
 public:
         inline std::string getUserId(){
                 return this->_fbUserId;
@@ -43,7 +42,7 @@ public:
         
         void initSession(); 
         void reloadFBAvatar();
-        
+        void inviteMyFriendToThisBattle();
 
 protected:
         void onLogin(bool, const std::string&)override;
@@ -65,8 +64,7 @@ private:
         std::string     _fbUserId;
         std::string     _fbUserName;
         std::string     _fbUserAvatarPath;
-        sdkbox::FBGraphUser _fbBasiceInfo;
-        std::map<std::string, sdkbox::FBGraphUser> _cachedPlayersInfos;
+        sdkbox::FBGraphUser _fbBasiceInfo; 
 };
 
 #endif /* UserSessionBean_hpp */

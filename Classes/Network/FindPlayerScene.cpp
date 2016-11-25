@@ -31,10 +31,10 @@ Scene* FindPlayer::createScene(){
 
 
 FindPlayer::~FindPlayer(){
-        for(auto& v: _battlList){
-                v->release();
-        }
-        _battlList.clear();
+//        for(auto& v: _battlList){
+//                v->release();
+//        }
+//        _battlList.clear();
 }
 
 
@@ -75,7 +75,11 @@ bool FindPlayer::init(){
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, 3);
         
-        this->initPageViews(visibleSize, center); 
+        _searchingBgLayer = LayerColor::create(Color4B::GRAY, visibleSize.width/2, visibleSize.height/2);
+        this->addChild(_searchingBgLayer, 4);
+        _searchingBgLayer->setVisible(false); 
+        
+//        this->initPageViews(visibleSize, center); 
 
         return true;
 }
@@ -86,7 +90,7 @@ void FindPlayer::menuExit(Ref* pSender){
 }
 
 void FindPlayer::menuRefresh(Ref* pSender){
-        this->getBattleListFromServer();
+//        this->getBattleListFromServer();
         _refreshBtn->runAction(RotateBy::create(4, 360*4));
         
 }
@@ -115,40 +119,40 @@ void FindPlayer::menuCreateBattle(Ref*){
 
 void FindPlayer::menuSearching(Ref*){
         ModalLayer::showModalDialog(this);
-        //TODO::
+        //TODO::show a searching dialog
 }
 
 void FindPlayer::afterAnimation(){
 }
 
-void FindPlayer::getBattleListFromServer(){
-        std::string base_url(GAME_SERVICE_SERVER_URL"/battleFields?");
-        std::string uid = UserSessionBean::getInstance()->getUserId();
-        if (uid.length() == 0){
-                return;
-        }
-        
-        base_url.append("user_id=");
-        base_url.append(uid);
-        base_url.append("&curPgaeNo=");
-        base_url.append(tostr(_curPgaeNo));
-        
-        HttpRequest* request = new (std::nothrow) HttpRequest();
-        request->setUrl(base_url);
-        request->setRequestType(HttpRequest::Type::GET);
-        request->setResponseCallback(CC_CALLBACK_2(FindPlayer::onHttpRequestCompleted, this));
-        request->setTag(LIST_ALL_BATTLES);
-        HttpClient::getInstance()->sendImmediate(request);
-        request->release();
-}
+//void FindPlayer::getBattleListFromServer(){
+//        std::string base_url(GAME_SERVICE_SERVER_URL"/battleFields?");
+//        std::string uid = UserSessionBean::getInstance()->getUserId();
+//        if (uid.length() == 0){
+//                return;
+//        }
+//        
+//        base_url.append("user_id=");
+//        base_url.append(uid);
+//        base_url.append("&curPgaeNo=");
+//        base_url.append(tostr(_curPgaeNo));
+//        
+//        HttpRequest* request = new (std::nothrow) HttpRequest();
+//        request->setUrl(base_url);
+//        request->setRequestType(HttpRequest::Type::GET);
+//        request->setResponseCallback(CC_CALLBACK_2(FindPlayer::onHttpRequestCompleted, this));
+//        request->setTag(LIST_ALL_BATTLES);
+//        HttpClient::getInstance()->sendImmediate(request);
+//        request->release();
+//}
 
 #pragma mark - update
 void FindPlayer::onEnter(){
         Layer::onEnter();
         _loadingCount = 0;
-        _curPgaeNo = 0;
-        _battlList = std::vector<BattleFieldBean*>();
-        this->getBattleListFromServer();
+//        _curPgaeNo = 0;
+//        _battlList = std::vector<BattleFieldBean*>();
+//        this->getBattleListFromServer();
         
         
 //        scheduleUpdate();
@@ -186,111 +190,111 @@ void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
         }else if (0 == tags.compare(SEARCHING_OPPENT)){
                 
         }else if (0 == tags.compare(LIST_ALL_BATTLES)){
-                this->parseBattleFieldBeans(data);
+//                this->parseBattleFieldBeans(data);
         }else{
                 CCLOGWARN("---Unkown request tag:%s---", tags.c_str());
         }
 }
 
-void FindPlayer::parseBattleFieldBeans(picojson::value& data){
-        
-        _battlList.clear();
-        picojson::array& array = data.get<picojson::array>();
-        for (picojson::array::iterator it = array.begin(); it != array.end(); it++){
-                picojson::object& tmpObject = it->get<picojson::object>();
-                auto BattleFieldBean = BattleFieldBean::create(tmpObject);
-                BattleFieldBean->retain();
-                _battlList.insert(_battlList.begin(), BattleFieldBean);
-        }
-        this->reloadPageData();
-}
+//void FindPlayer::parseBattleFieldBeans(picojson::value& data){
+//        
+//        _battlList.clear();
+//        picojson::array& array = data.get<picojson::array>();
+//        for (picojson::array::iterator it = array.begin(); it != array.end(); it++){
+//                picojson::object& tmpObject = it->get<picojson::object>();
+//                auto BattleFieldBean = BattleFieldBean::create(tmpObject);
+//                BattleFieldBean->retain();
+//                _battlList.insert(_battlList.begin(), BattleFieldBean);
+//        }
+//        this->reloadPageData();
+//}
 
-#pragma mark - page view actions
-void FindPlayer::initPageViews(Size visibleSize, Vec2 center){
-        
-        _batllePageViews = PageView::create();
-        _batllePageViews->setContentSize(visibleSize * 0.85);
-        _batllePageViews->setIgnoreAnchorPointForPosition(false);
-        _batllePageViews->setAnchorPoint(Vec2(0.5, 0.5));
-        _batllePageViews->setPosition(center);
-        _batllePageViews->removeAllItems();
-        _batllePageViews->addEventListener((PageView::ccPageViewCallback)CC_CALLBACK_2(FindPlayer::pageViewEvent, this));
-        
-        _batllePageViews->setIndicatorEnabled(true);
-        _batllePageViews->setIndicatorSpaceBetweenIndexNodes(5);
-        _batllePageViews->setIndicatorIndexNodesScale(0.5);
-        _batllePageViews->setIndicatorIndexNodesTexture("green_edit.png");
-        _batllePageViews->setIndicatorIndexNodesColor(Color3B::BLACK);
-        
-        this->addChild(_batllePageViews);
-}
+//#pragma mark - page view actions
+//void FindPlayer::initPageViews(Size visibleSize, Vec2 center){
+//        
+//        _batllePageViews = PageView::create();
+//        _batllePageViews->setContentSize(visibleSize * 0.85);
+//        _batllePageViews->setIgnoreAnchorPointForPosition(false);
+//        _batllePageViews->setAnchorPoint(Vec2(0.5, 0.5));
+//        _batllePageViews->setPosition(center);
+//        _batllePageViews->removeAllItems();
+//        _batllePageViews->addEventListener((PageView::ccPageViewCallback)CC_CALLBACK_2(FindPlayer::pageViewEvent, this));
+//        
+//        _batllePageViews->setIndicatorEnabled(true);
+//        _batllePageViews->setIndicatorSpaceBetweenIndexNodes(5);
+//        _batllePageViews->setIndicatorIndexNodesScale(0.5);
+//        _batllePageViews->setIndicatorIndexNodesTexture("green_edit.png");
+//        _batllePageViews->setIndicatorIndexNodesColor(Color3B::BLACK);
+//        
+//        this->addChild(_batllePageViews);
+//}
 
-#define BATTLE_ROWS  2
-#define BATTLE_COLUM 3
-
-void FindPlayer::reloadPageData(){
-        if (!_batllePageViews){
-                return;
-        }
-        
-        _batllePageViews->removeAllPages();
-        
-        int total_cnt = (int)_battlList.size();
-        int battle_idx = 0;
-        int pageCount =  total_cnt / (BATTLE_ROWS * BATTLE_COLUM) + 1;
-        auto size = _batllePageViews->getContentSize();
-        for (int i = 0; i < pageCount; ++i) {
-                HBox* outerBox = HBox::create();
-                outerBox->setContentSize(size);
-                
-                for (int k = 0; k < BATTLE_COLUM && total_cnt > battle_idx; ++k) {
-                        VBox* innerBox = VBox::create();
-                        
-                        for (int j = 0; j < BATTLE_ROWS && total_cnt > battle_idx; j++) {
-                                BattleFieldBean* bean = _battlList.at(battle_idx++);
-                                
-                                Button *btn = Button::create("battle_field.png","");
-                                btn->setTitleText(StringUtils::format("button %d", battle_idx));
-                                btn->setTitleColor(Color3B::RED);
-                                btn->setTitleFontSize(24);
-                                btn->addTouchEventListener( CC_CALLBACK_2(FindPlayer::onBattleSelected, this));
-                                
-                                std::set<std::string> players = bean->getCurrentPlayers();
-                                for (std::set<std::string>::iterator it = players.begin();
-                                     it != players.end(); it++) {
-                                        
-                                        sdkbox::FBGraphUser player = UserSessionBean::getInstance()->getPlayerInfo(it->c_str());
-                                        
-                                        auto name = Label::createWithSystemFont(player.getName(), "", 24);
-                                        name->setColor(Color3B::RED);
-                                        auto btn_size = btn->getContentSize();
-                                        name->setPosition(Vec2(btn_size/2));
-                                        btn->addChild(name, 1, 111);
-                                        
-                                        
-                                        auto avatar = SpriteEx::createWithUrl(player.getPictureURL());
-                                        avatar->setPosition(Vec2(btn_size/2) - Vec2(0, 50));
-                                        btn->addChild(avatar, 2, 112);
-                                }
-                                innerBox->addChild(btn);
-                        }
-                        
-                        LinearLayoutParameter *parameter = LinearLayoutParameter::create();
-                        parameter->setMargin(Margin(size.width/8, 5,size.width/8, 5));
-                        innerBox->setLayoutParameter(parameter);
-                        
-                        outerBox->addChild(innerBox);
-                }
-                _batllePageViews->insertCustomItem(outerBox, i);
-        }
-}
-
-void FindPlayer::pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type){
-        CCLOG("---pageViewEvent:%d---", type);
-}
-void FindPlayer::onBattleSelected(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type){
-        CCLOG("---onBattleSelected:%d---", type);
-}
+//#define BATTLE_ROWS  2
+//#define BATTLE_COLUM 3
+//
+//void FindPlayer::reloadPageData(){
+//        if (!_batllePageViews){
+//                return;
+//        }
+//        
+//        _batllePageViews->removeAllPages();
+//        
+//        int total_cnt = (int)_battlList.size();
+//        int battle_idx = 0;
+//        int pageCount =  total_cnt / (BATTLE_ROWS * BATTLE_COLUM) + 1;
+//        auto size = _batllePageViews->getContentSize();
+//        for (int i = 0; i < pageCount; ++i) {
+//                HBox* outerBox = HBox::create();
+//                outerBox->setContentSize(size);
+//                
+//                for (int k = 0; k < BATTLE_COLUM && total_cnt > battle_idx; ++k) {
+//                        VBox* innerBox = VBox::create();
+//                        
+//                        for (int j = 0; j < BATTLE_ROWS && total_cnt > battle_idx; j++) {
+//                                BattleFieldBean* bean = _battlList.at(battle_idx++);
+//                                
+//                                Button *btn = Button::create("battle_field.png","");
+//                                btn->setTitleText(StringUtils::format("button %d", battle_idx));
+//                                btn->setTitleColor(Color3B::RED);
+//                                btn->setTitleFontSize(24);
+//                                btn->addTouchEventListener( CC_CALLBACK_2(FindPlayer::onBattleSelected, this));
+//                                
+//                                std::set<std::string> players = bean->getCurrentPlayers();
+//                                for (std::set<std::string>::iterator it = players.begin();
+//                                     it != players.end(); it++) {
+//                                        
+//                                        sdkbox::FBGraphUser player = UserSessionBean::getInstance()->getPlayerInfo(it->c_str());
+//                                        
+//                                        auto name = Label::createWithSystemFont(player.getName(), "", 24);
+//                                        name->setColor(Color3B::RED);
+//                                        auto btn_size = btn->getContentSize();
+//                                        name->setPosition(Vec2(btn_size/2));
+//                                        btn->addChild(name, 1, 111);
+//                                        
+//                                        
+//                                        auto avatar = SpriteEx::createWithUrl(player.getPictureURL());
+//                                        avatar->setPosition(Vec2(btn_size/2) - Vec2(0, 50));
+//                                        btn->addChild(avatar, 2, 112);
+//                                }
+//                                innerBox->addChild(btn);
+//                        }
+//                        
+//                        LinearLayoutParameter *parameter = LinearLayoutParameter::create();
+//                        parameter->setMargin(Margin(size.width/8, 5,size.width/8, 5));
+//                        innerBox->setLayoutParameter(parameter);
+//                        
+//                        outerBox->addChild(innerBox);
+//                }
+//                _batllePageViews->insertCustomItem(outerBox, i);
+//        }
+//}
+//
+//void FindPlayer::pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type){
+//        CCLOG("---pageViewEvent:%d---", type);
+//}
+//void FindPlayer::onBattleSelected(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type){
+//        CCLOG("---onBattleSelected:%d---", type);
+//}
 
 
 

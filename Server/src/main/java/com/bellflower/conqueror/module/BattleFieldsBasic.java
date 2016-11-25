@@ -1,6 +1,7 @@
 package com.bellflower.conqueror.module;
 
-import org.json.JSONArray;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BattleFieldsBasic {
 	
@@ -12,6 +13,7 @@ public class BattleFieldsBasic {
 	long		createTime;
 	private String owner;
 	String ownerName;
+	List<String> players = new ArrayList<String>(3);
 	
 	public BattleFieldsBasic(){
 		this.createTime = System.currentTimeMillis();
@@ -50,5 +52,18 @@ public class BattleFieldsBasic {
 	}
 	public String getOwnerName(){
 		return this.ownerName;
+	}
+	
+	
+	public List<String> getPlayer(){
+		return this.players;
+	}
+	public void setPlayer(List<String> p) {
+		this.players = p;
+	}
+
+
+	public void addPlayer(String user_id) {
+		this.players.add(user_id);
 	}
 }

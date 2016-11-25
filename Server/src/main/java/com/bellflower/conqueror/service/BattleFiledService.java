@@ -42,6 +42,7 @@ public class BattleFiledService {
 		BattleFieldsBasic fields = new BattleFieldsBasic();
 		fields.setOwner(user_id);
 		fields.setOwnerName(user_name);
+		fields.addPlayer(user_id);
 		mongoService.insert(fields);
 		
 		

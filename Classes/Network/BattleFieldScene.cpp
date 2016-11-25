@@ -88,6 +88,10 @@ bool BattleField::init(){
                 this->addChild(my_avatar, ZORDER_AVATAR_LAYERS, key_my_default_avatar_tag);
         }else{
                 auto my_avatar = Sprite::create(img_path);
+                if (nullptr ==  my_avatar){
+                        my_avatar = Sprite::create("deault_avatar.png");
+                        UserSessionBean::getInstance()->reloadFBAvatar();
+                }
                 my_avatar->setPosition(my_avatar_pos);
                 this->addChild(my_avatar, ZORDER_AVATAR_LAYERS, key_my_avatar_tag);
         }

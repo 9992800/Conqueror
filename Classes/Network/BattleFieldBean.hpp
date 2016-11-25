@@ -26,11 +26,16 @@ public:
                 return _battleCreator;
         }
         
+        inline std::set<std::string> getCurrentPlayers(){
+                return this->_curPlayerFbIds;
+        }
+        
 private:
         std::string     _battleId;
         std::string     _battleCreator;
         int             _playerNum;
         int             _status;
+        std::set<std::string> _curPlayerFbIds;
 };
 
 #endif /* BattleFieldBean_hpp */

@@ -33,6 +33,7 @@ bool UserSessionBean::init(){
 UserSessionBean::UserSessionBean(){
         _fbUserId       = "";
         _fbUserAvatarPath    = "";
+        _cachedPlayersInfos = std::map<std::string, sdkbox::FBGraphUser>();
 }
 
 UserSessionBean::~UserSessionBean(){
@@ -82,11 +83,6 @@ void UserSessionBean::onHttpRequestCompleted(HttpClient *sender,
 }
 
 void UserSessionBean::reloadFBAvatar(){
-//        sdkbox::FBAPIParam params;
-//        params["fields"] = "picture,name";
-//        params["type"] = "small";
-//        params["redirect"] = "false";
-//        PluginFacebook::api("me", "GET", params, "__fetch_picture_tag__");
         
         network::HttpRequest* request = new network::HttpRequest();
         request->setUrl(this->_fbBasiceInfo.getPictureURL().data());
@@ -94,6 +90,21 @@ void UserSessionBean::reloadFBAvatar(){
         request->setResponseCallback(CC_CALLBACK_2(UserSessionBean::onHttpRequestCompleted, this));
         network::HttpClient::getInstance()->send(request);
         request->release();
+}
+
+sdkbox::FBGraphUser UserSessionBean::getPlayerInfo(std::string fbid){
+        std::map<std::string, sdkbox::FBGraphUser>::iterator it = this->_cachedPlayersInfos.find(fbid);
+        if (it != this->_cachedPlayersInfos.end()){
+                return it->second;
+        }
+        
+        sdkbox::FBAPIParam params;
+        params["fields"] = "picture,name";
+        params["type"] = "small";
+        params["redirect"] = "false";
+        PluginFacebook::api("me", "GET", params, "__fetch_picture_tag__");
+        
+        return sdkbox::FBGraphUser();
 }
 
 #pragma mark - facebook callback
@@ -159,14 +170,16 @@ void UserSessionBean::onGetUserInfo( const sdkbox::FBGraphUser& userInfo )
 {
         if (userInfo.getUserId() == PluginFacebook::getUserID()){
                 CCLOG("on onGetUserInfo friends.....................");
+                this->_fbBasiceInfo = userInfo;
+                this->_fbUserId = userInfo.getUserId();
+                this->_fbUserName = userInfo.getName();
+                this->reloadFBAvatar();
+                CCLOG("Facebook josn:'%s' ", userInfo.toJSONString().c_str());
+                UserDefault::getInstance()->setStringForKey(FACEBOOK_INFO_USER_FB_BASIC, userInfo.toJSONString());
+                UserDefault::getInstance()->flush();
+        }else{
+                
         }
-        this->_fbBasiceInfo = userInfo;
-        this->_fbUserId = userInfo.getUserId();
-        this->_fbUserName = userInfo.getName();
-        this->reloadFBAvatar();
-        CCLOG("Facebook josn:'%s' ", userInfo.toJSONString().c_str());
-        UserDefault::getInstance()->setStringForKey(FACEBOOK_INFO_USER_FB_BASIC, userInfo.toJSONString());
-        UserDefault::getInstance()->flush();
 }
 
 

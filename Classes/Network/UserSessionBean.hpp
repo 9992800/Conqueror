@@ -25,7 +25,8 @@ public:
         ~UserSessionBean();
         bool init();
         
-        static bool checkResponse(HttpResponse*, picojson::value&); 
+        static bool checkResponse(HttpResponse*, picojson::value&);
+        sdkbox::FBGraphUser getPlayerInfo(std::string fbid);
 public:
         inline std::string getUserId(){
                 return this->_fbUserId;
@@ -65,6 +66,7 @@ private:
         std::string     _fbUserName;
         std::string     _fbUserAvatarPath;
         sdkbox::FBGraphUser _fbBasiceInfo;
+        std::map<std::string, sdkbox::FBGraphUser> _cachedPlayersInfos;
 };
 
 #endif /* UserSessionBean_hpp */

@@ -83,6 +83,7 @@
 		7C4DA6A81DE43C1B001CC255 /* green_edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DA6A71DE43C1B001CC255 /* green_edit.png */; };
 		7C4DA6AA1DE44548001CC255 /* battle_field.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DA6A91DE44548001CC255 /* battle_field.png */; };
 		7C4DA6AF1DE6A7EB001CC255 /* deault_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DA6AE1DE6A7EB001CC255 /* deault_avatar.png */; };
+		7C4DA6B21DE82466001CC255 /* SpriteEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C4DA6B01DE82466001CC255 /* SpriteEx.cpp */; };
 		7C67A7B51DD1BE6B004B5151 /* WebSocktUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */; };
 		7C6E7FFD1DD94F5300C5E374 /* ReplayLastScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */; };
 		7C6E80001DD9575A00C5E374 /* history.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFF1DD9575A00C5E374 /* history.png */; };
@@ -268,6 +269,8 @@
 		7C4DA6A91DE44548001CC255 /* battle_field.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = battle_field.png; sourceTree = "<group>"; };
 		7C4DA6AD1DE69258001CC255 /* picojson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = picojson.h; sourceTree = "<group>"; };
 		7C4DA6AE1DE6A7EB001CC255 /* deault_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deault_avatar.png; sourceTree = "<group>"; };
+		7C4DA6B01DE82466001CC255 /* SpriteEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteEx.cpp; sourceTree = "<group>"; };
+		7C4DA6B11DE82466001CC255 /* SpriteEx.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpriteEx.hpp; sourceTree = "<group>"; };
 		7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocktUtil.cpp; sourceTree = "<group>"; };
 		7C67A7B41DD1BE6B004B5151 /* WebSocktUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocktUtil.hpp; sourceTree = "<group>"; };
 		7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReplayLastScene.cpp; sourceTree = "<group>"; };
@@ -657,6 +660,8 @@
 				7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */,
 				7CCB51D91DD5AAC000810354 /* JsonUtil.hpp */,
 				7CCB51D81DD5AAC000810354 /* JsonUtil.cpp */,
+				7C4DA6B01DE82466001CC255 /* SpriteEx.cpp */,
+				7C4DA6B11DE82466001CC255 /* SpriteEx.hpp */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -845,6 +850,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C99A1481DE20350005A489B /* OnlineGameEngine.cpp in Sources */,
+				7C4DA6B21DE82466001CC255 /* SpriteEx.cpp in Sources */,
 				BBD6967F1DCC55CE00B9B145 /* GameAI.cpp in Sources */,
 				BB9A4E271DCB84A200E88C41 /* MapCreator.cpp in Sources */,
 				7C21A0F81DCB3A3C0035ECC6 /* PopUpOkCancelDialog.cpp in Sources */,

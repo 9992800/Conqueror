@@ -12,6 +12,7 @@
 #include "ModalDialog.hpp"
 #include "UserSessionBean.hpp"
 #include "OnlineGameData.hpp" 
+#include "SpriteEx.hpp"
 
 
 #define SEARCHING_OPPENT        "searching"
@@ -215,12 +216,6 @@ void FindPlayer::initPageViews(Size visibleSize, Vec2 center){
         _batllePageViews->removeAllItems();
         _batllePageViews->addEventListener((PageView::ccPageViewCallback)CC_CALLBACK_2(FindPlayer::pageViewEvent, this));
         
-//        auto bg = LayerColor::create(Color4B::RED);
-//        bg->setIgnoreAnchorPointForPosition(false);
-//        bg->setAnchorPoint(Vec2(0.5, 0.5));
-//        bg->setPosition(center);
-//        _batllePageViews->addChild(bg);
-        
         _batllePageViews->setIndicatorEnabled(true);
         _batllePageViews->setIndicatorSpaceBetweenIndexNodes(5);
         _batllePageViews->setIndicatorIndexNodesScale(0.5);
@@ -252,15 +247,31 @@ void FindPlayer::reloadPageData(){
                         VBox* innerBox = VBox::create();
                         
                         for (int j = 0; j < BATTLE_ROWS && total_cnt > battle_idx; j++) {
-                                BattleFieldBean* bean = _battlList.at(battle_idx);
-                                battle_idx++;
+                                BattleFieldBean* bean = _battlList.at(battle_idx++);
+                                
                                 Button *btn = Button::create("battle_field.png","");
-                                btn->setName(StringUtils::format("button %d", j));
-                                btn->setTitleText(bean->getCreator());
+                                btn->setTitleText(StringUtils::format("button %d", battle_idx));
                                 btn->setTitleColor(Color3B::RED);
                                 btn->setTitleFontSize(24);
                                 btn->addTouchEventListener( CC_CALLBACK_2(FindPlayer::onBattleSelected, this));
                                 
+                                std::set<std::string> players = bean->getCurrentPlayers();
+                                for (std::set<std::string>::iterator it = players.begin();
+                                     it != players.end(); it++) {
+                                        
+                                        sdkbox::FBGraphUser player = UserSessionBean::getInstance()->getPlayerInfo(it->c_str());
+                                        
+                                        auto name = Label::createWithSystemFont(player.getName(), "", 24);
+                                        name->setColor(Color3B::RED);
+                                        auto btn_size = btn->getContentSize();
+                                        name->setPosition(Vec2(btn_size/2));
+                                        btn->addChild(name, 1, 111);
+                                        
+                                        
+                                        auto avatar = SpriteEx::createWithUrl(player.getPictureURL());
+                                        avatar->setPosition(Vec2(btn_size/2) - Vec2(0, 50));
+                                        btn->addChild(avatar, 2, 112);
+                                }
                                 innerBox->addChild(btn);
                         }
                         
@@ -275,10 +286,10 @@ void FindPlayer::reloadPageData(){
 }
 
 void FindPlayer::pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type){
-        
+        CCLOG("---pageViewEvent:%d---", type);
 }
 void FindPlayer::onBattleSelected(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type){
-        
+        CCLOG("---onBattleSelected:%d---", type);
 }
 
 

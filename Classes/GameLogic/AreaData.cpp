@@ -16,7 +16,7 @@
 #include "json/rapidjson.h"
 #include "json/document.h"
 
-static Color4F AreaBackGroundColors[] = {Color4F((float)0x3E/0xff, (float)0xA5/0xff, (float)0xDD/0xff, 1),//back ground
+static Color4F AreaBackGroundColors[] = {Color4F((float)0xCE/0xff, (float)0x84/0xff, (float)0x39/0xff, 1),
         Color4F((float)0xD7/0xff, (float)0x45/0xff, (float)0x13/0xff, 1),
         Color4F((float)0xE0/0xff, (float)0xE9/0xff, (float)0x83/0xff, 1),
         Color4F((float)0x6F/0xff, (float)0xCF/0xff, (float)0x00/0xff, 1),
@@ -181,6 +181,14 @@ void AreaData::initAreaLine(int cell, int dir, GameData* data){
         }
 }
 
+void AreaData::changeOwner(int newOwner){
+        if (_arm == newOwner){
+                return;
+        }
+        _arm = newOwner;
+        this->drawAsUnselected();
+}
+
 void AreaData::drawBorder(){
         if (_size == 0 || _arm < 0)
                 return;
@@ -216,7 +224,7 @@ void AreaData::drawPolyGon(int owner){
         if (-1 == owner){
                 fillColor = selected_color;
         }else{
-                fillColor = AreaBackGroundColors[_arm + 1];
+                fillColor = AreaBackGroundColors[owner];
         }
         
         for (std::set<int>::iterator it = _cell_idxs.begin(); it != _cell_idxs.end(); ++it){
@@ -227,7 +235,7 @@ void AreaData::drawPolyGon(int owner){
                         points[i] = ScreenCoordinate::getInstance()->getCellPos(*it, i);
                 }
                 
-                _drawNode->drawPolygon(points, 6, fillColor, 0.0f, Color4F(0.0f,0.f,0.f,0.0f));
+                _drawNode->drawPolygon(points, 6, fillColor, 0.1f, Color4F(0.01f,0.1f,0.f,1.0f));
         }
 }
  

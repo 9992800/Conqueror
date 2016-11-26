@@ -646,7 +646,7 @@ void DiceGame::occupyArea(int newOwner, int area){
 //                layer->setTileGID(player->getGid(), Vec2(row, col));
 //        }
         
-        _data->_areaData[area]->setOwner(newOwner);
+        _data->_areaData[area]->changeOwner(newOwner);
 }
 
 #pragma mark - game history replay functions

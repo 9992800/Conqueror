@@ -70,11 +70,13 @@ void GameScene::initMapLayer(){
         _theGameLogic->retain();        
         auto data = _theGameLogic->initGameData(_playerNumber);
 #if 1
-        auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND);
-        ScreenCoordinate::getInstance()->configScreen(visibleSize);
+        Size back_size = visibleSize+Size(10, 20);
+        auto back_layer = LayerColor::create(Color4B::WHITE);//TILE_COLOR_BACKGRUND
+        ScreenCoordinate::getInstance()->configScreen(back_size);
         data->reshDataByBackGrnd(back_layer);
         this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);
-#else 
+        _lowestPostion_y = visibleSize.height + origin.y - back_size.height - 6;//TODO::
+#else
         auto map = MapCreator::instance()->createMap(data->getMapData());
         Size map_size = map->getContentSize();
         ScreenCoordinate::getInstance()->configScreen(map_size);

@@ -183,5 +183,6 @@ enum{
 };
 
 #define TILE_COLOR_BACKGRUND Color4B(0x3E, 0xA5, 0xDD, 255)
+//Color4F((float)0x3E/0xff, (float)0xA5/0xff, (float)0xDD/0xff, 1),//back ground
 
 #endif /* __APPMACROS_H__ */

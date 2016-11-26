@@ -41,8 +41,8 @@ bool PopUpOkCancelDialog::init(){
         if ( !LayerColor::init() ) {
                 return false;
         }
-        Size s = this->getContentSize();
-        LayerColor::initWithColor(Color4B(255, 100, 100, 128), s.width, s.height);
+        Size s = this->_backGound->getContentSize();
+        LayerColor::initWithColor(Color4B(255, 0, 0, 255), s.width, s.height);
         
         _okButton = MenuItemImage::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
         Size ok_size = _okButton->getContentSize();

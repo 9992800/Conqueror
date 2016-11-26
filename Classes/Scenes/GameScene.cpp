@@ -52,6 +52,13 @@ bool GameScene::init()
         int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 6);
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         
+//        BaseDialogConfig config("胜利了!",
+//                                "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香");
+//        PopUpOkCancelDialog *dialog = PopUpOkCancelDialog::create(config,
+//                                                                  CC_CALLBACK_1(GameScene::gameOver, this, 1),
+//                                                                  CC_CALLBACK_1(GameScene::gameOver, this, 0));
+//        this->addChild(dialog, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
+        
         return true;
 }
 
@@ -61,10 +68,6 @@ void GameScene::initMapLayer(){
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         Vec2 center = origin + visibleSize / 2;
-
-//        auto back_ground = Sprite::create("starting_back.png");
-//        back_ground->setPosition(center);
-//        this->addChild(back_ground, ZORDER_BACK_GROUND);
         
         _theGameLogic = DiceGame::create();
         _theGameLogic->retain();        

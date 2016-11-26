@@ -13,15 +13,12 @@ PopUpBaseDialog::PopUpBaseDialog(BaseDialogConfig config):LayerColor::LayerColor
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         Vec2 center = origin + visibleSize / 2;
         Size  layer_size = visibleSize / 2;
-        this->setContentSize(layer_size);
-        this->setPosition(center);
-        this->setIgnoreAnchorPointForPosition(false);
-        this->setAnchorPoint(Vec2(0.5f, 0.5f));
+        this->setPosition(Vec2((visibleSize - layer_size) /2));
         
         _backGound = cocos2d::ui::Scale9Sprite::create(_baseConfig._backGroundImg);
         _backGound->setContentSize(layer_size);
         _backGound->setCapInsets(Rect(12, 12, 40, 40));
-        _backGound->setPosition(Vec2(layer_size/2));
+        _backGound->setPosition(layer_size/2);
         this->addChild(_backGound, 0, kTagBackGrd);
         
         

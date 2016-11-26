@@ -74,7 +74,7 @@ extern "C" {
 
 // to disable the use of localeconv(3), set PICOJSON_USE_LOCALE to 0
 #ifndef PICOJSON_USE_LOCALE
-# define PICOJSON_USE_LOCALE 1
+# define PICOJSON_USE_LOCALE 0
 #endif
 #if PICOJSON_USE_LOCALE
 extern "C" {

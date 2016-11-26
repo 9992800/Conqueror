@@ -947,8 +947,8 @@
 					"$(_COCOS_LIB_IOS_END)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellflower.Conqueror;
-				PROVISIONING_PROFILE = "a3174618-4f66-412e-9bea-c4abdc790e9c";
-				PROVISIONING_PROFILE_SPECIFIER = Conqueror_debug;
+				PROVISIONING_PROFILE = "308af586-b2ab-46e2-9b58-083043f8a891";
+				PROVISIONING_PROFILE_SPECIFIER = Conquero_debug_pro;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -990,8 +990,8 @@
 					"$(_COCOS_LIB_IOS_END)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellflower.Conqueror;
-				PROVISIONING_PROFILE = "2cea4210-8779-476f-92ca-d9a76e0eea0e";
-				PROVISIONING_PROFILE_SPECIFIER = Conqueror_release;
+				PROVISIONING_PROFILE = "308af586-b2ab-46e2-9b58-083043f8a891";
+				PROVISIONING_PROFILE_SPECIFIER = Conquero_debug_pro;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = 1;

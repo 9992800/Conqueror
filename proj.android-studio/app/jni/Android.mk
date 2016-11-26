@@ -40,8 +40,13 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/Common/PopUpOkCancelDialog.cpp \
                    ../../../Classes/Common/PopUpOkDialog.cpp \
                    ../../../Classes/Common/WebSocktUtil.cpp \
+                   ../../../Classes/Common/ModalDialog.cpp \
                    ../../../Classes/Network/FindPlayerScene.cpp \
-                   ../../../Classes/Network/BattleFieldScene.cpp
+                   ../../../Classes/Network/BattleFieldScene.cpp \
+                   ../../../Classes/Network/UserSessionBean.cpp \
+                   ../../../Classes/Network/OnlineGameData.cpp \
+                   ../../../Classes/Network/OnlineGameEngine.cpp \
+                   ../../../Classes/Network/BattleFieldBean.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes \
 					$(LOCAL_PATH)/../../../Classes/Common \

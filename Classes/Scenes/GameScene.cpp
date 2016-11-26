@@ -62,20 +62,20 @@ void GameScene::initMapLayer(){
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         Vec2 center = origin + visibleSize / 2;
 
-        auto back_ground = Sprite::create("starting_back.png");
-        back_ground->setPosition(center);
-        this->addChild(back_ground, ZORDER_BACK_GROUND);
+//        auto back_ground = Sprite::create("starting_back.png");
+//        back_ground->setPosition(center);
+//        this->addChild(back_ground, ZORDER_BACK_GROUND);
         
         _theGameLogic = DiceGame::create();
         _theGameLogic->retain();        
         auto data = _theGameLogic->initGameData(_playerNumber);
 #if 1
-        Size back_size = visibleSize+Size(10, 20);
-        auto back_layer = LayerColor::create(Color4B::WHITE);//TILE_COLOR_BACKGRUND
-        ScreenCoordinate::getInstance()->configScreen(back_size);
+        auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND);//TILE_COLOR_BACKGRUND  //Color4B::WHITE
+        back_layer->setContentSize(visibleSize+Size(10,10));
+        ScreenCoordinate::getInstance()->configScreen(visibleSize);
         data->reshDataByBackGrnd(back_layer);
         this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);
-        _lowestPostion_y = visibleSize.height + origin.y - back_size.height - 6;//TODO::
+        _lowestPostion_y = visibleSize.height + origin.y - visibleSize.height - 6;//TODO::
 #else
         auto map = MapCreator::instance()->createMap(data->getMapData());
         Size map_size = map->getContentSize();

@@ -10,7 +10,7 @@
 #include "MapCreator.hpp"
 #include "ScreenCoordinate.hpp"
 #include "base/CCAsyncTaskPool.h"
-
+#include "AppMacros.hpp"
 
 enum{
         HISTORY_STATUS_INIT = 1,
@@ -37,15 +37,24 @@ bool ReplayLast::init(){
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         
+#if DONT_USER_TILE_MAP
+        auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND);//TILE_COLOR_BACKGRUND  //Color4B::WHITE
+        back_layer->setContentSize(visibleSize+Size(10,10));
+        ScreenCoordinate::getInstance()->configScreen(visibleSize);
+        _gameData->reshDataByBackGrnd(back_layer);
+        this->addChild(back_layer, 0, 1);
+        _lowestPostion_y = visibleSize.height + origin.y - visibleSize.height - 6;//TODO::
+#else
         auto map = MapCreator::instance()->createMap(_gameData->getMapData());
         Size map_size = map->getContentSize();
         ScreenCoordinate::getInstance()->configScreen(map_size);
-        
         _gameData->reshDataByMapInfo(map);
-        
-        this->addChild(map, 0, 1);
-        
+        this->addChild(map, 0, 1);        
         _lowestPostion_y = visibleSize.height + origin.y - map_size.height - 6;//TODO::
+#endif
+        
+        
+        
         
         Director::getInstance()->setDepthTest(true);
         auto listener = EventListenerTouchAllAtOnce::create();
@@ -113,7 +122,22 @@ void ReplayLast::menuExit(Ref* pSender){
 
 
 void ReplayLast::resetHistoryData(){
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+#ifdef DONT_USER_TILE_MAP
+        auto layer = _gameData->_referedLayer;
+        layer->removeFromParentAndCleanup(true);
+        _gameData->release();
         
+        _gameData = GameData::createWithData(_clonedGameData);
+        _gameData->retain();
+        
+        layer = LayerColor::create(TILE_COLOR_BACKGRUND, visibleSize.width + 10, visibleSize.height + 20);
+        ScreenCoordinate::getInstance()->configScreen(visibleSize);
+        _gameData->reshDataByBackGrnd(layer);
+        
+        this->addChild(layer, 0, 1);
+        
+#else
         auto map  = _gameData->_refereMap;
         map->removeFromParentAndCleanup(true);
         _gameData->release();
@@ -127,7 +151,8 @@ void ReplayLast::resetHistoryData(){
         
         _gameData->reshDataByMapInfo(map);
         
-        this->addChild(map, 0, 1);
+        this->addChild(map, 0, 1);        
+#endif
         
 }
 void ReplayLast::menuStartShow(Ref* pSender){
@@ -176,7 +201,13 @@ void ReplayLast::playHistory(float delta){
         int res = _hisRes[_dataIdx];
         int from = _hisFrom[_dataIdx];
         int to = _hisTo[_dataIdx];
+        
+        
+#if DONT_USER_TILE_MAP
+        auto map = _gameData->_referedLayer;
+#else
         auto map = _gameData->_refereMap;
+#endif
         
         if (ATTACK_RES_GOTSUPPLY == res){
                 
@@ -210,6 +241,10 @@ void ReplayLast::playHistory(float delta){
                 
                 if (ATTACK_RES_WIN == res){
                         int new_owner = _gameData->_areaData[from]->getOwner();
+                        
+#if DONT_USER_TILE_MAP
+                        area_to->changeOwner(new_owner);
+#else
                         TMXLayer * layer = map->getLayer(LAYER_NAME_IN_TILE_MAP);
                         for (int j = 0; j < CEL_MAX; j++){
                                 if (to != _gameData->_cel[j]){
@@ -221,6 +256,8 @@ void ReplayLast::playHistory(float delta){
                                 layer->setTileGID(GamePlayer::getGid(new_owner), Vec2(row, col));
                         }
                         area_to->setOwner(new_owner);
+#endif
+                        
                         area_to->setDice(area_from->getDice() - 1);
                         area_to->updatePawn(map);
                         

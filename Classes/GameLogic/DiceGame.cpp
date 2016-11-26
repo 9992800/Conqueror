@@ -550,11 +550,20 @@ std::map<int, int> DiceGame::cleanUpBattleField(int res){
                 this->occupyArea(area_from->getOwner(), _data->_areaTo);
                 
                 area_to->setDice(area_from->getDice() - 1);
+#if DONT_USER_TILE_MAP
                 area_to->updatePawn(_data->_referedLayer);
+#else
+                area_to->updatePawn(_data->_refereMap);
+#endif
         }
         
         area_from->initDice();
+        
+#if DONT_USER_TILE_MAP
         area_from->updatePawn(_data->_referedLayer);
+#else
+        area_from->updatePawn(_data->_refereMap);
+#endif
         
         std::map<int, int> ok_area = std::map<int, int>();
         for (int i = 0; i < _data->_curPlayerNum; i++){
@@ -618,9 +627,13 @@ void DiceGame::starSupplyDice(CallFunc* callback){
         _historyRes.push_back(ATTACK_RES_GOTSUPPLY);
         for(std::set<int>::iterator it = affected_aread.begin(); it != affected_aread.end(); ++it){
                 AreaData* area = _data->_areaData[*it];
-                
+#if DONT_USER_TILE_MAP
                 area->updatePawn(_data->_referedLayer);
                 area->drawSupply(_data->_referedLayer);
+#else
+                area->updatePawn(_data->_refereMap);
+                area->drawSupply(_data->_refereMap);
+#endif
                 _historySup.push_back(Vec2(*it, area->getDice()));
         }
         _historyTo.push_back((int)_historySup.size());

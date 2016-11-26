@@ -69,9 +69,9 @@ void GameScene::initMapLayer(){
         _theGameLogic = DiceGame::create();
         _theGameLogic->retain();        
         auto data = _theGameLogic->initGameData(_playerNumber);
-#if 1
-        auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND);//TILE_COLOR_BACKGRUND  //Color4B::WHITE
-        back_layer->setContentSize(visibleSize+Size(10,10));
+#if DONT_USER_TILE_MAP
+        auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND, visibleSize.width + 10, visibleSize.height + 20);
+        //TILE_COLOR_BACKGRUND  //Color4B::WHITE
         ScreenCoordinate::getInstance()->configScreen(visibleSize);
         data->reshDataByBackGrnd(back_layer);
         this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);
@@ -199,17 +199,30 @@ void GameScene::tryAgain(){
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         Vec2 center = origin + visibleSize / 2;
         
-        auto old_map = this->getChildByTag(key_map_tag);
-        old_map->removeFromParentAndCleanup(true);
+        auto layer = this->getChildByTag(key_map_tag);
+        layer->removeFromParentAndCleanup(true);
         
         auto data = _theGameLogic->resetInitData();
+        
+#if DONT_USER_TILE_MAP
+        auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND, visibleSize.width + 10, visibleSize.height + 20);//TILE_COLOR_BACKGRUND  //Color4B::WHITE 
+        ScreenCoordinate::getInstance()->configScreen(visibleSize);
+        data->reshDataByBackGrnd(back_layer);
+        this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);
+
+#else        
         auto map = MapCreator::instance()->createMap(data->getMapData());
         Size map_size = map->getContentSize();
         ScreenCoordinate::getInstance()->configScreen(map_size);
         
         data->reshDataByMapInfo(map);
         
-        this->addChild(map, ZORDER_MAP_GROUND, key_map_tag); 
+        this->addChild(map, ZORDER_MAP_GROUND, key_map_tag);
+
+#endif
+        
+        
+        
         
         _startPlayMenuItem->setVisible(true);
         _endTurnMenuItem->setVisible(false);

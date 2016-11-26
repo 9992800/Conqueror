@@ -212,7 +212,11 @@ void AreaData::drawBorder(){
         }
         
         _drawNode->drawPoly(points, point_size, true, border_color);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         _drawNode->setLineWidth(3.f);
+#else
+        _drawNode->setLineWidth(5.f);
+#endif
 }
 
 

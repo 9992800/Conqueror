@@ -212,6 +212,7 @@ void AreaData::drawBorder(){
         }
         
         _drawNode->drawPoly(points, point_size, true, border_color);
+        _drawNode->setLineWidth(3.f);
 }
 
 
@@ -235,7 +236,7 @@ void AreaData::drawPolyGon(int owner){
                         points[i] = ScreenCoordinate::getInstance()->getCellPos(*it, i);
                 }
                 
-                _drawNode->drawPolygon(points, 6, fillColor, 0.4f, Color4F(0.0f,0.f,0.f,.5f));
+                _drawNode->drawPolygon(points, 6, fillColor, 0.5f, Color4F(0.0f,0.f,0.f,.5f));
         }
 }
  

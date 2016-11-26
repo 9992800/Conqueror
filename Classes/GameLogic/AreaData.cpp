@@ -16,11 +16,14 @@
 #include "json/rapidjson.h"
 #include "json/document.h"
 
-static Color4F _areaLineColor[] = {Color4F(1.0, 0.0, 0.0, 0.02),
-        Color4F(0.0, 1.0, 0.0, 0.02),Color4F(0.0, 0.0, 1.0, 0.02),
-        Color4F(1.0, 1.0, 0.0, 0.02),Color4F(0.0, 1.0, 1.0, 0.02),
-        Color4F(1.0, 0.0, 1.0, 0.02),Color4F(1.0, 1.0, 1.0, 0.02),
-        Color4F(0.0, 0.0, 0.0, 0.02)};
+static Color4F AreaBackGroundColors[] = {Color4F((float)0x3E/0xff, (float)0xA5/0xff, (float)0xDD/0xff, 1),//back ground
+        Color4F((float)0xD7/0xff, (float)0x45/0xff, (float)0x13/0xff, 1),
+        Color4F((float)0xE0/0xff, (float)0xE9/0xff, (float)0x83/0xff, 1),
+        Color4F((float)0x6F/0xff, (float)0xCF/0xff, (float)0x00/0xff, 1),
+        Color4F((float)0x84/0xff, (float)0x6F/0xff, (float)0xE0/0xff, 1),
+        Color4F((float)0xE0/0xff, (float)0x00/0xff, (float)0xBC/0xff, 1),
+        Color4F((float)0x44/0xff, (float)0x6F/0xff, (float)0x00/0xff, 1),
+        Color4F((float)0x6F/0xff, (float)0xA0/0xff, (float)0xE0/0xff, 1)};
 
 static Color4F border_color = Color4F(0.0, 0.0, 0.0, 1.0);
 static Color4F selected_color = Color4F(0.2, 0.0, 0.0, 0.7);
@@ -213,7 +216,7 @@ void AreaData::drawPolyGon(int owner){
         if (-1 == owner){
                 fillColor = selected_color;
         }else{
-                fillColor = _areaLineColor[_arm];
+                fillColor = AreaBackGroundColors[_arm + 1];
         }
         
         for (std::set<int>::iterator it = _cell_idxs.begin(); it != _cell_idxs.end(); ++it){
@@ -241,23 +244,23 @@ Sprite* AreaData::createSprite(){
 }
 
 
-void AreaData::drawSupply(TMXTiledMap* map){
+void AreaData::drawSupply(Node* back){
         //TODO::play Animation.
         
         std::string filename = "particles/ExplodingRing.plist";
         _emitter = ParticleSystemQuad::create(filename);
         _emitter->retain();
-        map->addChild(_emitter, 10);
+        back->addChild(_emitter, 10);
         Vec2 pos = ScreenCoordinate::getInstance()->getAreaCenterPos(_cpos);
         _emitter->setPosition(pos);
 }
 
-void AreaData::updatePawn(TMXTiledMap* map){
-        Sprite* sprite = (Sprite*)map->getChildByTag(AREA_TAG_ID_INMAP(_areaId));
+void AreaData::updatePawn(Node* back){
+        Sprite* sprite = (Sprite*)back->getChildByTag(AREA_TAG_ID_INMAP(_areaId));
         sprite->removeFromParent();
         
         sprite = this->createSprite();
-        map->addChild(sprite,AREA_SPRITE_ZORDER, AREA_TAG_ID_INMAP(_areaId));
+        back->addChild(sprite,AREA_SPRITE_ZORDER, AREA_TAG_ID_INMAP(_areaId));
 }
 
 std::string AreaData::serializeData(){

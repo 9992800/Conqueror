@@ -69,16 +69,23 @@ void GameScene::initMapLayer(){
         _theGameLogic = DiceGame::create();
         _theGameLogic->retain();        
         auto data = _theGameLogic->initGameData(_playerNumber);
-        
+#if 1
+        auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND);
+        ScreenCoordinate::getInstance()->configScreen(visibleSize);
+        data->reshDataByBackGrnd(back_layer);
+        this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);
+#else 
         auto map = MapCreator::instance()->createMap(data->getMapData());
         Size map_size = map->getContentSize();
         ScreenCoordinate::getInstance()->configScreen(map_size);
         
-        data->reshDataByMapInfo(map);       
+        data->reshDataByMapInfo(map);
         
         this->addChild(map, ZORDER_MAP_GROUND, key_map_tag);
         
         _lowestPostion_y = visibleSize.height + origin.y - map_size.height - 6;//TODO::
+#endif
+       
 }
 
 void GameScene::initControlLayer(){

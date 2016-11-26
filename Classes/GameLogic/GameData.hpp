@@ -61,6 +61,7 @@ public:
         
 public:
         void reshDataByMapInfo(TMXTiledMap* map);
+        void reshDataByBackGrnd(Node* backGrd);
 private:
         int                             _userId;
         int                             _curPlayerNum;
@@ -79,6 +80,7 @@ private:
         std::vector<int>                _chk;
 private:
         TMXTiledMap*                    _refereMap;
+        Node*                           _referedLayer;
 };
 
 #endif /* GameData_hpp */

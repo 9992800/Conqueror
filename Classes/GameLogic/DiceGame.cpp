@@ -550,11 +550,11 @@ std::map<int, int> DiceGame::cleanUpBattleField(int res){
                 this->occupyArea(area_from->getOwner(), _data->_areaTo);
                 
                 area_to->setDice(area_from->getDice() - 1);
-                area_to->updatePawn(_data->_refereMap);
+                area_to->updatePawn(_data->_referedLayer);
         }
         
         area_from->initDice();
-        area_from->updatePawn(_data->_refereMap);
+        area_from->updatePawn(_data->_referedLayer);
         
         std::map<int, int> ok_area = std::map<int, int>();
         for (int i = 0; i < _data->_curPlayerNum; i++){
@@ -619,8 +619,8 @@ void DiceGame::starSupplyDice(CallFunc* callback){
         for(std::set<int>::iterator it = affected_aread.begin(); it != affected_aread.end(); ++it){
                 AreaData* area = _data->_areaData[*it];
                 
-                area->updatePawn(_data->_refereMap);
-                area->drawSupply(_data->_refereMap);
+                area->updatePawn(_data->_referedLayer);
+                area->drawSupply(_data->_referedLayer);
                 _historySup.push_back(Vec2(*it, area->getDice()));
         }
         _historyTo.push_back((int)_historySup.size());
@@ -631,19 +631,20 @@ void DiceGame::starSupplyDice(CallFunc* callback){
 
 void DiceGame::occupyArea(int newOwner, int area){
         
-        TMXLayer * layer = _data->_refereMap->getLayer(LAYER_NAME_IN_TILE_MAP);
-        GamePlayer* player = _data->_player[newOwner];
-        
-        for (int j = 0; j < CEL_MAX; j++){
-                if (area != _data->_cel[j]){
-                        continue;
-                }
-                
-                int col = j / XMAX;
-                int row = j % XMAX;
-                
-                layer->setTileGID(player->getGid(), Vec2(row, col));
-        }
+//TODO::
+//        TMXLayer * layer = _data->_refereMap->getLayer(LAYER_NAME_IN_TILE_MAP);
+//        GamePlayer* player = _data->_player[newOwner];
+//        
+//        for (int j = 0; j < CEL_MAX; j++){
+//                if (area != _data->_cel[j]){
+//                        continue;
+//                }
+//                
+//                int col = j / XMAX;
+//                int row = j % XMAX;
+//                
+//                layer->setTileGID(player->getGid(), Vec2(row, col));
+//        }
         
         _data->_areaData[area]->setOwner(newOwner);
 }

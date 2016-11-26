@@ -107,9 +107,9 @@ public:
         
         inline int getAreaId(){return _areaId;}
         
-        void drawSupply(TMXTiledMap* map);
+        void drawSupply(Node* map);
         
-        void updatePawn(TMXTiledMap*);
+        void updatePawn(Node*);
         
         std::string serializeData();
         

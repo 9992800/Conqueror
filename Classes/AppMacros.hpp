@@ -182,4 +182,6 @@ enum{
         BATTLE_FIELD_ROLE_JOINER
 };
 
+#define TILE_COLOR_BACKGRUND Color4B(0x3E, 0xA5, 0xDD, 255)
+
 #endif /* __APPMACROS_H__ */

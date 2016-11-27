@@ -37,6 +37,7 @@ PopUpOkCancelDialog::PopUpOkCancelDialog(BaseDialogConfig config):PopUpBaseDialo
 PopUpOkCancelDialog::~PopUpOkCancelDialog(){
         
 }
+
 bool PopUpOkCancelDialog::init(){
         if ( !LayerColor::init() ) {
                 return false;
@@ -46,11 +47,20 @@ bool PopUpOkCancelDialog::init(){
         
         _okButton = MenuItemImage::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
         Size ok_size = _okButton->getContentSize();
-        _okButton->setPosition(Vec2(s.width / 2 - ok_size.width,  ok_size.height / 2 + 30));
+        float button_gap = s.width * 0.2;
+        _okButton->setPosition(Vec2(s.width / 2 - button_gap,  ok_size.height / 2 + 30));
+        
+        _okLabel = Label::createWithSystemFont("OK", "", 24);
+        _okButton->addChild(_okLabel);
+        _okLabel->setPosition(Vec2(ok_size / 2));
         
         _cancelButton = MenuItemImage::create("DIALOG_CANCEL.png", "DIALOG_CANCEL_SEL.png");
         Size cancel_size = _cancelButton->getContentSize();
-        _cancelButton->setPosition(Vec2(s.width / 2 + cancel_size.width, cancel_size.height / 2 + 30));
+        _cancelButton->setPosition(Vec2(s.width / 2 + button_gap, cancel_size.height / 2 + 30));
+        
+        _cancelLabel = Label::createWithSystemFont("Cancel", "", 24);
+        _cancelButton->addChild(_cancelLabel);
+        _cancelLabel->setPosition(Vec2(cancel_size / 2));
         
         auto menu = Menu::create(_okButton, _cancelButton, nullptr);
         menu->setPosition(Vec2::ZERO);

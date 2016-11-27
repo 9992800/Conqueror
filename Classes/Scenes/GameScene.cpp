@@ -51,12 +51,13 @@ bool GameScene::init()
         
         int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 6);
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
-        
+        //DIALOG_SIZE_TYPE_MIDDLE
 //        BaseDialogConfig config("胜利了!",
-//                                "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香");
+//                                "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香",DIALOG_SIZE_TYPE_BIG);
 //        PopUpOkCancelDialog *dialog = PopUpOkCancelDialog::create(config,
 //                                                                  CC_CALLBACK_1(GameScene::gameOver, this, 1),
 //                                                                  CC_CALLBACK_1(GameScene::gameOver, this, 0));
+//        dialog->setButtonTittle("重玩","退出");
 //        this->addChild(dialog, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
         
         return true;
@@ -361,6 +362,7 @@ void GameScene::menuExit(Ref* pSender){
         PopUpOkCancelDialog *dialog = PopUpOkCancelDialog::create(config,
                                                                   CC_CALLBACK_1(GameScene::gameExit, this, 1),
                                                                   CC_CALLBACK_1(GameScene::gameExit, this, 0));
+        dialog->setButtonTittle("退出","取消");
         this->addChild(dialog, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
 }
 

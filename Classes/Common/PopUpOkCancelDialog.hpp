@@ -19,11 +19,17 @@ public:
         static PopUpOkCancelDialog* create(BaseDialogConfig config);
         static PopUpOkCancelDialog*  create(BaseDialogConfig config, ccMenuCallback callback1, ccMenuCallback callback2);
         void setCallBack(ccMenuCallback callback1, ccMenuCallback callback2);
+        inline void setButtonTittle(std::string o, std::string c){
+                _okLabel->setString(o);
+                _cancelLabel->setString(c);
+        }
 private:
-        ccMenuCallback _okCallback;
-        ccMenuCallback _cancelCallback;
-        MenuItemImage *_okButton;
-        MenuItemImage *_cancelButton;
+        ccMenuCallback  _okCallback;
+        ccMenuCallback  _cancelCallback;
+        MenuItemImage   *_okButton;
+        MenuItemImage   *_cancelButton;
+        Label           *_okLabel;
+        Label           *_cancelLabel;
 };
 
 #endif /* PopUpOkCancelDialog_hpp */

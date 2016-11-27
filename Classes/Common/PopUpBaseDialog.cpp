@@ -13,6 +13,22 @@ PopUpBaseDialog::PopUpBaseDialog(BaseDialogConfig config):LayerColor::LayerColor
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         Vec2 center = origin + visibleSize / 2;
         Size  layer_size = visibleSize / 2;
+        switch (_baseConfig._sizeType) {
+                case DIALOG_SIZE_TYPE_EMPTY:
+                        layer_size = Size(visibleSize.width / 3, visibleSize.height / 4);
+                        break;
+                case DIALOG_SIZE_TYPE_SMALL:
+                        layer_size = visibleSize / 3;
+                        break;
+                default:
+                case DIALOG_SIZE_TYPE_MIDDLE:
+                        layer_size = visibleSize / 2;
+                        break;
+                case DIALOG_SIZE_TYPE_BIG:
+                        layer_size = visibleSize * 0.8;
+                        break;
+        }
+        
         this->setPosition(Vec2((visibleSize - layer_size) /2));
         
         _backGound = cocos2d::ui::Scale9Sprite::create(_baseConfig._backGroundImg);

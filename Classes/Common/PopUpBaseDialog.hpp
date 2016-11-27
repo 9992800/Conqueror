@@ -20,6 +20,12 @@ enum{
         kTagContent,
         kTagOkButton
 };
+enum{
+        DIALOG_SIZE_TYPE_EMPTY=0,
+        DIALOG_SIZE_TYPE_SMALL,
+        DIALOG_SIZE_TYPE_MIDDLE,
+        DIALOG_SIZE_TYPE_BIG,
+};
 
 typedef struct BaseDialogConfig_tg {
         std::string     _backGroundImg;
@@ -29,6 +35,7 @@ typedef struct BaseDialogConfig_tg {
         int             _contentFontSize;
         int             _padding;
         int             _paddingTop;
+        int             _sizeType;
         BaseDialogConfig_tg(std::string title, std::string content){
                 _title = title;
                 _content = content;
@@ -37,6 +44,19 @@ typedef struct BaseDialogConfig_tg {
                 _contentFontSize = 20;
                 _padding = 50;
                 _paddingTop = 30;
+                _sizeType = DIALOG_SIZE_TYPE_SMALL;
+        }
+        
+        BaseDialogConfig_tg(std::string title, std::string content, int sizeType){
+                _title = title;
+                _content = content;
+                _backGroundImg = "DIALOG_BACKGROUND.png";
+                _titleFontSize = 20;
+                _contentFontSize = 20;
+                _padding = 50;
+                _paddingTop = 30;
+                _sizeType = DIALOG_SIZE_TYPE_SMALL;
+                _sizeType = sizeType;
         }
         
         
@@ -46,6 +66,7 @@ typedef struct BaseDialogConfig_tg {
                 _contentFontSize = 20;
                 _padding = 50;
                 _paddingTop = 30;
+                _sizeType = DIALOG_SIZE_TYPE_EMPTY;
         }
         void setTitle(std::string t){
                 _title = t;

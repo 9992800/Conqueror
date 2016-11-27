@@ -49,17 +49,9 @@ bool GameScene::init()
         
         this->initAnimationLayer();
         
-        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 6);
-        Director::getInstance()->getScheduler()->setTimeScale(game_speed);
+        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 2);
+        Director::getInstance()->getScheduler()->setTimeScale(game_speed);//TODO::
         //DIALOG_SIZE_TYPE_MIDDLE
-//        BaseDialogConfig config("胜利了!",
-//                                "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香",DIALOG_SIZE_TYPE_BIG);
-//        PopUpOkCancelDialog *dialog = PopUpOkCancelDialog::create(config,
-//                                                                  CC_CALLBACK_1(GameScene::gameOver, this, 1),
-//                                                                  CC_CALLBACK_1(GameScene::gameOver, this, 0));
-//        dialog->setButtonTittle("重玩","退出");
-//        this->addChild(dialog, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
-        
         return true;
 }
 
@@ -132,12 +124,43 @@ void GameScene::initControlLayer(){
 void GameScene::initAnimationLayer(){
         _animationLayer = Layer::create();
         
+        auto frameCache = SpriteFrameCache::getInstance();
+        frameCache->addSpriteFramesWithFile("anim/renwu_run.plist");
+        
+        Vector<SpriteFrame*> animFrames(10);
+        char str[100] = {0};
+        for(int i = 1; i < 10; i++){
+                sprintf(str, "zhanshi%04d.png",i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        
+        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        
+        // Add an animation to the Cache
+        AnimationCache::getInstance()->addAnimation(animation, "renwu_run");
+        
+        _tamara = Sprite::create();
+        auto frame = frameCache->getSpriteFrameByName("zhanshi0001.png");
+        _tamara->setSpriteFrame(frame);
+        
+#if 0
         _tamara = Sprite::create("anim/grossinis_sister1.png");
+#endif
         _tamara->setPosition(Vec2(100, 100));
         _animationLayer->addChild(_tamara);
-        _tamara->setVisible(false);
+//        _tamara->setVisible(false);
+
         
         this->addChild(_animationLayer, ZORDER_ANIM_LAYER, key_anim_layer_tag);
+}
+
+
+GameScene::~GameScene(){
+        _theGameLogic->release();
+        
+        auto frameCache = SpriteFrameCache::getInstance();
+        frameCache->removeSpriteFramesFromFile("anim/renwu_run.plist");
 }
 
 #pragma mark - touch and menu event
@@ -236,7 +259,7 @@ void GameScene::tryAgain(){
 
 void GameScene::afterPlayerBattle(int result){
         _isPalyingAnim = false;
-        _tamara->setVisible(false);
+//        _tamara->setVisible(false);
         std::map<int, int> survival = _theGameLogic->cleanUpBattleField(result);
         if (survival.size() == 1){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_WIN);
@@ -315,8 +338,9 @@ void GameScene::playBattleAnimation(int res, CallFunc* callback){
                 _isPalyingAnim = true;
                 
                 auto cache = AnimationCache::getInstance();
-                cache->addAnimationsWithFile("anim/animations-2.plist");
-                auto animation2 = cache->getAnimation("dance_1");
+                auto animation2 = cache->getAnimation("renwu_run");
+                animation2->setRestoreOriginalFrame(true);
+
                 auto action2 = Animate::create(animation2);
                 
                 Sequence*  s = Sequence::create(action2, callback, nullptr);

@@ -27,10 +27,7 @@ public:
                 _gameLevel = level;
                 _playerNumber = level + 1;
         }     
-        
-        ~GameScene(){
-                _theGameLogic->release();
-        }
+        ~GameScene();
         
 private:
         void initMapLayer();

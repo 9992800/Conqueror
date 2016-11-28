@@ -369,10 +369,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
                               origin.y + visibleSize.height - coins_show->getContentSize().height);
         coins_show->setPosition(coins_pos);
         
-        auto coins_back = LayerColor::create(Color4B::GRAY);
-        coins_back->setIgnoreAnchorPointForPosition(false);
-        coins_back->setAnchorPoint(Vec2(0.5, 0.5));
-        coins_back->setContentSize(Size(100, 40));
+        auto coins_back = Sprite::create("level/coind_back.png");
         Vec2 coins_back_pos = Vec2(coins_pos.x - 60, coins_pos.y);
         coins_back->setPosition(coins_back_pos);
         _coinsNum = 100;//查询消费记录 apple
@@ -396,10 +393,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         Vec2 dices_pos = Vec2(add_coins_pos.x - 100, coins_pos.y);
         dices_show->setPosition(dices_pos);
         
-        auto dices_back = LayerColor::create(Color4B::GRAY);
-        dices_back->setIgnoreAnchorPointForPosition(false);
-        dices_back->setAnchorPoint(Vec2(0.5, 0.5));
-        dices_back->setContentSize(Size(100, 40));
+        auto dices_back = Sprite::create("level/coind_back.png");
         Vec2 dices_back_pos = Vec2(dices_pos.x - 60, dices_pos.y);
         dices_back->setPosition(dices_back_pos);
         _dicesNum = 100;//查询消费记录 apple

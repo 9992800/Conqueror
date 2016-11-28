@@ -106,7 +106,7 @@ bool LevelSelect::init()
         
         this->loadLevelSelectedBackGround();
         
-        this->initActionListener();
+//        this->initActionListener();
         
         this->initButtons(origin, visibleSize);
         
@@ -138,33 +138,26 @@ bool LevelSelect::init()
 }
 
 void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
-       
         
-        _levelShowBackGround = LayerColor::create(Color4B::ORANGE);
-        _levelShowBackGround->setIgnoreAnchorPointForPosition(false);
-        _levelShowBackGround->setAnchorPoint(Vec2(0.5, 0.5));
+        auto level_back_1 = Button::create("level/players_back.png");
+        Size leve1_size = level_back_1->getContentSize();
+        float left_tap = leve1_size.width;
         
         auto leve1_1 = Sprite::create("level/2player.png");
-        Size leve1_1_size = leve1_1->getContentSize();
-        float left_tap = leve1_1_size.width;
+        leve1_1->setPosition(leve1_size / 2);
+        level_back_1->addChild(leve1_1);
         
-        Size back_size = Size(left_tap * 8 + leve1_1_size.width * 7, visibleSize.height / 2);
-        _levelShowBackGround->setContentSize(back_size);
-        _mostRight = Vec2(center.x + (back_size.width - visibleSize.width) / 2 ,center.y);
-        _mostLeft  = Vec2(center.x - (back_size.width - visibleSize.width) / 2 ,center.y);
-        _levelShowBackGround->setPosition(_mostRight);
+        Vec2 level_1_pos  = Vec2(left_tap + leve1_size.width / 2, visibleSize.height / 4);
+        level_back_1->setPosition(level_1_pos);
+        this->addChild(level_back_1, ZORDER_ITEM_SHOW, kLevelShowLevel1Tag);
         
-        float c = back_size.height / 2;
-        
-        Vec2 level_1_pos  = Vec2(left_tap + leve1_1_size.width / 2, c);
-        leve1_1->setPosition(level_1_pos);
-        _levelShowBackGround->addChild(leve1_1, ZORDER_ITEM_SHOW, kLevelShowLevel1Tag);
-        
+        auto level_back_2 = level_back_1->clone();
         auto leve1_2 = Sprite::create("level/3player.png");
-        Size level_2_size = leve1_2->getContentSize();
-        Vec2 level_2_pos  = Vec2(level_1_pos.x + left_tap + level_2_size.width, c);
-        leve1_2->setPosition(level_2_pos);
-        _levelShowBackGround->addChild(leve1_2, ZORDER_ITEM_SHOW, kLevelShowLevel2Tag);
+        leve1_2->setPosition(leve1_size / 2);
+        level_back_2->addChild(leve1_2);
+        Vec2 level_2_pos  = Vec2(level_1_pos.x + left_tap + leve1_size.width / 2, visibleSize.height / 4);
+        level_back_2->setPosition(level_2_pos);
+        this->addChild(level_back_2, ZORDER_ITEM_SHOW, kLevelShowLevel2Tag);
         
         auto level_3 = Sprite::create("level/4player.png");
         Size level_3_size = level_3->getContentSize();
@@ -325,12 +318,12 @@ void LevelSelect::loadLevelSelectedBackGround(){
 }
 
 
-void LevelSelect::initActionListener(){
-        auto listener = EventListenerTouchOneByOne::create();
-        listener->onTouchMoved = CC_CALLBACK_2(LevelSelect::onTouchesMoved, this);
-        listener->onTouchBegan = CC_CALLBACK_2(LevelSelect::onTouchBegan, this);
-        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-}
+//void LevelSelect::initActionListener(){
+//        auto listener = EventListenerTouchOneByOne::create();
+//        listener->onTouchMoved = CC_CALLBACK_2(LevelSelect::onTouchesMoved, this);
+//        listener->onTouchBegan = CC_CALLBACK_2(LevelSelect::onTouchBegan, this);
+//        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+//}
 
 void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         
@@ -580,17 +573,17 @@ void LevelSelect::menuSoundControl(Ref* btn){
         }
 }
 
-void LevelSelect::onTouchesMoved(Touch* touch, Event* event){        
-        auto diff = touch->getDelta();
-        diff.y = 0;
-        auto current_pos = _levelShowBackGround->getPosition();
-        auto want_to_be = current_pos + diff;
-        
-        if (want_to_be.x < _mostLeft.x || want_to_be.x > _mostRight.x){
-                return;
-        }
-        _levelShowBackGround->setPosition(want_to_be);
-}
+//void LevelSelect::onTouchesMoved(Touch* touch, Event* event){        
+//        auto diff = touch->getDelta();
+//        diff.y = 0;
+//        auto current_pos = _levelShowBackGround->getPosition();
+//        auto want_to_be = current_pos + diff;
+//        
+//        if (want_to_be.x < _mostLeft.x || want_to_be.x > _mostRight.x){
+//                return;
+//        }
+//        _levelShowBackGround->setPosition(want_to_be);
+//}
 
 
 #pragma mark - loading bar

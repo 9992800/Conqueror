@@ -32,8 +32,8 @@ public:
         void update(float delta)override;
         virtual void onExit()override;
         
-        void onTouchesMoved(Touch*, Event* event);
-        bool onTouchBegan(Touch*, Event*)override{return true;}
+//        void onTouchesMoved(Touch*, Event* event);
+//        bool onTouchBegan(Touch*, Event*)override{return true;}
         
 protected:
         void menuSelectLevel(Ref* btn, int num);
@@ -51,7 +51,7 @@ private:
         void loadLevelShow(Vec2 center, Size visibleSize);
         void setSelectLevelBackPos();
         void loadLevelSelectedBackGround();
-        void initActionListener();
+//        void initActionListener();
         
         void initButtons(Vec2 center, Size visibleSize);
         
@@ -79,7 +79,6 @@ private:
         Vec2            _mostRight, _mostLeft;
         LoadingBar*     _loadingBar;
         LayerColor*     _selectedBackGround;
-        LayerColor*     _levelShowBackGround;
         Sprite*         _loadingBarBack;
         MenuItemImage*  _soundCtrl;
         MenuItemImage*  _historyPlayItem;

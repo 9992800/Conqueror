@@ -31,6 +31,7 @@ public:
 private:
         int _count = 0;
         LoadingBar* _loadingBar;
+        Sprite* _loadingBarBack;
 };
 
 

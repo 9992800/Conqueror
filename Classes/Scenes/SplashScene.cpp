@@ -44,12 +44,16 @@ bool Splash::init()
         
         Vec2 pos = Vec2(visibleSize.width / 2 + origin.x, origin.y + visibleSize.height / 6);
         _loadingBar->setPosition(pos);
-        this->addChild(_loadingBar, 1);
+        this->addChild(_loadingBar, 2);
+        
+        _loadingBarBack = Sprite::create("sliderProgress_back.png");
+        _loadingBarBack->setPosition(pos);
+        this->addChild(_loadingBarBack, 1);
         
         Size bar_size = _loadingBar->getContentSize();
         auto label = Label::createWithTTF("Loading", "fonts/Marker Felt.ttf", 24);
         label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
-        this->addChild(label, 2);
+        this->addChild(label, 3);
         
         return true;
 }

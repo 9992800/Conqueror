@@ -84,6 +84,7 @@
 		7C4DA6AA1DE44548001CC255 /* battle_field.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DA6A91DE44548001CC255 /* battle_field.png */; };
 		7C4DA6AF1DE6A7EB001CC255 /* deault_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DA6AE1DE6A7EB001CC255 /* deault_avatar.png */; };
 		7C4DA6B21DE82466001CC255 /* SpriteEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C4DA6B01DE82466001CC255 /* SpriteEx.cpp */; };
+		7C558EB91DEC1D52007722D7 /* sliderProgress_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EB81DEC1D52007722D7 /* sliderProgress_back.png */; };
 		7C67A7B51DD1BE6B004B5151 /* WebSocktUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */; };
 		7C6E7FFD1DD94F5300C5E374 /* ReplayLastScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */; };
 		7C6E80001DD9575A00C5E374 /* history.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFF1DD9575A00C5E374 /* history.png */; };
@@ -271,6 +272,7 @@
 		7C4DA6AE1DE6A7EB001CC255 /* deault_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deault_avatar.png; sourceTree = "<group>"; };
 		7C4DA6B01DE82466001CC255 /* SpriteEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteEx.cpp; sourceTree = "<group>"; };
 		7C4DA6B11DE82466001CC255 /* SpriteEx.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpriteEx.hpp; sourceTree = "<group>"; };
+		7C558EB81DEC1D52007722D7 /* sliderProgress_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sliderProgress_back.png; sourceTree = "<group>"; };
 		7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocktUtil.cpp; sourceTree = "<group>"; };
 		7C67A7B41DD1BE6B004B5151 /* WebSocktUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocktUtil.hpp; sourceTree = "<group>"; };
 		7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReplayLastScene.cpp; sourceTree = "<group>"; };
@@ -488,6 +490,7 @@
 				BBBA8DD31DCCE3C6006A6471 /* NextButton.png */,
 				BBBA8DD41DCCE3C6006A6471 /* start.png */,
 				7C21A0DB1DC9C06C0035ECC6 /* sliderProgress.png */,
+				7C558EB81DEC1D52007722D7 /* sliderProgress_back.png */,
 				7C733B181DC990E200098EDD /* iphone5 */,
 				7C733B191DC990E200098EDD /* iphone6 */,
 				7C733B1A1DC990E200098EDD /* iphone6p */,
@@ -797,6 +800,7 @@
 				BBC12E501DCDFC470035A571 /* sdkbox_config.json in Resources */,
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				7C4DA6AF1DE6A7EB001CC255 /* deault_avatar.png in Resources */,
+				7C558EB91DEC1D52007722D7 /* sliderProgress_back.png in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				7C21A0DC1DC9C06C0035ECC6 /* sliderProgress.png in Resources */,
 				BB62DFD31DCD9E7A0037DE0A /* anim in Resources */,

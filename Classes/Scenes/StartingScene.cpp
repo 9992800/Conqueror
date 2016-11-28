@@ -5,11 +5,6 @@
 #include "GameHelpScene.hpp"
 #include "FindPlayerScene.hpp"
 #include "UserSessionBean.hpp"
-#include "editor-support/cocostudio/CocoStudio.h"
-
-using namespace cocos2d::ui;
-using namespace cocostudio;
-using namespace cocostudio::timeline;
 
 using namespace CocosDenshion;
 
@@ -79,22 +74,6 @@ bool Starting::init()
         auto menu = Menu::create(_startGame, _soundCtrl, _helpBtn, share_it, _onlineBattle, NULL);
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, 2);
-        
-        
-        FileUtils::getInstance()->addSearchPath("anim");
-        std::string filename = "hailang.csb";
-        Node* node = CSLoader::createNode(filename);
-        node->setPosition(Vec2(visibleSize/4));
-        
-        // create the animation and add it to the node
-        cocostudio::timeline::ActionTimeline* action =
-        CSLoader::createTimeline(filename);
-        node->runAction(action);
-        
-        // start the animation (and enable loop)
-        action->gotoFrameAndPlay(0, true);
-        
-        this->addChild(node, 100);
         
         return true;
 }

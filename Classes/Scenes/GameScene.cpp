@@ -49,7 +49,7 @@ bool GameScene::init()
         
         this->initAnimationLayer();
         
-        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 2);
+        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);//TODO::
         //DIALOG_SIZE_TYPE_MIDDLE
         return true;
@@ -63,15 +63,17 @@ void GameScene::initMapLayer(){
         Vec2 center = origin + visibleSize / 2;
         
         _theGameLogic = DiceGame::create();
-        _theGameLogic->retain();        
+        _theGameLogic->retain();
+        
         auto data = _theGameLogic->initGameData(_playerNumber);
 #if DONT_USER_TILE_MAP
+        
         auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND, visibleSize.width + 10, visibleSize.height + 20);
         //TILE_COLOR_BACKGRUND  //Color4B::WHITE
         ScreenCoordinate::getInstance()->configScreen(visibleSize);
         data->reshDataByBackGrnd(back_layer);
         this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);
-        _lowestPostion_y = visibleSize.height + origin.y - visibleSize.height - 6;//TODO::
+        _lowestPostion_y = visibleSize.height + origin.y - visibleSize.height - 6;//TODO::         
 #else
         auto map = MapCreator::instance()->createMap(data->getMapData());
         Size map_size = map->getContentSize();

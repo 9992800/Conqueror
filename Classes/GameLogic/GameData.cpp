@@ -7,6 +7,11 @@
 //
 
 #include "GameData.hpp"
+#include "ScreenCoordinate.hpp"
+#include "editor-support/cocostudio/CocoStudio.h"
+using namespace cocos2d::ui;
+using namespace cocostudio;
+using namespace cocostudio::timeline;
 
 GameData::GameData(int n):_curPlayerNum(n),_userId(0),
 _gameStatus(GAME_STATUS_INIT),_ban(0),_areaFrom(AREA_UNSELECTED),
@@ -134,6 +139,44 @@ void GameData::reshDataByBackGrnd(Node* backGrd){
                 }
                 Sprite* dice = area->createSprite();
                 backGrd->addChild(dice, AREA_SPRITE_ZORDER, AREA_TAG_ID_INMAP(i));
+        }
+        
+        
+        FileUtils::getInstance()->addSearchPath("anim");
+        std::string filename = "hailang.csb";
+//        Node* node = CSLoader::createNode(filename);
+        cocostudio::timeline::ActionTimeline* action =
+        CSLoader::createTimeline(filename);
+        
+        
+        for (int i = 0; i < CEL_MAX; i++){
+                if (this->_cel[i] != 0 ){
+                        continue;
+                }
+                
+                bool is_shore = false;
+                JoinData * join_data = _join[i];
+                for (int k = 0; k < DIR_INAREA; k++){
+                        int cell_idx = join_data->getJoinDir(k);
+                        if (this->_cel[cell_idx] > 0){
+                                is_shore = true;
+                                break;
+                        }
+                }
+                if (!is_shore){
+                        continue;
+                }
+                
+                Vec2 pos = ScreenCoordinate::getInstance()->getCellPos2(i);
+                Node* node = CSLoader::createNode(filename);
+                auto action_cop = action->clone();
+                
+                node->setPosition(pos);
+                
+                node->runAction(action_cop);
+                action_cop->gotoFrameAndPlay(0, true);
+                
+                backGrd->addChild(node);
         }
 }
 

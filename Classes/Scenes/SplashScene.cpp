@@ -11,7 +11,8 @@
 #include "SimpleAudioEngine.h"
 #include "AppMacros.hpp"
 #include "GamePayUtil.hpp"
-#include "PopUpOkCancelDialog.hpp" 
+#include "PopUpOkCancelDialog.hpp"
+#include "LevelSelectScene.hpp"
 
 #pragma makr - init scene
 Scene* Splash::createScene()
@@ -66,28 +67,28 @@ void Splash::onEnter(){
         scheduleUpdate();
         
         CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_START_GAME);
-        _count += 5;
+        _count += 1;
         
         CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_WIN);
-        _count += 5;
+        _count += 1;
         
         CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_DEFEAT);
-        _count += 5;
+        _count += 1;
         
         CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_SELECTED);
-        _count += 5;
+        _count += 1;
 
         CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_DROP_DICE);
-        _count += 5;
+        _count += 1;
         
         CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_SUPPLY);
-        _count += 5;
+        _count += 1;
         
         CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_FINISH_LOSE);
-        _count += 5;
+        _count += 1;
         
         CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_FINISH_WIN);
-        _count += 5;
+        _count += 1;
         
         bool is_effect_on = UserDefault::getInstance()->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
         if (is_effect_on){
@@ -96,7 +97,7 @@ void Splash::onEnter(){
                 CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.f);
         }
         
-        _count += 5;
+        _count += 1;
 }
 
 void Splash::update(float delta){
@@ -104,8 +105,11 @@ void Splash::update(float delta){
         if (_count < 100)
                 _count += 1 ;
         else{
-                auto starting = Starting::createScene();
-                Director::getInstance()->replaceScene(starting);
+//                auto starting = Starting::createScene();
+//                Director::getInstance()->replaceScene(starting);
+                
+                auto main = LevelSelect::createScene();
+                Director::getInstance()->replaceScene(main);
         }
         
         _loadingBar->setPercent(_count);

@@ -90,12 +90,17 @@ void Starting::menuStartGame(Ref* pSender){
         
         Vec2 pos = Vec2(visibleSize.width / 2 + origin.x, origin.y + visibleSize.height / 6);
         _loadingBar->setPosition(pos);
-        this->addChild(_loadingBar, 3);
+        this->addChild(_loadingBar, 4);
+        
         
         Size bar_size = _loadingBar->getContentSize();
         auto label = Label::createWithTTF("Loading", "fonts/Marker Felt.ttf", 24);
         label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
-        this->addChild(label, 2);
+        this->addChild(label, 5);
+        
+        auto loading_back = Sprite::create("sliderProgress_back.png");
+        loading_back->setPosition(pos);
+        this->addChild(loading_back, 3);
         
         scheduleUpdate();
 }
@@ -162,7 +167,7 @@ void Starting::menuOnlineBattle(Ref* pSender){
 void Starting::update(float delta){
         
         if (_count < 100)
-                _count += 10;
+                _count += 1;
         else{
                 auto level = LevelSelect::createScene();
                 Director::getInstance()->pushScene(level);

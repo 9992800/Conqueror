@@ -34,6 +34,7 @@ enum{
         kLevelShowLevel7Tag = 8,
         key_loading_bar1,
         key_loading_bar2,
+        key_loading_bar3,
         kLevelBuyMenuTag,
         kLevel4BuyBtnTag,
         kLevel5BuyBtnTag,
@@ -126,6 +127,12 @@ bool LevelSelect::init()
         _loadingBar->addChild(label, 4, key_loading_bar2);
         this->addChild(_loadingBar, 3, key_loading_bar1);
         _loadingBar->setVisible(false);
+        
+        _loadingBarBack = Sprite::create("sliderProgress_back.png");
+        _loadingBarBack->setPosition(pos);
+        this->addChild(_loadingBarBack, 2, key_loading_bar3);
+        _loadingBarBack->setVisible(false);
+
         
         return true;
 }
@@ -430,11 +437,10 @@ void LevelSelect::menuBuyLevel(Ref* btn, std::string name){
 }
 
 void LevelSelect::menuStartGame(Ref* btn){
+        _count = 0;
         _loadingBar->setVisible(true);
+        _loadingBarBack->setVisible(true);
         scheduleUpdate();
-        
-        auto scene = GameScene::createScene(_lastLevel);
-        Director::getInstance()->pushScene(scene); 
 }
 
 void LevelSelect::menuShowSettigns(Ref* btn){
@@ -541,6 +547,7 @@ void LevelSelect::menuPlayHistory(Ref* pSender){
         }
         scheduleUpdate();
         _loadingBar->setVisible(true);
+        _loadingBarBack->setVisible(true);
         std::function<void(void*)> callback_area = CC_CALLBACK_1(LevelSelect::afterParseArea, this);
         GameData* gameData = GameData::create(player_num);
         gameData->retain();
@@ -605,12 +612,17 @@ void LevelSelect::onEnter(){
 void LevelSelect::update(float delta){
         
         if (_count < 100)
-                _loadingBar->setPercent(_count);
+                _loadingBar->setPercent(++_count);
+        else{
+                auto scene = GameScene::createScene(_lastLevel);
+                Director::getInstance()->pushScene(scene);
+        }
 }
 
 void LevelSelect::onExit(){
         Layer::onExit();
         _loadingBar->setVisible(false);
+        _loadingBarBack->setVisible(false);
         _count = 0;
         unscheduleUpdate();
         AsyncTaskPool::getInstance()->stopTasks(AsyncTaskPool::TaskType::TASK_IO);

@@ -80,6 +80,7 @@ private:
         LoadingBar*     _loadingBar;
         LayerColor*     _selectedBackGround;
         LayerColor*     _levelShowBackGround;
+        Sprite*         _loadingBarBack;
         MenuItemImage*  _soundCtrl;
         MenuItemImage*  _historyPlayItem;
         map<string, Product> _productsMap;

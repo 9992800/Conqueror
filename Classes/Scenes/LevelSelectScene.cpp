@@ -441,6 +441,8 @@ void LevelSelect::menuStartGame(Ref* btn){
         _loadingBar->setVisible(true);
         _loadingBarBack->setVisible(true);
         scheduleUpdate();
+        auto scene = GameScene::createScene(_lastLevel);
+        Director::getInstance()->pushScene(scene);
 }
 
 void LevelSelect::menuShowSettigns(Ref* btn){
@@ -554,6 +556,7 @@ void LevelSelect::menuPlayHistory(Ref* pSender){
         
         _historyData.gameData = gameData;
         HistoryReplayData* data_ptr = &_historyData;
+        _count = 0;
         int *loader = &_count;
         AsyncTaskPool::getInstance()->enqueue(AsyncTaskPool::TaskType::TASK_IO, callback_area, nullptr, [loader, data_ptr, this](){
                 this->loadResourceInBg(loader, data_ptr);
@@ -612,11 +615,7 @@ void LevelSelect::onEnter(){
 void LevelSelect::update(float delta){
         
         if (_count < 100)
-                _loadingBar->setPercent(++_count);
-        else{
-                auto scene = GameScene::createScene(_lastLevel);
-                Director::getInstance()->pushScene(scene);
-        }
+                _loadingBar->setPercent(_count);
 }
 
 void LevelSelect::onExit(){

@@ -55,7 +55,7 @@ for (int j = 0; j < CEL_MAX; j++){\
         if (j % AREA_MAX == 0){\
                 printf("\r\n");\
         }\
-        printf("%d,", _data->_areaData[area_id]->getOwner() + 2);\
+        printf("%d,", area_id);\
 }\
 }
 

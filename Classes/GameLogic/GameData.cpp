@@ -157,8 +157,9 @@ void GameData::reshDataByBackGrnd(Node* backGrd){
                 JoinData * join_data = _join[i];
                 for (int k = 0; k < DIR_INAREA; k++){
                         int cell_idx = join_data->getJoinDir(k);
-                        if (this->_cel[cell_idx] > 0){
+                        if (cell_idx > 0 && this->_cel[cell_idx] > 0){
                                 is_shore = true;
+                                printf("\t idx=%d area=%d", cell_idx, this->_cel[cell_idx]);
                                 break;
                         }
                 }

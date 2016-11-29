@@ -407,6 +407,30 @@ void GameScene::gameAction(){
         }
 }
 
+void GameScene::afterFightFinished(CallFunc* cb){
+        
+        auto hide = ScaleBy::create(1.0f, .1f);
+        _animationLayer->runAction(Sequence::create(hide, cb, NULL));
+}
+
+void GameScene::afterShowFightBg(CallFunc*cb){
+        auto cache = AnimationCache::getInstance();
+        auto animation = cache->getAnimation("zhanshi_run");
+        animation->setLoops(2);
+        animation->setRestoreOriginalFrame(true);
+        auto action = Animate::create(animation);
+        
+        auto move = MoveBy::create(1, Vec2(242,0));
+        
+        auto p_test = _allFightingCharacters[0][0];
+        p_test->setVisible(true);
+        p_test->setPosition(invader_fight_pos[0] - Vec2(READY_DISTANCE_POS, 0));
+        
+        auto cc = CallFunc::create(std::bind(&GameScene::afterFightFinished, this, cb));
+        Spawn* get_ready = Spawn::create(action, move, NULL);
+        p_test->runAction(Sequence::create(get_ready, cc, NULL));
+}
+
 void GameScene::playBattleAnimation(int res, CallFunc* callback, bool isManual){
         if (ATTACK_RES_WIN == res){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_WIN);
@@ -416,41 +440,11 @@ void GameScene::playBattleAnimation(int res, CallFunc* callback, bool isManual){
         bool is_anim_on = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
         if (is_anim_on && isManual){
                 _isPalyingAnim = true;
-                
                 auto show = ScaleBy::create(1.0f, 10.0f);
-                
-                auto hide = show->reverse();
-                
-                auto cache = AnimationCache::getInstance();
-                auto animation = cache->getAnimation("zhanshi_run");
-                animation->setLoops(2);
-                animation->setRestoreOriginalFrame(true);
-                auto action = Animate::create(animation);
-                
-                auto move = MoveBy::create(1, Vec2(242,0));
-                
                 _animationLayer->setVisible(true);
-                auto p_test = _allFightingCharacters[0][0];
-                p_test->setVisible(true);
-                p_test->setPosition(invader_fight_pos[0] - Vec2(READY_DISTANCE_POS, 0));
                 
-                Spawn* get_ready = Spawn::create(action, move, NULL);
-                
-                
-                //hide back ground and call next action
-                auto callbackFightFinish = CallFunc::create([this, hide, callback](){
-                        _animationLayer->runAction(Sequence::create(hide, callback, NULL));
-                });
-                
-                //got to fight position
-                auto callbackShowBack = CallFunc::create([this, p_test, get_ready, callbackFightFinish](){
-                        get_ready->retain();
-                        callbackFightFinish->retain();
-                        p_test->runAction(Sequence::create(get_ready, callbackFightFinish, NULL));                        
-                });
-                
-                //show back ground
-                _animationLayer->runAction(Sequence::create(show, callbackShowBack, NULL));
+                auto cc = CallFunc::create(std::bind(&GameScene::afterShowFightBg, this, callback));
+                _animationLayer->runAction(Sequence::create(show, cc, NULL));
                 
         }else{
                 //TODO::play a simple sequence

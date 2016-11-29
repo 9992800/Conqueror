@@ -55,6 +55,9 @@ private:
         void loadXunShouShi();
         void loadZhanshi();
         
+        void afterShowFightBg(CallFunc*);
+        void afterFightFinished(CallFunc*);
+        
 private:
         int             _playerNumber;
         Layer*          _controlLayer;

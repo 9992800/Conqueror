@@ -13,6 +13,14 @@
                     "type": "non_consumable", 
                     "id": "com.bellflower.Conqueror.removeAds"
                 },
+                "open_level2": {
+                    "type": "non_consumable",
+                    "id": "com.bellflower.Conqueror.open_level2"
+                },
+                "open_level3": {
+                    "type": "non_consumable",
+                    "id": "com.bellflower.Conqueror.open_level3"
+                },
                 "open_level4": {
                     "type": "non_consumable",
                     "id": "com.bellflower.Conqueror.open_level4"
@@ -43,6 +51,14 @@
                 "remove_ads": {
                         "type": "non_consumable",
                         "id": "com.bellflower.Conqueror.removeAds"
+                },
+                "open_level2": {
+                        "type": "non_consumable",
+                        "id": "com.bellflower.Conqueror.open_level2"
+                },
+                "open_level3": {
+                        "type": "non_consumable",
+                        "id": "com.bellflower.Conqueror.open_level3"
                 },
                 "open_level4": {
                         "type": "non_consumable",

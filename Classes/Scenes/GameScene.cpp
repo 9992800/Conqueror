@@ -300,8 +300,7 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         int result = _theGameLogic->startPlayerAttack(cell_id);
         if (ATTACK_RES_WIN == result|| ATTACK_RES_DEFEATED == result){
                 CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this, result));
-                callback->retain();
-                this->playBattleAnimation(result, callback, true);
+                this->playManualBattleAnimation(result, callback);
         }
 }
 
@@ -393,7 +392,7 @@ void GameScene::gameAction(){
         if (ATTACK_RES_WIN == res || ATTACK_RES_DEFEATED == res){
                 
                 CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this, res));
-                this->playBattleAnimation(res, callback, false);
+                this->playRobbotBattleAnimation(res, callback);
                 
         }else if(ATTACK_RES_GOTSUPPLY == res){
                 
@@ -408,16 +407,16 @@ void GameScene::gameAction(){
         }
 }
 
-void GameScene::afterFightFinished(CallFunc* cb){
-        
+void GameScene::afterFightFinished(CallFunc* cb){        
         auto hide = ScaleBy::create(1.0f, .1f);
         _animationLayer->runAction(Sequence::create(hide, cb, NULL));
+        cb->release();
 }
 
 void GameScene::afterShowFightBg(CallFunc*cb){
         auto cache = AnimationCache::getInstance();
         auto animation = cache->getAnimation("zhanshi_run");
-        animation->setLoops(2);
+        animation->setLoops(1);
         animation->setRestoreOriginalFrame(true);
         auto action = Animate::create(animation);
         
@@ -432,24 +431,32 @@ void GameScene::afterShowFightBg(CallFunc*cb){
         p_test->runAction(Sequence::create(get_ready, cc, NULL));
 }
 
-void GameScene::playBattleAnimation(int res, CallFunc* callback, bool isManual){
+void GameScene::playRobbotBattleAnimation(int res, CallFunc* callback){
+        //TODO::replace this animation by a occupation animation
+        auto show = ScaleBy::create(1.0f, 1.0f);
+        _animationLayer->runAction(Sequence::create(show, callback, NULL));
+}
+
+void GameScene::playManualBattleAnimation(int res, CallFunc* callback){
         if (ATTACK_RES_WIN == res){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_WIN);
         }else if (ATTACK_RES_DEFEATED == res){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_DEFEAT);
         }
+        
         bool is_anim_on = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
-        if (is_anim_on && isManual){
+        if (is_anim_on){
                 _isPalyingAnim = true;
                 auto show = ScaleBy::create(1.0f, 10.0f);
                 _animationLayer->setVisible(true);
-                
+                callback->retain();
                 auto cc = CallFunc::create(std::bind(&GameScene::afterShowFightBg, this, callback));
                 _animationLayer->runAction(Sequence::create(show, cc, NULL));
                 
         }else{
-                //TODO::play a simple sequence
-                callback->execute();
+                //TODO::replace this animation by a occupation animation
+                auto show = ScaleBy::create(1.0f, 1.0f);
+                _animationLayer->runAction(Sequence::create(show, callback, NULL));
         }
 }
 

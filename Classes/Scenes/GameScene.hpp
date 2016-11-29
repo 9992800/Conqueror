@@ -39,7 +39,8 @@ private:
 
         void afterPlayerBattle(int result);
         void afterRobootBattle(int result);
-        void playBattleAnimation(int, CallFunc*, bool isManual);
+        void playManualBattleAnimation(int, CallFunc*);
+        void playRobbotBattleAnimation(int, CallFunc*);
         void playSupplyAnimation(CallFunc*);
         void afterRobootSupply();
         void afterPlayerSupply();

@@ -300,6 +300,7 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         int result = _theGameLogic->startPlayerAttack(cell_id);
         if (ATTACK_RES_WIN == result|| ATTACK_RES_DEFEATED == result){
                 CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this, result));
+                callback->retain();
                 this->playBattleAnimation(result, callback, true);
         }
 }

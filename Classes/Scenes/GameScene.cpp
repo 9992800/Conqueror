@@ -48,6 +48,12 @@ bool GameScene::init()
                 return false;
         }
         
+        auto frameCache = SpriteFrameCache::getInstance();
+        frameCache->addSpriteFramesWithFile("anim/hanshirun.plist", "anim/hanshirun.png");
+        frameCache->addSpriteFramesWithFile("anim/hanshisd.plist", "anim/hanshisd.png");
+        frameCache->addSpriteFramesWithFile("anim/xunshoushirun.plist", "anim/xunshoushirun.png");
+        frameCache->addSpriteFramesWithFile("anim/xunshoushisd.plist", "anim/xunshoushisd.png");
+        
         auto visibleSize = Director::getInstance()->getVisibleSize();
         for (int i = 0; i < 9; i++){
                 keeper_fight_pos[i].x = visibleSize.width + keeper_fight_pos[i].x;
@@ -60,8 +66,7 @@ bool GameScene::init()
         this->initAnimationLayer();
         
         int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
-        Director::getInstance()->getScheduler()->setTimeScale(game_speed);//TODO::
-        //DIALOG_SIZE_TYPE_MIDDLE
+        Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         return true;
 }
 
@@ -133,38 +138,103 @@ void GameScene::initControlLayer(){
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-void GameScene::initAnimationLayer(){
-        _animationLayer = Layer::create();
+void GameScene::loadZhanshi(){
         
         auto frameCache = SpriteFrameCache::getInstance();
-        frameCache->addSpriteFramesWithFile("anim/renwu_run.plist");
         
-        Vector<SpriteFrame*> animFrames(10);
+        Vector<SpriteFrame*> animFrames(12);
         char str[100] = {0};
-        for(int i = 1; i < 10; i++){
-                sprintf(str, "zhanshi%04d.png",i);
+        for(int i = 1; i <= 12; i++){
+                sprintf(str, "renwurun%04D.png", i);
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "zhanshi_run");
         
-        // Add an animation to the Cache
-        AnimationCache::getInstance()->addAnimation(animation, "renwu_run");
         
-        _tamara = Sprite::create();
-        auto frame = frameCache->getSpriteFrameByName("zhanshi0001.png");
-        _tamara->setSpriteFrame(frame);
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "renwu_sd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "zhanshi_sd");
         
-#if 0
-        _tamara = Sprite::create("anim/grossinis_sister1.png");
-#endif
-        _tamara->setPosition(Vec2(100, 100));
-        _animationLayer->addChild(_tamara);
-//        _tamara->setVisible(false);
+        
+        
+        auto frame = frameCache->getSpriteFrameByName("renwurun0001.png");
+        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
+                auto zhanshi = Sprite::create();
+                zhanshi->setSpriteFrame(frame);
+                _allFightingCharacters[0][i] = zhanshi;
+                zhanshi->setVisible(false);
+                _animationLayer->addChild(zhanshi);
+        }
+//        frame = frameCache->getSpriteFrameByName("renwu_sd0001.png");
+//        zhanshi = Sprite::create();
+//        zhanshi->setSpriteFrame(frame);
+//        _playerZhanshi[MAX_DICE_PER_AREA] = zhanshi;
+}
 
+void GameScene::loadXunShouShi(){
+        
+        auto frameCache = SpriteFrameCache::getInstance();
+        
+        Vector<SpriteFrame*> animFrames(12);
+        char str[100] = {0};
+        
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "xsssd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
+                 
+        auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
+        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
+                auto xunshoushi = Sprite::create();
+                xunshoushi->setSpriteFrame(frame);
+                _allFightingCharacters[1][i] = xunshoushi;
+                xunshoushi->setVisible(false);
+                _animationLayer->addChild(xunshoushi);
+        }
+//        frame = frameCache->getSpriteFrameByName("xsssd0001.png");
+//        xunshoushi = Sprite::create();
+//        xunshoushi->setSpriteFrame(frame);
+//        _playerXunshouShi[MAX_DICE_PER_AREA] = xunshoushi;
+}
+
+
+void GameScene::initAnimationLayer(){
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        _animationLayer = Sprite::create("zhandou_beijing.png");
+        _animationLayer->setScale(0.1f, 0.1f);
+        
+//        _animationLayer->setIgnoreAnchorPointForPosition(false);
+//        _animationLayer->setAnchorPoint(Vec2(0.5f, 0.5f));
+        
+        auto anim_back_size = _animationLayer->getContentSize();
+        _animationLayer->setPosition(Vec2(visibleSize - anim_back_size / 2));
+//        _animationLayer->setVisible(false);
         
         this->addChild(_animationLayer, ZORDER_ANIM_LAYER, key_anim_layer_tag);
+        
+        this->loadZhanshi();
+        
+        this->loadXunShouShi();
 }
 
 
@@ -172,7 +242,10 @@ GameScene::~GameScene(){
         _theGameLogic->release();
         
         auto frameCache = SpriteFrameCache::getInstance();
-        frameCache->removeSpriteFramesFromFile("anim/renwu_run.plist");
+        frameCache->removeSpriteFramesFromFile("anim/hanshirun.plist");
+        frameCache->removeSpriteFramesFromFile("anim/hanshisd.plist");
+        frameCache->removeSpriteFramesFromFile("anim/xunshoushirun.plist");
+        frameCache->removeSpriteFramesFromFile("anim/xunshoushisd.plist");
 }
 
 #pragma mark - touch and menu event
@@ -227,7 +300,7 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         int result = _theGameLogic->startPlayerAttack(cell_id);
         if (ATTACK_RES_WIN == result|| ATTACK_RES_DEFEATED == result){
                 CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this, result));
-                this->playBattleAnimation(result, callback);
+                this->playBattleAnimation(result, callback, true);
         }
 }
 
@@ -259,10 +332,6 @@ void GameScene::tryAgain(){
         this->addChild(map, ZORDER_MAP_GROUND, key_map_tag);
 
 #endif
-        
-        
-        
-        
         _startPlayMenuItem->setVisible(true);
         _endTurnMenuItem->setVisible(false);
 }
@@ -288,7 +357,7 @@ void GameScene::afterPlayerBattle(int result){
 
 void GameScene::afterRobootBattle(int result){
         _isPalyingAnim = false;
-        _tamara->setVisible(false);
+        _animationLayer->setVisible(false);
         _theGameLogic->cleanUpBattleField(result);
         
         int user_tc = _theGameLogic->getUserTC();
@@ -323,7 +392,7 @@ void GameScene::gameAction(){
         if (ATTACK_RES_WIN == res || ATTACK_RES_DEFEATED == res){
                 
                 CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this, res));
-                this->playBattleAnimation(res, callback);
+                this->playBattleAnimation(res, callback, false);
                 
         }else if(ATTACK_RES_GOTSUPPLY == res){
                 
@@ -338,25 +407,51 @@ void GameScene::gameAction(){
         }
 }
 
-void GameScene::playBattleAnimation(int res, CallFunc* callback){
+void GameScene::playBattleAnimation(int res, CallFunc* callback, bool isManual){
         if (ATTACK_RES_WIN == res){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_WIN);
         }else if (ATTACK_RES_DEFEATED == res){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_DEFEAT);
         }
         bool is_anim_on = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
-        if (is_anim_on){
-                _tamara->setVisible(true);
+        if (is_anim_on && isManual){
                 _isPalyingAnim = true;
                 
-                auto cache = AnimationCache::getInstance();
-                auto animation2 = cache->getAnimation("renwu_run");
-                animation2->setRestoreOriginalFrame(true);
-
-                auto action2 = Animate::create(animation2);
+                auto show = ScaleBy::create(1.0f, 10.0f);
                 
-                Sequence*  s = Sequence::create(action2, callback, nullptr);
-                _tamara->runAction(s);
+                auto hide = show->reverse();
+                
+                auto cache = AnimationCache::getInstance();
+                auto animation = cache->getAnimation("zhanshi_run");
+                animation->setLoops(2);
+                animation->setRestoreOriginalFrame(true);
+                auto action = Animate::create(animation);
+                
+                auto move = MoveBy::create(1, Vec2(242,0));
+                
+                _animationLayer->setVisible(true);
+                auto p_test = _allFightingCharacters[0][0];
+                p_test->setVisible(true);
+                p_test->setPosition(invader_fight_pos[0] - Vec2(READY_DISTANCE_POS, 0));
+                
+                Spawn* get_ready = Spawn::create(action, move, NULL);
+                
+                
+                //hide back ground and call next action
+                auto callbackFightFinish = CallFunc::create([this, hide, callback](){
+                        _animationLayer->runAction(Sequence::create(hide, callback, NULL));
+                });
+                
+                //got to fight position
+                auto callbackShowBack = CallFunc::create([this, p_test, get_ready, callbackFightFinish](){
+                        get_ready->retain();
+                        callbackFightFinish->retain();
+                        p_test->runAction(Sequence::create(get_ready, callbackFightFinish, NULL));                        
+                });
+                
+                //show back ground
+                _animationLayer->runAction(Sequence::create(show, callbackShowBack, NULL));
+                
         }else{
                 //TODO::play a simple sequence
                 callback->execute();

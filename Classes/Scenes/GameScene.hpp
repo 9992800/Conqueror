@@ -39,7 +39,7 @@ private:
 
         void afterPlayerBattle(int result);
         void afterRobootBattle(int result);
-        void playBattleAnimation(int, CallFunc*);
+        void playBattleAnimation(int, CallFunc*, bool isManual);
         void playSupplyAnimation(CallFunc*);
         void afterRobootSupply();
         void afterPlayerSupply();
@@ -52,15 +52,18 @@ private:
         void gameExit(Ref*, int);
         void gameOver(Ref*, int);
         
+        void loadXunShouShi();
+        void loadZhanshi();
+        
 private:
         int             _playerNumber;
         Layer*          _controlLayer;
-        Layer*          _animationLayer;
+        Sprite*         _animationLayer;
         DiceGame*       _theGameLogic;
         bool            _isMoved;
         bool            _isPalyingAnim;
         float           _lowestPostion_y;
-        Sprite*         _tamara;
+        Sprite*         _allFightingCharacters[8][8];
         int             _gameStatus;
         MenuItemImage*  _endTurnMenuItem;
         MenuItemImage*  _startPlayMenuItem;

@@ -193,4 +193,6 @@ enum{
 
 #define FIGHT_POS_KEEPER   {{-242,250}, {-203,265}, {-182,236}, {-156,280}, {-136,250}, {-116,221},{-91, 265}, {-70,236}, {-30,250}}
 
+#define READY_DISTANCE_POS (242)
+
 #endif /* __APPMACROS_H__ */

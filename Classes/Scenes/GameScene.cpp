@@ -65,7 +65,7 @@ bool GameScene::init()
         
         this->initAnimationLayer();
         
-        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
+        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 3);
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         return true;
 }
@@ -410,7 +410,9 @@ void GameScene::gameAction(){
 
 void GameScene::afterFightFinished(CallFunc* cb){
         auto hide = ScaleBy::create(1.0f, .1f);
-        _animationLayer->runAction(Sequence::create(hide, cb, NULL));
+        _animationLayer->runAction(Sequence::create(hide,
+                CallFunc::create( [&](){_animationLayer->setVisible(false);}),
+                                                    cb, NULL));
         cb->release();
 }
 
@@ -494,7 +496,7 @@ void GameScene::playManualBattleAnimation(int res, CallFunc* callback){
         bool is_anim_on = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
         if (is_anim_on){
                 _isPalyingAnim = true;
-                auto show = ScaleBy::create(1.0f, 10.0f);
+                auto show = ScaleBy::create(.5f, 10.0f);
                 _animationLayer->setVisible(true);
                 callback->retain();
                 auto cc = CallFunc::create(std::bind(&GameScene::afterShowFightBg, this, callback));

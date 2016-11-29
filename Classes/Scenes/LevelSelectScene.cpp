@@ -103,11 +103,6 @@ bool LevelSelect::init()
         
         
         this->loadLevelShow(center, visibleSize);
-        
-        this->loadLevelSelectedBackGround();
-        
-//        this->initActionListener();
-        
         this->initButtons(origin, visibleSize);
         
         IAP::setDebug(true);
@@ -139,191 +134,109 @@ bool LevelSelect::init()
 
 void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         
+        _levelShowBackGround = LayerColor::create(Color4B::ORANGE);
+        
         auto level_back_1 = Button::create("level/players_back.png");
         Size leve1_size = level_back_1->getContentSize();
-        float left_tap = leve1_size.width;
-        
         auto leve1_1 = Sprite::create("level/2player.png");
         leve1_1->setPosition(leve1_size / 2);
         level_back_1->addChild(leve1_1);
+        level_back_1->setPosition(Vec2(visibleSize.width * 2 / 13, visibleSize.height * 7/ 11));
+        _levelShowBackGround->addChild(level_back_1, ZORDER_ITEM_SHOW, kLevelShowLevel1Tag);
         
-        Vec2 level_1_pos  = Vec2(left_tap + leve1_size.width / 2, visibleSize.height / 4);
-        level_back_1->setPosition(level_1_pos);
-        this->addChild(level_back_1, ZORDER_ITEM_SHOW, kLevelShowLevel1Tag);
         
-        auto level_back_2 = level_back_1->clone();
+        
+        auto level_back_2 = (Button*)level_back_1->clone();
         auto leve1_2 = Sprite::create("level/3player.png");
         leve1_2->setPosition(leve1_size / 2);
+        bool level_2_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_2_LOCK_STATE_KEY, false);
+        if (false == level_2_opened){
+                auto lock = Sprite::create("level/level_lock.png");
+                lock->setPosition(leve1_size / 2);
+                level_back_2->addChild(lock, 100);
+        }
         level_back_2->addChild(leve1_2);
-        Vec2 level_2_pos  = Vec2(level_1_pos.x + left_tap + leve1_size.width / 2, visibleSize.height / 4);
-        level_back_2->setPosition(level_2_pos);
-        this->addChild(level_back_2, ZORDER_ITEM_SHOW, kLevelShowLevel2Tag);
+        level_back_2->setPosition(Vec2(visibleSize.width * 5 / 13, visibleSize.height * 7/ 11));
+        _levelShowBackGround->addChild(level_back_2, ZORDER_ITEM_SHOW, kLevelShowLevel2Tag);
         
+        
+        
+        auto level_back_3 = (Button*)level_back_1->clone();
         auto level_3 = Sprite::create("level/4player.png");
-        Size level_3_size = level_3->getContentSize();
-        Vec2 level_3_pos  = Vec2(level_2_pos.x + left_tap + level_3_size.width, c);
-        level_3->setPosition(level_3_pos);
-        _levelShowBackGround->addChild(level_3, ZORDER_ITEM_SHOW, kLevelShowLevel3Tag);
+        level_3->setPosition(leve1_size / 2);
+        bool level_3_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_3_LOCK_STATE_KEY, false);
+        if (false == level_3_opened){
+                auto lock = Sprite::create("level/level_lock.png");
+                lock->setPosition(leve1_size / 2);
+                level_back_3->addChild(lock, 100);
+        }
+        level_back_3->addChild(level_3);
+        level_back_3->setPosition(Vec2(visibleSize.width * 8 / 13, visibleSize.height * 7/ 11));
+        _levelShowBackGround->addChild(level_back_3, ZORDER_ITEM_SHOW, kLevelShowLevel3Tag);
         
+        
+        
+        auto level_back_4 = (Button*)level_back_1->clone();
         auto level_4 = Sprite::create("level/5player.png");
-        Size level_4_size = level_4->getContentSize();
-        Vec2 level_4_pos  = Vec2(level_3_pos.x + left_tap + level_4_size.width, c);
-        level_4->setPosition(level_4_pos);
-        _levelShowBackGround->addChild(level_4, ZORDER_ITEM_SHOW, kLevelShowLevel4Tag);
+        level_4->setPosition(leve1_size / 2);
+        bool level_4_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_4_LOCK_STATE_KEY, false);
+        if (false == level_4_opened){
+                auto lock = Sprite::create("level/level_lock.png");
+                lock->setPosition(leve1_size / 2);
+                level_back_4->addChild(lock, 100);
+        }
+        level_back_4->addChild(level_4);
+        level_back_4->setPosition(Vec2(visibleSize.width * 11 / 13, visibleSize.height * 7/ 11));
+        _levelShowBackGround->addChild(level_back_4, ZORDER_ITEM_SHOW, kLevelShowLevel4Tag);
         
+        
+        
+        auto level_back_5 = (Button*)level_back_1->clone();
         auto level_5 = Sprite::create("level/6player.png");
-        Size level_5_size = level_5->getContentSize();
-        Vec2 level_5_pos  = Vec2(level_4_pos.x + left_tap + level_5_size.width, c);
-        level_5->setPosition(level_5_pos);
-        _levelShowBackGround->addChild(level_5, ZORDER_ITEM_SHOW, kLevelShowLevel5Tag);
+        level_5->setPosition(leve1_size / 2);
+        bool level_5_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_5_LOCK_STATE_KEY, false);
+        if (false == level_5_opened){
+                auto lock = Sprite::create("level/level_lock.png");
+                lock->setPosition(leve1_size / 2);
+                level_back_5->addChild(lock, 100);
+        }
+        level_back_5->addChild(level_5);
+        level_back_5->setPosition(Vec2(visibleSize.width * 2 / 13, visibleSize.height * 4 / 11));
+        _levelShowBackGround->addChild(level_back_5, ZORDER_ITEM_SHOW, kLevelShowLevel5Tag);
         
+        
+        
+        auto level_back_6 = (Button*)level_back_1->clone();
         auto level_6 = Sprite::create("level/7player.png");
-        Size level_6_size = level_6->getContentSize();
-        Vec2 level_6_pos  = Vec2(level_5_pos.x + left_tap + level_6_size.width, c);
-        level_6->setPosition(level_6_pos);
-        _levelShowBackGround->addChild(level_6, ZORDER_ITEM_SHOW, kLevelShowLevel6Tag);
+        level_6->setPosition(leve1_size / 2);
+        bool level_6_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_6_LOCK_STATE_KEY, false);
+        if (false == level_6_opened){
+                auto lock = Sprite::create("level/level_lock.png");
+                lock->setPosition(leve1_size / 2);
+                level_back_6->addChild(lock, 100);
+        }
+        level_back_6->addChild(level_6);
+        level_back_6->setPosition(Vec2(visibleSize.width * 5 / 13, visibleSize.height * 4 / 11));
+        _levelShowBackGround->addChild(level_back_6, ZORDER_ITEM_SHOW, kLevelShowLevel6Tag);
         
+        
+        
+        auto level_back_7 = (Button*)level_back_1->clone();
         auto level_7 = Sprite::create("level/8player.png");
-        Size level_7_size = level_7->getContentSize();
-        Vec2 level_7_pos  = Vec2(level_6_pos.x + left_tap + level_7_size.width, c);
-        level_7->setPosition(level_7_pos);
-        _levelShowBackGround->addChild(level_7, ZORDER_ITEM_SHOW, kLevelShowLevel7Tag);
+        level_7->setPosition(leve1_size / 2);
+        bool level_7_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_7_LOCK_STATE_KEY, false);
+        if (false == level_7_opened){
+                auto lock = Sprite::create("level/level_lock.png");
+                lock->setPosition(leve1_size / 2);
+                level_back_7->addChild(lock, 100);
+        }
+        level_back_7->addChild(level_7);
+        level_back_7->setPosition(Vec2(visibleSize.width * 8 / 13, visibleSize.height * 4 / 11));
+        _levelShowBackGround->addChild(level_back_7, ZORDER_ITEM_SHOW, kLevelShowLevel7Tag);
         
         
         this->addChild(_levelShowBackGround, ZORDER_BACK_LAYERS);
-        
-        //TODO::load receipents from apple store
-        
-        float btn_top_gap = 30.f;
-        auto level_1_lock_btn = MenuItemImage::create("level/level_unlock.png", "level/level_unlock_sel.png",
-                                           CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_1));
-        level_1_lock_btn->setPosition(Vec2(level_1_pos.x, level_1_pos.y - leve1_1_size.height / 2 - btn_top_gap));
-        
-        
-        
-        auto level_2_lock_btn = MenuItemImage::create("level/level_unlock.png", "level/level_unlock_sel.png",
-                                                      CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_2));
-        level_2_lock_btn->setPosition(Vec2(level_2_pos.x, level_2_pos.y - level_2_size.height / 2 - btn_top_gap));
-        
-        
-        
-        auto level_3_lock_btn = MenuItemImage::create("level/level_unlock.png", "level/level_unlock_sel.png",
-                                                      CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_3));
-        level_3_lock_btn->setPosition(Vec2(level_3_pos.x, level_3_pos.y - level_3_size.height / 2 - btn_top_gap));
-        
-        
-        MenuItemImage *level_4_lock_btn, *level_5_lock_btn, *level_6_lock_btn, *level_7_lock_btn;
-
-        bool level_4_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_4_LOCK_STATE_KEY, true);
-//        bool level_4_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_4_LOCK_STATE_KEY, false);
-        if (level_4_opened){
-                level_4_lock_btn = MenuItemImage::create("level/level_unlock.png", "level/level_unlock_sel.png",
-                                                              CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_4));
-        }else{
-                level_4_lock_btn = MenuItemImage::create("level/level_lock.png", "level/level_lock_sel.png",
-                                                              CC_CALLBACK_1(LevelSelect::menuBuyLevel, this, LEVEL_4_PRODUCT_NAME_KEY));
-                level_4_lock_btn->setTag(kLevel4BuyBtnTag);
-        }
-        level_4_lock_btn->setPosition(Vec2(level_4_pos.x, level_4_pos.y - level_4_size.height / 2 - btn_top_gap));
-        
-        
-        
-        bool level_5_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_5_LOCK_STATE_KEY, true);
-//        bool level_5_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_5_LOCK_STATE_KEY, false);
-        if (level_5_opened){
-                level_5_lock_btn = MenuItemImage::create("level/level_unlock.png", "level/level_unlock_sel.png",
-                                                         CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_5));
-        }else{
-                level_5_lock_btn = MenuItemImage::create("level/level_lock.png", "level/level_lock_sel.png",
-                                                         CC_CALLBACK_1(LevelSelect::menuBuyLevel, this, LEVEL_5_PRODUCT_NAME_KEY));
-                level_5_lock_btn->setTag(kLevel5BuyBtnTag);
-        }
-        level_5_lock_btn->setPosition(Vec2(level_5_pos.x, level_5_pos.y - level_5_size.height / 2 - btn_top_gap));
-        
-
-        bool level_6_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_6_LOCK_STATE_KEY, true);
-//        bool level_6_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_6_LOCK_STATE_KEY, false);
-        if (level_6_opened){
-                level_6_lock_btn = MenuItemImage::create("level/level_unlock.png", "level/level_unlock_sel.png",
-                                                         CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_6));
-        }else{
-                level_6_lock_btn = MenuItemImage::create("level/level_lock.png", "level/level_lock_sel.png",
-                                                         CC_CALLBACK_1(LevelSelect::menuBuyLevel, this, LEVEL_6_PRODUCT_NAME_KEY));
-                level_6_lock_btn->setTag(kLevel6BuyBtnTag);
-        }
-        level_6_lock_btn->setPosition(Vec2(level_6_pos.x, level_6_pos.y - level_6_size.height / 2 - btn_top_gap));
-        
-//        bool level_7_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_7_LOCK_STATE_KEY, true);
-        bool level_7_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_7_LOCK_STATE_KEY, false);
-        if (level_7_opened){
-                level_7_lock_btn = MenuItemImage::create("level/level_unlock.png", "level/level_unlock_sel.png",
-                                                         CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_7));
-        }else{
-                level_7_lock_btn = MenuItemImage::create("level/level_lock.png", "level/level_lock_sel.png",
-                                                         CC_CALLBACK_1(LevelSelect::menuBuyLevel, this, LEVEL_7_PRODUCT_NAME_KEY));
-                level_7_lock_btn->setTag(kLevel7BuyBtnTag);
-        }
-        level_7_lock_btn->setPosition(Vec2(level_7_pos.x, level_7_pos.y - level_7_size.height / 2 - btn_top_gap));
-        
-        auto menu = Menu::create(level_1_lock_btn, level_2_lock_btn, level_3_lock_btn, level_4_lock_btn,
-                                 level_5_lock_btn, level_6_lock_btn, level_7_lock_btn, NULL);
-        
-        menu->setPosition(Vec2::ZERO);
-        _levelShowBackGround->addChild(menu, ZORDER_ITEM_CONTROL, kLevelBuyMenuTag);
 }
-
-void LevelSelect::setSelectLevelBackPos(){
-        
-        Vec2 pos;
-        switch (_lastLevel) {
-                case GAME_LEVEL_INDEX_2:
-                        pos = _levelShowBackGround->getChildByTag(kLevelShowLevel2Tag)->getPosition();
-                        break;
-                case GAME_LEVEL_INDEX_3:
-                        pos = _levelShowBackGround->getChildByTag(kLevelShowLevel3Tag)->getPosition();
-                        break;
-                case GAME_LEVEL_INDEX_4:
-                        pos = _levelShowBackGround->getChildByTag(kLevelShowLevel4Tag)->getPosition();
-                        break;
-                case GAME_LEVEL_INDEX_5:
-                        pos = _levelShowBackGround->getChildByTag(kLevelShowLevel5Tag)->getPosition();
-                        break;
-                case GAME_LEVEL_INDEX_6:
-                        pos = _levelShowBackGround->getChildByTag(kLevelShowLevel6Tag)->getPosition();
-                        break;
-                case GAME_LEVEL_INDEX_7:
-                        pos = _levelShowBackGround->getChildByTag(kLevelShowLevel7Tag)->getPosition();
-                        break;
-                case GAME_LEVEL_INDEX_1:
-                default:
-                        pos = _levelShowBackGround->getChildByTag(kLevelShowLevel1Tag)->getPosition();
-                        break;
-        }
-        _selectedBackGround->setPosition(pos);
-}
-
-void LevelSelect::loadLevelSelectedBackGround(){
-        
-        Size back_size = _levelShowBackGround->getContentSize();
-        
-        _selectedBackGround = LayerColor::create(Color4B::GRAY);
-        _selectedBackGround->setContentSize(Size(200, back_size.height / 2 + 20));
-        _selectedBackGround->setIgnoreAnchorPointForPosition(false);
-        _selectedBackGround->setAnchorPoint(Vec2(0.5, 0.5));
-        
-        _lastLevel = UserDefault::getInstance()->getIntegerForKey(LAST_GAME_LEVEL_PLAYED_KEY, GAME_LEVEL_INDEX_1);
-        _levelShowBackGround->addChild(_selectedBackGround, ZORDER_SEL_BACK_LAYER);
-       
-        this->setSelectLevelBackPos();
-}
-
-
-//void LevelSelect::initActionListener(){
-//        auto listener = EventListenerTouchOneByOne::create();
-//        listener->onTouchMoved = CC_CALLBACK_2(LevelSelect::onTouchesMoved, this);
-//        listener->onTouchBegan = CC_CALLBACK_2(LevelSelect::onTouchBegan, this);
-//        _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-//}
 
 void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         
@@ -338,13 +251,10 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         _soundCtrl->setPosition(Vec2(2 * _soundCtrl->getContentSize().width,
                                      origin.y + 60));
         
-        
-        
         auto start_game = MenuItemImage::create("start_game.png", "start_game_sel.png",
                                                   CC_CALLBACK_1(LevelSelect::menuStartGame, this));
         start_game->setPosition(Vec2(origin.x + visibleSize.width / 2,
                                      origin.y + 60));
-        
         
         
         auto system_setting = MenuItemImage::create("level/game_setting.png", "level/game_setting_sel.png",
@@ -416,9 +326,6 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
 void LevelSelect::menuSelectLevel(Ref* btn, int bt_indx){
         
         _lastLevel = bt_indx;
-        
-        this->setSelectLevelBackPos();
-        
         UserDefault::getInstance()->getIntegerForKey(LAST_GAME_LEVEL_PLAYED_KEY, bt_indx);
 }
 
@@ -573,19 +480,6 @@ void LevelSelect::menuSoundControl(Ref* btn){
         }
 }
 
-//void LevelSelect::onTouchesMoved(Touch* touch, Event* event){        
-//        auto diff = touch->getDelta();
-//        diff.y = 0;
-//        auto current_pos = _levelShowBackGround->getPosition();
-//        auto want_to_be = current_pos + diff;
-//        
-//        if (want_to_be.x < _mostLeft.x || want_to_be.x > _mostRight.x){
-//                return;
-//        }
-//        _levelShowBackGround->setPosition(want_to_be);
-//}
-
-
 #pragma mark - loading bar
 
 void LevelSelect::onEnter(){
@@ -603,6 +497,8 @@ void LevelSelect::onEnter(){
                 _historyPlayItem->setNormalSpriteFrame(SpriteFrame::create("history_data.png", c));
                 _historyPlayItem->setNormalSpriteFrame(SpriteFrame::create("history_data_sel.png", c));
         }
+        
+        //TODO::animations
 }
 
 void LevelSelect::update(float delta){

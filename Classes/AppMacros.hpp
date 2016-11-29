@@ -114,6 +114,8 @@ enum {
 #define GAME_HISTORY_SUPPLY_KEY         "_key_history_supply_value"
 
 
+#define LEVEL_2_LOCK_STATE_KEY          "_key_level_2_lock_state"
+#define LEVEL_3_LOCK_STATE_KEY          "_key_level_3_lock_state"
 #define LEVEL_4_LOCK_STATE_KEY          "_key_level_4_lock_state"
 #define LEVEL_5_LOCK_STATE_KEY          "_key_level_5_lock_state"
 #define LEVEL_6_LOCK_STATE_KEY          "_key_level_6_lock_state"
@@ -186,5 +188,9 @@ enum{
 //Color4F((float)0x3E/0xff, (float)0xA5/0xff, (float)0xDD/0xff, 1),//back ground
 
 #define DONT_USER_TILE_MAP 1
+
+#define FIGHT_POS_INVADER  {{242,250}, {203,265}, {182,236}, {156,280}, {136,250}, {116,221},{91, 265}, {70,236}, {30,250}}
+
+#define FIGHT_POS_KEEPER   {{-242,250}, {-203,265}, {-182,236}, {-156,280}, {-136,250}, {-116,221},{-91, 265}, {-70,236}, {-30,250}}
 
 #endif /* __APPMACROS_H__ */

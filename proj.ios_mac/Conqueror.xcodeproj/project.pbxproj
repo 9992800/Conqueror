@@ -91,6 +91,7 @@
 		7C558EC41DEC28F6007722D7 /* dice_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EBE1DEC28F6007722D7 /* dice_4.png */; };
 		7C558EC51DEC28F6007722D7 /* dice_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EBF1DEC28F6007722D7 /* dice_5.png */; };
 		7C558EC61DEC28F6007722D7 /* dice_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EC01DEC28F6007722D7 /* dice_6.png */; };
+		7C558EC81DED138A007722D7 /* zhandou_beijing.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EC71DED138A007722D7 /* zhandou_beijing.png */; };
 		7C67A7B51DD1BE6B004B5151 /* WebSocktUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */; };
 		7C6E7FFD1DD94F5300C5E374 /* ReplayLastScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */; };
 		7C6E80001DD9575A00C5E374 /* history.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFF1DD9575A00C5E374 /* history.png */; };
@@ -285,6 +286,7 @@
 		7C558EBE1DEC28F6007722D7 /* dice_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dice_4.png; sourceTree = "<group>"; };
 		7C558EBF1DEC28F6007722D7 /* dice_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dice_5.png; sourceTree = "<group>"; };
 		7C558EC01DEC28F6007722D7 /* dice_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dice_6.png; sourceTree = "<group>"; };
+		7C558EC71DED138A007722D7 /* zhandou_beijing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhandou_beijing.png; sourceTree = "<group>"; };
 		7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocktUtil.cpp; sourceTree = "<group>"; };
 		7C67A7B41DD1BE6B004B5151 /* WebSocktUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocktUtil.hpp; sourceTree = "<group>"; };
 		7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReplayLastScene.cpp; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7C558EC71DED138A007722D7 /* zhandou_beijing.png */,
 				7C558EBB1DEC28F6007722D7 /* dice_1.png */,
 				7C558EBC1DEC28F6007722D7 /* dice_2.png */,
 				7C558EBD1DEC28F6007722D7 /* dice_3.png */,
@@ -840,6 +843,7 @@
 				7C82E4281DD57EDD0019C8CF /* online_battle.png in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
 				BB62DFD41DCD9E7A0037DE0A /* particles in Resources */,
+				7C558EC81DED138A007722D7 /* zhandou_beijing.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
 				BBBA8DD91DCCE3C6006A6471 /* start.png in Resources */,
 				7C6E80041DD9687D00C5E374 /* history_data_sel.png in Resources */,

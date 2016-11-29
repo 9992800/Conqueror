@@ -13,6 +13,10 @@
 #include "PopUpOkCancelDialog.hpp"
 #include "PopUpOkDialog.hpp"
 
+
+
+Vec2 invader_fight_pos[] = FIGHT_POS_INVADER;
+Vec2 keeper_fight_pos[]  = FIGHT_POS_KEEPER;
 enum{
         ZORDER_BACK_GROUND = 0,
         ZORDER_MAP_GROUND,
@@ -43,6 +47,12 @@ bool GameScene::init()
         if (!Layer::init()){
                 return false;
         }
+        
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        for (int i = 0; i < 9; i++){
+                keeper_fight_pos[i].x = visibleSize.width + keeper_fight_pos[i].x;
+        }
+        
         this->initMapLayer();
         
         this->initControlLayer();

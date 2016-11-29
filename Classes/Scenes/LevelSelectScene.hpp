@@ -48,11 +48,7 @@ protected:
         void menuPlayHistory(Ref* btn);
         
 private:
-        void loadLevelShow(Vec2 center, Size visibleSize);
-        void setSelectLevelBackPos();
-        void loadLevelSelectedBackGround();
-//        void initActionListener();
-        
+        void loadLevelShow(Vec2 center, Size visibleSize);        
         void initButtons(Vec2 center, Size visibleSize);
         
 private:
@@ -77,13 +73,13 @@ private:
         int             _dicesNum;
         
         Vec2            _mostRight, _mostLeft;
-        LoadingBar*     _loadingBar;
-        LayerColor*     _selectedBackGround;
+        LoadingBar*     _loadingBar; 
         Sprite*         _loadingBarBack;
         MenuItemImage*  _soundCtrl;
         MenuItemImage*  _historyPlayItem;
         map<string, Product> _productsMap;
         HistoryReplayData _historyData;
+        LayerColor*     _levelShowBackGround; 
 };
 
 

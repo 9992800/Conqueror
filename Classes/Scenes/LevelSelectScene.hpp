@@ -36,8 +36,6 @@ public:
 //        bool onTouchBegan(Touch*, Event*)override{return true;}
         
 protected:
-        void menuSelectLevel(Ref* btn, int num);
-        void menuBuyLevel(Ref* btn, std::string name);
         void purchaseCallBack(sdkbox::Product&);
         
         void menuStartGame(Ref* btn);
@@ -68,7 +66,7 @@ private:
         
 private:
         int             _count;
-        int             _lastLevel;
+        int             _levelPlayerNUm;
         int             _coinsNum;
         int             _dicesNum;
         

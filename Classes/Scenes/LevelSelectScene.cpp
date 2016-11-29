@@ -13,6 +13,7 @@
 #include "json/stringbuffer.h"
 #include "json/rapidjson.h"
 #include "json/document.h"
+#include "PlayerSettingScene.hpp"
 
 enum {
         GAME_LEVEL_INDEX_1 = 1,
@@ -35,11 +36,7 @@ enum{
         key_loading_bar1,
         key_loading_bar2,
         key_loading_bar3,
-        kLevelBuyMenuTag,
-        kLevel4BuyBtnTag,
-        kLevel5BuyBtnTag,
-        kLevel6BuyBtnTag,
-        kLevel7BuyBtnTag
+        kLevelLockedTag,
 };
 
 enum{
@@ -151,6 +148,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         level_back_1->addChild(leve1_1);
         level_back_1->setPosition(Vec2(visibleSize.width * 2 / 13, visibleSize.height * 2/ 11));
         _levelBackTopHalf->addChild(level_back_1, ZORDER_ITEM_SHOW, kLevelShowLevel1Tag);
+        level_back_1->setTag(2);
         
         
         auto level_back_2 = (Button*)level_back_1->clone();
@@ -160,11 +158,12 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         if (false == level_2_opened){
                 auto lock = Sprite::create("level/level_lock.png");
                 lock->setPosition(leve1_size / 2);
-                level_back_2->addChild(lock, 100);
+                level_back_2->addChild(lock, 100, kLevelLockedTag);
         }
         level_back_2->addChild(leve1_2);
         level_back_2->setPosition(Vec2(visibleSize.width * 5 / 13, visibleSize.height * 2/ 11));
         _levelBackTopHalf->addChild(level_back_2, ZORDER_ITEM_SHOW, kLevelShowLevel2Tag);
+        level_back_1->setTag(3);
         
         
         
@@ -175,12 +174,12 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         if (false == level_3_opened){
                 auto lock = Sprite::create("level/level_lock.png");
                 lock->setPosition(leve1_size / 2);
-                level_back_3->addChild(lock, 100);
+                level_back_3->addChild(lock, 100, kLevelLockedTag);
         }
         level_back_3->addChild(level_3);
         level_back_3->setPosition(Vec2(visibleSize.width * 8 / 13, visibleSize.height * 2/ 11));
         _levelBackTopHalf->addChild(level_back_3, ZORDER_ITEM_SHOW, kLevelShowLevel3Tag);
-        
+        level_back_1->setTag(4);
         
         
         auto level_back_4 = (Button*)level_back_1->clone();
@@ -190,12 +189,12 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         if (false == level_4_opened){
                 auto lock = Sprite::create("level/level_lock.png");
                 lock->setPosition(leve1_size / 2);
-                level_back_4->addChild(lock, 100);
+                level_back_4->addChild(lock, 100, kLevelLockedTag);
         }
         level_back_4->addChild(level_4);
         level_back_4->setPosition(Vec2(visibleSize.width * 11 / 13, visibleSize.height * 2/ 11));
         _levelBackTopHalf->addChild(level_back_4, ZORDER_ITEM_SHOW, kLevelShowLevel4Tag);
-        
+        level_back_1->setTag(5);
         
         
         auto level_back_5 = (Button*)level_back_1->clone();
@@ -205,12 +204,12 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         if (false == level_5_opened){
                 auto lock = Sprite::create("level/level_lock.png");
                 lock->setPosition(leve1_size / 2);
-                level_back_5->addChild(lock, 100);
+                level_back_5->addChild(lock, 100, kLevelLockedTag);
         }
         level_back_5->addChild(level_5);
         level_back_5->setPosition(Vec2(visibleSize.width * 2 / 13, visibleSize.height * 4 / 11));
         _levelBackBottomHalf->addChild(level_back_5, ZORDER_ITEM_SHOW, kLevelShowLevel5Tag);
-        
+        level_back_1->setTag(6);
         
         
         auto level_back_6 = (Button*)level_back_1->clone();
@@ -220,12 +219,12 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         if (false == level_6_opened){
                 auto lock = Sprite::create("level/level_lock.png");
                 lock->setPosition(leve1_size / 2);
-                level_back_6->addChild(lock, 100);
+                level_back_6->addChild(lock, 100, kLevelLockedTag);
         }
         level_back_6->addChild(level_6);
         level_back_6->setPosition(Vec2(visibleSize.width * 5 / 13, visibleSize.height * 4 / 11));
         _levelBackBottomHalf->addChild(level_back_6, ZORDER_ITEM_SHOW, kLevelShowLevel6Tag);
-        
+        level_back_1->setTag(7);
         
         
         auto level_back_7 = (Button*)level_back_1->clone();
@@ -235,12 +234,12 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         if (false == level_7_opened){
                 auto lock = Sprite::create("level/level_lock.png");
                 lock->setPosition(leve1_size / 2);
-                level_back_7->addChild(lock, 100);
+                level_back_7->addChild(lock, 100, kLevelLockedTag);
         }
         level_back_7->addChild(level_7);
         level_back_7->setPosition(Vec2(visibleSize.width * 8 / 13, visibleSize.height * 4 / 11));
         _levelBackBottomHalf->addChild(level_back_7, ZORDER_ITEM_SHOW, kLevelShowLevel7Tag);
-        
+        level_back_1->setTag(8);
         
         this->addChild(_levelBackTopHalf, ZORDER_BACK_LAYERS);
         this->addChild(_levelBackBottomHalf, ZORDER_BACK_LAYERS);
@@ -325,25 +324,54 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
 }
 
 #pragma mark - button action callback
-void LevelSelect::menuSelectLevel(Ref* btn, int bt_indx){
-        
-        _lastLevel = bt_indx;
-        UserDefault::getInstance()->getIntegerForKey(LAST_GAME_LEVEL_PLAYED_KEY, bt_indx);
-}
+
 
 void LevelSelect::purchaseCallBack(sdkbox::Product& p){
         
 }
-void LevelSelect::menuBuyLevel(Ref* btn, std::string name){
-        IAP::purchase(name);
-}
 
 void LevelSelect::menuStartGame(Ref* btn){
-        _count = 0;
-        _loadingBar->setVisible(true);
-        _loadingBarBack->setVisible(true);
-        scheduleUpdate();
-        auto scene = GameScene::createScene(_lastLevel);
+        
+        _levelPlayerNUm = ((Node*)btn)->getTag();
+        std::string product_name;
+        bool need_buy = false;
+        switch (_levelPlayerNUm) {
+                case 3:
+                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_2_LOCK_STATE_KEY, false);
+                        product_name = LEVEL_2_PRODUCT_NAME_KEY;
+                        break;
+                        
+                case 4:
+                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_3_LOCK_STATE_KEY, false);
+                        product_name = LEVEL_3_PRODUCT_NAME_KEY;
+                        break;
+                case 5:
+                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_4_LOCK_STATE_KEY, false);
+                        product_name = LEVEL_4_PRODUCT_NAME_KEY;
+                        break;
+                case 6:
+                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_5_LOCK_STATE_KEY, false);
+                        product_name = LEVEL_5_PRODUCT_NAME_KEY;
+                        break;
+                case 7:
+                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_6_LOCK_STATE_KEY, false);
+                        product_name = LEVEL_6_PRODUCT_NAME_KEY;
+                        break;
+                case 8:
+                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_7_LOCK_STATE_KEY, false);
+                        product_name = LEVEL_7_PRODUCT_NAME_KEY;
+                        break;
+                default:
+                        need_buy = false;
+                        break;
+        }
+        
+        if (need_buy){
+                IAP::purchase(product_name);
+                return;
+        }
+        
+        auto scene = GameScene::createScene(_levelPlayerNUm);
         Director::getInstance()->pushScene(scene);
 }
 
@@ -526,43 +554,36 @@ void LevelSelect::onExit(){
 
 #pragma mark - payment callback
 void LevelSelect::onSuccess(const Product& p){
-        
-        //TODO::This should change by new code
-        
-        auto menu = _levelBackTopHalf->getChildByTag(kLevelBuyMenuTag);
-        
-        if (LEVEL_4_PRODUCT_NAME_KEY == p.name){
+        auto user_default = UserDefault::getInstance();
+        if (LEVEL_2_PRODUCT_NAME_KEY == p.name){
+                user_default->setBoolForKey(LEVEL_2_LOCK_STATE_KEY, true);
+                auto button = _levelBackTopHalf->getChildByTag(kLevelShowLevel2Tag);
+                button->removeChildByTag(kLevelLockedTag);
                 
-                MenuItemImage* btn = (MenuItemImage*)menu->getChildByTag(kLevel4BuyBtnTag);
-                btn->setNormalImage(Sprite::create("level/level_unlock.png"));
-                btn->setSelectedImage(Sprite::create("level/level_unlock_sel.png"));
-                UserDefault::getInstance()->setBoolForKey(LEVEL_4_LOCK_STATE_KEY, true);
-                btn->setCallback(CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_4));
+        }else if(LEVEL_3_PRODUCT_NAME_KEY == p.name){
+                user_default->setBoolForKey(LEVEL_3_LOCK_STATE_KEY, true);
+                auto button = _levelBackTopHalf->getChildByTag(kLevelShowLevel3Tag);
+                button->removeChildByTag(kLevelLockedTag);
                 
+        }else if(LEVEL_4_PRODUCT_NAME_KEY == p.name){
+                user_default->setBoolForKey(LEVEL_4_LOCK_STATE_KEY, true);
+                auto button = _levelBackTopHalf->getChildByTag(kLevelShowLevel4Tag);
+                button->removeChildByTag(kLevelLockedTag);
                 
         }else if(LEVEL_5_PRODUCT_NAME_KEY == p.name){
-                
-                MenuItemImage* btn = (MenuItemImage*)menu->getChildByTag(kLevel5BuyBtnTag);
-                btn->setNormalImage(Sprite::create("level/level_unlock.png"));
-                btn->setSelectedImage(Sprite::create("level/level_unlock_sel.png"));
-                UserDefault::getInstance()->setBoolForKey(LEVEL_5_LOCK_STATE_KEY, true);
-                btn->setCallback(CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_5));
+                user_default->setBoolForKey(LEVEL_5_LOCK_STATE_KEY, true);
+                auto button = _levelBackTopHalf->getChildByTag(kLevelShowLevel5Tag);
+                button->removeChildByTag(kLevelLockedTag);
                 
         }else if(LEVEL_6_PRODUCT_NAME_KEY == p.name){
-                
-                MenuItemImage* btn = (MenuItemImage*)menu->getChildByTag(kLevel6BuyBtnTag);
-                btn->setNormalImage(Sprite::create("level/level_unlock.png"));
-                btn->setSelectedImage(Sprite::create("level/level_unlock_sel.png"));
-                UserDefault::getInstance()->setBoolForKey(LEVEL_6_LOCK_STATE_KEY, true);
-                btn->setCallback(CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_6));
+                user_default->setBoolForKey(LEVEL_6_LOCK_STATE_KEY, true);
+                auto button = _levelBackTopHalf->getChildByTag(kLevelShowLevel6Tag);
+                button->removeChildByTag(kLevelLockedTag);
                 
         }else if(LEVEL_7_PRODUCT_NAME_KEY == p.name){
-                
-                MenuItemImage* btn = (MenuItemImage*)menu->getChildByTag(kLevel7BuyBtnTag);
-                btn->setNormalImage(Sprite::create("level/level_unlock.png"));
-                btn->setSelectedImage(Sprite::create("level/level_unlock_sel.png"));
-                UserDefault::getInstance()->setBoolForKey(LEVEL_7_LOCK_STATE_KEY, true);
-                btn->setCallback(CC_CALLBACK_1(LevelSelect::menuSelectLevel, this, GAME_LEVEL_INDEX_7));
+                user_default->setBoolForKey(LEVEL_7_LOCK_STATE_KEY, true);
+                auto button = _levelBackTopHalf->getChildByTag(kLevelShowLevel7Tag);
+                button->removeChildByTag(kLevelLockedTag);
                 
         }else if (REMOVE_ADS_PRODUCT_NAME_KEY == p.name){
                 

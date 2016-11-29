@@ -122,6 +122,8 @@ enum {
 #define LEVEL_7_LOCK_STATE_KEY          "_key_level_7_lock_state"
 #define ADS_LOCK_STATE_KEY              "_key_ads_lock_state"
 
+#define LEVEL_2_PRODUCT_NAME_KEY        "open_level2"
+#define LEVEL_3_PRODUCT_NAME_KEY        "open_level3"
 #define LEVEL_4_PRODUCT_NAME_KEY        "open_level4"
 #define LEVEL_5_PRODUCT_NAME_KEY        "open_level5"
 #define LEVEL_6_PRODUCT_NAME_KEY        "open_level6"
@@ -131,8 +133,6 @@ enum {
 
 #define FACEBOOK_INFO_USER_AVATAR_KEY     "_key_facebook_avatar_id"
 #define FACEBOOK_INFO_USER_FB_BASIC       "_key_facebook_user_name"
-
-#define LAST_GAME_LEVEL_PLAYED_KEY      "_key_last_game_level_played"
 
 template <typename T> std::string tostr(const T& t) { std::ostringstream os; os<<t; return os.str(); }
 

@@ -92,7 +92,6 @@
 		7C558EC51DEC28F6007722D7 /* dice_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EBF1DEC28F6007722D7 /* dice_5.png */; };
 		7C558EC61DEC28F6007722D7 /* dice_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EC01DEC28F6007722D7 /* dice_6.png */; };
 		7C558EC81DED138A007722D7 /* zhandou_beijing.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EC71DED138A007722D7 /* zhandou_beijing.png */; };
-		7C558ECE1DED3EC1007722D7 /* PlayerSettingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C558ECC1DED3EC1007722D7 /* PlayerSettingScene.cpp */; };
 		7C67A7B51DD1BE6B004B5151 /* WebSocktUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */; };
 		7C6E7FFD1DD94F5300C5E374 /* ReplayLastScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */; };
 		7C6E80001DD9575A00C5E374 /* history.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFF1DD9575A00C5E374 /* history.png */; };
@@ -288,8 +287,6 @@
 		7C558EBF1DEC28F6007722D7 /* dice_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dice_5.png; sourceTree = "<group>"; };
 		7C558EC01DEC28F6007722D7 /* dice_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dice_6.png; sourceTree = "<group>"; };
 		7C558EC71DED138A007722D7 /* zhandou_beijing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhandou_beijing.png; sourceTree = "<group>"; };
-		7C558ECC1DED3EC1007722D7 /* PlayerSettingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerSettingScene.cpp; sourceTree = "<group>"; };
-		7C558ECD1DED3EC1007722D7 /* PlayerSettingScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PlayerSettingScene.hpp; sourceTree = "<group>"; };
 		7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocktUtil.cpp; sourceTree = "<group>"; };
 		7C67A7B41DD1BE6B004B5151 /* WebSocktUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocktUtil.hpp; sourceTree = "<group>"; };
 		7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReplayLastScene.cpp; sourceTree = "<group>"; };
@@ -605,8 +602,6 @@
 				7C21A0D71DC9A11E0035ECC6 /* StartingScene.cpp */,
 				7C21A0E31DC9ED930035ECC6 /* LevelSelectScene.hpp */,
 				7C21A0E21DC9ED930035ECC6 /* LevelSelectScene.cpp */,
-				7C558ECC1DED3EC1007722D7 /* PlayerSettingScene.cpp */,
-				7C558ECD1DED3EC1007722D7 /* PlayerSettingScene.hpp */,
 				7C21A0EB1DCB39050035ECC6 /* GameScene.hpp */,
 				7C21A0EA1DCB39050035ECC6 /* GameScene.cpp */,
 				7C6E7FFC1DD94F5300C5E374 /* ReplayLastScene.hpp */,
@@ -910,7 +905,6 @@
 				7C67A7B51DD1BE6B004B5151 /* WebSocktUtil.cpp in Sources */,
 				7CCB51DA1DD5AAC000810354 /* JsonUtil.cpp in Sources */,
 				7C82E4201DD572A70019C8CF /* FindPlayerScene.cpp in Sources */,
-				7C558ECE1DED3EC1007722D7 /* PlayerSettingScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				7C4DA6A51DE2E973001CC255 /* BattleFieldBean.cpp in Sources */,
 				BBC12E5E1DCE2F830035A571 /* GamePayUtil.cpp in Sources */,
@@ -985,8 +979,8 @@
 					"$(_COCOS_LIB_IOS_END)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellflower.Conqueror;
-				PROVISIONING_PROFILE = "308af586-b2ab-46e2-9b58-083043f8a891";
-				PROVISIONING_PROFILE_SPECIFIER = Conquero_debug_pro;
+				PROVISIONING_PROFILE = "a3174618-4f66-412e-9bea-c4abdc790e9c";
+				PROVISIONING_PROFILE_SPECIFIER = Conqueror_debug;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1028,8 +1022,8 @@
 					"$(_COCOS_LIB_IOS_END)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellflower.Conqueror;
-				PROVISIONING_PROFILE = "308af586-b2ab-46e2-9b58-083043f8a891";
-				PROVISIONING_PROFILE_SPECIFIER = Conquero_debug_pro;
+				PROVISIONING_PROFILE = "2cea4210-8779-476f-92ca-d9a76e0eea0e";
+				PROVISIONING_PROFILE_SPECIFIER = Conqueror_release;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = 1;

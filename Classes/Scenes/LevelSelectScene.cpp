@@ -12,8 +12,7 @@
 #include "json/writer.h"
 #include "json/stringbuffer.h"
 #include "json/rapidjson.h"
-#include "json/document.h"
-#include "PlayerSettingScene.hpp"
+#include "json/document.h" 
 
 enum {
         GAME_LEVEL_INDEX_1 = 1,

@@ -145,7 +145,7 @@ void GameScene::loadZhanshi(){
         Vector<SpriteFrame*> animFrames(12);
         char str[100] = {0};
         for(int i = 1; i <= 12; i++){
-                sprintf(str, "renwurun%04D.png", i);
+                sprintf(str, "renwurun%04d.png", i);
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }

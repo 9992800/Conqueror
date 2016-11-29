@@ -392,7 +392,8 @@ void GameScene::gameAction(){
         if (ATTACK_RES_WIN == res || ATTACK_RES_DEFEATED == res){
                 
                 CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this, res));
-                this->playRobbotBattleAnimation(res, callback);
+//                this->playRobbotBattleAnimation(res, callback);
+                this->playManualBattleAnimation(res, callback);
                 
         }else if(ATTACK_RES_GOTSUPPLY == res){
                 
@@ -407,28 +408,74 @@ void GameScene::gameAction(){
         }
 }
 
-void GameScene::afterFightFinished(CallFunc* cb){        
+void GameScene::afterFightFinished(CallFunc* cb){
         auto hide = ScaleBy::create(1.0f, .1f);
         _animationLayer->runAction(Sequence::create(hide, cb, NULL));
         cb->release();
 }
 
 void GameScene::afterShowFightBg(CallFunc*cb){
-        auto cache = AnimationCache::getInstance();
-        auto animation = cache->getAnimation("zhanshi_run");
-        animation->setLoops(1);
-        animation->setRestoreOriginalFrame(true);
-        auto action = Animate::create(animation);
+        Size visible_size = Director::getInstance()->getVisibleSize();
+        auto cc = CallFunc::create(std::bind(&GameScene::afterFightFinished, this, cb));
         
-        auto move = MoveBy::create(1, Vec2(242,0));
         
         auto p_test = _allFightingCharacters[0][0];
         p_test->setVisible(true);
         p_test->setPosition(invader_fight_pos[0] - Vec2(READY_DISTANCE_POS, 0));
         
-        auto cc = CallFunc::create(std::bind(&GameScene::afterFightFinished, this, cb));
+        
+        auto cache = AnimationCache::getInstance();
+        auto animation = cache->getAnimation("zhanshi_run");
+        animation->setRestoreOriginalFrame(true);
+        auto action = Animate::create(animation);
+        
+        auto move = MoveBy::create(2, Vec2(READY_DISTANCE_POS,0));
         Spawn* get_ready = Spawn::create(action, move, NULL);
-        p_test->runAction(Sequence::create(get_ready, cc, NULL));
+        
+        animation = cache->getAnimation("zhanshi_sd");
+        animation->setRestoreOriginalFrame(true);
+        auto fight_wait = Animate::create(animation);
+        
+        
+        auto moveby = MoveBy::create(2, Vec2(visible_size.width / 2 -READY_DISTANCE_POS,0));
+        auto run_to_fight = Spawn::create(action->clone(), moveby, NULL);
+        
+        //TODO:: add clound
+        Sequence* invade_seq = Sequence::create(get_ready,
+                                                      fight_wait,
+                                                      run_to_fight,
+                                                      run_to_fight->reverse(),
+                                                      fight_wait,
+                                                      get_ready->reverse(),
+                                                      cc, NULL);
+        p_test->runAction(invade_seq);
+        
+        
+        auto p_test2 = _allFightingCharacters[1][0];
+        p_test2->setVisible(true);
+        p_test2->setPosition(keeper_fight_pos[0] + Vec2(READY_DISTANCE_POS, 0));
+        
+        auto animation2 = cache->getAnimation("xunshoushi_run");
+        animation2->setRestoreOriginalFrame(true);
+        auto action2 = Animate::create(animation2);
+        
+        auto move2 = MoveBy::create(2, Vec2(-READY_DISTANCE_POS,0));
+        Spawn* get_ready2 = Spawn::create(action2, move2, NULL);
+        
+        
+        animation2 = cache->getAnimation("xunshoushi_sd");
+        animation2->setRestoreOriginalFrame(true);
+        auto fight_wait2 = Animate::create(animation2);
+        
+        
+        auto moveby2 = MoveBy::create(2, Vec2(READY_DISTANCE_POS - visible_size.width / 2 ,0));
+        auto run_to_fight2 = Spawn::create(action2->clone(), moveby2, NULL);
+        
+        Sequence* keeper_seq = Sequence::create(get_ready2,
+                                                fight_wait2,
+                                                run_to_fight2,
+                                                NULL);
+        p_test2->runAction(keeper_seq);
 }
 
 void GameScene::playRobbotBattleAnimation(int res, CallFunc* callback){

@@ -325,11 +325,6 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
 
 #pragma mark - button action callback
 
-
-void LevelSelect::purchaseCallBack(sdkbox::Product& p){
-        
-}
-
 void LevelSelect::menuStartGame(Ref* btn){
         
         _levelPlayerNUm = ((Node*)btn)->getTag();
@@ -340,7 +335,6 @@ void LevelSelect::menuStartGame(Ref* btn){
                         need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_2_LOCK_STATE_KEY, false);
                         product_name = LEVEL_2_PRODUCT_NAME_KEY;
                         break;
-                        
                 case 4:
                         need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_3_LOCK_STATE_KEY, false);
                         product_name = LEVEL_3_PRODUCT_NAME_KEY;

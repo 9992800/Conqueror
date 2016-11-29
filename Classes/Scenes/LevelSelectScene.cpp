@@ -163,7 +163,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         level_back_2->addChild(leve1_2);
         level_back_2->setPosition(Vec2(visibleSize.width * 5 / 13, visibleSize.height * 2/ 11));
         _levelBackTopHalf->addChild(level_back_2, ZORDER_ITEM_SHOW, kLevelShowLevel2Tag);
-        level_back_1->setTag(3);
+        level_back_2->setTag(3);
         
         
         
@@ -179,7 +179,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         level_back_3->addChild(level_3);
         level_back_3->setPosition(Vec2(visibleSize.width * 8 / 13, visibleSize.height * 2/ 11));
         _levelBackTopHalf->addChild(level_back_3, ZORDER_ITEM_SHOW, kLevelShowLevel3Tag);
-        level_back_1->setTag(4);
+        level_back_3->setTag(4);
         
         
         auto level_back_4 = (Button*)level_back_1->clone();
@@ -194,7 +194,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         level_back_4->addChild(level_4);
         level_back_4->setPosition(Vec2(visibleSize.width * 11 / 13, visibleSize.height * 2/ 11));
         _levelBackTopHalf->addChild(level_back_4, ZORDER_ITEM_SHOW, kLevelShowLevel4Tag);
-        level_back_1->setTag(5);
+        level_back_4->setTag(5);
         
         
         auto level_back_5 = (Button*)level_back_1->clone();
@@ -209,7 +209,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         level_back_5->addChild(level_5);
         level_back_5->setPosition(Vec2(visibleSize.width * 2 / 13, visibleSize.height * 4 / 11));
         _levelBackBottomHalf->addChild(level_back_5, ZORDER_ITEM_SHOW, kLevelShowLevel5Tag);
-        level_back_1->setTag(6);
+        level_back_5->setTag(6);
         
         
         auto level_back_6 = (Button*)level_back_1->clone();
@@ -224,7 +224,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         level_back_6->addChild(level_6);
         level_back_6->setPosition(Vec2(visibleSize.width * 5 / 13, visibleSize.height * 4 / 11));
         _levelBackBottomHalf->addChild(level_back_6, ZORDER_ITEM_SHOW, kLevelShowLevel6Tag);
-        level_back_1->setTag(7);
+        level_back_6->setTag(7);
         
         
         auto level_back_7 = (Button*)level_back_1->clone();
@@ -239,7 +239,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         level_back_7->addChild(level_7);
         level_back_7->setPosition(Vec2(visibleSize.width * 8 / 13, visibleSize.height * 4 / 11));
         _levelBackBottomHalf->addChild(level_back_7, ZORDER_ITEM_SHOW, kLevelShowLevel7Tag);
-        level_back_1->setTag(8);
+        level_back_7->setTag(8);
         
         this->addChild(_levelBackTopHalf, ZORDER_BACK_LAYERS);
         this->addChild(_levelBackBottomHalf, ZORDER_BACK_LAYERS);

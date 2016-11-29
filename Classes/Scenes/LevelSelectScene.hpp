@@ -79,7 +79,7 @@ private:
         MenuItemImage*  _historyPlayItem;
         map<string, Product> _productsMap;
         HistoryReplayData _historyData;
-        LayerColor*     _levelShowBackGround; 
+        LayerColor      *_levelBackTopHalf, *_levelBackBottomHalf;
 };
 
 

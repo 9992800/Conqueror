@@ -134,16 +134,23 @@ bool LevelSelect::init()
 
 void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         
-        _levelShowBackGround = LayerColor::create(Color4B::ORANGE);
+        _levelBackTopHalf       = LayerColor::create();
+        _levelBackTopHalf->setContentSize(Size(visibleSize.width, visibleSize.height / 2));
+        _levelBackTopHalf->setPosition(Vec2(-visibleSize.width, visibleSize.height / 2));
         
-        auto level_back_1 = Button::create("level/players_back.png");
+        _levelBackBottomHalf    = LayerColor::create();
+        _levelBackBottomHalf->setContentSize(Size(visibleSize.width, visibleSize.height / 2));
+        _levelBackBottomHalf->setPosition(Vec2(visibleSize.width, 0));
+        
+        auto level_back_1 = Button::create("level/players_back.png");        
+        level_back_1->addClickEventListener(CC_CALLBACK_1(LevelSelect::menuStartGame, this));
+        
         Size leve1_size = level_back_1->getContentSize();
         auto leve1_1 = Sprite::create("level/2player.png");
         leve1_1->setPosition(leve1_size / 2);
         level_back_1->addChild(leve1_1);
-        level_back_1->setPosition(Vec2(visibleSize.width * 2 / 13, visibleSize.height * 7/ 11));
-        _levelShowBackGround->addChild(level_back_1, ZORDER_ITEM_SHOW, kLevelShowLevel1Tag);
-        
+        level_back_1->setPosition(Vec2(visibleSize.width * 2 / 13, visibleSize.height * 2/ 11));
+        _levelBackTopHalf->addChild(level_back_1, ZORDER_ITEM_SHOW, kLevelShowLevel1Tag);
         
         
         auto level_back_2 = (Button*)level_back_1->clone();
@@ -156,8 +163,8 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
                 level_back_2->addChild(lock, 100);
         }
         level_back_2->addChild(leve1_2);
-        level_back_2->setPosition(Vec2(visibleSize.width * 5 / 13, visibleSize.height * 7/ 11));
-        _levelShowBackGround->addChild(level_back_2, ZORDER_ITEM_SHOW, kLevelShowLevel2Tag);
+        level_back_2->setPosition(Vec2(visibleSize.width * 5 / 13, visibleSize.height * 2/ 11));
+        _levelBackTopHalf->addChild(level_back_2, ZORDER_ITEM_SHOW, kLevelShowLevel2Tag);
         
         
         
@@ -171,8 +178,8 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
                 level_back_3->addChild(lock, 100);
         }
         level_back_3->addChild(level_3);
-        level_back_3->setPosition(Vec2(visibleSize.width * 8 / 13, visibleSize.height * 7/ 11));
-        _levelShowBackGround->addChild(level_back_3, ZORDER_ITEM_SHOW, kLevelShowLevel3Tag);
+        level_back_3->setPosition(Vec2(visibleSize.width * 8 / 13, visibleSize.height * 2/ 11));
+        _levelBackTopHalf->addChild(level_back_3, ZORDER_ITEM_SHOW, kLevelShowLevel3Tag);
         
         
         
@@ -186,8 +193,8 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
                 level_back_4->addChild(lock, 100);
         }
         level_back_4->addChild(level_4);
-        level_back_4->setPosition(Vec2(visibleSize.width * 11 / 13, visibleSize.height * 7/ 11));
-        _levelShowBackGround->addChild(level_back_4, ZORDER_ITEM_SHOW, kLevelShowLevel4Tag);
+        level_back_4->setPosition(Vec2(visibleSize.width * 11 / 13, visibleSize.height * 2/ 11));
+        _levelBackTopHalf->addChild(level_back_4, ZORDER_ITEM_SHOW, kLevelShowLevel4Tag);
         
         
         
@@ -202,7 +209,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         }
         level_back_5->addChild(level_5);
         level_back_5->setPosition(Vec2(visibleSize.width * 2 / 13, visibleSize.height * 4 / 11));
-        _levelShowBackGround->addChild(level_back_5, ZORDER_ITEM_SHOW, kLevelShowLevel5Tag);
+        _levelBackBottomHalf->addChild(level_back_5, ZORDER_ITEM_SHOW, kLevelShowLevel5Tag);
         
         
         
@@ -217,7 +224,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         }
         level_back_6->addChild(level_6);
         level_back_6->setPosition(Vec2(visibleSize.width * 5 / 13, visibleSize.height * 4 / 11));
-        _levelShowBackGround->addChild(level_back_6, ZORDER_ITEM_SHOW, kLevelShowLevel6Tag);
+        _levelBackBottomHalf->addChild(level_back_6, ZORDER_ITEM_SHOW, kLevelShowLevel6Tag);
         
         
         
@@ -232,10 +239,11 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         }
         level_back_7->addChild(level_7);
         level_back_7->setPosition(Vec2(visibleSize.width * 8 / 13, visibleSize.height * 4 / 11));
-        _levelShowBackGround->addChild(level_back_7, ZORDER_ITEM_SHOW, kLevelShowLevel7Tag);
+        _levelBackBottomHalf->addChild(level_back_7, ZORDER_ITEM_SHOW, kLevelShowLevel7Tag);
         
         
-        this->addChild(_levelShowBackGround, ZORDER_BACK_LAYERS);
+        this->addChild(_levelBackTopHalf, ZORDER_BACK_LAYERS);
+        this->addChild(_levelBackBottomHalf, ZORDER_BACK_LAYERS);
 }
 
 void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
@@ -250,12 +258,6 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         }
         _soundCtrl->setPosition(Vec2(2 * _soundCtrl->getContentSize().width,
                                      origin.y + 60));
-        
-        auto start_game = MenuItemImage::create("start_game.png", "start_game_sel.png",
-                                                  CC_CALLBACK_1(LevelSelect::menuStartGame, this));
-        start_game->setPosition(Vec2(origin.x + visibleSize.width / 2,
-                                     origin.y + 60));
-        
         
         auto system_setting = MenuItemImage::create("level/game_setting.png", "level/game_setting_sel.png",
                                                   CC_CALLBACK_1(LevelSelect::menuShowSettigns, this));
@@ -316,7 +318,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         Vec2 add_dices_pos(dices_back_pos.x - 100, dices_pos.y);
         add_dices->setPosition(add_dices_pos);
         
-        auto menu = Menu::create(start_game, _soundCtrl, system_setting, coins_show,
+        auto menu = Menu::create(_soundCtrl, system_setting, coins_show,
                                  add_coins, dices_show, add_dices, _historyPlayItem, NULL);
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, ZORDER_ITEM_CONTROL);
@@ -498,7 +500,12 @@ void LevelSelect::onEnter(){
                 _historyPlayItem->setNormalSpriteFrame(SpriteFrame::create("history_data_sel.png", c));
         }
         
-        //TODO::animations
+        auto visible_size = Director::getInstance()->getVisibleSize();
+        auto actionTo = MoveTo::create(1, Vec2(0,visible_size.height / 2));
+        _levelBackTopHalf->runAction(actionTo);
+        
+        auto actionTo2 = MoveTo::create(1, Vec2::ZERO);
+        _levelBackBottomHalf->runAction(actionTo2);
 }
 
 void LevelSelect::update(float delta){
@@ -519,7 +526,10 @@ void LevelSelect::onExit(){
 
 #pragma mark - payment callback
 void LevelSelect::onSuccess(const Product& p){
-        auto menu = _levelShowBackGround->getChildByTag(kLevelBuyMenuTag);
+        
+        //TODO::This should change by new code
+        
+        auto menu = _levelBackTopHalf->getChildByTag(kLevelBuyMenuTag);
         
         if (LEVEL_4_PRODUCT_NAME_KEY == p.name){
                 

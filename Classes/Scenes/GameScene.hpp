@@ -23,9 +23,8 @@ public:
         GameScene(int level):_lowestPostion_y(0.f),
         _isMoved(false),
         _isPalyingAnim(false),
-        _gameStatus(GAME_STATUS_INIT){
-                _gameLevel = level;
-                _playerNumber = level + 1;
+        _gameStatus(GAME_STATUS_INIT),
+        _playerNumber(level){
         }     
         ~GameScene();
         
@@ -55,7 +54,6 @@ private:
         
 private:
         int             _playerNumber;
-        int             _gameLevel;
         Layer*          _controlLayer;
         Layer*          _animationLayer;
         DiceGame*       _theGameLogic;

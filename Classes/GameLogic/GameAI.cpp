@@ -94,8 +94,6 @@ int GameAI::com_thinking(GameData* data){
                                 continue;
                         }
                         
-                        printf("++++++target_uid=%d++++++",target_uid);
-                        
                         if (target_uid >= 0){
                                 if (!(area_i->getOwner() != target_uid && area_j->getOwner() != target_uid)){
                                         

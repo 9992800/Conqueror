@@ -417,7 +417,7 @@ void GameScene::afterFightFinished(CallFunc* cb){
         cb->release();
 }
 
-void GameScene::afterShowFightBg(CallFunc*cb){
+void GameScene::afterShowFightBg(CallFunc* cb){
         Size visible_size = Director::getInstance()->getVisibleSize();
         auto cc = CallFunc::create(std::bind(&GameScene::afterFightFinished, this, cb));
         
@@ -499,6 +499,25 @@ void GameScene::playManualBattleAnimation(FightResultData* resut_data, CallFunc*
                 _isPalyingAnim = true;
                 auto show = ScaleBy::create(.5f, 10.0f);
                 _animationLayer->setVisible(true);
+                auto back_size = _animationLayer->getContentSize();
+                for (int i = 0; i < MAX_DICE_PER_AREA; i++){
+                        int value = resut_data->_from[i];
+                        if (value != 0){
+                                auto dice = Sprite::create(StringUtils::format("dice_%d.png", value));
+                                dice->setPosition(Vec2(50 * i + 20, back_size.height / 2 - 120));
+                                _animationLayer->addChild(dice, 100 + i);
+                        }
+                }
+                
+                for (int i = 0; i < MAX_DICE_PER_AREA; i++){
+                        int value = resut_data->_to[i];
+                        if (value != 0){
+                                auto dice = Sprite::create(StringUtils::format("dice_%d.png", value));
+                                dice->setPosition(Vec2(back_size.width - 50 * i - 20, back_size.height / 2 - 120));
+                                _animationLayer->addChild(dice, 100 + i);
+                        }
+                }
+                
                 callback->retain();
                 auto cc = CallFunc::create(std::bind(&GameScene::afterShowFightBg, this, callback));
                 _animationLayer->runAction(Sequence::create(show, cc, NULL));

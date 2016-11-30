@@ -21,8 +21,8 @@ public:
         CREATE_FUNC(FightResultData);
         virtual bool init(){
                 _result = ATTACK_RES_NONE;
-                _from = std::vector<int>(MAX_DICE_PER_AREA);
-                _to = std::vector<int>(MAX_DICE_PER_AREA);
+                _from = std::vector<int>(MAX_DICE_PER_AREA, 0);
+                _to = std::vector<int>(MAX_DICE_PER_AREA, 0);
                 return true;
         }
 private:

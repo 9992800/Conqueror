@@ -77,7 +77,7 @@ bool GameScene::init()
         this->addChild(_diceResultLayer, ZORDER_DICE_LAYER, key_dice_layer_tag);
         _diceResultLayer->setVisible(false);
         
-        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 2);
+        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 3);
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         return true;
 }

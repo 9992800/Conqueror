@@ -569,7 +569,7 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
                 auto fight_wait = Animate::create(stand_wait);
                 
                 
-                auto moveby = MoveBy::create(2, Vec2(back_size.width / 2 -READY_DISTANCE_POS,0));
+                auto moveby = MoveBy::create(2, Vec2(back_size.width / 2 - READY_DISTANCE_POS,0));
                 auto run_to_fight = Spawn::create(run_action->clone(), moveby, NULL);
                 
         

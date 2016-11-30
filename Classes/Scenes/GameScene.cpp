@@ -182,7 +182,9 @@ void GameScene::loadZhanshi(){
                 auto zhanshi = Sprite::create();
                 zhanshi->setSpriteFrame(frame);
                 _allFightingCharacters[0][i] = zhanshi;
+                zhanshi->setVisible(false);
                 _animationLayer->addChild(zhanshi);
+                zhanshi->setPosition(Vec2(-100,-100));
         }
 //        frame = frameCache->getSpriteFrameByName("renwu_sd0001.png");
 //        zhanshi = Sprite::create();
@@ -221,6 +223,7 @@ void GameScene::loadXunShouShi(){
                 xunshoushi->setSpriteFrame(frame);
                 _allFightingCharacters[1][i] = xunshoushi;
                 _animationLayer->addChild(xunshoushi);
+                xunshoushi->setPosition(Vec2(-100,-100));
         }
 //        frame = frameCache->getSpriteFrameByName("xsssd0001.png");
 //        xunshoushi = Sprite::create();
@@ -428,10 +431,10 @@ void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
         //TODO:: accupy area.
         
         auto hide = ScaleBy::create(1.0f, .1f);
-        _animationLayer->runAction(Sequence::create(hide, cb,
+        _animationLayer->runAction(Sequence::create(hide,
                 CallFunc::create( [&](){
                 _animationLayer->setVisible(false);
-        }), NULL));
+        }), cb, NULL));
 }
 
 
@@ -459,7 +462,7 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
                 }
                 
                 auto moveby = MoveBy::create(2, Vec2(READY_DISTANCE_POS - visible_size.width / 2,0));
-                auto run_back = Spawn::create(run_back_act, moveby, FlipX::create(true), NULL);
+                auto run_back = Spawn::create(run_back_act, FlipX::create(true), moveby, NULL);
                 
                 auto fight_back = Animate::create(back_wait);
                 
@@ -487,7 +490,7 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
                 }
                 
                 auto moveby = MoveBy::create(2, Vec2(visible_size.width / 2 - READY_DISTANCE_POS, 0));
-                auto run_back = Spawn::create(run_back_act, moveby, FlipX::create(true), NULL);
+                auto run_back = Spawn::create(run_back_act, FlipX::create(false), moveby, NULL);
                 
                 auto fight_back = Animate::create(back_wait);
                 
@@ -556,7 +559,7 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
                 run_anim->setRestoreOriginalFrame(true);
                 auto run_action = Animate::create(run_anim);
                 auto move = MoveBy::create(2, Vec2(READY_DISTANCE_POS,0));
-                Spawn* get_ready = Spawn::create(run_action, move, NULL);
+                Spawn* get_ready = Spawn::create(run_action, FlipX::create(false), move, NULL);
                 
                 
                 
@@ -597,7 +600,7 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
                 auto run_act = Animate::create(run_anim);
                 
                 auto move = MoveBy::create(2, Vec2(-READY_DISTANCE_POS,0));
-                Spawn* get_ready = Spawn::create(run_act, move, FlipX::create(true), NULL);
+                Spawn* get_ready = Spawn::create(run_act, FlipX::create(true), move, NULL);
                 
                 
                 auto stand_wait = cache->getAnimation(ANIM_NAME_FIGHT_STAND[player_uid]);
@@ -606,7 +609,7 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
                 
                 
                 auto moveby = MoveBy::create(2, Vec2(READY_DISTANCE_POS - visible_size.width / 2 ,0));
-                auto run_to_fight = Spawn::create(run_act->clone(), moveby, NULL);
+                auto run_to_fight = Spawn::create(run_act, moveby, NULL);
                 
                 Sequence* keeper_seq = Sequence::create(get_ready, fight_wait, run_to_fight, NULL);
                 

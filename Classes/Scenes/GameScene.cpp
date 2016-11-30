@@ -297,8 +297,9 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
                 return;
         }
         
-        int result = _theGameLogic->startPlayerAttack(cell_id);
-        if (ATTACK_RES_WIN == result|| ATTACK_RES_DEFEATED == result){
+        FightResultData* result = _theGameLogic->startPlayerAttack(cell_id);
+        
+        if (nullptr != result){
                 CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this, result));
                 this->playManualBattleAnimation(result, callback);
         }
@@ -338,7 +339,7 @@ void GameScene::tryAgain(){
 
 #pragma mark - animation 
 
-void GameScene::afterPlayerBattle(int result){
+void GameScene::afterPlayerBattle(FightResultData* result){
         _isPalyingAnim = false;
 //        _tamara->setVisible(false);
         std::map<int, int> survival = _theGameLogic->cleanUpBattleField(result);
@@ -355,7 +356,7 @@ void GameScene::afterPlayerBattle(int result){
         }
 }
 
-void GameScene::afterRobootBattle(int result){
+void GameScene::afterRobootBattle(FightResultData* result){
         _isPalyingAnim = false;
         _animationLayer->setVisible(false);
         _theGameLogic->cleanUpBattleField(result);
@@ -387,24 +388,24 @@ void GameScene::afterRobootSupply(){
 }
 
 void GameScene::gameAction(){
-        int res = _theGameLogic->startRobootAttack();
-        
-        if (ATTACK_RES_WIN == res || ATTACK_RES_DEFEATED == res){
-                
-                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this, res));
-//                this->playRobbotBattleAnimation(res, callback);
-                this->playManualBattleAnimation(res, callback);
-                
-        }else if(ATTACK_RES_GOTSUPPLY == res){
-                
-                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootSupply, this));
-                this->playSupplyAnimation(callback);
-                
-        }else if (ATTACK_RES_NONE == res){
+        FightResultData* res_data = _theGameLogic->startRobootAttack();
+        if (nullptr == res_data || res_data->_result == ATTACK_RES_NONE){
                 
                 _gameStatus = GAME_STATUS_INUSERTURN;
                 _endTurnMenuItem->setVisible(true);
+                return;
+        }
+        
+        if (ATTACK_RES_WIN == res_data->_result || ATTACK_RES_DEFEATED == res_data->_result){
                 
+                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this, res_data));
+//                this->playRobbotBattleAnimation(res, callback);
+                this->playManualBattleAnimation(res_data, callback);
+                
+        }else if(ATTACK_RES_GOTSUPPLY == res_data->_result){
+                
+                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootSupply, this));
+                this->playSupplyAnimation(callback);
         }
 }
 
@@ -480,16 +481,16 @@ void GameScene::afterShowFightBg(CallFunc*cb){
         p_test2->runAction(keeper_seq);
 }
 
-void GameScene::playRobbotBattleAnimation(int res, CallFunc* callback){
+void GameScene::playRobbotBattleAnimation(FightResultData* res_data, CallFunc* callback){
         //TODO::replace this animation by a occupation animation
         auto show = ScaleBy::create(1.0f, 1.0f);
         _animationLayer->runAction(Sequence::create(show, callback, NULL));
 }
 
-void GameScene::playManualBattleAnimation(int res, CallFunc* callback){
-        if (ATTACK_RES_WIN == res){
+void GameScene::playManualBattleAnimation(FightResultData* resut_data, CallFunc* callback){
+        if (ATTACK_RES_WIN == resut_data->_result){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_WIN);
-        }else if (ATTACK_RES_DEFEATED == res){
+        }else if (ATTACK_RES_DEFEATED == resut_data->_result){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_DEFEAT);
         }
         

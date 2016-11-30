@@ -11,8 +11,7 @@
 
 #include "cocos2d.h"
 #include "GameData.hpp"
-
-
+#include "FightResultData.hpp"
 USING_NS_CC;
 
 class DiceGame : public Ref{
@@ -26,9 +25,9 @@ public:
 public:
         GameData* initGameData(int num);
         GameData* resetInitData();        
-        int startPlayerAttack(int cell_sel);
-        int startRobootAttack();
-        std::map<int, int> cleanUpBattleField(int);
+        FightResultData* startPlayerAttack(int cell_sel);
+        FightResultData* startRobootAttack();
+        std::map<int, int> cleanUpBattleField(FightResultData* );
         void clearManulAction();
         void starSupplyDice(CallFunc*);
         
@@ -48,7 +47,7 @@ private:
         void setAreaLine(int cell, int dir);
         int set_area_tc(int pid);
         void occupyArea(int newOwner, int area);
-        int startBattle();
+        FightResultData* startBattle();
         
         
         

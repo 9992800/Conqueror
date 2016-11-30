@@ -418,7 +418,9 @@ int DiceGame::set_area_tc(int pid){
 
 #pragma mark - game logic process
 
-int DiceGame::startBattle(){
+FightResultData* DiceGame::startBattle(){
+        
+        FightResultData* result_data = FightResultData::create();
         
         AreaData* area_from = _data->_areaData[_data->_areaFrom];
         area_from->drawAsSelected();
@@ -429,65 +431,70 @@ int DiceGame::startBattle(){
         _historyTo.push_back(_data->_areaTo);
         _historyFrom.push_back(_data->_areaFrom);
         
+        result_data->_fromArea = _data->_areaFrom;
+        result_data->_toArea   = _data->_areaTo;
+        
         int from_sum = 0, to_sum = 0;
         
         area_from->clearFightValue();
-        printf("\r\n---from---");
         for (int i = 0; i < area_from->getDice(); i++){
                 int random_value = random(1, 6);
                 area_from->recordFightValue(random_value);
                 from_sum += random_value;
-                printf("\t---%d---", random_value);
-                //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_DROP_DICE);
+                result_data->_from[i] = random_value;
         }
         
-        printf("\r\n---to---");
         area_to->clearFightValue();
         for (int i = 0; i < area_to->getDice(); i++){
                 int random_value = random(1, 6);
                 area_to->recordFightValue(random_value);
                 to_sum += random_value;
-                printf("\t---%d---", random_value);
-                //CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_DROP_DICE);
+                result_data->_to[i] = random_value;
         }
-        printf("\r\n---result:(%d)VS(%d)---", from_sum, to_sum);
+        
+        result_data->_fromSum = from_sum;
+        result_data->_toSum   = to_sum;
+
         if (from_sum > to_sum){
                 _historyRes.push_back(ATTACK_RES_WIN);
-                return ATTACK_RES_WIN;
+                result_data->_result = ATTACK_RES_WIN;
         }else{
                 _historyRes.push_back(ATTACK_RES_DEFEATED);
-                return ATTACK_RES_DEFEATED;
+                result_data->_result = ATTACK_RES_DEFEATED;
         }
+        
+        return result_data;
 }
 
-int DiceGame::startPlayerAttack(int cell_id){
+FightResultData* DiceGame::startPlayerAttack(int cell_id){
         
         int area_id = _data->_cel[cell_id];
         
         AreaData* area = _data->_areaData[area_id];
         int owner_uid = area->getOwner();
         
+        FightResultData* data = nullptr;
         
         if (AREA_UNSELECTED == _data->_areaFrom){
                 
                 if (area->getDice() <= 1){
-                        return ATTACK_RES_NONE;
+                        return data;
                 }
                 
                 if (owner_uid == _data->_userId){
                         _data->_areaFrom = area_id;
                         area->drawAsSelected();                        
                         CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_SELECTED);
-                        return ATTACK_RES_NONE;
+                        return data;
                 }else{
-                        return ATTACK_RES_NONE;
+                        return data;
                 }
                 
         }else{
                 if (area_id == _data->_areaFrom){
                         _data->_areaFrom = AREA_UNSELECTED;
                         area->drawAsUnselected();
-                        return ATTACK_RES_NONE;
+                        return data;
                 }else {
                         if (owner_uid == _data->_userId){
                                 
@@ -499,11 +506,11 @@ int DiceGame::startPlayerAttack(int cell_id){
                                         area->drawAsSelected();
                                 }
                                 
-                                return ATTACK_RES_NONE;
+                                return data;
                                 
                         }else {
                                 if (AREA_UNSELECTED != _data->_areaTo){
-                                        return ATTACK_RES_NONE;
+                                        return data;
                                 }
                                 
                                 if (area->isJoinedWithArea(_data->_areaFrom)){
@@ -512,29 +519,33 @@ int DiceGame::startPlayerAttack(int cell_id){
                                         return this->startBattle();
                                         
                                 }else{
-                                        return ATTACK_RES_NONE;
+                                        return data;
                                 }
                         }
                 }
         }
-        return ATTACK_RES_NONE;
+        return data;
 }
 
 
-int DiceGame::startRobootAttack(){
+FightResultData* DiceGame::startRobootAttack(){
+        FightResultData* data = nullptr;
+        
         if (_data->_jun[_data->_ban] == _data->_userId){
-                return ATTACK_RES_NONE;
+                return data;
         }
         int target = GameAI::getInstance()->com_thinking(_data);
         if (0 == target){
-                return ATTACK_RES_GOTSUPPLY;
+                data = FightResultData::create();
+                data->_result = ATTACK_RES_GOTSUPPLY;
+                return data;
         }else{
                 return this->startBattle();
         }
         
 }
 
-std::map<int, int> DiceGame::cleanUpBattleField(int res){
+std::map<int, int> DiceGame::cleanUpBattleField(FightResultData* res_data){
         
         AreaData* area_from = _data->_areaData[_data->_areaFrom];
         AreaData* area_to   = _data->_areaData[_data->_areaTo];
@@ -545,7 +556,7 @@ std::map<int, int> DiceGame::cleanUpBattleField(int res){
         area_from->clearFightValue();
         area_to->clearFightValue();
         
-        if (ATTACK_RES_WIN == res){
+        if (ATTACK_RES_WIN == res_data->_result){
                 
                 this->occupyArea(area_from->getOwner(), _data->_areaTo);
                 

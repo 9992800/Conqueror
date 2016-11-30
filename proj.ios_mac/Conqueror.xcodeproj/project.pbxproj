@@ -94,6 +94,7 @@
 		7C558EC81DED138A007722D7 /* zhandou_beijing.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EC71DED138A007722D7 /* zhandou_beijing.png */; };
 		7C558EDE1DEE7560007722D7 /* xunshoushi_pos.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EDC1DEE7560007722D7 /* xunshoushi_pos.png */; };
 		7C558EDF1DEE7560007722D7 /* zhanshi_pos.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EDD1DEE7560007722D7 /* zhanshi_pos.png */; };
+		7C558EE21DEE784A007722D7 /* FightResultData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C558EE01DEE784A007722D7 /* FightResultData.cpp */; };
 		7C67A7B51DD1BE6B004B5151 /* WebSocktUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */; };
 		7C6E7FFD1DD94F5300C5E374 /* ReplayLastScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */; };
 		7C6E80001DD9575A00C5E374 /* history.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFF1DD9575A00C5E374 /* history.png */; };
@@ -291,6 +292,8 @@
 		7C558EC71DED138A007722D7 /* zhandou_beijing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhandou_beijing.png; sourceTree = "<group>"; };
 		7C558EDC1DEE7560007722D7 /* xunshoushi_pos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xunshoushi_pos.png; sourceTree = "<group>"; };
 		7C558EDD1DEE7560007722D7 /* zhanshi_pos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhanshi_pos.png; sourceTree = "<group>"; };
+		7C558EE01DEE784A007722D7 /* FightResultData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FightResultData.cpp; sourceTree = "<group>"; };
+		7C558EE11DEE784A007722D7 /* FightResultData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FightResultData.hpp; sourceTree = "<group>"; };
 		7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocktUtil.cpp; sourceTree = "<group>"; };
 		7C67A7B41DD1BE6B004B5151 /* WebSocktUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocktUtil.hpp; sourceTree = "<group>"; };
 		7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReplayLastScene.cpp; sourceTree = "<group>"; };
@@ -631,6 +634,8 @@
 				7C21A10A1DCB4F010035ECC6 /* GamePlayer.hpp */,
 				7C21A10B1DCB4F010035ECC6 /* JoinData.cpp */,
 				7C21A10C1DCB4F010035ECC6 /* JoinData.hpp */,
+				7C558EE01DEE784A007722D7 /* FightResultData.cpp */,
+				7C558EE11DEE784A007722D7 /* FightResultData.hpp */,
 			);
 			path = GameLogic;
 			sourceTree = "<group>";
@@ -900,6 +905,7 @@
 				7C21A1011DCB3B0F0035ECC6 /* MapBasicInfo.cpp in Sources */,
 				7C21A0E81DCB2F450035ECC6 /* GameSettingsScene.cpp in Sources */,
 				7C82E4261DD5768A0019C8CF /* BattleFieldScene.cpp in Sources */,
+				7C558EE21DEE784A007722D7 /* FightResultData.cpp in Sources */,
 				7C21A0E41DC9ED930035ECC6 /* LevelSelectScene.cpp in Sources */,
 				7C6E7FFD1DD94F5300C5E374 /* ReplayLastScene.cpp in Sources */,
 				7C4BA1D41DDF0A90004F9770 /* UserSessionBean.cpp in Sources */,

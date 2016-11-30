@@ -10,6 +10,8 @@
 #define DiceGameScene_hpp
 #include "DiceGame.hpp"
 #include "cocos2d.h"
+#include "FightResultData.hpp"
+
 USING_NS_CC;
 
 
@@ -37,10 +39,10 @@ private:
         void onTouchesEnded(const std::vector<Touch*>& touches, Event *event)override;
         void tryAgain();
 
-        void afterPlayerBattle(int result);
-        void afterRobootBattle(int result);
-        void playManualBattleAnimation(int, CallFunc*);
-        void playRobbotBattleAnimation(int, CallFunc*);
+        void afterPlayerBattle(FightResultData*);
+        void afterRobootBattle(FightResultData*);
+        void playManualBattleAnimation(FightResultData*, CallFunc*);
+        void playRobbotBattleAnimation(FightResultData*, CallFunc*);
         void playSupplyAnimation(CallFunc*);
         void afterRobootSupply();
         void afterPlayerSupply();

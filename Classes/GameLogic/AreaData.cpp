@@ -19,6 +19,9 @@
 static std::string CHARACTER_NAME[]={"zhanshi_pos.png", "xunshoushi_pos.png", "zhanshi_pos.png", "xunshoushi_pos.png",
         "zhanshi_pos.png", "xunshoushi_pos.png","zhanshi_pos.png", "xunshoushi_pos.png"};
 
+static std::string CHARACTER_NAME_2[]={"zhanshi_pos2.png", "xunshoushi_pos2.png", "zhanshi_pos2.png", "xunshoushi_pos2.png",
+        "zhanshi_pos2.png", "xunshoushi_pos2.png","zhanshi_pos2.png", "xunshoushi_pos2.png"};
+
 static Color4F AreaBackGroundColors[] = {Color4F((float)0xCE/0xff, (float)0x84/0xff, (float)0x39/0xff, 1),
         Color4F((float)0xD7/0xff, (float)0x45/0xff, (float)0x13/0xff, 1),
         Color4F((float)0xE0/0xff, (float)0xE9/0xff, (float)0x83/0xff, 1),
@@ -250,12 +253,17 @@ void AreaData::drawPolyGon(int owner){
 
 Sprite* AreaData::createSprite(){
         Vec2 pos = ScreenCoordinate::getInstance()->getAreaCenterPos(_cpos);
-        auto character = Sprite::create(CHARACTER_NAME[_arm]);
+        
+        std::string charactr_name = _dice > 4 ? CHARACTER_NAME[_arm] : CHARACTER_NAME_2[_arm];
+        auto character = Sprite::create(charactr_name);
         auto ch_size = character->getContentSize();
         
-        std::ostringstream s;
-        s <<"arms/"<< _dice <<".png";
-        auto numbser = Sprite::create(s.str());
+        auto frameCache = SpriteFrameCache::getInstance();       
+        std::string s = StringUtils::format("zssl%04d.png", _dice);
+        auto frame = frameCache->getSpriteFrameByName(s);
+        
+        auto numbser = Sprite::create();
+        numbser->setSpriteFrame(frame);
         character->addChild(numbser);
         numbser->setPosition(Vec2(ch_size.width / 2, 10));
         

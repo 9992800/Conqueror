@@ -61,6 +61,8 @@ bool GameScene::init()
         frameCache->addSpriteFramesWithFile("anim/hanshisd.plist", "anim/hanshisd.png");
         frameCache->addSpriteFramesWithFile("anim/xunshoushirun.plist", "anim/xunshoushirun.png");
         frameCache->addSpriteFramesWithFile("anim/xunshoushisd.plist", "anim/xunshoushisd.png");
+        frameCache->addSpriteFramesWithFile("anim/yanwu.plist", "anim/yanwu.png");
+        frameCache->addSpriteFramesWithFile("anim/zssl.plist", "anim/zssl.png");
         
         this->initMapLayer();
         

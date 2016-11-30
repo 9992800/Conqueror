@@ -115,6 +115,8 @@
 		BB34FAAA1DD35B7A0070B4E4 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = BB34FAA91DD35B7A0070B4E4 /* sounds */; };
 		BB51F1091DCF66D50031296E /* share_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = BB51F1071DCF66D50031296E /* share_sel.png */; };
 		BB51F10A1DCF66D50031296E /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = BB51F1081DCF66D50031296E /* share.png */; };
+		BB60FC161DEF26D400904ABC /* xunshoushi_pos2.png in Resources */ = {isa = PBXBuildFile; fileRef = BB60FC141DEF26D400904ABC /* xunshoushi_pos2.png */; };
+		BB60FC171DEF26D400904ABC /* zhanshi_pos2.png in Resources */ = {isa = PBXBuildFile; fileRef = BB60FC151DEF26D400904ABC /* zhanshi_pos2.png */; };
 		BB62DFD31DCD9E7A0037DE0A /* anim in Resources */ = {isa = PBXBuildFile; fileRef = BB62DFD11DCD9E7A0037DE0A /* anim */; };
 		BB62DFD41DCD9E7A0037DE0A /* particles in Resources */ = {isa = PBXBuildFile; fileRef = BB62DFD21DCD9E7A0037DE0A /* particles */; };
 		BB9A4E241DCB7C6400E88C41 /* GameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E221DCB7C6400E88C41 /* GameData.cpp */; };
@@ -321,6 +323,8 @@
 		BB34FAA91DD35B7A0070B4E4 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		BB51F1071DCF66D50031296E /* share_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_sel.png; sourceTree = "<group>"; };
 		BB51F1081DCF66D50031296E /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
+		BB60FC141DEF26D400904ABC /* xunshoushi_pos2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xunshoushi_pos2.png; sourceTree = "<group>"; };
+		BB60FC151DEF26D400904ABC /* zhanshi_pos2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhanshi_pos2.png; sourceTree = "<group>"; };
 		BB62DFD11DCD9E7A0037DE0A /* anim */ = {isa = PBXFileReference; lastKnownFileType = folder; path = anim; sourceTree = "<group>"; };
 		BB62DFD21DCD9E7A0037DE0A /* particles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particles; sourceTree = "<group>"; };
 		BB9A4E221DCB7C6400E88C41 /* GameData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameData.cpp; sourceTree = "<group>"; };
@@ -494,6 +498,8 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BB60FC141DEF26D400904ABC /* xunshoushi_pos2.png */,
+				BB60FC151DEF26D400904ABC /* zhanshi_pos2.png */,
 				7C558EDC1DEE7560007722D7 /* xunshoushi_pos.png */,
 				7C558EDD1DEE7560007722D7 /* zhanshi_pos.png */,
 				7C558EC71DED138A007722D7 /* zhandou_beijing.png */,
@@ -835,6 +841,7 @@
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				7C4DA6AF1DE6A7EB001CC255 /* deault_avatar.png in Resources */,
 				7C558EB91DEC1D52007722D7 /* sliderProgress_back.png in Resources */,
+				BB60FC161DEF26D400904ABC /* xunshoushi_pos2.png in Resources */,
 				7C558EC61DEC28F6007722D7 /* dice_6.png in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				7C21A0DC1DC9C06C0035ECC6 /* sliderProgress.png in Resources */,
@@ -869,6 +876,7 @@
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
 				7C558EDE1DEE7560007722D7 /* xunshoushi_pos.png in Resources */,
 				7C4BA1CB1DDEA0D2004F9770 /* search_oppent_sel.png in Resources */,
+				BB60FC171DEF26D400904ABC /* zhanshi_pos2.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 				7C4DA6A81DE43C1B001CC255 /* green_edit.png in Resources */,
 			);
@@ -993,8 +1001,8 @@
 					"$(_COCOS_LIB_IOS_END)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellflower.Conqueror;
-				PROVISIONING_PROFILE = "ce6f5698-f608-4b68-8c33-51e60ea7a61c";
-				PROVISIONING_PROFILE_SPECIFIER = Conquero_debug_pro;
+				PROVISIONING_PROFILE = "a3174618-4f66-412e-9bea-c4abdc790e9c";
+				PROVISIONING_PROFILE_SPECIFIER = Conqueror_debug;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1036,8 +1044,8 @@
 					"$(_COCOS_LIB_IOS_END)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellflower.Conqueror;
-				PROVISIONING_PROFILE = "ce6f5698-f608-4b68-8c33-51e60ea7a61c";
-				PROVISIONING_PROFILE_SPECIFIER = Conquero_debug_pro;
+				PROVISIONING_PROFILE = "2cea4210-8779-476f-92ca-d9a76e0eea0e";
+				PROVISIONING_PROFILE_SPECIFIER = Conqueror_release;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = 1;

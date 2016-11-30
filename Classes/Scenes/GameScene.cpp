@@ -441,7 +441,7 @@ void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
 
 void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
         
-        Size visible_size = Director::getInstance()->getVisibleSize();
+        Size back_size = _animationLayer->getContentSize();
         auto cache = AnimationCache::getInstance();
         auto when_back_home = CallFunc::create(std::bind(&GameScene::afterFightFinished, this,res_data, cb));
         
@@ -462,7 +462,7 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
                         keeper->setVisible(false);
                 }
                 
-                auto moveby = MoveBy::create(2, Vec2(READY_DISTANCE_POS - visible_size.width / 2,0));
+                auto moveby = MoveBy::create(2, Vec2(READY_DISTANCE_POS - back_size.width / 2,0));
                 auto run_back = Spawn::create(run_back_act, FlipX::create(true), moveby, NULL);
                 
                 auto fight_back = Animate::create(back_wait);
@@ -490,7 +490,7 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
                         invader->setVisible(false);
                 }
                 
-                auto moveby = MoveBy::create(2, Vec2(visible_size.width / 2 - READY_DISTANCE_POS, 0));
+                auto moveby = MoveBy::create(2, Vec2(back_size.width / 2 - READY_DISTANCE_POS, 0));
                 auto run_back = Spawn::create(run_back_act, FlipX::create(false), moveby, NULL);
                 
                 auto fight_back = Animate::create(back_wait);
@@ -549,7 +549,7 @@ void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
 }
 
 void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
-        Size visible_size = Director::getInstance()->getVisibleSize();
+        Size back_size = _animationLayer->getContentSize();
         auto cache = AnimationCache::getInstance();
         
         //FIGHTER
@@ -569,7 +569,7 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
                 auto fight_wait = Animate::create(stand_wait);
                 
                 
-                auto moveby = MoveBy::create(2, Vec2(visible_size.width / 2 -READY_DISTANCE_POS,0));
+                auto moveby = MoveBy::create(2, Vec2(back_size.width / 2 -READY_DISTANCE_POS,0));
                 auto run_to_fight = Spawn::create(run_action->clone(), moveby, NULL);
                 
         
@@ -609,7 +609,7 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
                 auto fight_wait = Animate::create(stand_wait);
                 
                 
-                auto moveby = MoveBy::create(2, Vec2(READY_DISTANCE_POS - visible_size.width / 2 ,0));
+                auto moveby = MoveBy::create(2, Vec2(READY_DISTANCE_POS - back_size.width / 2 ,0));
                 auto run_to_fight = Spawn::create(run_act, moveby, NULL);
                 
                 Sequence* keeper_seq = Sequence::create(get_ready, fight_wait, run_to_fight, NULL);

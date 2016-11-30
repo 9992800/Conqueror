@@ -57,6 +57,8 @@ private:
         
         void loadXunShouShi();
         void loadZhanshi();
+        void loadFightCloud();
+        void loadFightResult();
         
         void afterShowFightBg(FightResultData*, CallFunc*);
         void afterFightFinished(FightResultData*, CallFunc*);

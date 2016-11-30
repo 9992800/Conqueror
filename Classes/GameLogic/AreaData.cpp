@@ -226,6 +226,18 @@ void AreaData::drawBorder(){
 }
 
 
+void AreaData::drawAsSelected(){
+        //TODO:: add animation as Selected
+        this->drawPolyGon(-1);
+}
+void AreaData::drawAsUnselected(){
+        //TODO:: remove animations;
+        _drawNode->clear();
+        drawBorder();
+        drawPolyGon(_arm);
+}
+
+
 void AreaData::drawPolyGon(int owner){
         
         if (_size == 0 || _arm < 0)

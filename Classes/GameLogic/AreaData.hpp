@@ -77,14 +77,9 @@ public:
                 drawPolyGon(_arm);
         }
         
-        inline void drawAsSelected(){
-                drawPolyGon(-1);
-        }
-        inline void drawAsUnselected(){ 
-                _drawNode->clear();
-                drawBorder();
-                drawPolyGon(_arm);
-        }
+        void drawAsSelected();
+        
+        void drawAsUnselected();
         
         inline bool isJoinedWithArea(int joinId){
                 return _join[joinId];

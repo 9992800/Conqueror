@@ -201,10 +201,6 @@ void GameScene::loadZhanshi(){
                 _animationLayer->addChild(zhanshi);
                 zhanshi->setVisible(false);
         }
-//        frame = frameCache->getSpriteFrameByName("renwu_sd0001.png");
-//        zhanshi = Sprite::create();
-//        zhanshi->setSpriteFrame(frame);
-//        _playerZhanshi[MAX_DICE_PER_AREA] = zhanshi;
 }
 
 void GameScene::loadXunShouShi(){
@@ -240,12 +236,26 @@ void GameScene::loadXunShouShi(){
                 _animationLayer->addChild(xunshoushi);
                 xunshoushi->setVisible(false);
         }
-//        frame = frameCache->getSpriteFrameByName("xsssd0001.png");
-//        xunshoushi = Sprite::create();
-//        xunshoushi->setSpriteFrame(frame);
-//        _playerXunshouShi[MAX_DICE_PER_AREA] = xunshoushi;
 }
 
+
+void GameScene::loadFightCloud(){
+        
+        auto frameCache = SpriteFrameCache::getInstance();
+        
+        Vector<SpriteFrame*> animFrames(27);
+        char str[100] = {0};
+        
+        for (int i = 1; i<= 27; i++){
+                sprintf(str, "yw%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "finght_cloud");
+}
+void GameScene::loadFightResult(){
+}
 
 void GameScene::initAnimationLayer(){
         auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -265,7 +275,9 @@ void GameScene::initAnimationLayer(){
         
         this->loadXunShouShi();
         
+        this->loadFightCloud();
         
+        this->loadFightResult();
         
         _diceResultLayer = Layer::create();
         _diceResultLayer->setContentSize(anim_back_size);

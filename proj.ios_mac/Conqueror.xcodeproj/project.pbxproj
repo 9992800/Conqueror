@@ -664,12 +664,12 @@
 				7C82E4241DD5768A0019C8CF /* BattleFieldScene.cpp */,
 				7C4BA1D31DDF0A90004F9770 /* UserSessionBean.hpp */,
 				7C4BA1D21DDF0A90004F9770 /* UserSessionBean.cpp */,
-				7C99A1431DE2033E005A489B /* OnlineGameData.cpp */,
 				7C99A1441DE2033E005A489B /* OnlineGameData.hpp */,
-				7C99A1461DE20350005A489B /* OnlineGameEngine.cpp */,
+				7C99A1431DE2033E005A489B /* OnlineGameData.cpp */,
 				7C99A1471DE20350005A489B /* OnlineGameEngine.hpp */,
-				7C4DA6A31DE2E973001CC255 /* BattleFieldBean.cpp */,
+				7C99A1461DE20350005A489B /* OnlineGameEngine.cpp */,
 				7C4DA6A41DE2E973001CC255 /* BattleFieldBean.hpp */,
+				7C4DA6A31DE2E973001CC255 /* BattleFieldBean.cpp */,
 			);
 			path = Network;
 			sourceTree = "<group>";

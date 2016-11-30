@@ -16,6 +16,9 @@
 #include "json/rapidjson.h"
 #include "json/document.h"
 
+static std::string CHARACTER_NAME[]={"zhanshi_pos.png", "xunshoushi_pos.png", "zhanshi_pos.png", "xunshoushi_pos.png",
+        "zhanshi_pos.png", "xunshoushi_pos.png","zhanshi_pos.png", "xunshoushi_pos.png"};
+
 static Color4F AreaBackGroundColors[] = {Color4F((float)0xCE/0xff, (float)0x84/0xff, (float)0x39/0xff, 1),
         Color4F((float)0xD7/0xff, (float)0x45/0xff, (float)0x13/0xff, 1),
         Color4F((float)0xE0/0xff, (float)0xE9/0xff, (float)0x83/0xff, 1),
@@ -246,14 +249,18 @@ void AreaData::drawPolyGon(int owner){
  
 
 Sprite* AreaData::createSprite(){
+        Vec2 pos = ScreenCoordinate::getInstance()->getAreaCenterPos(_cpos);
+        auto character = Sprite::create(CHARACTER_NAME[_arm]);
+        auto ch_size = character->getContentSize();
+        
         std::ostringstream s;
         s <<"arms/"<< _dice <<".png";
-        auto sprite = Sprite::create(s.str());
-        Vec2 pos = ScreenCoordinate::getInstance()->getAreaCenterPos(_cpos);
+        auto numbser = Sprite::create(s.str());
+        character->addChild(numbser);
+        numbser->setPosition(Vec2(ch_size.width / 2, 10));
         
-        
-        sprite->setPosition(pos);
-        return sprite;
+        character->setPosition(Vec2(pos.x, pos.y + 10));
+        return character;
 }
 
 

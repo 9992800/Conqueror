@@ -254,7 +254,7 @@ void AreaData::drawPolyGon(int owner){
 Sprite* AreaData::createSprite(){
         Vec2 pos = ScreenCoordinate::getInstance()->getAreaCenterPos(_cpos);
         
-        std::string charactr_name = _dice > 4 ? CHARACTER_NAME[_arm] : CHARACTER_NAME_2[_arm];
+        std::string charactr_name = _dice > 4 ? CHARACTER_NAME_2[_arm] : CHARACTER_NAME[_arm];
         auto character = Sprite::create(charactr_name);
         auto ch_size = character->getContentSize();
         
@@ -265,9 +265,9 @@ Sprite* AreaData::createSprite(){
         auto numbser = Sprite::create();
         numbser->setSpriteFrame(frame);
         character->addChild(numbser);
-        numbser->setPosition(Vec2(ch_size.width / 2, 10));
+        numbser->setPosition(Vec2(ch_size.width / 2, ch_size.height / 4));
         
-        character->setPosition(Vec2(pos.x, pos.y + 10));
+        character->setPosition(Vec2(pos.x, pos.y));
         return character;
 }
 

@@ -50,6 +50,20 @@ Scene* GameScene::createScene(int gameLevel)
         return scene;
 }
 
+GameScene::~GameScene(){
+        _theGameLogic->release();
+        
+        auto frameCache = SpriteFrameCache::getInstance();
+        frameCache->removeSpriteFramesFromFile("anim/hanshirun.plist");
+        frameCache->removeSpriteFramesFromFile("anim/hanshisd.plist");
+        frameCache->removeSpriteFramesFromFile("anim/xunshoushirun.plist");
+        frameCache->removeSpriteFramesFromFile("anim/xunshoushisd.plist");
+        frameCache->removeSpriteFramesFromFile("anim/yanwu.plist");
+        frameCache->removeSpriteFramesFromFile("anim/zssl.plist");
+        frameCache->removeSpriteFramesFromFile("anim/XX.plist");
+}
+
+
 bool GameScene::init()
 {
         if (!Layer::init()){
@@ -63,6 +77,7 @@ bool GameScene::init()
         frameCache->addSpriteFramesWithFile("anim/xunshoushisd.plist", "anim/xunshoushisd.png");
         frameCache->addSpriteFramesWithFile("anim/yanwu.plist", "anim/yanwu.png");
         frameCache->addSpriteFramesWithFile("anim/zssl.plist", "anim/zssl.png");
+        frameCache->addSpriteFramesWithFile("anim/XX.plist", "anim/XX.png");
         
         this->initMapLayer();
         
@@ -70,10 +85,15 @@ bool GameScene::init()
         
         this->initAnimationLayer();
         
-        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
-        Director::getInstance()->getScheduler()->setTimeScale(game_speed);
-        
         _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
+        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
+        
+        if (_animationIsOn){
+                Director::getInstance()->getScheduler()->setTimeScale(3);
+        }else{
+                Director::getInstance()->getScheduler()->setTimeScale(game_speed);
+        }
+        
         return true;
 }
 
@@ -256,18 +276,6 @@ void GameScene::initAnimationLayer(){
                 keeper_fight_pos[i].x = anim_back_size.width + keeper_fight_pos[i].x;
         }
 }
-
-
-GameScene::~GameScene(){
-        _theGameLogic->release();
-        
-        auto frameCache = SpriteFrameCache::getInstance();
-        frameCache->removeSpriteFramesFromFile("anim/hanshirun.plist");
-        frameCache->removeSpriteFramesFromFile("anim/hanshisd.plist");
-        frameCache->removeSpriteFramesFromFile("anim/xunshoushirun.plist");
-        frameCache->removeSpriteFramesFromFile("anim/xunshoushisd.plist");
-}
-
 #pragma mark - touch and menu event
 
 void GameScene::onTouchesMoved(const std::vector<Touch*>& touches, Event* event){

@@ -479,7 +479,7 @@ void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
 
 
 void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
-        
+        _allFightingCharacters[8][0]->setVisible(false);
         Size back_size = _animationLayer->getContentSize();
         auto cache = AnimationCache::getInstance();
         auto when_back_home = CallFunc::create(std::bind(&GameScene::afterFightFinished, this,res_data, cb));
@@ -594,7 +594,7 @@ void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
         auto cache = AnimationCache::getInstance();
         
         fight_cloud->setPosition(Vec2(size/2));
-        fight_cloud->setScale(3, 3);
+        fight_cloud->setScale(3, 5);
         auto anim_cloud = cache->getAnimation("finght_cloud");
         anim_cloud->setRestoreOriginalFrame(true);
         auto anim_action = Animate::create(anim_cloud);

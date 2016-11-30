@@ -62,20 +62,11 @@ bool GameScene::init()
         frameCache->addSpriteFramesWithFile("anim/xunshoushirun.plist", "anim/xunshoushirun.png");
         frameCache->addSpriteFramesWithFile("anim/xunshoushisd.plist", "anim/xunshoushisd.png");
         
-        auto visibleSize = Director::getInstance()->getVisibleSize();
-        for (int i = 0; i < 9; i++){
-                keeper_fight_pos[i].x = visibleSize.width + keeper_fight_pos[i].x;
-        }
-        
         this->initMapLayer();
         
         this->initControlLayer();
         
         this->initAnimationLayer();
-        
-        _diceResultLayer = Layer::create();
-        this->addChild(_diceResultLayer, ZORDER_DICE_LAYER, key_dice_layer_tag);
-        _diceResultLayer->setVisible(false);
         
         int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 3);
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
@@ -184,7 +175,7 @@ void GameScene::loadZhanshi(){
                 _allFightingCharacters[0][i] = zhanshi;
                 zhanshi->setVisible(false);
                 _animationLayer->addChild(zhanshi);
-                zhanshi->setPosition(Vec2(-100,-100));
+                zhanshi->setVisible(false);
         }
 //        frame = frameCache->getSpriteFrameByName("renwu_sd0001.png");
 //        zhanshi = Sprite::create();
@@ -223,7 +214,7 @@ void GameScene::loadXunShouShi(){
                 xunshoushi->setSpriteFrame(frame);
                 _allFightingCharacters[1][i] = xunshoushi;
                 _animationLayer->addChild(xunshoushi);
-                xunshoushi->setPosition(Vec2(-100,-100));
+                xunshoushi->setVisible(false);
         }
 //        frame = frameCache->getSpriteFrameByName("xsssd0001.png");
 //        xunshoushi = Sprite::create();
@@ -241,7 +232,7 @@ void GameScene::initAnimationLayer(){
 //        _animationLayer->setAnchorPoint(Vec2(0.5f, 0.5f));
         
         auto anim_back_size = _animationLayer->getContentSize();
-        _animationLayer->setPosition(Vec2(visibleSize - anim_back_size / 2));
+        _animationLayer->setPosition(Vec2(visibleSize / 2));
         _animationLayer->setVisible(false);
         
         this->addChild(_animationLayer, ZORDER_ANIM_LAYER, key_anim_layer_tag);
@@ -249,6 +240,16 @@ void GameScene::initAnimationLayer(){
         this->loadZhanshi();
         
         this->loadXunShouShi();
+        
+        
+        
+        _diceResultLayer = Layer::create();
+        this->addChild(_diceResultLayer, ZORDER_DICE_LAYER, key_dice_layer_tag);
+        _diceResultLayer->setVisible(false);
+        
+        for (int i = 0; i < 9; i++){
+                keeper_fight_pos[i].x = anim_back_size.width + keeper_fight_pos[i].x;
+        }
 }
 
 

@@ -22,14 +22,26 @@ enum{
         ZORDER_MAP_GROUND,
         ZORDER_CRTL_LAYERS,
         ZORDER_ANIM_LAYER,
+        ZORDER_DICE_LAYER,
         ZORDER_DIALOG_LAYER
 };
 enum{
         key_map_tag             = 1,
         key_ctrl_layer_tag,
         key_anim_layer_tag,
+        key_dice_layer_tag,
         key_dialog_layer_tag
 };
+
+static std::string ANIM_NAME_FIGHT_RUN[]        = {"zhanshi_run", "xunshoushi_run", "zhanshi_run", "xunshoushi_run",
+        "zhanshi_run", "xunshoushi_run", "zhanshi_run", "xunshoushi_run"};
+
+static std::string ANIM_NAME_FIGHT_STAND[]      = {"zhanshi_sd", "xunshoushi_sd", "zhanshi_sd", "xunshoushi_sd",
+        "zhanshi_sd", "xunshoushi_sd", "zhanshi_sd", "xunshoushi_sd"};
+
+
+static std::string ANIM_NAME_FIGHT_RUNBACK[]      = {"zhanshi_run", "xunshoushi_run", "zhanshi_run", "xunshoushi_run",
+        "zhanshi_run", "xunshoushi_run", "zhanshi_run", "xunshoushi_run", };
 
 
 #pragma mark - constructor
@@ -64,6 +76,10 @@ bool GameScene::init()
         this->initControlLayer();
         
         this->initAnimationLayer();
+        
+        _diceResultLayer = Layer::create();
+        this->addChild(_diceResultLayer, ZORDER_DICE_LAYER, key_dice_layer_tag);
+        _diceResultLayer->setVisible(false);
         
         int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 3);
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
@@ -169,7 +185,6 @@ void GameScene::loadZhanshi(){
                 auto zhanshi = Sprite::create();
                 zhanshi->setSpriteFrame(frame);
                 _allFightingCharacters[0][i] = zhanshi;
-                zhanshi->setVisible(false);
                 _animationLayer->addChild(zhanshi);
         }
 //        frame = frameCache->getSpriteFrameByName("renwu_sd0001.png");
@@ -208,7 +223,6 @@ void GameScene::loadXunShouShi(){
                 auto xunshoushi = Sprite::create();
                 xunshoushi->setSpriteFrame(frame);
                 _allFightingCharacters[1][i] = xunshoushi;
-                xunshoushi->setVisible(false);
                 _animationLayer->addChild(xunshoushi);
         }
 //        frame = frameCache->getSpriteFrameByName("xsssd0001.png");
@@ -228,7 +242,7 @@ void GameScene::initAnimationLayer(){
         
         auto anim_back_size = _animationLayer->getContentSize();
         _animationLayer->setPosition(Vec2(visibleSize - anim_back_size / 2));
-//        _animationLayer->setVisible(false);
+        _animationLayer->setVisible(false);
         
         this->addChild(_animationLayer, ZORDER_ANIM_LAYER, key_anim_layer_tag);
         
@@ -341,7 +355,9 @@ void GameScene::tryAgain(){
 
 void GameScene::afterPlayerBattle(FightResultData* result){
         _isPalyingAnim = false;
-//        _tamara->setVisible(false);
+        
+        _diceResultLayer->setVisible(false);
+        _diceResultLayer->removeAllChildren();
         std::map<int, int> survival = _theGameLogic->cleanUpBattleField(result);
         if (survival.size() == 1){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_WIN);
@@ -358,7 +374,8 @@ void GameScene::afterPlayerBattle(FightResultData* result){
 
 void GameScene::afterRobootBattle(FightResultData* result){
         _isPalyingAnim = false;
-        _animationLayer->setVisible(false);
+        _diceResultLayer->setVisible(false);
+        _diceResultLayer->removeAllChildren();
         _theGameLogic->cleanUpBattleField(result);
         
         int user_tc = _theGameLogic->getUserTC();
@@ -409,76 +426,129 @@ void GameScene::gameAction(){
         }
 }
 
-void GameScene::afterFightFinished(CallFunc* cb){
+void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
         auto hide = ScaleBy::create(1.0f, .1f);
         _animationLayer->runAction(Sequence::create(hide,
                 CallFunc::create( [&](){_animationLayer->setVisible(false);}),
                                                     cb, NULL));
         cb->release();
+        resut_data->release();
 }
 
-void GameScene::afterShowFightBg(CallFunc* cb){
+
+void GameScene::WinnerBack(FightResultData* resut_data, CallFunc* cb){
+        
+}
+
+void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
+        _diceResultLayer->setVisible(true);
+        
+        
+        auto back_size = _diceResultLayer->getContentSize();
+        for (int i = 0; i < resut_data->_from.size(); i++){
+                int value = resut_data->_from[i];
+                auto dice = Sprite::create(StringUtils::format("dice_%d.png", value));
+                dice->setPosition(Vec2(50 * i + 20, back_size.height / 2 - 120));
+                _diceResultLayer->addChild(dice);
+        }
+        
+        for (int i = 0; i < resut_data->_to.size(); i++){
+                int value = resut_data->_to[i];
+                auto dice = Sprite::create(StringUtils::format("dice_%d.png", value));
+                dice->setPosition(Vec2(back_size.width - 50 * i - 20, back_size.height / 2 - 120));
+                _diceResultLayer->addChild(dice);
+        }
+        
+        auto from_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_fromSum), "", 60);
+        from_value->setColor(Color3B::RED);
+        from_value->setPosition(Vec2(back_size.width / 2 - 100, back_size.height / 2 + 120));
+        _diceResultLayer->addChild(from_value);
+        
+        auto to_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_toSum), "", 60);
+        to_value->setColor(Color3B::RED);
+        to_value->setPosition(Vec2(back_size.width / 2 + 100, back_size.height / 2 + 120));
+        _diceResultLayer->addChild(to_value);
+        
+        auto winner_back = CallFunc::create(std::bind(&GameScene::WinnerBack, this, resut_data, cb));
+        
+        //TODO:: use this as  cloud animation. need to be replaced.
+        _diceResultLayer->runAction(Sequence::create(RotateBy::create(2, 360 * 2), winner_back, NULL));
+}
+
+void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
         Size visible_size = Director::getInstance()->getVisibleSize();
-        auto cc = CallFunc::create(std::bind(&GameScene::afterFightFinished, this, cb));
-        
-        
-        auto p_test = _allFightingCharacters[0][0];
-        p_test->setVisible(true);
-        p_test->setPosition(invader_fight_pos[0] - Vec2(READY_DISTANCE_POS, 0));
-        
-        
         auto cache = AnimationCache::getInstance();
-        auto animation = cache->getAnimation("zhanshi_run");
-        animation->setRestoreOriginalFrame(true);
-        auto action = Animate::create(animation);
         
-        auto move = MoveBy::create(2, Vec2(READY_DISTANCE_POS,0));
-        Spawn* get_ready = Spawn::create(action, move, NULL);
+        //FIGHTER
+        {
+                int player_uid = res_data->_fromPlayer;
         
-        animation = cache->getAnimation("zhanshi_sd");
-        animation->setRestoreOriginalFrame(true);
-        auto fight_wait = Animate::create(animation);
+                auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[player_uid]);
+                run_anim->setRestoreOriginalFrame(true);
+                auto run_action = Animate::create(run_anim);
+                auto move = MoveBy::create(2, Vec2(READY_DISTANCE_POS,0));
+                Spawn* get_ready = Spawn::create(run_action, move, NULL);
+                
+                
+                
+                auto stand_wait = cache->getAnimation(ANIM_NAME_FIGHT_STAND[player_uid]);
+                stand_wait->setRestoreOriginalFrame(true);
+                auto fight_wait = Animate::create(stand_wait);
+                
+                
+                auto moveby = MoveBy::create(2, Vec2(visible_size.width / 2 -READY_DISTANCE_POS,0));
+                auto run_to_fight = Spawn::create(run_action->clone(), moveby, NULL);
+                
         
-        
-        auto moveby = MoveBy::create(2, Vec2(visible_size.width / 2 -READY_DISTANCE_POS,0));
-        auto run_to_fight = Spawn::create(action->clone(), moveby, NULL);
-        
-        //TODO:: add clound
-        Sequence* invade_seq = Sequence::create(get_ready,
-                                                      fight_wait,
-                                                      run_to_fight,
-                                                      run_to_fight->reverse(),
-                                                      fight_wait,
-                                                      get_ready->reverse(),
-                                                      cc, NULL);
-        p_test->runAction(invade_seq);
-        
-        
-        auto p_test2 = _allFightingCharacters[1][0];
-        p_test2->setVisible(true);
-        p_test2->setPosition(keeper_fight_pos[0] + Vec2(READY_DISTANCE_POS, 0));
-        
-        auto animation2 = cache->getAnimation("xunshoushi_run");
-        animation2->setRestoreOriginalFrame(true);
-        auto action2 = Animate::create(animation2);
-        
-        auto move2 = MoveBy::create(2, Vec2(-READY_DISTANCE_POS,0));
-        Spawn* get_ready2 = Spawn::create(action2, move2, NULL);
-        
-        
-        animation2 = cache->getAnimation("xunshoushi_sd");
-        animation2->setRestoreOriginalFrame(true);
-        auto fight_wait2 = Animate::create(animation2);
+                Sequence* invade_seq = Sequence::create(get_ready, fight_wait,  run_to_fight, NULL);
+                
+                for (int i = 0; i < res_data->_from.size(); i++){
+                        
+                        auto invader = _allFightingCharacters[res_data->_fromPlayer][i];
+                        invader->setPosition(invader_fight_pos[i] - Vec2(READY_DISTANCE_POS, 0));
+                        
+                        if (i == 0){
+                                auto fighting = CallFunc::create(std::bind(&GameScene::Fighting, this,res_data, cb));
+                                auto s_with_cc = Sequence::create(get_ready, fight_wait,  run_to_fight, fighting, NULL);
+                                invader->runAction(s_with_cc);
+                        }else{
+                                invader->runAction(invade_seq->clone());
+                        }
+                }
+        }
         
         
-        auto moveby2 = MoveBy::create(2, Vec2(READY_DISTANCE_POS - visible_size.width / 2 ,0));
-        auto run_to_fight2 = Spawn::create(action2->clone(), moveby2, NULL);
-        
-        Sequence* keeper_seq = Sequence::create(get_ready2,
-                                                fight_wait2,
-                                                run_to_fight2,
-                                                NULL);
-        p_test2->runAction(keeper_seq);
+        //KEEPER
+        {
+                int player_uid = res_data->_toPlayer;
+                
+                auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[player_uid]);
+                run_anim->setRestoreOriginalFrame(true);
+                auto run_act = Animate::create(run_anim);
+                
+                auto move = MoveBy::create(2, Vec2(-READY_DISTANCE_POS,0));
+                Spawn* get_ready = Spawn::create(run_act, move, NULL);
+                
+                
+                auto stand_wait = cache->getAnimation(ANIM_NAME_FIGHT_STAND[player_uid]);
+                stand_wait->setRestoreOriginalFrame(true);
+                auto fight_wait = Animate::create(stand_wait);
+                
+                
+                auto moveby = MoveBy::create(2, Vec2(READY_DISTANCE_POS - visible_size.width / 2 ,0));
+                auto run_to_fight = Spawn::create(run_act->clone(), moveby, NULL);
+                
+                Sequence* keeper_seq = Sequence::create(get_ready,
+                                                        fight_wait,
+                                                        run_to_fight,
+                                                        NULL);
+                
+                for (int i = 0; i < res_data->_to.size(); i++){
+                        auto keeper = _allFightingCharacters[player_uid][i];
+                        keeper->setPosition(keeper_fight_pos[i] + Vec2(READY_DISTANCE_POS, 0));
+                        keeper->runAction(keeper_seq->clone());
+                }        
+        }
 }
 
 void GameScene::playRobbotBattleAnimation(FightResultData* res_data, CallFunc* callback){
@@ -499,27 +569,10 @@ void GameScene::playManualBattleAnimation(FightResultData* resut_data, CallFunc*
                 _isPalyingAnim = true;
                 auto show = ScaleBy::create(.5f, 10.0f);
                 _animationLayer->setVisible(true);
-                auto back_size = _animationLayer->getContentSize();
-                for (int i = 0; i < MAX_DICE_PER_AREA; i++){
-                        int value = resut_data->_from[i];
-                        if (value != 0){
-                                auto dice = Sprite::create(StringUtils::format("dice_%d.png", value));
-                                dice->setPosition(Vec2(50 * i + 20, back_size.height / 2 - 120));
-                                _animationLayer->addChild(dice, 100 + i);
-                        }
-                }
-                
-                for (int i = 0; i < MAX_DICE_PER_AREA; i++){
-                        int value = resut_data->_to[i];
-                        if (value != 0){
-                                auto dice = Sprite::create(StringUtils::format("dice_%d.png", value));
-                                dice->setPosition(Vec2(back_size.width - 50 * i - 20, back_size.height / 2 - 120));
-                                _animationLayer->addChild(dice, 100 + i);
-                        }
-                }
                 
                 callback->retain();
-                auto cc = CallFunc::create(std::bind(&GameScene::afterShowFightBg, this, callback));
+                resut_data->retain();
+                auto cc = CallFunc::create(std::bind(&GameScene::afterShowFightBg, this,resut_data, callback));
                 _animationLayer->runAction(Sequence::create(show, cc, NULL));
                 
         }else{

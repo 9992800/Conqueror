@@ -58,12 +58,14 @@ private:
         void loadXunShouShi();
         void loadZhanshi();
         
-        void afterShowFightBg(CallFunc*);
-        void afterFightFinished(CallFunc*);
-        
+        void afterShowFightBg(FightResultData*, CallFunc*);
+        void afterFightFinished(FightResultData*, CallFunc*);
+        void Fighting(FightResultData*, CallFunc*);
+        void WinnerBack(FightResultData*, CallFunc*);
 private:
         int             _playerNumber;
         Layer*          _controlLayer;
+        Layer*          _diceResultLayer;
         Sprite*         _animationLayer;
         DiceGame*       _theGameLogic;
         bool            _isMoved;

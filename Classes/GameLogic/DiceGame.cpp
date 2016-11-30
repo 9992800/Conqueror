@@ -424,9 +424,11 @@ FightResultData* DiceGame::startBattle(){
         
         AreaData* area_from = _data->_areaData[_data->_areaFrom];
         area_from->drawAsSelected();
+        result_data->_fromPlayer = area_from->getOwner();
         
         AreaData* area_to   = _data->_areaData[_data->_areaTo];
         area_to->drawAsSelected();
+        result_data->_toPlayer = area_to->getOwner();
         
         _historyTo.push_back(_data->_areaTo);
         _historyFrom.push_back(_data->_areaFrom);
@@ -441,7 +443,7 @@ FightResultData* DiceGame::startBattle(){
                 int random_value = random(1, 6);
                 area_from->recordFightValue(random_value);
                 from_sum += random_value;
-                result_data->_from[i] = random_value;
+                result_data->_from.push_back(random_value);
         }
         
         area_to->clearFightValue();
@@ -449,7 +451,7 @@ FightResultData* DiceGame::startBattle(){
                 int random_value = random(1, 6);
                 area_to->recordFightValue(random_value);
                 to_sum += random_value;
-                result_data->_to[i] = random_value;
+                result_data->_to.push_back(random_value);
         }
         
         result_data->_fromSum = from_sum;

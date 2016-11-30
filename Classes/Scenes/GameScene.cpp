@@ -40,14 +40,6 @@ static std::string ANIM_NAME_FIGHT_STAND[]      = {"zhanshi_sd", "xunshoushi_sd"
         "zhanshi_sd", "xunshoushi_sd", "zhanshi_sd", "xunshoushi_sd"};
 
 
-static std::string ANIM_NAME_BACK_STAND[]      = {"zhanshi_sd", "xunshoushi_sd", "zhanshi_sd", "xunshoushi_sd",
-        "zhanshi_sd", "xunshoushi_sd", "zhanshi_sd", "xunshoushi_sd"};
-
-
-static std::string ANIM_NAME_FIGHT_RUNBACK[]      = {"zhanshi_run", "xunshoushi_run", "zhanshi_run", "xunshoushi_run",
-        "zhanshi_run", "xunshoushi_run", "zhanshi_run", "xunshoushi_run", };
-
-
 #pragma mark - constructor
 Scene* GameScene::createScene(int gameLevel)
 {
@@ -450,6 +442,13 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
         auto when_back_home = CallFunc::create(std::bind(&GameScene::afterFightFinished, this,res_data, cb));
         
         int player_uid = ATTACK_RES_WIN == res_data->_result ? res_data->_fromPlayer : res_data->_toPlayer;
+        auto run_back_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[player_uid]);
+        run_back_anim->setRestoreOriginalFrame(true);
+        auto run_back_act = Animate::create(run_back_anim);
+        
+        auto back_wait = cache->getAnimation(ANIM_NAME_FIGHT_STAND[player_uid]);
+        back_wait->setRestoreOriginalFrame(true);
+        
         
         if (ATTACK_RES_WIN == res_data->_result){
                 
@@ -459,18 +458,8 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
                         keeper->setVisible(false);
                 }
                 
-                
-                auto run_back_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUNBACK[player_uid]);
-                run_back_anim->setRestoreOriginalFrame(true);
-                auto run_back_act = Animate::create(run_back_anim);
-                
-                auto back_wait = cache->getAnimation(ANIM_NAME_BACK_STAND[player_uid]);
-                back_wait->setRestoreOriginalFrame(true);
-                
-                
-                
                 auto moveby = MoveBy::create(2, Vec2(READY_DISTANCE_POS - visible_size.width / 2,0));
-                auto run_back = Spawn::create(run_back_act, moveby, NULL);
+                auto run_back = Spawn::create(run_back_act, moveby, FlipX::create(true), NULL);
                 
                 auto fight_back = Animate::create(back_wait);
                 
@@ -491,17 +480,6 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
                 }
         }else{
                 
-                
-                
-                auto run_back_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUNBACK[player_uid]);
-                run_back_anim->setRestoreOriginalFrame(true);
-                auto run_back_act = Animate::create(run_back_anim);
-                
-                auto back_wait = cache->getAnimation(ANIM_NAME_BACK_STAND[player_uid]);
-                back_wait->setRestoreOriginalFrame(true);
-                
-                
-                
                 int invader_uid = res_data->_fromPlayer;
                 for (int i = 0; i < res_data->_from.size(); i++){
                         auto invader = _allFightingCharacters[invader_uid][i];
@@ -509,7 +487,7 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
                 }
                 
                 auto moveby = MoveBy::create(2, Vec2(visible_size.width / 2 - READY_DISTANCE_POS, 0));
-                auto run_back = Spawn::create(run_back_act, moveby, NULL);
+                auto run_back = Spawn::create(run_back_act, moveby, FlipX::create(true), NULL);
                 
                 auto fight_back = Animate::create(back_wait);
                 
@@ -619,7 +597,7 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
                 auto run_act = Animate::create(run_anim);
                 
                 auto move = MoveBy::create(2, Vec2(-READY_DISTANCE_POS,0));
-                Spawn* get_ready = Spawn::create(run_act, move, NULL);
+                Spawn* get_ready = Spawn::create(run_act, move, FlipX::create(true), NULL);
                 
                 
                 auto stand_wait = cache->getAnimation(ANIM_NAME_FIGHT_STAND[player_uid]);

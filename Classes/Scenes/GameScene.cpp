@@ -68,8 +68,10 @@ bool GameScene::init()
         
         this->initAnimationLayer();
         
-        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 3);
+        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
+        
+        _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
         return true;
 }
 
@@ -86,9 +88,9 @@ void GameScene::initMapLayer(){
         auto data = _theGameLogic->initGameData(_playerNumber);
 #if DONT_USER_TILE_MAP
         
-        auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND, visibleSize.width + 10, visibleSize.height + 20);
+        auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND, visibleSize.width, visibleSize.height);
         //TILE_COLOR_BACKGRUND  //Color4B::WHITE
-        ScreenCoordinate::getInstance()->configScreen(visibleSize);
+        ScreenCoordinate::getInstance()->configScreen(visibleSize - Size(10, 20));
         data->reshDataByBackGrnd(back_layer);
         this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);
         _lowestPostion_y = visibleSize.height + origin.y - visibleSize.height - 6;//TODO::         
@@ -244,6 +246,7 @@ void GameScene::initAnimationLayer(){
         
         
         _diceResultLayer = Layer::create();
+        _diceResultLayer->setContentSize(anim_back_size);
         this->addChild(_diceResultLayer, ZORDER_DICE_LAYER, key_dice_layer_tag);
         _diceResultLayer->setVisible(false);
         
@@ -513,9 +516,8 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
         }
 }
 
-void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
+void GameScene::ShowResultData(FightResultData* resut_data){
         _diceResultLayer->setVisible(true);
-        
         
         auto back_size = _diceResultLayer->getContentSize();
         for (int i = 0; i < resut_data->_from.size(); i++){
@@ -533,14 +535,19 @@ void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
         }
         
         auto from_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_fromSum), "", 78);
-        from_value->setColor(Color3B::RED);
+        from_value->setColor(Color3B::BLUE);
         from_value->setPosition(Vec2(back_size.width / 2 - 100, back_size.height / 2 + 120));
         _diceResultLayer->addChild(from_value);
         
         auto to_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_toSum), "", 78);
-        to_value->setColor(Color3B::RED);
+        to_value->setColor(Color3B::BLUE);
         to_value->setPosition(Vec2(back_size.width / 2 + 100, back_size.height / 2 + 120));
         _diceResultLayer->addChild(to_value);
+}
+
+void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
+        
+        this->ShowResultData(resut_data);
         
         auto winner_back = CallFunc::create(std::bind(&GameScene::WinnerBack, this, resut_data, cb));
         
@@ -636,8 +643,8 @@ void GameScene::playManualBattleAnimation(FightResultData* resut_data, CallFunc*
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_DEFEAT);
         }
         
-        bool is_anim_on = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
-        if (is_anim_on){
+        
+        if (_animationIsOn){
                 _isPalyingAnim = true;
                 auto show = ScaleBy::create(.5f, 10.0f);
                 _animationLayer->setVisible(true);
@@ -648,8 +655,11 @@ void GameScene::playManualBattleAnimation(FightResultData* resut_data, CallFunc*
                 _animationLayer->runAction(Sequence::create(show, cc, NULL));
                 
         }else{
-                //TODO::replace this animation by a occupation animation
+                this->ShowResultData(resut_data);
+                //TODO::show occupacation animation
                 auto show = ScaleBy::create(1.0f, 1.0f);
+                callback->retain();
+                resut_data->retain();
                 _animationLayer->runAction(Sequence::create(show, callback, NULL));
         }
 }

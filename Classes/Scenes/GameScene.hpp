@@ -62,6 +62,7 @@ private:
         void afterFightFinished(FightResultData*, CallFunc*);
         void Fighting(FightResultData*, CallFunc*);
         void WinnerBack(FightResultData*, CallFunc*);
+        void ShowResultData(FightResultData*);
 private:
         int             _playerNumber;
         Layer*          _controlLayer;
@@ -75,6 +76,7 @@ private:
         int             _gameStatus;
         MenuItemImage*  _endTurnMenuItem;
         MenuItemImage*  _startPlayMenuItem;
+        bool            _animationIsOn;
 };
 
 

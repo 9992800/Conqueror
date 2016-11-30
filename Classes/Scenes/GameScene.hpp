@@ -42,7 +42,6 @@ private:
         void afterPlayerBattle(FightResultData*);
         void afterRobootBattle(FightResultData*);
         void playManualBattleAnimation(FightResultData*, CallFunc*);
-        void playRobbotBattleAnimation(FightResultData*, CallFunc*);
         void playSupplyAnimation(CallFunc*);
         void afterRobootSupply();
         void afterPlayerSupply();
@@ -74,7 +73,7 @@ private:
         bool            _isMoved;
         bool            _isPalyingAnim;
         float           _lowestPostion_y;
-        Sprite*         _allFightingCharacters[8][8];
+        Sprite*         _allFightingCharacters[9][MAX_DICE_PER_AREA];
         int             _gameStatus;
         MenuItemImage*  _endTurnMenuItem;
         MenuItemImage*  _startPlayMenuItem;

@@ -253,6 +253,13 @@ void GameScene::loadFightCloud(){
         }
         auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
         AnimationCache::getInstance()->addAnimation(animation, "finght_cloud");
+        
+        auto frame = frameCache->getSpriteFrameByName("yw0001.png");
+        auto xingyun = Sprite::create();
+        xingyun->setSpriteFrame(frame);
+        _allFightingCharacters[8][0] = xingyun;
+        xingyun->setVisible(false);
+        _animationLayer->addChild(xingyun);
 }
 void GameScene::loadFightResult(){
 }
@@ -456,7 +463,14 @@ void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
         
         //TODO:: accupy area.
         
+        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
+                _allFightingCharacters[resut_data->_fromPlayer][i]->setVisible(false);
+                _allFightingCharacters[resut_data->_toPlayer][i]->setVisible(false);
+        }
+        _allFightingCharacters[8][0]->setVisible(false);
+        
         auto hide = ScaleBy::create(1.0f, .1f);
+        
         _animationLayer->runAction(Sequence::create(hide,
                 CallFunc::create( [&](){
                 _animationLayer->setVisible(false);
@@ -573,8 +587,18 @@ void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
         
         auto winner_back = CallFunc::create(std::bind(&GameScene::WinnerBack, this, resut_data, cb));
         
-        //TODO:: use this as  cloud animation. need to be replaced.
-        _diceResultLayer->runAction(Sequence::create(RotateBy::create(2, 360 * 2), winner_back, NULL));
+        auto fight_cloud = _allFightingCharacters[8][0];
+        fight_cloud->setVisible(true);
+        
+        auto size = _animationLayer->getContentSize();
+        auto cache = AnimationCache::getInstance();
+        
+        fight_cloud->setPosition(Vec2(size/2));
+        fight_cloud->setScale(3, 3);
+        auto anim_cloud = cache->getAnimation("finght_cloud");
+        anim_cloud->setRestoreOriginalFrame(true);
+        auto anim_action = Animate::create(anim_cloud);
+        fight_cloud->runAction(Sequence::create(anim_action, winner_back, NULL));
 }
 
 void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
@@ -650,12 +674,6 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
                         keeper->runAction(keeper_seq->clone());
                 }
         }
-}
-
-void GameScene::playRobbotBattleAnimation(FightResultData* res_data, CallFunc* callback){
-        //TODO::replace this animation by a occupation animation
-        auto show = ScaleBy::create(1.0f, 1.0f);
-        _animationLayer->runAction(Sequence::create(show, callback, NULL));
 }
 
 void GameScene::playManualBattleAnimation(FightResultData* resut_data, CallFunc* callback){

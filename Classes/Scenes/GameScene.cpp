@@ -40,6 +40,10 @@ static std::string ANIM_NAME_FIGHT_STAND[]      = {"zhanshi_sd", "xunshoushi_sd"
         "zhanshi_sd", "xunshoushi_sd", "zhanshi_sd", "xunshoushi_sd"};
 
 
+static std::string ANIM_NAME_BACK_STAND[]      = {"zhanshi_sd", "xunshoushi_sd", "zhanshi_sd", "xunshoushi_sd",
+        "zhanshi_sd", "xunshoushi_sd", "zhanshi_sd", "xunshoushi_sd"};
+
+
 static std::string ANIM_NAME_FIGHT_RUNBACK[]      = {"zhanshi_run", "xunshoushi_run", "zhanshi_run", "xunshoushi_run",
         "zhanshi_run", "xunshoushi_run", "zhanshi_run", "xunshoushi_run", };
 
@@ -159,6 +163,7 @@ void GameScene::loadZhanshi(){
         auto frameCache = SpriteFrameCache::getInstance();
         
         Vector<SpriteFrame*> animFrames(12);
+        Vector<SpriteFrame*> animFrames_back(12);
         char str[100] = {0};
         for(int i = 1; i <= 12; i++){
                 sprintf(str, "renwurun%04d.png", i);
@@ -427,17 +432,103 @@ void GameScene::gameAction(){
 }
 
 void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
+        
+        //TODO:: accupy area.
+        
         auto hide = ScaleBy::create(1.0f, .1f);
-        _animationLayer->runAction(Sequence::create(hide,
-                CallFunc::create( [&](){_animationLayer->setVisible(false);}),
-                                                    cb, NULL));
-        cb->release();
-        resut_data->release();
+        _animationLayer->runAction(Sequence::create(hide, cb,
+                CallFunc::create( [&](){
+                _animationLayer->setVisible(false);
+        }), NULL));
 }
 
 
-void GameScene::WinnerBack(FightResultData* resut_data, CallFunc* cb){
+void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
         
+        Size visible_size = Director::getInstance()->getVisibleSize();
+        auto cache = AnimationCache::getInstance();
+        auto when_back_home = CallFunc::create(std::bind(&GameScene::afterFightFinished, this,res_data, cb));
+        
+        int player_uid = ATTACK_RES_WIN == res_data->_result ? res_data->_fromPlayer : res_data->_toPlayer;
+        
+        if (ATTACK_RES_WIN == res_data->_result){
+                
+                int keeper_uid = res_data->_toPlayer;
+                for (int i = 0; i < res_data->_to.size(); i++){
+                        auto keeper = _allFightingCharacters[keeper_uid][i];
+                        keeper->setVisible(false);
+                }
+                
+                
+                auto run_back_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUNBACK[player_uid]);
+                run_back_anim->setRestoreOriginalFrame(true);
+                auto run_back_act = Animate::create(run_back_anim);
+                
+                auto back_wait = cache->getAnimation(ANIM_NAME_BACK_STAND[player_uid]);
+                back_wait->setRestoreOriginalFrame(true);
+                
+                
+                
+                auto moveby = MoveBy::create(2, Vec2(READY_DISTANCE_POS - visible_size.width / 2,0));
+                auto run_back = Spawn::create(run_back_act, moveby, NULL);
+                
+                auto fight_back = Animate::create(back_wait);
+                
+                auto move = MoveBy::create(2, Vec2(-READY_DISTANCE_POS,0));
+                Spawn* back_home = Spawn::create(run_back_act->clone(), move, NULL);
+                
+                Sequence* invade_back = Sequence::create(run_back, fight_back,  back_home, NULL);
+                
+                for (int i = 0; i < res_data->_from.size(); i++){
+                        auto invader = _allFightingCharacters[player_uid][i];
+                        
+                        if (i == 0){
+                                auto s_with_cc = Sequence::create(run_back, fight_back,  back_home, when_back_home, NULL);
+                                invader->runAction(s_with_cc);
+                        }else{
+                                invader->runAction(invade_back->clone());
+                        }
+                }
+        }else{
+                
+                
+                
+                auto run_back_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUNBACK[player_uid]);
+                run_back_anim->setRestoreOriginalFrame(true);
+                auto run_back_act = Animate::create(run_back_anim);
+                
+                auto back_wait = cache->getAnimation(ANIM_NAME_BACK_STAND[player_uid]);
+                back_wait->setRestoreOriginalFrame(true);
+                
+                
+                
+                int invader_uid = res_data->_fromPlayer;
+                for (int i = 0; i < res_data->_from.size(); i++){
+                        auto invader = _allFightingCharacters[invader_uid][i];
+                        invader->setVisible(false);
+                }
+                
+                auto moveby = MoveBy::create(2, Vec2(visible_size.width / 2 - READY_DISTANCE_POS, 0));
+                auto run_back = Spawn::create(run_back_act, moveby, NULL);
+                
+                auto fight_back = Animate::create(back_wait);
+                
+                auto move = MoveBy::create(2, Vec2(READY_DISTANCE_POS, 0));
+                Spawn* back_home = Spawn::create(run_back_act->clone(), move, NULL);
+                
+                Sequence* keeper_back = Sequence::create(run_back, fight_back, back_home, NULL);
+
+                for (int i = 0; i < res_data->_to.size(); i++){
+                        auto keeper = _allFightingCharacters[player_uid][i];
+                        
+                        if (0 == i){
+                                auto s_with_cc = Sequence::create(run_back, fight_back,  back_home, when_back_home, NULL);
+                                keeper->runAction(s_with_cc);
+                        }else{
+                                keeper->runAction(keeper_back->clone());
+                        }
+                }
+        }
 }
 
 void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
@@ -448,23 +539,23 @@ void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
         for (int i = 0; i < resut_data->_from.size(); i++){
                 int value = resut_data->_from[i];
                 auto dice = Sprite::create(StringUtils::format("dice_%d.png", value));
-                dice->setPosition(Vec2(50 * i + 20, back_size.height / 2 - 120));
+                dice->setPosition(Vec2(50 * i + 40, back_size.height / 2 - 120));
                 _diceResultLayer->addChild(dice);
         }
         
         for (int i = 0; i < resut_data->_to.size(); i++){
                 int value = resut_data->_to[i];
                 auto dice = Sprite::create(StringUtils::format("dice_%d.png", value));
-                dice->setPosition(Vec2(back_size.width - 50 * i - 20, back_size.height / 2 - 120));
+                dice->setPosition(Vec2(back_size.width - 50 * i - 40, back_size.height / 2 - 120));
                 _diceResultLayer->addChild(dice);
         }
         
-        auto from_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_fromSum), "", 60);
+        auto from_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_fromSum), "", 78);
         from_value->setColor(Color3B::RED);
         from_value->setPosition(Vec2(back_size.width / 2 - 100, back_size.height / 2 + 120));
         _diceResultLayer->addChild(from_value);
         
-        auto to_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_toSum), "", 60);
+        auto to_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_toSum), "", 78);
         to_value->setColor(Color3B::RED);
         to_value->setPosition(Vec2(back_size.width / 2 + 100, back_size.height / 2 + 120));
         _diceResultLayer->addChild(to_value);
@@ -505,6 +596,7 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
                 for (int i = 0; i < res_data->_from.size(); i++){
                         
                         auto invader = _allFightingCharacters[res_data->_fromPlayer][i];
+                        invader->setVisible(true);
                         invader->setPosition(invader_fight_pos[i] - Vec2(READY_DISTANCE_POS, 0));
                         
                         if (i == 0){
@@ -538,16 +630,14 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
                 auto moveby = MoveBy::create(2, Vec2(READY_DISTANCE_POS - visible_size.width / 2 ,0));
                 auto run_to_fight = Spawn::create(run_act->clone(), moveby, NULL);
                 
-                Sequence* keeper_seq = Sequence::create(get_ready,
-                                                        fight_wait,
-                                                        run_to_fight,
-                                                        NULL);
+                Sequence* keeper_seq = Sequence::create(get_ready, fight_wait, run_to_fight, NULL);
                 
                 for (int i = 0; i < res_data->_to.size(); i++){
                         auto keeper = _allFightingCharacters[player_uid][i];
+                        keeper->setVisible(true);
                         keeper->setPosition(keeper_fight_pos[i] + Vec2(READY_DISTANCE_POS, 0));
                         keeper->runAction(keeper_seq->clone());
-                }        
+                }
         }
 }
 

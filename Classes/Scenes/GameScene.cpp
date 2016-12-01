@@ -423,22 +423,12 @@ void GameScene::tryAgain(){
         
         auto data = _theGameLogic->resetInitData();
         
-#if DONT_USER_TILE_MAP
-        auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND, visibleSize.width + 10, visibleSize.height + 20);//TILE_COLOR_BACKGRUND  //Color4B::WHITE 
+        auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND, visibleSize.width + 10, visibleSize.height + 20);
         ScreenCoordinate::getInstance()->configScreen(visibleSize);
         data->reshDataByBackGrnd(back_layer);
         this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);
 
-#else        
-        auto map = MapCreator::instance()->createMap(data->getMapData());
-        Size map_size = map->getContentSize();
-        ScreenCoordinate::getInstance()->configScreen(map_size);
-        
-        data->reshDataByMapInfo(map);
-        
-        this->addChild(map, ZORDER_MAP_GROUND, key_map_tag);
 
-#endif
         _startPlayMenuItem->setVisible(true);
         _endTurnMenuItem->setVisible(false);
 }

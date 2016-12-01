@@ -87,11 +87,15 @@ _hisSupply(data.sup),
 _curStatus(HISTORY_STATUS_INIT){
         _clonedGameData = GameData::createWithData(_gameData);
         _clonedGameData->retain();
+        
+        SpriteFrameCache::getInstance()->addSpriteFramesWithFile("anim/zssl.plist", "anim/zssl.png");
 }
 
 ReplayLast::~ReplayLast(){
         _gameData->release();
         _clonedGameData->release();
+        
+        SpriteFrameCache::getInstance()->removeSpriteFramesFromFile("anim/zssl.plist");
 }
 
 

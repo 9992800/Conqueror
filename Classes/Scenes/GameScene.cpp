@@ -94,14 +94,9 @@ bool GameScene::init()
         this->initAnimationLayer();
         
         _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
-        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
+        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 3);
         
-        if (_animationIsOn){
-                Director::getInstance()->getScheduler()->setTimeScale(3);
-        }else{
-                Director::getInstance()->getScheduler()->setTimeScale(game_speed);
-        }
-        
+        Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         return true;
 }
 
@@ -447,9 +442,6 @@ void GameScene::tryAgain(){
 
 void GameScene::afterPlayerBattle(FightResultData* result){
         _isPalyingAnim = false;
-        
-        _diceResultLayer->setVisible(false);
-        _diceResultLayer->removeAllChildren();
         std::map<int, int> survival = _theGameLogic->cleanUpBattleField(result);
         if (survival.size() == 1){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_WIN);
@@ -466,8 +458,6 @@ void GameScene::afterPlayerBattle(FightResultData* result){
 
 void GameScene::afterRobootBattle(FightResultData* result){
         _isPalyingAnim = false;
-        _diceResultLayer->setVisible(false);
-        _diceResultLayer->removeAllChildren();
         _theGameLogic->cleanUpBattleField(result);
         
         int user_tc = _theGameLogic->getUserTC();
@@ -518,9 +508,6 @@ void GameScene::gameAction(){
 }
 
 void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
-        
-        
-        
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 _allFightingCharacters[resut_data->_fromPlayer][i]->setVisible(false);
                 _allFightingCharacters[resut_data->_toPlayer][i]->setVisible(false);
@@ -533,12 +520,17 @@ void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
         _animationLayer->runAction(Sequence::create(hide,
                 CallFunc::create( [& , resut_data](){
                 _animationLayer->setVisible(false);
+                _diceResultLayer->setVisible(false);
+                _diceResultLayer->removeAllChildren();                
         }), occupay_cc, NULL));
 }
 
 
 void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
+        this->ShowResultData(res_data);
+        
         _allFightingCharacters[8][0]->setVisible(false);
+        
         Size back_size = _animationLayer->getContentSize();
         auto cache = AnimationCache::getInstance();
         auto when_back_home = CallFunc::create(std::bind(&GameScene::afterFightFinished, this,res_data, cb));
@@ -642,8 +634,6 @@ void GameScene::ShowResultData(FightResultData* resut_data){
 
 void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
         
-        this->ShowResultData(resut_data);
-        
         auto winner_back = CallFunc::create(std::bind(&GameScene::WinnerBack, this, resut_data, cb));
         
         auto fight_cloud = _allFightingCharacters[8][0];
@@ -657,6 +647,7 @@ void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
         auto anim_cloud = cache->getAnimation("finght_cloud");
         anim_cloud->setRestoreOriginalFrame(true);
         auto anim_action = Animate::create(anim_cloud);
+        
         fight_cloud->runAction(Sequence::create(anim_action, winner_back, NULL));
 }
 

@@ -325,7 +325,15 @@ void AreaData::playOccupaiedAnimation(CallFunc* cb, Node* back){
         auto fire = cache->getAnimation("finght_occupay");
         fire->setRestoreOriginalFrame(true);
         
-        Sequence* s = Sequence::create(Animate::create(fire), Animate::create(character_hit), cb, NULL);
+        auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName("XX0001.png");
+        auto fire_spr = Sprite::create();
+        fire_spr->setSpriteFrame(frame);
+        fire_spr->setScale(0.5f);
+        fire_spr->setPosition(Vec2(sprite->getContentSize() / 2));
+        sprite->addChild(fire_spr);
+        
+        fire_spr->runAction(Animate::create(fire));
+        Sequence* s = Sequence::create(Animate::create(character_hit), cb, NULL);
         sprite->runAction(s);
 }
 

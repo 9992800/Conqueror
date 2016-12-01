@@ -563,20 +563,12 @@ std::map<int, int> DiceGame::cleanUpBattleField(FightResultData* res_data){
                 this->occupyArea(area_from->getOwner(), _data->_areaTo);
                 
                 area_to->setDice(area_from->getDice() - 1);
-#if DONT_USER_TILE_MAP
+
                 area_to->updatePawn(_data->_referedLayer);
-#else
-                area_to->updatePawn(_data->_refereMap);
-#endif
         }
         
         area_from->initDice();
-        
-#if DONT_USER_TILE_MAP
         area_from->updatePawn(_data->_referedLayer);
-#else
-        area_from->updatePawn(_data->_refereMap);
-#endif
         
         std::map<int, int> ok_area = std::map<int, int>();
         for (int i = 0; i < _data->_curPlayerNum; i++){

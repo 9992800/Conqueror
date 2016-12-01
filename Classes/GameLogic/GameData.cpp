@@ -119,8 +119,6 @@ bool GameData::init(GameData* data){
         return true;
 }
 
-
-
 void GameData::reshDataByBackGrnd(Node* backGrd){
         
         this->_referedLayer = backGrd;

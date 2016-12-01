@@ -8,7 +8,7 @@
 #include "JoinData.hpp"
 #include "AppMacros.hpp"
 #include "OnlineGameData.hpp"
-OnlineGameData::OnlineGameData():_playerNum(3), _refereMap(nullptr){
+OnlineGameData::OnlineGameData():_playerNum(3){
         _mapIntData = std::vector<int>(CEL_MAX, 0);
 }
 
@@ -175,21 +175,4 @@ std::string OnlineGameData::getMapData(){
 
 
 void OnlineGameData::reshDataByMapInfo(TMXTiledMap* map){
-        this->_refereMap = map;
-        
-//        for (int i = 0; i < AREA_MAX; i++){
-//                DrawNode* draw_node = DrawNode::create();
-//                map->addChild(draw_node, 1);
-//                AreaData* area = this->_areaData[i];
-//                area->intDrawObject(draw_node);
-//        }
-//        
-//        for(int i = 1; i < AREA_MAX; i++){
-//                AreaData* area = this->_areaData[i];
-//                if (area->getOwner() < 0){
-//                        continue;
-//                }
-//                Sprite* dice = area->createSprite();
-//                map->addChild(dice, AREA_SPRITE_ZORDER, AREA_TAG_ID_INMAP(i));
-//        }
 }

@@ -49,8 +49,6 @@ private:
         int                     _playerNum;
         std::vector<int>        _mapIntData;
         rapidjson::Document     _battleData;
-        
-        TMXTiledMap*            _refereMap;
         std::string             _serverId;
         int                     _mapRoler;
 };

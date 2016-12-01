@@ -31,6 +31,7 @@ public:
         ~GameScene();
         
 private:
+        
         void initMapLayer();
         void initControlLayer();
         void initAnimationLayer();
@@ -53,6 +54,7 @@ private:
         void menuExit(Ref* pSender);
         void gameExit(Ref*, int);
         void gameOver(Ref*, int);
+        void butAnimSwitch(Ref* btn);
         
         void loadXunShouShi();
         void loadZhanshi();

@@ -12,6 +12,7 @@
 #include "SimpleAudioEngine.h"
 #include "PopUpOkCancelDialog.hpp"
 #include "PopUpOkDialog.hpp"
+#include "ui/CocosGUI.h"
 
 
 
@@ -93,11 +94,21 @@ bool GameScene::init()
         
         this->initAnimationLayer();
         
-        _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
-        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 3);
-        
-        Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         return true;
+}
+
+void GameScene::butAnimSwitch(Ref* btn){
+        auto label = (Label*)((Node*)btn)->getChildByTag(111);
+        if (_animationIsOn){
+                _animationIsOn = false;
+                label->setString("打开动画");
+        }else{
+                label->setString("关闭动画");
+                _animationIsOn = true;
+        }
+        
+        UserDefault::getInstance()->setBoolForKey(ANIMATION_SWITCH_KEY, _animationIsOn);
+        UserDefault::getInstance()->flush();
 }
 
 #pragma mark - initilization
@@ -155,11 +166,26 @@ void GameScene::initControlLayer(){
         return_back->setPosition(Vec2(origin.x + return_back->getContentSize().width + 10,
                                        origin.y + visibleSize.height - return_back->getContentSize().height - 10));
         
+        
         auto menu = Menu::create(_endTurnMenuItem, _startPlayMenuItem, return_back, NULL);
         menu->setPosition(Vec2::ZERO);
         _controlLayer->addChild(menu);
         
+        
         this->addChild(_controlLayer, ZORDER_CRTL_LAYERS, key_ctrl_layer_tag);
+        _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
+        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 3);
+        Director::getInstance()->getScheduler()->setTimeScale(game_speed);
+        
+        auto colse_anim = cocos2d::ui::Button::create();
+        auto label = Label::createWithSystemFont("关闭动画", "", 26);
+        colse_anim->addChild(label, 111);
+        if (!_animationIsOn){
+                label->setString("打开动画");
+        }
+        colse_anim->addClickEventListener(CC_CALLBACK_1(GameScene::butAnimSwitch, this));
+        _controlLayer->addChild(colse_anim);
+        
         
         Director::getInstance()->setDepthTest(true);
         auto listener = EventListenerTouchAllAtOnce::create();

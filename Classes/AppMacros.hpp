@@ -195,4 +195,8 @@ enum{
 
 #define READY_DISTANCE_POS (242)
 
+#define MAP_GAM_WIDTH   (20)
+
+#define MAP_GAM_HEIGHT  (40)
+
 #endif /* __APPMACROS_H__ */

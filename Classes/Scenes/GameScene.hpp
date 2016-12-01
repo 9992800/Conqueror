@@ -22,8 +22,7 @@ public:
         static Scene* createScene(int gameLevel);
         virtual bool init() override;
         CREATE_FUNC2(GameScene, int, level);
-        GameScene(int level):_lowestPostion_y(0.f),
-        _isMoved(false),
+        GameScene(int level):_isMoved(false),
         _isPalyingAnim(false),
         _gameStatus(GAME_STATUS_INIT),
         _playerNumber(level){
@@ -73,8 +72,7 @@ private:
         Sprite*         _animationLayer;
         DiceGame*       _theGameLogic;
         bool            _isMoved;
-        bool            _isPalyingAnim;
-        float           _lowestPostion_y;
+        bool            _isPalyingAnim; 
         Sprite*         _allFightingCharacters[9][MAX_DICE_PER_AREA];
         int             _gameStatus;
         MenuItemImage*  _endTurnMenuItem;

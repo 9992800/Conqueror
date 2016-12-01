@@ -12,8 +12,7 @@
 #include "SimpleAudioEngine.h"
 #include "PopUpOkCancelDialog.hpp"
 #include "PopUpOkDialog.hpp"
-#include "ui/CocosGUI.h"
-
+#include "ui/CocosGUI.h" 
 
 
 Vec2 invader_fight_pos[] = FIGHT_POS_INVADER;
@@ -108,28 +107,17 @@ void GameScene::initMapLayer(){
         _theGameLogic->retain();
         
         auto data = _theGameLogic->initGameData(_playerNumber);
-#if DONT_USER_TILE_MAP
         
-        auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND, visibleSize.width, visibleSize.height);
+        auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND,
+                                             visibleSize.width + MAP_GAM_WIDTH ,
+                                             visibleSize.height + MAP_GAM_HEIGHT);
+      
         
-        ScreenCoordinate::getInstance()->configScreen(visibleSize - Size(10, 20));
+        ScreenCoordinate::getInstance()->configScreen(visibleSize);
         
         data->reshDataByBackGrnd(back_layer);
-        this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);
-        _lowestPostion_y = visibleSize.height + origin.y - visibleSize.height - 6;
-        
-#else
-        auto map = MapCreator::instance()->createMap(data->getMapData());
-        Size map_size = map->getContentSize();
-        ScreenCoordinate::getInstance()->configScreen(map_size);
-        
-        data->reshDataByMapInfo(map);
-        
-        this->addChild(map, ZORDER_MAP_GROUND, key_map_tag);
-        
-        _lowestPostion_y = visibleSize.height + origin.y - map_size.height - 6;
-#endif
-       
+        back_layer->setPosition(-MAP_GAM_WIDTH / 2, -MAP_GAM_HEIGHT / 2);
+        this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag); 
 }
 
 void GameScene::initControlLayer(){
@@ -383,12 +371,12 @@ void GameScene::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
         auto currentPos = map->getPosition();
         auto origin = Director::getInstance()->getVisibleOrigin(); 
         
-        if (origin.y < (currentPos.y + diff.y)){
-                diff.y = origin.y - currentPos.y;
+        if ( origin.y < (currentPos.y + diff.y)){
+                diff.y = 0;
         }
         
-        if ((currentPos.y + diff.y) < _lowestPostion_y){
-                diff.y = _lowestPostion_y - currentPos.y;
+        if ((currentPos.y + diff.y) < -MAP_GAM_HEIGHT){
+                diff.y = 0;
         }
         
         map->setPosition(currentPos + diff);

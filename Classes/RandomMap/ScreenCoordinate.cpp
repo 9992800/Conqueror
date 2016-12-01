@@ -52,7 +52,7 @@ void ScreenCoordinate::configScreen(Size mapSize){
                                 _cpos_x[count] += _cellSize.width / 2;
                         }
                         
-                        _cpos_y[count] = mapSize.height - i * _cellSize.height;
+                        _cpos_y[count] = mapSize.height - i * _cellSize.height + (MAP_GAM_HEIGHT / 2);
                         ++count;
                 }
         }

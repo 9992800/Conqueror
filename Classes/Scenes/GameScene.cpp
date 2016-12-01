@@ -61,6 +61,10 @@ GameScene::~GameScene(){
         frameCache->removeSpriteFramesFromFile("anim/yanwu.plist");
         frameCache->removeSpriteFramesFromFile("anim/zssl.plist");
         frameCache->removeSpriteFramesFromFile("anim/XX.plist");
+        frameCache->removeSpriteFramesFromFile("anim/xssHIT1.plist");
+        frameCache->removeSpriteFramesFromFile("anim/xssHIT2.plist");
+        frameCache->removeSpriteFramesFromFile("anim/zhanshiHIT1.plist");
+        frameCache->removeSpriteFramesFromFile("anim/zhanshiHIT2.plist");
 }
 
 
@@ -78,6 +82,10 @@ bool GameScene::init()
         frameCache->addSpriteFramesWithFile("anim/yanwu.plist", "anim/yanwu.png");
         frameCache->addSpriteFramesWithFile("anim/zssl.plist", "anim/zssl.png");
         frameCache->addSpriteFramesWithFile("anim/XX.plist", "anim/XX.png");
+        frameCache->addSpriteFramesWithFile("anim/xssHIT1.plist", "anim/xssHIT1.png");
+        frameCache->addSpriteFramesWithFile("anim/xssHIT2.plist", "anim/xssHIT2.png");
+        frameCache->addSpriteFramesWithFile("anim/zhanshiHIT1.plist", "anim/zhanshiHIT1.png");
+        frameCache->addSpriteFramesWithFile("anim/zhanshiHIT2.plist", "anim/zhanshiHIT2.png");
         
         this->initMapLayer();
         
@@ -243,10 +251,10 @@ void GameScene::loadFightCloud(){
         
         auto frameCache = SpriteFrameCache::getInstance();
         
-        Vector<SpriteFrame*> animFrames(27);
+        Vector<SpriteFrame*> animFrames(26);
         char str[100] = {0};
         
-        for (int i = 1; i<= 27; i++){
+        for (int i = 1; i<= 26; i++){
                 sprintf(str, "yw%04d.png", i);
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
@@ -449,7 +457,6 @@ void GameScene::gameAction(){
         if (ATTACK_RES_WIN == res_data->_result || ATTACK_RES_DEFEATED == res_data->_result){
                 
                 CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this, res_data));
-//                this->playRobbotBattleAnimation(res, callback);
                 this->playManualBattleAnimation(res_data, callback);
                 
         }else if(ATTACK_RES_GOTSUPPLY == res_data->_result){
@@ -594,7 +601,7 @@ void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
         auto cache = AnimationCache::getInstance();
         
         fight_cloud->setPosition(Vec2(size/2));
-        fight_cloud->setScale(3, 5);
+        fight_cloud->setScale(2.0f);
         auto anim_cloud = cache->getAnimation("finght_cloud");
         anim_cloud->setRestoreOriginalFrame(true);
         auto anim_action = Animate::create(anim_cloud);

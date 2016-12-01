@@ -41,6 +41,9 @@ public:
 public:
         void initHistoryRecord();
         void finishHistoryRecord();
+        inline AreaData* getArea(int area_id){
+                return _data->_areaData[area_id];
+        }
 private:
         void makeNewMapData();
         int percolate(int pt, int cmax, int an);

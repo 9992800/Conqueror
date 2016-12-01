@@ -581,8 +581,7 @@ std::map<int, int> DiceGame::cleanUpBattleField(FightResultData* res_data){
         std::map<int, int> ok_area = std::map<int, int>();
         for (int i = 0; i < _data->_curPlayerNum; i++){
                 int tc = this->set_area_tc(i);
-                if (tc > 0)
-                        ok_area.insert(std::pair<int, int>(i, tc));
+                if (tc > 0) ok_area.insert(std::pair<int, int>(i, tc));
         }
         
         _data->_areaTo    = AREA_UNSELECTED;

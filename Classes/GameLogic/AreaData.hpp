@@ -109,6 +109,8 @@ public:
         
         std::string serializeData();
         
+        void playOccupaiedAnimation(CallFunc*, Node*);
+        
 private:
         void drawBorder();
         void drawPolyGon(int owner);

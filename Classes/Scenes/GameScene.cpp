@@ -198,8 +198,6 @@ void GameScene::loadZhanshi(){
         animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
         AnimationCache::getInstance()->addAnimation(animation, "zhanshi_sd");
         
-        
-        
         auto frame = frameCache->getSpriteFrameByName("renwurun0001.png");
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto zhanshi = Sprite::create();
@@ -269,7 +267,60 @@ void GameScene::loadFightCloud(){
         xingyun->setVisible(false);
         _animationLayer->addChild(xingyun);
 }
+
 void GameScene::loadFightResult(){
+        auto frameCache = SpriteFrameCache::getInstance();
+        
+        Vector<SpriteFrame*> animFrames(9);
+        char str[100] = {0};
+        
+        for (int i = 1; i<= 9; i++){
+                sprintf(str, "XX%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "finght_occupay");
+        
+//        auto frame = frameCache->getSpriteFrameByName("XX0001.png");
+//        auto fire = Sprite::create();
+//        fire->setSpriteFrame(frame);
+        
+        animFrames.clear();
+        for (int i = 1; i <= 14; i++){
+                sprintf(str, "zhanshi_HIT%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "zhangshi_hit1");
+        
+        animFrames.clear();
+        for (int i = 1; i <= 14; i++){
+                sprintf(str, "zhanshi_HIT2%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "zhangshi_hit2");
+        
+        animFrames.clear();
+        for (int i = 1; i <= 14; i++){
+                sprintf(str, "xunshoushi_HIT%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_hit1");
+        
+        animFrames.clear();
+        for (int i = 1; i <= 14; i++){
+                sprintf(str, "xunshoushi_HIT2%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_hit2");
 }
 
 void GameScene::initAnimationLayer(){
@@ -468,7 +519,7 @@ void GameScene::gameAction(){
 
 void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
         
-        //TODO:: accupy area.
+        
         
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 _allFightingCharacters[resut_data->_fromPlayer][i]->setVisible(false);
@@ -476,12 +527,19 @@ void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
         }
         _allFightingCharacters[8][0]->setVisible(false);
         
-        auto hide = ScaleBy::create(1.0f, .1f);
+        int area_id = ATTACK_RES_DEFEATED == resut_data->_result ? resut_data->_fromArea : resut_data->_toArea;
         
+        AreaData* defeat_area = _theGameLogic->getArea(area_id);
+        
+        auto map_back = this->getChildByTag(key_map_tag);
+        defeat_area->playOccupaiedAnimation(cb, map_back);
+        
+        auto hide = ScaleBy::create(0.5f, .1f);
         _animationLayer->runAction(Sequence::create(hide,
                 CallFunc::create( [&](){
                 _animationLayer->setVisible(false);
-        }), cb, NULL));
+                defeat_area->playOccupaiedAnimation(cb, map_back);
+        }), NULL));
 }
 
 
@@ -600,7 +658,7 @@ void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
         auto size = _animationLayer->getContentSize();
         auto cache = AnimationCache::getInstance();
         
-        fight_cloud->setPosition(Vec2(size/2));
+        fight_cloud->setPosition(Vec2(size.width / 2, size.height * 0.4));
         fight_cloud->setScale(2.0f);
         auto anim_cloud = cache->getAnimation("finght_cloud");
         anim_cloud->setRestoreOriginalFrame(true);

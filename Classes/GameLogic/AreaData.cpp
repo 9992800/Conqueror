@@ -22,6 +22,16 @@ static std::string CHARACTER_NAME[]={"zhanshi_pos.png", "xunshoushi_pos.png", "z
 static std::string CHARACTER_NAME_2[]={"zhanshi_pos2.png", "xunshoushi_pos2.png", "zhanshi_pos2.png", "xunshoushi_pos2.png",
         "zhanshi_pos2.png", "xunshoushi_pos2.png","zhanshi_pos2.png", "xunshoushi_pos2.png"};
 
+static std::string ANIM_NAME_DEFEATED_SHOW[2][8] = {
+        {"zhangshi_hit1", "xunshoushi_hit1","zhangshi_hit1",
+                "xunshoushi_hit1","zhangshi_hit1", "xunshoushi_hit1",
+                "zhangshi_hit1", "xunshoushi_hit1"},
+        
+        {"zhangshi_hit2", "xunshoushi_hit2", "zhangshi_hit2",
+                "xunshoushi_hit2", "zhangshi_hit2", "xunshoushi_hit2",
+                "zhangshi_hit2", "xunshoushi_hit2"}
+};
+
 static Color4F AreaBackGroundColors[] = {Color4F((float)0xCE/0xff, (float)0x84/0xff, (float)0x39/0xff, 1),
         Color4F((float)0xD7/0xff, (float)0x45/0xff, (float)0x13/0xff, 1),
         Color4F((float)0xE0/0xff, (float)0xE9/0xff, (float)0x83/0xff, 1),
@@ -188,6 +198,7 @@ void AreaData::initAreaLine(int cell, int dir, GameData* data){
 }
 
 void AreaData::changeOwner(int newOwner){
+        //TODO::playanimations
         if (_arm == newOwner){
                 return;
         }
@@ -279,7 +290,7 @@ Sprite* AreaData::createSprite(){
         character->addChild(numbser);
         numbser->setPosition(Vec2(ch_size.width / 2, ch_size.height / 4));
         
-        character->setPosition(Vec2(pos.x, pos.y));
+        character->setPosition(pos);
         return character;
 }
 
@@ -300,8 +311,24 @@ void AreaData::updatePawn(Node* back){
         sprite->removeFromParent();
         
         sprite = this->createSprite();
-        back->addChild(sprite,AREA_SPRITE_ZORDER, AREA_TAG_ID_INMAP(_areaId));
+        back->addChild(sprite, AREA_SPRITE_ZORDER, AREA_TAG_ID_INMAP(_areaId));
 }
+
+void AreaData::playOccupaiedAnimation(CallFunc* cb, Node* back){
+        auto cache = AnimationCache::getInstance();
+        
+        Sprite* sprite = (Sprite*)back->getChildByTag(AREA_TAG_ID_INMAP(_areaId));
+        
+        auto character_hit = cache->getAnimation(ANIM_NAME_DEFEATED_SHOW[_dice > 4 ? 1 : 0][_arm]);
+        character_hit->setRestoreOriginalFrame(true);
+        
+        auto fire = cache->getAnimation("finght_occupay");
+        fire->setRestoreOriginalFrame(true);
+        
+        Sequence* s = Sequence::create(Animate::create(fire), Animate::create(character_hit), cb, NULL);
+        sprite->runAction(s);
+}
+
 
 std::string AreaData::serializeData(){
         

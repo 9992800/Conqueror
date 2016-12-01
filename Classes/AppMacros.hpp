@@ -186,8 +186,7 @@ enum{
 
 #define TILE_COLOR_BACKGRUND Color4B(0x3E, 0xA5, 0xDD, 255)
 //Color4F((float)0x3E/0xff, (float)0xA5/0xff, (float)0xDD/0xff, 1),//back ground
-
-#define DONT_USER_TILE_MAP 1
+ 
 
 #define FIGHT_POS_INVADER  {{242,250}, {203,265}, {182,236}, {156,280}, {136,250}, {116,221},{91, 265}, {70,236}, {30,250}}
 

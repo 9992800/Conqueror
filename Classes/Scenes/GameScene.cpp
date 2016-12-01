@@ -527,19 +527,13 @@ void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
         }
         _allFightingCharacters[8][0]->setVisible(false);
         
-        int area_id = ATTACK_RES_DEFEATED == resut_data->_result ? resut_data->_fromArea : resut_data->_toArea;
-        
-        AreaData* defeat_area = _theGameLogic->getArea(area_id);
-        
-        auto map_back = this->getChildByTag(key_map_tag);
-        defeat_area->playOccupaiedAnimation(cb, map_back);
+        auto occupay_cc = CallFunc::create(std::bind(&DiceGame::occupayAnimation, _theGameLogic, resut_data, cb));
         
         auto hide = ScaleBy::create(0.5f, .1f);
         _animationLayer->runAction(Sequence::create(hide,
-                CallFunc::create( [&](){
+                CallFunc::create( [& , resut_data](){
                 _animationLayer->setVisible(false);
-                defeat_area->playOccupaiedAnimation(cb, map_back);
-        }), NULL));
+        }), occupay_cc, NULL));
 }
 
 
@@ -761,11 +755,9 @@ void GameScene::playManualBattleAnimation(FightResultData* resut_data, CallFunc*
                 
         }else{
                 this->ShowResultData(resut_data);
-                //TODO::show occupacation animation
-                auto show = ScaleBy::create(1.0f, 1.0f);
                 callback->retain();
                 resut_data->retain();
-                _animationLayer->runAction(Sequence::create(show, callback, NULL));
+                this->afterFightFinished(resut_data, callback); 
         }
 }
 

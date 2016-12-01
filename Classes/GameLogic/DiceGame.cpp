@@ -653,6 +653,14 @@ void DiceGame::starSupplyDice(CallFunc* callback){
         callback->execute();
 }
 
+void DiceGame::occupayAnimation(FightResultData* resut_data, CallFunc* cb){
+        
+        int area_id = ATTACK_RES_DEFEATED == resut_data->_result ? resut_data->_fromArea : resut_data->_toArea;
+        
+        AreaData* defeat_area = _data->_areaData[area_id];
+        
+        defeat_area->playOccupaiedAnimation(cb, _data->_referedLayer);
+}
 
 void DiceGame::occupyArea(int newOwner, int area){
         

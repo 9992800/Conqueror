@@ -97,20 +97,6 @@ bool GameScene::init()
         return true;
 }
 
-void GameScene::butAnimSwitch(Ref* btn){
-        auto label = (Label*)((Node*)btn)->getChildByTag(111);
-        if (_animationIsOn){
-                _animationIsOn = false;
-                label->setString("打开动画");
-        }else{
-                label->setString("关闭动画");
-                _animationIsOn = true;
-        }
-        
-        UserDefault::getInstance()->setBoolForKey(ANIMATION_SWITCH_KEY, _animationIsOn);
-        UserDefault::getInstance()->flush();
-}
-
 #pragma mark - initilization
 void GameScene::initMapLayer(){
         
@@ -125,11 +111,13 @@ void GameScene::initMapLayer(){
 #if DONT_USER_TILE_MAP
         
         auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND, visibleSize.width, visibleSize.height);
-        //TILE_COLOR_BACKGRUND  //Color4B::WHITE
+        
         ScreenCoordinate::getInstance()->configScreen(visibleSize - Size(10, 20));
+        
         data->reshDataByBackGrnd(back_layer);
         this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);
-        _lowestPostion_y = visibleSize.height + origin.y - visibleSize.height - 6;//TODO::         
+        _lowestPostion_y = visibleSize.height + origin.y - visibleSize.height - 6;
+        
 #else
         auto map = MapCreator::instance()->createMap(data->getMapData());
         Size map_size = map->getContentSize();
@@ -139,7 +127,7 @@ void GameScene::initMapLayer(){
         
         this->addChild(map, ZORDER_MAP_GROUND, key_map_tag);
         
-        _lowestPostion_y = visibleSize.height + origin.y - map_size.height - 6;//TODO::
+        _lowestPostion_y = visibleSize.height + origin.y - map_size.height - 6;
 #endif
        
 }
@@ -147,6 +135,12 @@ void GameScene::initMapLayer(){
 void GameScene::initControlLayer(){
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
+        
+        
+        _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
+        int game_speed = _animationIsOn ?  3 : UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 2);
+        
+        Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         
         
         _controlLayer = Layer::create();
@@ -166,26 +160,22 @@ void GameScene::initControlLayer(){
         return_back->setPosition(Vec2(origin.x + return_back->getContentSize().width + 10,
                                        origin.y + visibleSize.height - return_back->getContentSize().height - 10));
         
+        auto colse_anim = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
+                                              CC_CALLBACK_1(GameScene::menuAnimSwitch, this));
+        colse_anim->setPosition(Vec2(visibleSize.width - colse_anim->getContentSize().width - 10,
+                                      visibleSize.height - colse_anim->getContentSize().height - 10));
         
-        auto menu = Menu::create(_endTurnMenuItem, _startPlayMenuItem, return_back, NULL);
-        menu->setPosition(Vec2::ZERO);
-        _controlLayer->addChild(menu);
-        
-        
-        this->addChild(_controlLayer, ZORDER_CRTL_LAYERS, key_ctrl_layer_tag);
-        _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
-        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 3);
-        Director::getInstance()->getScheduler()->setTimeScale(game_speed);
-        
-        auto colse_anim = cocos2d::ui::Button::create();
-        auto label = Label::createWithSystemFont("关闭动画", "", 26);
-        colse_anim->addChild(label, 111);
+        auto label = Label::createWithSystemFont("关闭动画", "", 32);
+        label->setTextColor(Color4B::RED);
+        colse_anim->addChild(label, 1, 111);
         if (!_animationIsOn){
                 label->setString("打开动画");
         }
-        colse_anim->addClickEventListener(CC_CALLBACK_1(GameScene::butAnimSwitch, this));
-        _controlLayer->addChild(colse_anim);
+        auto menu = Menu::create(_endTurnMenuItem, _startPlayMenuItem, return_back, colse_anim, NULL);
+        menu->setPosition(Vec2::ZERO);
+        _controlLayer->addChild(menu);
         
+        this->addChild(_controlLayer, ZORDER_CRTL_LAYERS, key_ctrl_layer_tag);
         
         Director::getInstance()->setDepthTest(true);
         auto listener = EventListenerTouchAllAtOnce::create();
@@ -193,6 +183,7 @@ void GameScene::initControlLayer(){
         listener->onTouchesEnded = CC_CALLBACK_2(GameScene::onTouchesEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
+
 
 void GameScene::loadZhanshi(){
         
@@ -542,7 +533,7 @@ void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
         
         auto occupay_cc = CallFunc::create(std::bind(&DiceGame::occupayAnimation, _theGameLogic, resut_data, cb));
         
-        auto hide = ScaleBy::create(0.5f, .1f);
+        auto hide = ScaleTo::create(1.0f, .1f);
         _animationLayer->runAction(Sequence::create(hide,
                 CallFunc::create( [& , resut_data](){
                 _animationLayer->setVisible(false);
@@ -553,7 +544,15 @@ void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
 
 
 void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
+        
         this->ShowResultData(res_data);
+        
+        if (ATTACK_RES_WIN == res_data->_result){
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_WIN);
+        }else if (ATTACK_RES_DEFEATED == res_data->_result){
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_DEFEAT);
+        }
+        
         
         _allFightingCharacters[8][0]->setVisible(false);
         
@@ -753,21 +752,14 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
 }
 
 void GameScene::playManualBattleAnimation(FightResultData* resut_data, CallFunc* callback){
-        if (ATTACK_RES_WIN == resut_data->_result){
-                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_WIN);
-        }else if (ATTACK_RES_DEFEATED == resut_data->_result){
-                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_DEFEAT);
-        }
-        
         
         if (_animationIsOn){
                 _isPalyingAnim = true;
-                auto show = ScaleBy::create(.5f, 10.0f);
                 _animationLayer->setVisible(true);
-                
+                auto show = ScaleTo::create(.5f, 1.0f);
                 callback->retain();
                 resut_data->retain();
-                auto cc = CallFunc::create(std::bind(&GameScene::afterShowFightBg, this,resut_data, callback));
+                auto cc = CallFunc::create(std::bind(&GameScene::afterShowFightBg, this, resut_data, callback));
                 _animationLayer->runAction(Sequence::create(show, cc, NULL));
                 
         }else{
@@ -837,4 +829,21 @@ void GameScene::gameOver(Ref* btn, int result){
         }
         
         Director::getInstance()->resume();
+}
+
+void GameScene::menuAnimSwitch(Ref* btn){
+        auto label = (Label*)((Node*)btn)->getChildByTag(111);
+        if (_animationIsOn){
+                _animationIsOn = false;
+                label->setString("打开动画");
+                Director::getInstance()->getScheduler()->setTimeScale(2);
+                _animationLayer->setVisible(false);
+        }else{
+                label->setString("关闭动画");
+                _animationIsOn = true;
+                Director::getInstance()->getScheduler()->setTimeScale(3);
+        }
+        
+        UserDefault::getInstance()->setBoolForKey(ANIMATION_SWITCH_KEY, _animationIsOn);
+        UserDefault::getInstance()->flush();
 }

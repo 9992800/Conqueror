@@ -54,7 +54,7 @@ private:
         void menuExit(Ref* pSender);
         void gameExit(Ref*, int);
         void gameOver(Ref*, int);
-        void butAnimSwitch(Ref* btn);
+        void menuAnimSwitch(Ref* btn);
         
         void loadXunShouShi();
         void loadZhanshi();

@@ -2,7 +2,7 @@
 #include "SplashScene.hpp"
 #include "AppMacros.hpp"
 #include "MapBasicInfo.hpp"
-#include "PluginIAP/PluginIAP.h"
+#include "PluginIAP/PluginIAP.h" 
 
 AppDelegate::AppDelegate()
 {
@@ -30,7 +30,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
                 director->setOpenGLView(glview);
         }
  
-        Size w_size = director->getOpenGLView()->getFrameSize();
+        
 //        director->setDisplayStats(true);
         director->setAnimationInterval(1.0f / 60);
      
@@ -61,6 +61,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
         
         auto scene = Splash::createScene();
         director->runWithScene(scene);
+        
+        Size size = director->getOpenGLView()->getVisibleSize();
+        CCLOGWARN("-----size(%2.f, %2.f)--frame(%2.f, %2.f)--", size.width, size.height, frameSize.width, frameSize.height);
 
         return true;
 }

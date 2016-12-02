@@ -349,7 +349,9 @@ void GameScene::initAnimationLayer(){
         this->loadFightResult();
         
         _diceResultLayer = Layer::create();
-        _diceResultLayer->setContentSize(anim_back_size);
+        auto dice_size = Size(anim_back_size.width, anim_back_size.height / 3);
+        _diceResultLayer->setContentSize(dice_size);
+        _diceResultLayer->setPosition(Vec2((visibleSize - dice_size) / 2));
         this->addChild(_diceResultLayer, ZORDER_DICE_LAYER, key_dice_layer_tag);
         _diceResultLayer->setVisible(false);
         
@@ -615,30 +617,34 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
 
 void GameScene::ShowResultData(FightResultData* resut_data){
         _diceResultLayer->setVisible(true);
-        
         auto back_size = _diceResultLayer->getContentSize();
+        
         for (int i = 0; i < resut_data->_from.size(); i++){
                 int value = resut_data->_from[i];
                 auto dice = Sprite::create(StringUtils::format("dice_%d.png", value));
-                dice->setPosition(Vec2(50 * i + 40, back_size.height / 2 - 120));
+                auto dice_size = dice->getContentSize();
+                
+                dice->setPosition(Vec2(dice_size.width * (i + 1), dice_size.height));
                 _diceResultLayer->addChild(dice);
         }
         
         for (int i = 0; i < resut_data->_to.size(); i++){
                 int value = resut_data->_to[i];
                 auto dice = Sprite::create(StringUtils::format("dice_%d.png", value));
-                dice->setPosition(Vec2(back_size.width - 50 * i - 40, back_size.height / 2 - 120));
+                
+                auto dice_size = dice->getContentSize();
+                dice->setPosition(Vec2(back_size.width - dice_size.width * (i + 1),  dice_size.height));
                 _diceResultLayer->addChild(dice);
         }
         
         auto from_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_fromSum), "", 78);
         from_value->setColor(Color3B::BLUE);
-        from_value->setPosition(Vec2(back_size.width / 2 - 100, back_size.height / 2 + 120));
+        from_value->setPosition(Vec2(back_size.width / 2 - 100, back_size.height - 20 ));
         _diceResultLayer->addChild(from_value);
         
         auto to_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_toSum), "", 78);
         to_value->setColor(Color3B::BLUE);
-        to_value->setPosition(Vec2(back_size.width / 2 + 100, back_size.height / 2 + 120));
+        to_value->setPosition(Vec2(back_size.width / 2 + 100, back_size.height - 20));
         _diceResultLayer->addChild(to_value);
 }
 

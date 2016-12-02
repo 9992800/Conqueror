@@ -41,7 +41,7 @@ private:
 
         void afterPlayerBattle(FightResultData*);
         void afterRobootBattle(FightResultData*);
-        void playManualBattleAnimation(FightResultData*, CallFunc*);
+        void playBattleAnimation(FightResultData*, CallFunc*);
         void playSupplyAnimation(CallFunc*);
         void afterRobootSupply();
         void afterPlayerSupply();

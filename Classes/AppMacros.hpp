@@ -187,13 +187,6 @@ enum{
 #define TILE_COLOR_BACKGRUND Color4B(0x3E, 0xA5, 0xDD, 255)
 //Color4F((float)0x3E/0xff, (float)0xA5/0xff, (float)0xDD/0xff, 1),//back ground
  
-
-#define FIGHT_POS_INVADER  {{242,250}, {203,265}, {182,236}, {156,280}, {136,250}, {116,221},{91, 265}, {70,236}, {30,250}}
-
-#define FIGHT_POS_KEEPER   {{-242,250}, {-203,265}, {-182,236}, {-156,280}, {-136,250}, {-116,221},{-91, 265}, {-70,236}, {-30,250}}
-
-#define READY_DISTANCE_POS (242)
-
 #define MAP_GAM_WIDTH   (20)
 
 #define MAP_GAM_HEIGHT  (40)

@@ -15,8 +15,11 @@
 #include "ui/CocosGUI.h" 
 
 
-Vec2 invader_fight_pos[] = FIGHT_POS_INVADER;
-Vec2 keeper_fight_pos[]  = FIGHT_POS_KEEPER;
+static int READY_DISTANCE_POS = 242;
+
+Vec2 invader_fight_pos[] = {{242,250}, {203,265}, {182,236}, {156,280}, {136,250}, {116,221},{91, 265}, {70,236}, {30,250}};
+Vec2 keeper_fight_pos[]  = {{-242,250}, {-203,265}, {-182,236}, {-156,280}, {-136,250}, {-116,221},{-91, 265}, {-70,236}, {-30,250}};
+
 enum{
         ZORDER_BACK_GROUND = 0,
         ZORDER_MAP_GROUND,
@@ -350,9 +353,13 @@ void GameScene::initAnimationLayer(){
         this->addChild(_diceResultLayer, ZORDER_DICE_LAYER, key_dice_layer_tag);
         _diceResultLayer->setVisible(false);
         
+        float scale_factor = Director::getInstance()->getContentScaleFactor();
         for (int i = 0; i < 9; i++){
+                invader_fight_pos[i] *= (1.f / scale_factor);
+                keeper_fight_pos[i] *= (1.f / scale_factor);
                 keeper_fight_pos[i].x = anim_back_size.width + keeper_fight_pos[i].x;
         }
+        READY_DISTANCE_POS *= (1.f / scale_factor);
 }
 #pragma mark - touch and menu event
 
@@ -407,7 +414,7 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         
         if (nullptr != result){
                 CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this, result));
-                this->playManualBattleAnimation(result, callback);
+                this->playBattleAnimation(result, callback);
         }
 }
 
@@ -493,7 +500,7 @@ void GameScene::gameAction(){
         if (ATTACK_RES_WIN == res_data->_result || ATTACK_RES_DEFEATED == res_data->_result){
                 
                 CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this, res_data));
-                this->playManualBattleAnimation(res_data, callback);
+                this->playBattleAnimation(res_data, callback);
                 
         }else if(ATTACK_RES_GOTSUPPLY == res_data->_result){
                 
@@ -729,7 +736,7 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
         }
 }
 
-void GameScene::playManualBattleAnimation(FightResultData* resut_data, CallFunc* callback){
+void GameScene::playBattleAnimation(FightResultData* resut_data, CallFunc* callback){
         
         if (_animationIsOn){
                 _isPalyingAnim = true;

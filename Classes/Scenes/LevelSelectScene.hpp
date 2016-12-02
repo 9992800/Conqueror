@@ -35,7 +35,8 @@ public:
 //        void onTouchesMoved(Touch*, Event* event);
 //        bool onTouchBegan(Touch*, Event*)override{return true;}
         
-protected:       
+protected:
+        void menuOnlineBattle(Ref*);
         void menuStartGame(Ref* btn);
         void menuSoundControl(Ref* btn);
         void menuShowSettigns(Ref* btn);

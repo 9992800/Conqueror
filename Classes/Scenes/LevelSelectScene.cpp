@@ -12,7 +12,8 @@
 #include "json/writer.h"
 #include "json/stringbuffer.h"
 #include "json/rapidjson.h"
-#include "json/document.h" 
+#include "json/document.h"
+#include "FindPlayerScene.hpp"
 
 enum {
         GAME_LEVEL_INDEX_1 = 1,
@@ -123,7 +124,6 @@ bool LevelSelect::init()
         _loadingBarBack->setPosition(pos);
         this->addChild(_loadingBarBack, 2, key_loading_bar3);
         _loadingBarBack->setVisible(false);
-
         
         return true;
 }
@@ -269,6 +269,11 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         _historyPlayItem->setPosition(Vec2(2 * _historyPlayItem->getContentSize().width,
                                            origin.y + visibleSize.height - _historyPlayItem->getContentSize().height - 10));
         
+        auto online_game = MenuItemImage::create("online_battle.png", "online_battle_sel.png",
+                              CC_CALLBACK_1(LevelSelect::menuOnlineBattle, this));
+        online_game->setPosition(Vec2(visibleSize.width -  online_game->getContentSize().width,
+                                        visibleSize.height/ 2 ));
+        
         /*
          /////////////////////////////////////////////////////////
                         coins buttons
@@ -317,13 +322,16 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         add_dices->setPosition(add_dices_pos);
         
         auto menu = Menu::create(_soundCtrl, system_setting, coins_show,
-                                 add_coins, dices_show, add_dices, _historyPlayItem, NULL);
+                                 add_coins, dices_show, add_dices, _historyPlayItem, online_game, NULL);
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, ZORDER_ITEM_CONTROL);
 }
 
 #pragma mark - button action callback
-
+void LevelSelect::menuOnlineBattle(Ref* btn){
+        Scene* scene = FindPlayer::createScene();
+        Director::getInstance()->pushScene(scene);
+}
 void LevelSelect::menuStartGame(Ref* btn){
         
         _levelPlayerNUm = ((Node*)btn)->getTag();

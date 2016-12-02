@@ -48,13 +48,14 @@ bool ModalLayer::onTouchesBegan(Touch*, Event *event){
 
 
 void ModalLayer::afterAnimation(){
+        Director::getInstance()->getEventDispatcher()->resumeEventListenersForTarget(this->getParent(), true);
         this->removeFromParent();
 }
 
 void ModalLayer::onEnter(){
         Layer::onEnter();
         CallFunc* callback = CallFunc::create(std::bind(&ModalLayer::afterAnimation, this));
-        Sequence*  s = Sequence::create(RotateBy::create(4, 360*4), callback, nullptr);
+        Sequence*  s = Sequence::create(RotateBy::create(30, 360*4), callback, nullptr);
         _waitingTips->runAction(s);
 }
 
@@ -66,7 +67,8 @@ void ModalLayer::onExit(){
 #define PRIVILIEGE 10000
 #define NODETAG 10000
 void ModalLayer::showModalDialog(Node* parent){
-        if (!parent) return;
+        if (!parent)
+                return;
         
         Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(parent, true);
         auto tips = ModalLayer::create();

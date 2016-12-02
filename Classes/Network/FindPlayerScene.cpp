@@ -118,8 +118,26 @@ void FindPlayer::menuCreateBattle(Ref*){
 }
 
 void FindPlayer::menuSearching(Ref*){
+        
+        std::string base_url(GAME_SERVICE_SERVER_URL"/battleFields?");
+        std::string uid = UserSessionBean::getInstance()->getUserId();
+        if (uid.length() == 0){
+                return;
+        }
+
+        base_url.append("user_id=");
+        base_url.append(uid);
+        base_url.append("&curPgaeNo=1");
+
+        HttpRequest* request = new (std::nothrow) HttpRequest();
+        request->setUrl(base_url);
+        request->setRequestType(HttpRequest::Type::GET);
+        request->setResponseCallback(CC_CALLBACK_2(FindPlayer::onHttpRequestCompleted, this));
+        request->setTag(LIST_ALL_BATTLES);
+        
         ModalLayer::showModalDialog(this);
-        //TODO::show a searching dialog
+        HttpClient::getInstance()->sendImmediate(request);
+        request->release();
 }
 
 void FindPlayer::afterAnimation(){
@@ -168,6 +186,9 @@ void FindPlayer::onExit(){
 
 void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
                                         HttpResponse *response){
+        
+        
+        ModalLayer::dismissDialog(this);
         
         picojson::value data;
         if (!UserSessionBean::checkResponse(response, data)){

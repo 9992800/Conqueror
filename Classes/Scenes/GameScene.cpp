@@ -19,6 +19,14 @@ static int READY_DISTANCE_POS = 242;
 
 Vec2 invader_fight_pos[] = {{242,250}, {203,265}, {182,236}, {156,280}, {136,250}, {116,221},{91, 265}, {70,236}, {30,250}};
 Vec2 keeper_fight_pos[]  = {{-242,250}, {-203,265}, {-182,236}, {-156,280}, {-136,250}, {-116,221},{-91, 265}, {-70,236}, {-30,250}};
+static std::string DICE_PIC_NAME_STR[8][6] = {{"yellow0001.png", "yellow0002.png", "yellow0003.png", "yellow0004.png", "yellow0005.png", "yellow0006.png"},
+        {"red0001.png", "red0002.png", "red0003.png", "red0004.png", "red0005.png", "red0006.png"},
+        {"Bluegreen0001.png", "Bluegreen0002.png", "Bluegreen0003.png", "Bluegreen0004.png", "Bluegreen0005.png", "Bluegreen0006.png"},
+        {"green0001.png", "green0002.png", "green0003.png", "green0004.png", "green0005.png", "green0006.png"},
+        {"Blue0001.png", "Blue0002.png", "Blue0003.png", "Blue0004.png", "Blue0005.png", "Blue0006.png"},
+        {"Orange0001.png", "Orange0002.png", "Orange0003.png", "Orange0004.png", "Orange0005.png", "Orange0006.png"},
+        {"Pink0001.png", "Pink0002.png", "Pink0003.png", "Pink0004.png", "Pink0005.png", "Pink0006.png"},
+        {"Violet0001.png", "Violet0002.png", "Violet0003.png", "Violet0004.png", "Violet0005.png", "Violet0006.png"}};
 
 enum{
         ZORDER_BACK_GROUND = 0,
@@ -68,6 +76,7 @@ GameScene::~GameScene(){
         frameCache->removeSpriteFramesFromFile("anim/xssHIT2.plist");
         frameCache->removeSpriteFramesFromFile("anim/zhanshiHIT1.plist");
         frameCache->removeSpriteFramesFromFile("anim/zhanshiHIT2.plist");
+        frameCache->removeSpriteFramesFromFile("anim/dice_colors.plist");
 }
 
 
@@ -89,6 +98,7 @@ bool GameScene::init()
         frameCache->addSpriteFramesWithFile("anim/xssHIT2.plist", "anim/xssHIT2.png");
         frameCache->addSpriteFramesWithFile("anim/zhanshiHIT1.plist", "anim/zhanshiHIT1.png");
         frameCache->addSpriteFramesWithFile("anim/zhanshiHIT2.plist", "anim/zhanshiHIT2.png");
+        frameCache->addSpriteFramesWithFile("anim/dice_colors.plist", "anim/dice_colors.png");
         
         this->initMapLayer();
         
@@ -326,19 +336,39 @@ void GameScene::loadFightResult(){
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_hit2");
 }
 
+void GameScene::loadDiceResultLayer(){
+        
+        auto visibleSize = Director::getInstance()->getVisibleSize();
+        auto anim_back_size = _animationLayer->getContentSize();
+        _diceResultLayer = Layer::create();
+        auto dice_size = Size(anim_back_size.width, anim_back_size.height / 3);
+        _diceResultLayer->setContentSize(dice_size);
+        _diceResultLayer->setPosition(Vec2((visibleSize - dice_size) / 2));
+        this->addChild(_diceResultLayer, ZORDER_DICE_LAYER, key_dice_layer_tag);
+        _diceResultLayer->setVisible(false);
+        
+        float scale_factor = Director::getInstance()->getContentScaleFactor();
+        for (int i = 0; i < MAX_PLAYER; i++){
+                invader_fight_pos[i] *= (1.f / scale_factor);
+                keeper_fight_pos[i] *= (1.f / scale_factor);
+                keeper_fight_pos[i].x = anim_back_size.width + keeper_fight_pos[i].x;
+        }
+        
+        READY_DISTANCE_POS *= (1.f / scale_factor);
+
+}
+
 void GameScene::initAnimationLayer(){
         auto visibleSize = Director::getInstance()->getVisibleSize();
         _animationLayer = Sprite::create("zhandou_beijing.png");
         _animationLayer->setScale(0.1f, 0.1f);
         
-//        _animationLayer->setIgnoreAnchorPointForPosition(false);
-//        _animationLayer->setAnchorPoint(Vec2(0.5f, 0.5f));
         
-        auto anim_back_size = _animationLayer->getContentSize();
         _animationLayer->setPosition(Vec2(visibleSize / 2));
         _animationLayer->setVisible(false);
-        
         this->addChild(_animationLayer, ZORDER_ANIM_LAYER, key_anim_layer_tag);
+        
+        this->loadDiceResultLayer();
         
         this->loadZhanshi();
         
@@ -348,20 +378,6 @@ void GameScene::initAnimationLayer(){
         
         this->loadFightResult();
         
-        _diceResultLayer = Layer::create();
-        auto dice_size = Size(anim_back_size.width, anim_back_size.height / 3);
-        _diceResultLayer->setContentSize(dice_size);
-        _diceResultLayer->setPosition(Vec2((visibleSize - dice_size) / 2));
-        this->addChild(_diceResultLayer, ZORDER_DICE_LAYER, key_dice_layer_tag);
-        _diceResultLayer->setVisible(false);
-        
-        float scale_factor = Director::getInstance()->getContentScaleFactor();
-        for (int i = 0; i < 9; i++){
-                invader_fight_pos[i] *= (1.f / scale_factor);
-                keeper_fight_pos[i] *= (1.f / scale_factor);
-                keeper_fight_pos[i].x = anim_back_size.width + keeper_fight_pos[i].x;
-        }
-        READY_DISTANCE_POS *= (1.f / scale_factor);
 }
 #pragma mark - touch and menu event
 
@@ -618,20 +634,26 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
 void GameScene::ShowResultData(FightResultData* resut_data){
         _diceResultLayer->setVisible(true);
         auto back_size = _diceResultLayer->getContentSize();
+        auto frameCache = SpriteFrameCache::getInstance();
+        
         
         for (int i = 0; i < resut_data->_from.size(); i++){
                 int value = resut_data->_from[i];
-                auto dice = Sprite::create(StringUtils::format("dice_%d.png", value));
+                auto str = DICE_PIC_NAME_STR[resut_data->_fromPlayer][value - 1];
+                auto frame = frameCache->getSpriteFrameByName(str);
+                auto dice = Sprite::create();
+                dice->setSpriteFrame(frame);
                 auto dice_size = dice->getContentSize();
-                
                 dice->setPosition(Vec2(dice_size.width * (i + 1), dice_size.height));
                 _diceResultLayer->addChild(dice);
         }
         
         for (int i = 0; i < resut_data->_to.size(); i++){
                 int value = resut_data->_to[i];
-                auto dice = Sprite::create(StringUtils::format("dice_%d.png", value));
-                
+                auto str = DICE_PIC_NAME_STR[resut_data->_toPlayer][value - 1];
+                auto frame = frameCache->getSpriteFrameByName(str);
+                auto dice = Sprite::create();
+                dice->setSpriteFrame(frame);
                 auto dice_size = dice->getContentSize();
                 dice->setPosition(Vec2(back_size.width - dice_size.width * (i + 1),  dice_size.height));
                 _diceResultLayer->addChild(dice);

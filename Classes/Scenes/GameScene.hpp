@@ -59,6 +59,7 @@ private:
         void loadZhanshi();
         void loadFightCloud();
         void loadFightResult();
+        void loadDiceResultLayer();
         
         void afterShowFightBg(FightResultData*, CallFunc*);
         void afterFightFinished(FightResultData*, CallFunc*);

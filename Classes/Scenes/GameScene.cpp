@@ -1072,8 +1072,8 @@ void GameScene::menuAnimSwitch(Ref* btn){
         if (_animationIsOn){
                 _animationIsOn = false;
                 label->setString("打开动画");
-                Director::getInstance()->getScheduler()->setTimeScale(1);
-                _animationLayer->setVisible(false); 
+                Director::getInstance()->getScheduler()->setTimeScale(2);
+                _animationLayer->setVisible(false);
         }else{
                 label->setString("关闭动画");
                 _animationIsOn = true;

@@ -72,7 +72,7 @@ bool BattleField::init(){
         
         
         _wsiSendText = new network::WebSocket();
-        std::string socket_url = WEB_SOCKET_SERVER_URL"?userId=";
+        std::string socket_url = WEB_SOCKET_SERVER_BASE_URL"?userId=";
         std::string fb_uid = UserSessionBean::getInstance()->getUserId();
         socket_url.append(fb_uid);
         
@@ -214,6 +214,7 @@ int  BattleField::sendMessage(std::string msg){
         }
 }
 
+#pragma mark - websocket delegate
 void BattleField::onOpen(cocos2d::network::WebSocket* ws){
         log("Websocket (%p) opened", ws);
 }

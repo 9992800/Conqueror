@@ -16,17 +16,16 @@ import com.bellflower.conqueror.Utils.SessionUtils;
 import com.bellflower.conqueror.module.OnlineBean;
 import com.bellflower.conqueror.service.GameQueueService;
 
-public class RealTimeBattleServer extends AbstractWebSocketHandler {
+public class FindComponetProxy extends AbstractWebSocketHandler {
 	private static final Logger logger =
-	    LoggerFactory.getLogger(RealTimeBattleServer.class);
+	    LoggerFactory.getLogger(FindComponetProxy.class);
 	  @Resource GameQueueService gameQueue;
 	  
 	  
 	 protected void handleTextMessage(
 	     WebSocketSession session, TextMessage message) throws Exception {
 	  
-		 logger.info("Received text  message: " + message.getPayload());
-	     
+		 logger.info("Received text  message: " + message.getPayload());	     
 		 session.sendMessage(new TextMessage("......哈喽..Polo!......."));
 	  }
 	  

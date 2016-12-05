@@ -156,9 +156,9 @@ return nullptr; \
 
 #define LAYER_NAME_IN_TILE_MAP "map"
 
-
-#define WEB_SOCKET_SERVER_URL      "ws://192.168.1.39:9900/battleField"
-#define GAME_SERVICE_SERVER_URL    "http://192.168.1.39:9900/serverHome"
+#define NET_WORK_FIND_COMPONET          "findOponent"
+#define WEB_SOCKET_SERVER_BASE_URL      "ws://192.168.1.39:9900/"
+#define GAME_SERVICE_SERVER_URL         "http://192.168.1.39:9900/serverHome"
 
 template<typename T> extern std::vector<T> parseData(const char* key);
 

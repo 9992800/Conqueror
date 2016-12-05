@@ -16,6 +16,7 @@
 #include "BattleFieldBean.hpp"
 #include "network/HttpClient.h"
 #include "picojson.h"
+#include "network/WebSocket.h"
 
 USING_NS_CC;
 using namespace cocos2d::ui;
@@ -29,7 +30,7 @@ public:
 };
 
 
-class FindPlayer : public cocos2d::Layer 
+class FindPlayer : public cocos2d::Layer , public cocos2d::network::WebSocket::Delegate
 {
 public:
         static Scene* createScene();
@@ -42,6 +43,11 @@ protected:
         void onEnter() override;
         void update(float delta)override;
         void onExit()override;
+        
+        virtual void onOpen(network::WebSocket* ws)override;
+        virtual void onMessage(network::WebSocket* ws, const network::WebSocket::Data& data)override;
+        virtual void onClose(network::WebSocket* ws)override;
+        virtual void onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error)override;
         
         void onHttpRequestCompleted(HttpClient *sender,
                                     HttpResponse *response);
@@ -74,6 +80,8 @@ private:
 //        PageView*                       _batllePageViews;
 //        std::vector<BattleFieldBean*>   _battlList;
 //        int                             _curPgaeNo;
+        
+        network::WebSocket* _waitingQueue;
 };
 
 #endif /* FindPlayerScene_hpp */

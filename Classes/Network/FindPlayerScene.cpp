@@ -118,26 +118,39 @@ void FindPlayer::menuCreateBattle(Ref*){
 }
 
 void FindPlayer::menuSearching(Ref*){
-        
-        std::string base_url(GAME_SERVICE_SERVER_URL"/battleFields?");
-        std::string uid = UserSessionBean::getInstance()->getUserId();
-        if (uid.length() == 0){
-                return;
-        }
-
-        base_url.append("user_id=");
-        base_url.append(uid);
-        base_url.append("&curPgaeNo=1");
-
-        HttpRequest* request = new (std::nothrow) HttpRequest();
-        request->setUrl(base_url);
-        request->setRequestType(HttpRequest::Type::GET);
-        request->setResponseCallback(CC_CALLBACK_2(FindPlayer::onHttpRequestCompleted, this));
-        request->setTag(LIST_ALL_BATTLES);
-        
         ModalLayer::showModalDialog(this);
-        HttpClient::getInstance()->sendImmediate(request);
-        request->release();
+        _waitingQueue = new network::WebSocket();
+        std::string fb_uid = UserSessionBean::getInstance()->getUserId();
+        
+        std::string socket_url = StringUtils::format("%s%s?userId=%s", WEB_SOCKET_SERVER_BASE_URL, NET_WORK_FIND_COMPONET, fb_uid.c_str());
+        
+        if (!_waitingQueue->init(*this, socket_url)){
+                CC_SAFE_DELETE(_waitingQueue);
+        }else{
+                ModalLayer::dismissDialog(this);
+                log("ERROR:failed init the websocket.");
+        }
+        
+        
+//        std::string base_url(GAME_SERVICE_SERVER_URL"/battleFields?");
+//        std::string uid = UserSessionBean::getInstance()->getUserId();
+//        if (uid.length() == 0){
+//                return;
+//        }
+//
+//        base_url.append("user_id=");
+//        base_url.append(uid);
+//        base_url.append("&curPgaeNo=1");
+//
+//        HttpRequest* request = new (std::nothrow) HttpRequest();
+//        request->setUrl(base_url);
+//        request->setRequestType(HttpRequest::Type::GET);
+//        request->setResponseCallback(CC_CALLBACK_2(FindPlayer::onHttpRequestCompleted, this));
+//        request->setTag(LIST_ALL_BATTLES);
+//        
+//        ModalLayer::showModalDialog(this);
+//        HttpClient::getInstance()->sendImmediate(request);
+//        request->release();
 }
 
 void FindPlayer::afterAnimation(){
@@ -185,9 +198,7 @@ void FindPlayer::onExit(){
 }
 
 void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
-                                        HttpResponse *response){
-        
-        
+                                        HttpResponse *response){         
         ModalLayer::dismissDialog(this);
         
         picojson::value data;
@@ -407,3 +418,33 @@ void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
 //        label->setTag(123);
 //        this->addChild(label);
 //}
+
+#pragma mark - websocket delegate
+void FindPlayer::onOpen(cocos2d::network::WebSocket* ws){
+        log("Websocket (%p) opened", ws);
+}
+
+void FindPlayer::onMessage(network::WebSocket* ws, const network::WebSocket::Data& data){
+        std::string msg(data.bytes);
+        log("-----------%s---------------", msg.c_str());
+        
+        rapidjson::Document msg_d;
+        msg_d.Parse<0>(msg.c_str());
+        if (msg_d.HasParseError()) {
+                CCLOG("GetParseError %u\n",msg_d.GetParseError());
+        }
+}
+
+void FindPlayer::onClose(network::WebSocket* ws){
+        log("websocket instance (%p) closed.", ws);
+        
+        _waitingQueue = nullptr;
+        ModalLayer::dismissDialog(this);
+        CC_SAFE_DELETE(ws);
+}
+
+void FindPlayer::onError(network::WebSocket* ws, const network::WebSocket::ErrorCode& error){
+        ModalLayer::dismissDialog(this);
+        log("Error was fired, error code: %d", static_cast<int>(error));
+}
+

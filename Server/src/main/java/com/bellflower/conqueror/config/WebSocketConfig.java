@@ -13,7 +13,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 import org.springframework.web.socket.server.HandshakeInterceptor;
-import com.bellflower.conqueror.controller.RealTimeBattleServer;
+import com.bellflower.conqueror.controller.FindComponetProxy;
 
 @Configuration
 @EnableWebSocket
@@ -23,7 +23,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 	@Override
 	public void registerWebSocketHandlers(
 	                                 WebSocketHandlerRegistry registry) {
-		registry.addHandler(marcoHandler(), "/battleField"); 
+		registry.addHandler(findingHandler(), "/findOponent"); 
 	} 
 	
 	@Bean
@@ -45,7 +45,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 	}
 	
 	@Bean
-	public RealTimeBattleServer marcoHandler() {
-	     return new RealTimeBattleServer();
+	public FindComponetProxy findingHandler() {
+	     return new FindComponetProxy();
 	}
 }

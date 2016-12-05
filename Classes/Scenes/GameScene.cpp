@@ -140,7 +140,7 @@ void GameScene::initControlLayer(){
         
         
         _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
-        int game_speed = _animationIsOn ?  3 : UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 2);
+        int game_speed = _animationIsOn ?  3 : UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
         
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         
@@ -654,7 +654,7 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         
         if (nullptr != result){
                 CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this, result));
-                this->playBattleAnimation(result, callback);
+                this->playBattleAnimation(result, callback, true);
         }
 }
 
@@ -683,7 +683,8 @@ void GameScene::tryAgain(){
 #pragma mark - animation 
 
 void GameScene::afterPlayerBattle(FightResultData* result){
-        _isPalyingAnim = false;
+        _diceResultLayer->setVisible(false);
+        _diceResultLayer->removeAllChildren();
         std::map<int, int> survival = _theGameLogic->cleanUpBattleField(result);
         if (survival.size() == 1){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_WIN);
@@ -699,7 +700,8 @@ void GameScene::afterPlayerBattle(FightResultData* result){
 }
 
 void GameScene::afterRobootBattle(FightResultData* result){
-        _isPalyingAnim = false;
+        _diceResultLayer->setVisible(false);
+        _diceResultLayer->removeAllChildren();
         _theGameLogic->cleanUpBattleField(result);
         
         int user_tc = _theGameLogic->getUserTC();
@@ -740,7 +742,7 @@ void GameScene::gameAction(){
         if (ATTACK_RES_WIN == res_data->_result || ATTACK_RES_DEFEATED == res_data->_result){
                 
                 CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this, res_data));
-                this->playBattleAnimation(res_data, callback);
+                this->playBattleAnimation(res_data, callback, false);
                 
         }else if(ATTACK_RES_GOTSUPPLY == res_data->_result){
                 
@@ -760,10 +762,9 @@ void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
         
         auto hide = ScaleTo::create(1.0f, .1f);
         _animationLayer->runAction(Sequence::create(hide,
-                CallFunc::create( [& , resut_data](){
+                CallFunc::create( [&](){
                 _animationLayer->setVisible(false);
-                _diceResultLayer->setVisible(false);
-                _diceResultLayer->removeAllChildren();                
+                _isPalyingAnim = false;
         }), occupay_cc, NULL));
 }
 
@@ -986,9 +987,9 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
         }
 }
 
-void GameScene::playBattleAnimation(FightResultData* resut_data, CallFunc* callback){
+void GameScene::playBattleAnimation(FightResultData* resut_data, CallFunc* callback, bool isMaunual){
         
-        if (_animationIsOn){
+        if (_animationIsOn && isMaunual){
                 _isPalyingAnim = true;
                 _animationLayer->setVisible(true);
                 auto show = ScaleTo::create(.5f, 1.0f);
@@ -1071,8 +1072,8 @@ void GameScene::menuAnimSwitch(Ref* btn){
         if (_animationIsOn){
                 _animationIsOn = false;
                 label->setString("打开动画");
-                Director::getInstance()->getScheduler()->setTimeScale(2);
-                _animationLayer->setVisible(false);
+                Director::getInstance()->getScheduler()->setTimeScale(1);
+                _animationLayer->setVisible(false); 
         }else{
                 label->setString("关闭动画");
                 _animationIsOn = true;

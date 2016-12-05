@@ -17,8 +17,11 @@
 
 static int READY_DISTANCE_POS = 242;
 
-Vec2 invader_fight_pos[] = {{242,250}, {203,265}, {182,236}, {156,280}, {136,250}, {116,221},{91, 265}, {70,236}, {30,250}};
-Vec2 keeper_fight_pos[]  = {{-242,250}, {-203,265}, {-182,236}, {-156,280}, {-136,250}, {-116,221},{-91, 265}, {-70,236}, {-30,250}};
+Vec2 invader_pos[] = {{242,250}, {203,265}, {182,236}, {156,280}, {136,250}, {116,221},{91, 265}, {70,236}, {30,250}};
+
+Vec2 keeper_pos[]  = {{-242,250}, {-203,265}, {-182,236}, {-156,280}, {-136,250}, {-116,221},{-91, 265}, {-70,236}, {-30,250}};
+
+
 static std::string DICE_PIC_NAME_STR[8][6] = {
         {"Orange0001.png", "Orange0002.png", "Orange0003.png", "Orange0004.png", "Orange0005.png", "Orange0006.png"},
         {"red0001.png", "red0002.png", "red0003.png", "red0004.png", "red0005.png", "red0006.png"},
@@ -561,13 +564,12 @@ void GameScene::loadDiceResultLayer(){
         
         float scale_factor = Director::getInstance()->getContentScaleFactor();
         for (int i = 0; i < MAX_PLAYER; i++){
-                invader_fight_pos[i] *= (1.f / scale_factor);
-                keeper_fight_pos[i] *= (1.f / scale_factor);
-                keeper_fight_pos[i].x = anim_back_size.width + keeper_fight_pos[i].x;
+                _invaderPos[i]  = invader_pos[i] * (1.f / scale_factor);
+                _keeperPos[i]   = keeper_pos[i] * (1.f / scale_factor);
+                _keeperPos[i].x = anim_back_size.width + _keeperPos[i].x;
         }
         
         READY_DISTANCE_POS *= (1.f / scale_factor);
-
 }
 
 void GameScene::initAnimationLayer(){
@@ -946,7 +948,7 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
                         
                         auto invader = _allFightingCharacters[res_data->_fromPlayer][i];
                         invader->setVisible(true);
-                        invader->setPosition(invader_fight_pos[i] - Vec2(READY_DISTANCE_POS, 0));
+                        invader->setPosition(_invaderPos[i] - Vec2(READY_DISTANCE_POS, 0));
                         
                         if (i == 0){
                                 auto fighting = CallFunc::create(std::bind(&GameScene::Fighting, this,res_data, cb));
@@ -984,7 +986,7 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
                 for (int i = 0; i < res_data->_to.size(); i++){
                         auto keeper = _allFightingCharacters[player_uid][i];
                         keeper->setVisible(true);
-                        keeper->setPosition(keeper_fight_pos[i] + Vec2(READY_DISTANCE_POS, 0));
+                        keeper->setPosition(_keeperPos[i] + Vec2(READY_DISTANCE_POS, 0));
                         keeper->runAction(keeper_seq->clone());
                 }
         }

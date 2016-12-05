@@ -86,6 +86,7 @@ private:
         MenuItemImage*  _startPlayMenuItem;
         bool            _animationIsOn;
         Vec2            _minLeftBottom;
+        Vec2            _invaderPos[8], _keeperPos[8];
 };
 
 

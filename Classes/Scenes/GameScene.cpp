@@ -122,12 +122,14 @@ void GameScene::initMapLayer(){
         
         auto data = _theGameLogic->initGameData(_playerNumber);
         
+        auto map_size = visibleSize * 1.2f;
+        
         auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND,
-                                             visibleSize.width + MAP_GAM_WIDTH ,
-                                             visibleSize.height + MAP_GAM_HEIGHT);
+                                             map_size.width + MAP_GAM_WIDTH ,
+                                             map_size.height + MAP_GAM_HEIGHT);
       
         
-        ScreenCoordinate::getInstance()->configScreen(visibleSize);
+        ScreenCoordinate::getInstance()->configScreen(map_size);
         
         data->reshDataByBackGrnd(back_layer);
         back_layer->setPosition(-MAP_GAM_WIDTH / 2, -MAP_GAM_HEIGHT / 2);
@@ -258,7 +260,7 @@ void GameScene::loadXunShouShi(){
         }
 }
 
-void GameScene::loadZhanshi2(){
+void GameScene::loadQiShi(){
         
         auto frameCache = SpriteFrameCache::getInstance();
         
@@ -287,13 +289,13 @@ void GameScene::loadZhanshi2(){
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto xunshoushi = Sprite::create();
                 xunshoushi->setSpriteFrame(frame);
-                _allFightingCharacters[PLAYER_ROLE_TYPE_ZHANSHI2][i] = xunshoushi;
+                _allFightingCharacters[PLAYER_ROLE_TYPE_QISHI][i] = xunshoushi;
                 _animationLayer->addChild(xunshoushi);
                 xunshoushi->setVisible(false);
         }
 }
 
-void GameScene::loadZhanshi3(){
+void GameScene::loadGongJianShou(){
         
         auto frameCache = SpriteFrameCache::getInstance();
         
@@ -322,13 +324,13 @@ void GameScene::loadZhanshi3(){
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto xunshoushi = Sprite::create();
                 xunshoushi->setSpriteFrame(frame);
-                _allFightingCharacters[PLAYER_ROLE_TYPE_ZHANSHI3][i] = xunshoushi;
+                _allFightingCharacters[PLAYER_ROLE_TYPE_GONGJIANSHOU][i] = xunshoushi;
                 _animationLayer->addChild(xunshoushi);
                 xunshoushi->setVisible(false);
         }
 }
 
-void GameScene::loadZhanshi4(){
+void GameScene::loadPaoShou(){
         
         auto frameCache = SpriteFrameCache::getInstance();
         
@@ -357,13 +359,13 @@ void GameScene::loadZhanshi4(){
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto xunshoushi = Sprite::create();
                 xunshoushi->setSpriteFrame(frame);
-                _allFightingCharacters[PLAYER_ROLE_TYPE_ZHANSHI4][i] = xunshoushi;
+                _allFightingCharacters[PLAYER_ROLE_TYPE_PAOSHOU][i] = xunshoushi;
                 _animationLayer->addChild(xunshoushi);
                 xunshoushi->setVisible(false);
         }
 }
 
-void GameScene::loadZhanshi5(){
+void GameScene::loadShouRen(){
         
         auto frameCache = SpriteFrameCache::getInstance();
         
@@ -392,13 +394,13 @@ void GameScene::loadZhanshi5(){
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto xunshoushi = Sprite::create();
                 xunshoushi->setSpriteFrame(frame);
-                _allFightingCharacters[PLAYER_ROLE_TYPE_ZHANSHI5][i] = xunshoushi;
+                _allFightingCharacters[PLAYER_ROLE_TYPE_SHOUREN][i] = xunshoushi;
                 _animationLayer->addChild(xunshoushi);
                 xunshoushi->setVisible(false);
         }
 }
 
-void GameScene::loadZhanshi6(){
+void GameScene::loadMoNv(){
         
         auto frameCache = SpriteFrameCache::getInstance();
         
@@ -427,13 +429,13 @@ void GameScene::loadZhanshi6(){
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto xunshoushi = Sprite::create();
                 xunshoushi->setSpriteFrame(frame);
-                _allFightingCharacters[PLAYER_ROLE_TYPE_ZHANSHI6][i] = xunshoushi;
+                _allFightingCharacters[PLAYER_ROLE_TYPE_MONV][i] = xunshoushi;
                 _animationLayer->addChild(xunshoushi);
                 xunshoushi->setVisible(false);
         }
 }
 
-void GameScene::loadZhanshi7(){
+void GameScene::loadDaoZei(){
         
         auto frameCache = SpriteFrameCache::getInstance();
         
@@ -462,7 +464,7 @@ void GameScene::loadZhanshi7(){
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto xunshoushi = Sprite::create();
                 xunshoushi->setSpriteFrame(frame);
-                _allFightingCharacters[PLAYER_ROLE_TYPE_ZHANSHI7][i] = xunshoushi;
+                _allFightingCharacters[PLAYER_ROLE_TYPE_DAOZEI][i] = xunshoushi;
                 _animationLayer->addChild(xunshoushi);
                 xunshoushi->setVisible(false);
         }

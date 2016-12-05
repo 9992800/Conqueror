@@ -57,12 +57,12 @@ private:
         
         void loadXunShouShi();
         void loadZhanshi();
-        void loadZhanshi2();
-        void loadZhanshi3();
-        void loadZhanshi4();
-        void loadZhanshi5();
-        void loadZhanshi6();
-        void loadZhanshi7();
+        void loadQiShi();
+        void loadGongJianShou();
+        void loadPaoShou();
+        void loadShouRen();
+        void loadMoNv();
+        void loadDaoZei();
         void loadFightCloud();
         void loadFightResult();
         void loadDiceResultLayer();

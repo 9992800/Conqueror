@@ -85,6 +85,7 @@ private:
         MenuItemImage*  _endTurnMenuItem;
         MenuItemImage*  _startPlayMenuItem;
         bool            _animationIsOn;
+        Vec2            _minLeftBottom;
 };
 
 

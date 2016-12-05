@@ -47,7 +47,7 @@ void ScreenCoordinate::configScreen(Size mapSize){
                 
                 for (int j = 0; j < XMAX; j++){
                         
-                        _cpos_x[count] = j * _cellSize.width;
+                        _cpos_x[count] = j * _cellSize.width + MAP_GAM_WIDTH / 2;
                         if (i % 2 == 1){
                                 _cpos_x[count] += _cellSize.width / 2;
                         }

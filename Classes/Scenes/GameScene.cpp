@@ -128,7 +128,8 @@ void GameScene::initMapLayer(){
                                              map_size.width + MAP_GAM_WIDTH ,
                                              map_size.height + MAP_GAM_HEIGHT);
       
-        
+        _minLeftBottom = Vec2(visibleSize.width - map_size.width - MAP_GAM_WIDTH,
+                              visibleSize.height - map_size.height - MAP_GAM_HEIGHT);
         ScreenCoordinate::getInstance()->configScreen(map_size);
         
         data->reshDataByBackGrnd(back_layer);
@@ -586,17 +587,17 @@ void GameScene::initAnimationLayer(){
         
         this->loadXunShouShi();
         
-        this->loadZhanshi2();
+        this->loadQiShi();
         
-        this->loadZhanshi3();
+        this->loadGongJianShou();
         
-        this->loadZhanshi4();
+        this->loadPaoShou();
         
-        this->loadZhanshi5();
+        this->loadShouRen();
         
-        this->loadZhanshi6();
+        this->loadMoNv();
         
-        this->loadZhanshi7();
+        this->loadDaoZei();
         
         this->loadFightCloud();
         
@@ -610,22 +611,20 @@ void GameScene::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
         auto touch = touches[0];
         auto diff = touch->getDelta();
 
-        if (diff.x >= 0.01f || diff.y >= 0.01
-            || diff.x <= -0.01f ||diff.y <= -0.01f){
+        if (diff.x >= 0.001f || diff.y >= 0.001
+            || diff.x <= -0.001f ||diff.y <= -0.001f){
                 _isMoved = true;
         }
-        
-        diff.x = 0;
+         
         auto map = this->getChildByTag(key_map_tag);
         auto currentPos = map->getPosition();
-        auto origin = Director::getInstance()->getVisibleOrigin(); 
         
-        if ( origin.y < (currentPos.y + diff.y)){
+        if (0 < (currentPos.y + diff.y) || (currentPos.y + diff.y) < _minLeftBottom.y){
                 diff.y = 0;
         }
         
-        if ((currentPos.y + diff.y) < -MAP_GAM_HEIGHT){
-                diff.y = 0;
+        if (0 < (currentPos.x + diff.x) || (currentPos.x + diff.x) < _minLeftBottom.x){
+                diff.x = 0;
         }
         
         map->setPosition(currentPos + diff);

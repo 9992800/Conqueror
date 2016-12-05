@@ -16,20 +16,20 @@
 #include "json/rapidjson.h"
 #include "json/document.h"
 
-static std::string CHARACTER_NAME[]={"zhanshi_pos.png", "xunshoushi_pos.png", "zhanshi_pos.png", "xunshoushi_pos.png",
-        "zhanshi_pos.png", "xunshoushi_pos.png","zhanshi_pos.png", "xunshoushi_pos.png"};
+static std::string CHARACTER_NAME[]={"zhanshi_pos.png", "xunshoushi_pos.png", "xunshoushi_pos.png", "xunshoushi_pos.png",
+        "xunshoushi_pos.png", "xunshoushi_pos.png","xunshoushi_pos.png", "xunshoushi_pos.png"};
 
-static std::string CHARACTER_NAME_2[]={"zhanshi_pos2.png", "xunshoushi_pos2.png", "zhanshi_pos2.png", "xunshoushi_pos2.png",
-        "zhanshi_pos2.png", "xunshoushi_pos2.png","zhanshi_pos2.png", "xunshoushi_pos2.png"};
+static std::string CHARACTER_NAME_2[]={"zhanshi_pos2.png", "xunshoushi_pos2.png", "xunshoushi_pos2.png", "xunshoushi_pos2.png",
+        "xunshoushi_pos2.png", "xunshoushi_pos2.png","xunshoushi_pos2.png", "xunshoushi_pos2.png"};
 
 static std::string ANIM_NAME_DEFEATED_SHOW[2][8] = {
-        {"zhangshi_hit1", "xunshoushi_hit1","zhangshi_hit1",
-                "xunshoushi_hit1","zhangshi_hit1", "xunshoushi_hit1",
-                "zhangshi_hit1", "xunshoushi_hit1"},
+        {"zhangshi_hit1", "xunshoushi_hit1","xunshoushi_hit1",
+                "xunshoushi_hit1","xunshoushi_hit1", "xunshoushi_hit1",
+                "xunshoushi_hit1", "xunshoushi_hit1"},
         
-        {"zhangshi_hit2", "xunshoushi_hit2", "zhangshi_hit2",
-                "xunshoushi_hit2", "zhangshi_hit2", "xunshoushi_hit2",
-                "zhangshi_hit2", "xunshoushi_hit2"}
+        {"zhangshi_hit2", "xunshoushi_hit2", "xunshoushi_hit2",
+                "xunshoushi_hit2", "xunshoushi_hit2", "xunshoushi_hit2",
+                "xunshoushi_hit2", "xunshoushi_hit2"}
 };
 
 static Color4F AreaBackGroundColors[] = {Color4F((float)0xCE/0xff, (float)0x84/0xff, (float)0x39/0xff, 1),

@@ -19,12 +19,13 @@ static int READY_DISTANCE_POS = 242;
 
 Vec2 invader_fight_pos[] = {{242,250}, {203,265}, {182,236}, {156,280}, {136,250}, {116,221},{91, 265}, {70,236}, {30,250}};
 Vec2 keeper_fight_pos[]  = {{-242,250}, {-203,265}, {-182,236}, {-156,280}, {-136,250}, {-116,221},{-91, 265}, {-70,236}, {-30,250}};
-static std::string DICE_PIC_NAME_STR[8][6] = {{"yellow0001.png", "yellow0002.png", "yellow0003.png", "yellow0004.png", "yellow0005.png", "yellow0006.png"},
+static std::string DICE_PIC_NAME_STR[8][6] = {
+        {"Orange0001.png", "Orange0002.png", "Orange0003.png", "Orange0004.png", "Orange0005.png", "Orange0006.png"},
         {"red0001.png", "red0002.png", "red0003.png", "red0004.png", "red0005.png", "red0006.png"},
+        {"yellow0001.png", "yellow0002.png", "yellow0003.png", "yellow0004.png", "yellow0005.png", "yellow0006.png"},
         {"Bluegreen0001.png", "Bluegreen0002.png", "Bluegreen0003.png", "Bluegreen0004.png", "Bluegreen0005.png", "Bluegreen0006.png"},
         {"green0001.png", "green0002.png", "green0003.png", "green0004.png", "green0005.png", "green0006.png"},
         {"Blue0001.png", "Blue0002.png", "Blue0003.png", "Blue0004.png", "Blue0005.png", "Blue0006.png"},
-        {"Orange0001.png", "Orange0002.png", "Orange0003.png", "Orange0004.png", "Orange0005.png", "Orange0006.png"},
         {"Pink0001.png", "Pink0002.png", "Pink0003.png", "Pink0004.png", "Pink0005.png", "Pink0006.png"},
         {"Violet0001.png", "Violet0002.png", "Violet0003.png", "Violet0004.png", "Violet0005.png", "Violet0006.png"}};
 
@@ -44,11 +45,11 @@ enum{
         key_dialog_layer_tag
 };
 
-static std::string ANIM_NAME_FIGHT_RUN[]        = {"zhanshi_run", "xunshoushi_run", "zhanshi_run", "xunshoushi_run",
-        "zhanshi_run", "xunshoushi_run", "zhanshi_run", "xunshoushi_run"};
+static std::string ANIM_NAME_FIGHT_RUN[]        = {"zhanshi_run", "xunshoushi_run", "xunshoushi_run", "xunshoushi_run",
+        "xunshoushi_run", "xunshoushi_run", "xunshoushi_run", "xunshoushi_run"};
 
-static std::string ANIM_NAME_FIGHT_STAND[]      = {"zhanshi_sd", "xunshoushi_sd", "zhanshi_sd", "xunshoushi_sd",
-        "zhanshi_sd", "xunshoushi_sd", "zhanshi_sd", "xunshoushi_sd"};
+static std::string ANIM_NAME_FIGHT_STAND[]      = {"zhanshi_sd", "xunshoushi_sd", "xunshoushi_sd", "xunshoushi_sd",
+        "xunshoushi_sd", "xunshoushi_sd", "xunshoushi_sd", "xunshoushi_sd"};
 
 
 #pragma mark - constructor
@@ -215,7 +216,7 @@ void GameScene::loadZhanshi(){
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto zhanshi = Sprite::create();
                 zhanshi->setSpriteFrame(frame);
-                _allFightingCharacters[0][i] = zhanshi;
+                _allFightingCharacters[PLAYER_ROLE_TYPE_ZHANSHI][i] = zhanshi;
                 zhanshi->setVisible(false);
                 _animationLayer->addChild(zhanshi);
                 zhanshi->setVisible(false);
@@ -251,12 +252,221 @@ void GameScene::loadXunShouShi(){
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto xunshoushi = Sprite::create();
                 xunshoushi->setSpriteFrame(frame);
-                _allFightingCharacters[1][i] = xunshoushi;
+                _allFightingCharacters[PLAYER_ROLE_TYPE_XUNSHOUSHI][i] = xunshoushi;
                 _animationLayer->addChild(xunshoushi);
                 xunshoushi->setVisible(false);
         }
 }
 
+void GameScene::loadZhanshi2(){
+        
+        auto frameCache = SpriteFrameCache::getInstance();
+        
+        Vector<SpriteFrame*> animFrames(12);
+        char str[100] = {0};
+        
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "xsssd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
+        
+        auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
+        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
+                auto xunshoushi = Sprite::create();
+                xunshoushi->setSpriteFrame(frame);
+                _allFightingCharacters[PLAYER_ROLE_TYPE_ZHANSHI2][i] = xunshoushi;
+                _animationLayer->addChild(xunshoushi);
+                xunshoushi->setVisible(false);
+        }
+}
+
+void GameScene::loadZhanshi3(){
+        
+        auto frameCache = SpriteFrameCache::getInstance();
+        
+        Vector<SpriteFrame*> animFrames(12);
+        char str[100] = {0};
+        
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "xsssd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
+        
+        auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
+        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
+                auto xunshoushi = Sprite::create();
+                xunshoushi->setSpriteFrame(frame);
+                _allFightingCharacters[PLAYER_ROLE_TYPE_ZHANSHI3][i] = xunshoushi;
+                _animationLayer->addChild(xunshoushi);
+                xunshoushi->setVisible(false);
+        }
+}
+
+void GameScene::loadZhanshi4(){
+        
+        auto frameCache = SpriteFrameCache::getInstance();
+        
+        Vector<SpriteFrame*> animFrames(12);
+        char str[100] = {0};
+        
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "xsssd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
+        
+        auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
+        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
+                auto xunshoushi = Sprite::create();
+                xunshoushi->setSpriteFrame(frame);
+                _allFightingCharacters[PLAYER_ROLE_TYPE_ZHANSHI4][i] = xunshoushi;
+                _animationLayer->addChild(xunshoushi);
+                xunshoushi->setVisible(false);
+        }
+}
+
+void GameScene::loadZhanshi5(){
+        
+        auto frameCache = SpriteFrameCache::getInstance();
+        
+        Vector<SpriteFrame*> animFrames(12);
+        char str[100] = {0};
+        
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "xsssd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
+        
+        auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
+        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
+                auto xunshoushi = Sprite::create();
+                xunshoushi->setSpriteFrame(frame);
+                _allFightingCharacters[PLAYER_ROLE_TYPE_ZHANSHI5][i] = xunshoushi;
+                _animationLayer->addChild(xunshoushi);
+                xunshoushi->setVisible(false);
+        }
+}
+
+void GameScene::loadZhanshi6(){
+        
+        auto frameCache = SpriteFrameCache::getInstance();
+        
+        Vector<SpriteFrame*> animFrames(12);
+        char str[100] = {0};
+        
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "xsssd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
+        
+        auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
+        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
+                auto xunshoushi = Sprite::create();
+                xunshoushi->setSpriteFrame(frame);
+                _allFightingCharacters[PLAYER_ROLE_TYPE_ZHANSHI6][i] = xunshoushi;
+                _animationLayer->addChild(xunshoushi);
+                xunshoushi->setVisible(false);
+        }
+}
+
+void GameScene::loadZhanshi7(){
+        
+        auto frameCache = SpriteFrameCache::getInstance();
+        
+        Vector<SpriteFrame*> animFrames(12);
+        char str[100] = {0};
+        
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "xsssd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
+        
+        auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
+        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
+                auto xunshoushi = Sprite::create();
+                xunshoushi->setSpriteFrame(frame);
+                _allFightingCharacters[PLAYER_ROLE_TYPE_ZHANSHI7][i] = xunshoushi;
+                _animationLayer->addChild(xunshoushi);
+                xunshoushi->setVisible(false);
+        }
+}
 
 void GameScene::loadFightCloud(){
         
@@ -276,7 +486,7 @@ void GameScene::loadFightCloud(){
         auto frame = frameCache->getSpriteFrameByName("yw0001.png");
         auto xingyun = Sprite::create();
         xingyun->setSpriteFrame(frame);
-        _allFightingCharacters[8][0] = xingyun;
+        _allFightingCharacters[FIGHT_ANIM_TYPE_XINYUN][0] = xingyun;
         xingyun->setVisible(false);
         _animationLayer->addChild(xingyun);
 }
@@ -373,6 +583,18 @@ void GameScene::initAnimationLayer(){
         this->loadZhanshi();
         
         this->loadXunShouShi();
+        
+        this->loadZhanshi2();
+        
+        this->loadZhanshi3();
+        
+        this->loadZhanshi4();
+        
+        this->loadZhanshi5();
+        
+        this->loadZhanshi6();
+        
+        this->loadZhanshi7();
         
         this->loadFightCloud();
         
@@ -532,7 +754,7 @@ void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
                 _allFightingCharacters[resut_data->_fromPlayer][i]->setVisible(false);
                 _allFightingCharacters[resut_data->_toPlayer][i]->setVisible(false);
         }
-        _allFightingCharacters[8][0]->setVisible(false);
+        _allFightingCharacters[FIGHT_ANIM_TYPE_XINYUN][0]->setVisible(false);
         
         auto occupay_cc = CallFunc::create(std::bind(&DiceGame::occupayAnimation, _theGameLogic, resut_data, cb));
         
@@ -557,7 +779,7 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
         }
         
         
-        _allFightingCharacters[8][0]->setVisible(false);
+        _allFightingCharacters[FIGHT_ANIM_TYPE_XINYUN][0]->setVisible(false);
         
         Size back_size = _animationLayer->getContentSize();
         auto cache = AnimationCache::getInstance();
@@ -674,7 +896,7 @@ void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
         
         auto winner_back = CallFunc::create(std::bind(&GameScene::WinnerBack, this, resut_data, cb));
         
-        auto fight_cloud = _allFightingCharacters[8][0];
+        auto fight_cloud = _allFightingCharacters[FIGHT_ANIM_TYPE_XINYUN][0];
         fight_cloud->setVisible(true);
         
         auto size = _animationLayer->getContentSize();

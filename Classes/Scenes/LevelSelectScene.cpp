@@ -153,7 +153,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         auto level_back_2 = (Button*)level_back_1->clone();
         auto leve1_2 = Sprite::create("level/3player.png");
         leve1_2->setPosition(leve1_size / 2);
-        bool level_2_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_2_LOCK_STATE_KEY, false);
+        bool level_2_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_2_LOCK_STATE_KEY, true);
         if (false == level_2_opened){
                 auto lock = Sprite::create("level/level_lock.png");
                 lock->setPosition(leve1_size / 2);
@@ -169,7 +169,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         auto level_back_3 = (Button*)level_back_1->clone();
         auto level_3 = Sprite::create("level/4player.png");
         level_3->setPosition(leve1_size / 2);
-        bool level_3_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_3_LOCK_STATE_KEY, false);
+        bool level_3_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_3_LOCK_STATE_KEY, true);
         if (false == level_3_opened){
                 auto lock = Sprite::create("level/level_lock.png");
                 lock->setPosition(leve1_size / 2);
@@ -184,7 +184,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         auto level_back_4 = (Button*)level_back_1->clone();
         auto level_4 = Sprite::create("level/5player.png");
         level_4->setPosition(leve1_size / 2);
-        bool level_4_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_4_LOCK_STATE_KEY, false);
+        bool level_4_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_4_LOCK_STATE_KEY, true);
         if (false == level_4_opened){
                 auto lock = Sprite::create("level/level_lock.png");
                 lock->setPosition(leve1_size / 2);
@@ -199,7 +199,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         auto level_back_5 = (Button*)level_back_1->clone();
         auto level_5 = Sprite::create("level/6player.png");
         level_5->setPosition(leve1_size / 2);
-        bool level_5_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_5_LOCK_STATE_KEY, false);
+        bool level_5_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_5_LOCK_STATE_KEY, true);
         if (false == level_5_opened){
                 auto lock = Sprite::create("level/level_lock.png");
                 lock->setPosition(leve1_size / 2);
@@ -214,7 +214,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         auto level_back_6 = (Button*)level_back_1->clone();
         auto level_6 = Sprite::create("level/7player.png");
         level_6->setPosition(leve1_size / 2);
-        bool level_6_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_6_LOCK_STATE_KEY, false);
+        bool level_6_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_6_LOCK_STATE_KEY, true);
         if (false == level_6_opened){
                 auto lock = Sprite::create("level/level_lock.png");
                 lock->setPosition(leve1_size / 2);
@@ -229,7 +229,7 @@ void LevelSelect::loadLevelShow(Vec2 center, Size visibleSize){
         auto level_back_7 = (Button*)level_back_1->clone();
         auto level_7 = Sprite::create("level/8player.png");
         level_7->setPosition(leve1_size / 2);
-        bool level_7_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_7_LOCK_STATE_KEY, false);
+        bool level_7_opened = UserDefault::getInstance()->getBoolForKey(LEVEL_7_LOCK_STATE_KEY, true);
         if (false == level_7_opened){
                 auto lock = Sprite::create("level/level_lock.png");
                 lock->setPosition(leve1_size / 2);
@@ -339,27 +339,27 @@ void LevelSelect::menuStartGame(Ref* btn){
         bool need_buy = false;
         switch (_levelPlayerNUm) {
                 case 3:
-                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_2_LOCK_STATE_KEY, false);
+                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_2_LOCK_STATE_KEY, true);
                         product_name = LEVEL_2_PRODUCT_NAME_KEY;
                         break;
                 case 4:
-                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_3_LOCK_STATE_KEY, false);
+                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_3_LOCK_STATE_KEY, true);
                         product_name = LEVEL_3_PRODUCT_NAME_KEY;
                         break;
                 case 5:
-                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_4_LOCK_STATE_KEY, false);
+                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_4_LOCK_STATE_KEY, true);
                         product_name = LEVEL_4_PRODUCT_NAME_KEY;
                         break;
                 case 6:
-                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_5_LOCK_STATE_KEY, false);
+                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_5_LOCK_STATE_KEY, true);
                         product_name = LEVEL_5_PRODUCT_NAME_KEY;
                         break;
                 case 7:
-                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_6_LOCK_STATE_KEY, false);
+                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_6_LOCK_STATE_KEY, true);
                         product_name = LEVEL_6_PRODUCT_NAME_KEY;
                         break;
                 case 8:
-                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_7_LOCK_STATE_KEY, false);
+                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_7_LOCK_STATE_KEY, true);
                         product_name = LEVEL_7_PRODUCT_NAME_KEY;
                         break;
                 default:

@@ -57,6 +57,12 @@ private:
         
         void loadXunShouShi();
         void loadZhanshi();
+        void loadZhanshi2();
+        void loadZhanshi3();
+        void loadZhanshi4();
+        void loadZhanshi5();
+        void loadZhanshi6();
+        void loadZhanshi7();
         void loadFightCloud();
         void loadFightResult();
         void loadDiceResultLayer();
@@ -74,7 +80,7 @@ private:
         DiceGame*       _theGameLogic;
         bool            _isMoved;
         bool            _isPalyingAnim; 
-        Sprite*         _allFightingCharacters[9][MAX_DICE_PER_AREA];
+        Sprite*         _allFightingCharacters[FIGH_ANIM_MAX][MAX_DICE_PER_AREA];
         int             _gameStatus;
         MenuItemImage*  _endTurnMenuItem;
         MenuItemImage*  _startPlayMenuItem;

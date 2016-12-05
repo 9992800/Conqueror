@@ -32,8 +32,8 @@ public class FindComponetProxy extends AbstractWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		 logger.info("session getId: " + session.getId());
 		 OnlineBean bean = new OnlineBean();		
-		 SessionUtils.parseParam(bean, session);
-		 JSONObject resut = gameQueue.findOppoent(bean);	
+		 SessionUtils.parseParam(bean, session); 
+		 JSONObject resut = gameQueue.findOppoent(bean);
 		 session.sendMessage(new TextMessage(resut.toString()));
 	}
 	  

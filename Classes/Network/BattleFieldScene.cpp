@@ -216,6 +216,7 @@ int  BattleField::sendMessage(std::string msg){
 
 #pragma mark - websocket delegate
 void BattleField::onOpen(cocos2d::network::WebSocket* ws){
+        ModalLayer::dismissDialog(this);
         log("Websocket (%p) opened", ws);
 }
 

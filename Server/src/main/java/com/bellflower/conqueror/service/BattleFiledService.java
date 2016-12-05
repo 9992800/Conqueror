@@ -1,10 +1,12 @@
 package com.bellflower.conqueror.service;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Resource;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 import com.bellflower.conqueror.module.BattleFieldsBasic;
 import com.bellflower.conqueror.module.BattleFieldsMap;
+import com.bellflower.conqueror.module.OnlineBean;
+import com.bellflower.conqueror.module.RandomMap;
 import com.mongodb.WriteResult;
  
 
@@ -64,5 +68,10 @@ public class BattleFiledService {
 		query.with(new Sort(Sort.Direction.DESC, "createTime")).with(pageableRequest);
 		List<BattleFieldsBasic> rest = mongoService.find(query, BattleFieldsBasic.class);
 		return rest;
+	} 
+
+	public JSONObject createBattle(List<OnlineBean> data) {
+		RandomMap map = new RandomMap(data.size());
+		return null;
 	}
 }

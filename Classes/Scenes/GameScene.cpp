@@ -222,7 +222,6 @@ void GameScene::loadZhanshi(){
                 _allFightingCharacters[PLAYER_ROLE_TYPE_ZHANSHI][i] = zhanshi;
                 zhanshi->setVisible(false);
                 _animationLayer->addChild(zhanshi);
-                zhanshi->setVisible(false);
         }
 }
 
@@ -684,9 +683,11 @@ void GameScene::tryAgain(){
 #pragma mark - animation 
 
 void GameScene::afterPlayerBattle(FightResultData* result){
+        std::map<int, int> survival = _theGameLogic->cleanUpBattleField(result);
+        
+        _isPalyingAnim = false;
         _diceResultLayer->setVisible(false);
         _diceResultLayer->removeAllChildren();
-        std::map<int, int> survival = _theGameLogic->cleanUpBattleField(result);
         if (survival.size() == 1){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_WIN);
                 Director::getInstance()->pause();
@@ -701,9 +702,11 @@ void GameScene::afterPlayerBattle(FightResultData* result){
 }
 
 void GameScene::afterRobootBattle(FightResultData* result){
+        _theGameLogic->cleanUpBattleField(result);
+        
+        _isPalyingAnim = false;
         _diceResultLayer->setVisible(false);
         _diceResultLayer->removeAllChildren();
-        _theGameLogic->cleanUpBattleField(result);
         
         int user_tc = _theGameLogic->getUserTC();
         if (0 == user_tc){
@@ -765,7 +768,6 @@ void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
         _animationLayer->runAction(Sequence::create(hide,
                 CallFunc::create( [&](){
                 _animationLayer->setVisible(false);
-                _isPalyingAnim = false;
         }), occupay_cc, NULL));
 }
 
@@ -990,8 +992,8 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
 
 void GameScene::playBattleAnimation(FightResultData* resut_data, CallFunc* callback, bool isMaunual){
         
+        _isPalyingAnim = true;
         if (_animationIsOn && isMaunual){
-                _isPalyingAnim = true;
                 _animationLayer->setVisible(true);
                 auto show = ScaleTo::create(.5f, 1.0f);
                 callback->retain();

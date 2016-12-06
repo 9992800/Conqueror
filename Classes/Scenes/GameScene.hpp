@@ -66,6 +66,7 @@ private:
         void loadFightCloud();
         void loadFightResult();
         void loadDiceResultLayer();
+        void initMapSize(GameData*);
         
         void afterShowFightBg(FightResultData*, CallFunc*);
         void afterFightFinished(FightResultData*, CallFunc*);

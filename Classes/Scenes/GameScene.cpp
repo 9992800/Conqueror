@@ -114,30 +114,34 @@ bool GameScene::init()
 }
 
 #pragma mark - initilization
-void GameScene::initMapLayer(){
-        
+
+void GameScene::initMapSize(GameData* data){
+        _gameStatus = GAME_STATUS_INIT;
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         Vec2 center = origin + visibleSize / 2;
         
-        _theGameLogic = DiceGame::create();
-        _theGameLogic->retain();
-        
-        auto data = _theGameLogic->initGameData(_playerNumber);
-        
         auto map_size = visibleSize * 1.2f;
-        
         auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND,
                                              map_size.width + MAP_GAM_WIDTH ,
                                              map_size.height + MAP_GAM_HEIGHT);
-      
+        
         _minLeftBottom = Vec2(visibleSize.width - map_size.width - MAP_GAM_WIDTH,
                               visibleSize.height - map_size.height - MAP_GAM_HEIGHT);
         ScreenCoordinate::getInstance()->configScreen(map_size);
         
         data->reshDataByBackGrnd(back_layer);
         back_layer->setPosition(-MAP_GAM_WIDTH / 2, -MAP_GAM_HEIGHT / 2);
-        this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag); 
+        this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);
+}
+
+void GameScene::initMapLayer(){
+        _theGameLogic = DiceGame::create();
+        _theGameLogic->retain();
+        
+        auto data = _theGameLogic->initGameData(_playerNumber);
+        
+        this->initMapSize(data);
 }
 
 void GameScene::initControlLayer(){
@@ -661,23 +665,12 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 }
 
 void GameScene::tryAgain(){
-        _gameStatus = GAME_STATUS_INIT;
-        
-        auto visibleSize = Director::getInstance()->getVisibleSize();
-        Vec2 origin = Director::getInstance()->getVisibleOrigin();
-        Vec2 center = origin + visibleSize / 2;
-        
         auto layer = this->getChildByTag(key_map_tag);
         layer->removeFromParentAndCleanup(true);
         
         auto data = _theGameLogic->resetInitData();
+        this->initMapSize(data);
         
-        auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND, visibleSize.width + 10, visibleSize.height + 20);
-        ScreenCoordinate::getInstance()->configScreen(visibleSize);
-        data->reshDataByBackGrnd(back_layer);
-        this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);
-
-
         _startPlayMenuItem->setVisible(true);
         _endTurnMenuItem->setVisible(false);
 }

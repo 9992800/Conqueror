@@ -33,7 +33,7 @@ void WebSocktUtil::startConnect(){
         
         
         _wsiSendText = new network::WebSocket();
-        if (!_wsiSendText->init(*this, WEB_SOCKET_SERVER_URL)){
+        if (!_wsiSendText->init(*this, WEB_SOCKET_SERVER_BASE_URL)){
                 CC_SAFE_DELETE(_wsiSendText);
         }else{
                 log("ERROR:failed init the websocket.");

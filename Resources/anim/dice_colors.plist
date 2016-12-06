@@ -634,13 +634,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>all colors.png</string>
+            <string>shaizi_all.png</string>
             <key>size</key>
             <string>{512,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:26fc3d0105b0e455e4171c0176b89d7e:5e3748638d87e2eff4e5f576feafc605:e6e5caa9137a1bf6a0b4fd1704d7bfc8$</string>
+            <string>$TexturePacker:SmartUpdate:43907a0ba60b383e97e8178bca73e9ca:5e3748638d87e2eff4e5f576feafc605:85331b2db5970bd2455d3dd52f11a289$</string>
             <key>textureFileName</key>
-            <string>all colors.png</string>
+            <string>shaizi_all.png</string>
         </dict>
     </dict>
 </plist>

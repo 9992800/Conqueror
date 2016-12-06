@@ -1,12 +1,9 @@
 package com.bellflower.conqueror.service;
 
 import java.util.List;
-import java.util.Random;
 
 import javax.annotation.Resource;
-
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
@@ -16,9 +13,9 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
-
 import com.bellflower.conqueror.module.BattleFieldsBasic;
 import com.bellflower.conqueror.module.BattleFieldsMap;
+import com.bellflower.conqueror.module.OnlineBattleMap;
 import com.bellflower.conqueror.module.OnlineBean;
 import com.bellflower.conqueror.module.RandomMap;
 import com.mongodb.WriteResult;
@@ -39,9 +36,7 @@ public class BattleFiledService {
 		
 		Query query2 = new Query(Criteria.where("userId").is(user_id));
 		WriteResult result2 = this.mongoService.remove(query2, BattleFieldsMap.class);
-		logger.info("battles maps need to delete: " + result2.getN());
-		
-		
+		logger.info("battles maps need to delete: " + result2.getN());		
 		
 		BattleFieldsBasic fields = new BattleFieldsBasic();
 		fields.setOwner(user_id);
@@ -68,10 +63,17 @@ public class BattleFiledService {
 		query.with(new Sort(Sort.Direction.DESC, "createTime")).with(pageableRequest);
 		List<BattleFieldsBasic> rest = mongoService.find(query, BattleFieldsBasic.class);
 		return rest;
-	} 
-
-	public JSONObject createBattle(List<OnlineBean> data) {
-		RandomMap map = new RandomMap(data.size());
-		return null;
 	}
+	
+
+	public OnlineBattleMap createOnlineBattle(List<OnlineBean> bean) {
+		OnlineBattleMap map = new OnlineBattleMap();
+		map.setPlayerNum(bean.size());
+		map.setPlayers(bean);
+		RandomMap r_m = new RandomMap(bean.size());
+		map.setMapData(r_m.getCellData());
+		
+		mongoService.insert(map);
+		return map;
+	}  
 }

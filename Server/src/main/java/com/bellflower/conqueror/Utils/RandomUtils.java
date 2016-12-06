@@ -16,6 +16,10 @@ public final class RandomUtils {
 		return new String(randBuffer);
 	}
 	
+	public static final int randomNum2(int length) {		 
+		return randGen.nextInt(length);
+	}
+	
 	public static final String validCodeForClientApply(){
 		return RandomUtils.randomNum(VALID_CODE_LEN);
 	}

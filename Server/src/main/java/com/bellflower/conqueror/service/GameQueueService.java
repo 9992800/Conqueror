@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import com.bellflower.conqueror.module.OnlineBattleMap;
@@ -17,7 +18,7 @@ import com.bellflower.conqueror.module.OnlineBean;
 @Service
 public class GameQueueService {
 	
-	@Resource BattleFiledService battleFiledService;
+	@Resource GameRoomManager roomManager;
 	
 	public static final int max_waitor_in_queue = 100;
 	public static final int finding_status_wait = 1;
@@ -33,19 +34,9 @@ public class GameQueueService {
 			data.add(waitor1);
 			data.add(waitor2);
 			data.add(me);
-
-			JSONArray payer_ids = new JSONArray();
-			payer_ids.put(waitor1.getUserId());
-			payer_ids.put(waitor2.getUserId());
-			payer_ids.put(me.getUserId());
 			
-			OnlineBattleMap map = battleFiledService.createOnlineBattle(data);
-			JSONObject result = new JSONObject();
-			result.put("payer_ids", payer_ids);
-			result.put("player_num", data.size());
-			result.put("status", finding_status_create);
-			result.put("map_id", map.getId());				
-			return result;
+			return roomManager.createGameRoom(data); 
+			
 			
 		}else{
 			

@@ -239,7 +239,10 @@
 			</activation>
 			<properties>				
 				<mvn.log.level>DEBUG</mvn.log.level> 				
-				<mongodb.uri.str>mongodb://127.0.0.1:27017/test</mongodb.uri.str>				
+				<mongodb.uri.str>mongodb://127.0.0.1:27017/test</mongodb.uri.str>
+				<thread.pool.coresize>5</thread.pool.coresize>		
+				<thread.pool.maxsize>10</thread.pool.maxsize>
+				<thread.pool.queuesize>20</thread.pool.queuesize>		
 			</properties>
 		</profile>
 
@@ -248,6 +251,9 @@
 			<properties> 				
 				<mvn.log.level>INFO</mvn.log.level> 
 				<mongodb.uri.str>mongodb://127.0.0.1:27017/test</mongodb.uri.str>
+				<thread.pool.coresize>50</thread.pool.coresize>
+				<thread.pool.maxsize>10000</thread.pool.maxsize>
+				<thread.pool.queuesize>100</thread.pool.queuesize>
 			</properties>
 		</profile>		
 	</profiles>

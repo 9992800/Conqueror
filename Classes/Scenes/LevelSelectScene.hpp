@@ -43,9 +43,11 @@ protected:
         void menuGetMoreCoins(Ref* btn);
         void menuGetMoreDices(Ref* btn);
         void menuPlayHistory(Ref* btn);
+        void menuCharactorUpDown(Ref*, int);
         
 private:
         void initButtons(Vec2 center, Size visibleSize);
+        void initMenuSelections();
         
 private:
         void onInitialized(bool success)override{
@@ -68,12 +70,14 @@ private:
         int             _coinsNum;
         int             _dicesNum;
         
-        Vec2            _mostRight, _mostLeft;
-        LoadingBar*     _loadingBar; 
-        Sprite*         _loadingBarBack;
-        MenuItemImage*  _soundCtrl; 
-        map<string, Product> _productsMap;
-        HistoryReplayData _historyData;
+        Vec2                    _mostRight, _mostLeft;
+        LoadingBar*             _loadingBar;
+        Sprite*                 _loadingBarBack;
+        MenuItemImage*          _soundCtrl;
+        map<string, Product>    _productsMap;
+        HistoryReplayData       _historyData;
+        std::vector<Sprite*>    _characterToChoose;
+        int                     _curChIdx;
 };
 
 

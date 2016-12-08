@@ -106,6 +106,8 @@ bool LevelSelect::init()
         
         this->initButtons(origin, visibleSize);
         
+        this->initMenuSelections();
+        
         IAP::setDebug(true);
         IAP::setListener(this);
         IAP::init();
@@ -130,6 +132,41 @@ bool LevelSelect::init()
         _loadingBarBack->setVisible(false);
         
         return true;
+}
+
+void LevelSelect::initMenuSelections(){
+        auto character_back = Sprite::create("level/character_sel_back.png");
+        auto size = character_back->getContentSize();
+        auto visible_size = Director::getInstance()->getVisibleSize();
+        character_back->setPosition(Vec2(size.width, visible_size.height / 2));
+        this->addChild(character_back, ZORDER_BACK_LAYERS);
+        
+        _characterToChoose = std::vector<Sprite*>();
+        _curChIdx = 0;
+        for (int i = 0; i < 2; i++){
+                std::string name = StringUtils::format("level/ch_player_%d.png", i);
+                auto ch = Sprite::create(name);
+                _characterToChoose.push_back(ch);
+                ch->setPosition(Vec2(size / 2));
+                ch->setVisible(false);
+                character_back->addChild(ch);
+        }
+        _characterToChoose[_curChIdx]->setVisible(true);
+        
+        auto btn_up = MenuItemImage::create("level/arrow_up.png", "level/arrow_up.png",
+                                            CC_CALLBACK_1(LevelSelect::menuCharactorUpDown, this, 0));
+        btn_up->setPosition(Vec2(size.width / 2,
+                                 size.height + btn_up->getContentSize().height / 2 + 5));
+        
+        auto btn_down = MenuItemImage::create("level/arrow_down.png", "level/arrow_down.png",
+                                            CC_CALLBACK_1(LevelSelect::menuCharactorUpDown, this, 1));
+        
+        btn_down->setPosition(Vec2(size.width / 2,
+                                 - btn_up->getContentSize().height / 2 - 5));
+        
+        auto menu = Menu::create(btn_up, btn_down, NULL);
+        menu->setPosition(Vec2::ZERO);
+        character_back->addChild(menu, ZORDER_ITEM_CONTROL);
 }
 
 void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
@@ -213,6 +250,13 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
 }
 
 #pragma mark - button action callback
+
+void LevelSelect::menuCharactorUpDown(Ref* btn, int dir){
+        if (dir == 0){
+//                _cur
+        }
+} 
+
 void LevelSelect::menuOnlineBattle(Ref* btn){
         Scene* scene = FindPlayer::createScene();
         Director::getInstance()->pushScene(scene);

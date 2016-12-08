@@ -43,7 +43,8 @@ protected:
         void menuGetMoreCoins(Ref* btn);
         void menuGetMoreDices(Ref* btn);
         void menuPlayHistory(Ref* btn);
-        void menuCharactorUpDown(Ref*, int);
+        void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
+        void menuColorUpDown(Ref*, int);
         void btnChosePlayerNum(Ref*, int);
 private:
         void initButtons(Vec2 center, Size visibleSize);
@@ -77,7 +78,6 @@ private:
         MenuItemImage*          _soundCtrl;
         map<string, Product>    _productsMap;
         HistoryReplayData       _historyData;
-        std::vector<Sprite*>    _characterToChoose;
         int                     _curChIdx;
 };
 

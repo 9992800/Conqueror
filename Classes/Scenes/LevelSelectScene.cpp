@@ -143,32 +143,43 @@ void LevelSelect::initMenuSelections(){
         character_back->setPosition(position);
         this->addChild(character_back, ZORDER_BACK_LAYERS);
         
-        _characterToChoose = std::vector<Sprite*>();
+        PageView* pageView = PageView::create();
+        pageView->setContentSize(size);
+//        pageView->setPosition(Vec2(size / 2));
+        pageView->setDirection(ui::PageView::Direction::VERTICAL);
+        pageView->removeAllItems();
         _curChIdx = 0;
-        for (int i = 0; i < 2; i++){
+        int charactor_num = 2;
+        for (int i = 0; i < charactor_num; i++){
                 std::string name = StringUtils::format("level/ch_player_%d.png", i);
-                auto ch = Sprite::create(name);
-                _characterToChoose.push_back(ch);
+                auto ch = ImageView::create(name);
                 ch->setPosition(Vec2(size / 2));
-                ch->setVisible(false);
-                character_back->addChild(ch);
+                pageView->insertCustomItem(ch, i);
         }
-        _characterToChoose[_curChIdx]->setVisible(true);
+        pageView->addEventListener(CC_CALLBACK_2(LevelSelect::pageViewEvent, this));
+        character_back->addChild(pageView);
         
-        auto btn_up = MenuItemImage::create("level/arrow_up.png", "level/arrow_up.png",
-                                            CC_CALLBACK_1(LevelSelect::menuCharactorUpDown, this, 0));
+        auto btn_up = Button::create("level/arrow_up.png");
         btn_up->setPosition(Vec2(size.width / 2,
                                  size.height + btn_up->getContentSize().height / 2 + 5));
+        btn_up->addClickEventListener([=](Ref*){
+                int indx = (1 + _curChIdx) % charactor_num;
+                pageView->setCurrentPageIndex(indx);
+                _curChIdx = indx;
+        });
+        character_back->addChild(btn_up);
         
-        auto btn_down = MenuItemImage::create("level/arrow_down.png", "level/arrow_down.png",
-                                            CC_CALLBACK_1(LevelSelect::menuCharactorUpDown, this, 1));
+        
+        auto btn_down = Button::create("level/arrow_down.png");
         
         btn_down->setPosition(Vec2(size.width / 2,
-                                 - btn_up->getContentSize().height / 2 - 5));
-        
-        auto menu = Menu::create(btn_up, btn_down, NULL);
-        menu->setPosition(Vec2::ZERO);
-        character_back->addChild(menu, ZORDER_ITEM_CONTROL);
+                                 - btn_down->getContentSize().height / 2 - 5));
+        btn_down->addClickEventListener([=](Ref*){
+                int indx = (charactor_num + _curChIdx - 1) % charactor_num;
+                pageView->setCurrentPageIndex(indx);
+                _curChIdx = indx;
+        });
+        character_back->addChild(btn_down);
         
         
         auto chose_num_back = Sprite::create("level/player_num_sel_back.png");
@@ -206,13 +217,60 @@ void LevelSelect::initMenuSelections(){
         _num_sel_back_grd->setPosition(pos_1);
         chose_num_back->addChild(_num_sel_back_grd);
         
+        auto chose_num_header = Sprite::create("level/sel_num_header.png");
+        chose_num_header->setPosition(Vec2(num_size.width / 2,
+                                      num_size.height - chose_num_header->getContentSize().height / 2));
+        chose_num_back->addChild(chose_num_header);
+        
+        
+        
+        
+        
         
         auto chose_color_back = Sprite::create("level/chose_color_bck.png");
         chose_color_back->setPosition(Vec2(position_num.x +
                                            num_size.width / 2 + 5
                                            + chose_color_back->getContentSize().width / 2,
                                            position_num.y));
+        
+        
+        auto color_size = chose_color_back->getContentSize();
+        auto color_idicator = Sprite::create("level/color_idicator.png");
+        color_idicator->setPosition(color_size / 2);
+        chose_color_back->addChild(color_idicator);
         this->addChild(chose_color_back, ZORDER_BACK_LAYERS);
+        
+        
+        auto color_up = MenuItemImage::create("level/arrow_up.png", "level/arrow_up.png",
+                                            CC_CALLBACK_1(LevelSelect::menuColorUpDown, this, 0));
+        color_up->setPosition(Vec2(color_size.width / 2,
+                                 color_size.height + color_up->getContentSize().height / 2 + 5));
+        
+        auto color_down = MenuItemImage::create("level/arrow_down.png", "level/arrow_down.png",
+                                              CC_CALLBACK_1(LevelSelect::menuColorUpDown, this, 1));
+        
+        color_down->setPosition(Vec2(color_size.width / 2,
+                                   - color_down->getContentSize().height / 2 - 5));
+        
+        auto menu2 = Menu::create(color_up, color_down, NULL);
+        menu2->setPosition(Vec2::ZERO);
+        chose_color_back->addChild(menu2, ZORDER_ITEM_SHOW);
+        
+        auto _colorLayer = Layer::create();
+        float layer_height = 0.f;
+        for (int i = 0; i < 8; i++){
+                std::string str = StringUtils::format("level/player_color_%d.png", i);
+                auto color = Sprite::create(str);
+                auto color_size = color->getContentSize();
+                layer_height += color_size.height;
+                color->setPosition(color_size.width / 2,
+                                   color_size.height / 2 + i * color_size.height);
+                _colorLayer->addChild(color);
+        }
+        _colorLayer->setContentSize(Size(color_size.width, layer_height));
+        
+        _colorLayer->setPosition(Size(color_size.width / 2, 0.f));
+        chose_color_back->addChild(_colorLayer);
 }
 
 void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
@@ -303,11 +361,31 @@ void LevelSelect::btnChosePlayerNum(Ref* btn, int num){
         _num_sel_back_grd->setPosition(sel_btn->getPosition());
 }
 
-void LevelSelect::menuCharactorUpDown(Ref* btn, int dir){
-        if (dir == 0){
-//                _cur
+void LevelSelect::pageViewEvent(Ref *pSender, PageView::EventType type)
+{
+        
+//                ch_player_samll_0.png
+//                ch_player_samll_1.png
+
+        switch (type)
+        {
+                case PageView::EventType::TURNING:
+                {
+                PageView* pageView = dynamic_cast<PageView*>(pSender);
+                
+                std::string str = StringUtils::format("page = %ld", static_cast<long>(pageView->getCurrentPageIndex() + 1));
+                }
+                break;
+                
+                default:
+                break;
         }
-} 
+}
+
+
+void LevelSelect::menuColorUpDown(Ref*, int){
+        
+}
 
 void LevelSelect::menuOnlineBattle(Ref* btn){
         Scene* scene = FindPlayer::createScene();

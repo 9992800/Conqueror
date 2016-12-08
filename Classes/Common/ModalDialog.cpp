@@ -55,7 +55,7 @@ void ModalLayer::afterAnimation(){
 void ModalLayer::onEnter(){
         Layer::onEnter();
         CallFunc* callback = CallFunc::create(std::bind(&ModalLayer::afterAnimation, this));
-        Sequence*  s = Sequence::create(Repeat::create(RotateBy::create(1, 360*1), 60) , callback, nullptr);
+        Sequence*  s = Sequence::create(Repeat::create(RotateBy::create(1, 360*1), 300) , callback, nullptr);
         _waitingTips->runAction(s);
 }
 

@@ -36,6 +36,7 @@ public:
         static Scene* createScene();
         virtual bool init() override;
         CREATE_FUNC(FindPlayer);
+        FindPlayer():_waitingQueue(nullptr){}
         virtual ~FindPlayer();
         
 protected:

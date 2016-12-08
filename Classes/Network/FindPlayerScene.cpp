@@ -119,38 +119,25 @@ void FindPlayer::menuCreateBattle(Ref*){
 
 void FindPlayer::menuSearching(Ref*){
         ModalLayer::showModalDialog(this);
-        _waitingQueue = new network::WebSocket();
-        std::string fb_uid = UserSessionBean::getInstance()->getUserId();
         
-        std::string socket_url = StringUtils::format("%s%s?userId=%s", WEB_SOCKET_SERVER_BASE_URL, NET_WORK_FIND_COMPONET, fb_uid.c_str());
-        
-        if (!_waitingQueue->init(*this, socket_url)){
-                CC_SAFE_DELETE(_waitingQueue);
+        if (nullptr == _waitingQueue ||
+            WebSocket::State::OPEN != _waitingQueue->getReadyState()){
+                _waitingQueue = new network::WebSocket();
+                std::string fb_uid = UserSessionBean::getInstance()->getUserId();
+                
+                std::string socket_url = StringUtils::format("%s%s?userId=%s", WEB_SOCKET_SERVER_BASE_URL, NET_WORK_FIND_COMPONET, fb_uid.c_str());
+                
+                if (!_waitingQueue->init(*this, socket_url)){
+                        CC_SAFE_DELETE(_waitingQueue);
+                }else{
+                        ModalLayer::dismissDialog(this);
+                        log("ERROR:failed init the websocket.");
+                }
         }else{
-                ModalLayer::dismissDialog(this);
-                log("ERROR:failed init the websocket.");
+                std::string msg = StringUtils::format("");
+                _waitingQueue->send(msg);
         }
         
-        
-//        std::string base_url(GAME_SERVICE_SERVER_URL"/battleFields?");
-//        std::string uid = UserSessionBean::getInstance()->getUserId();
-//        if (uid.length() == 0){
-//                return;
-//        }
-//
-//        base_url.append("user_id=");
-//        base_url.append(uid);
-//        base_url.append("&curPgaeNo=1");
-//
-//        HttpRequest* request = new (std::nothrow) HttpRequest();
-//        request->setUrl(base_url);
-//        request->setRequestType(HttpRequest::Type::GET);
-//        request->setResponseCallback(CC_CALLBACK_2(FindPlayer::onHttpRequestCompleted, this));
-//        request->setTag(LIST_ALL_BATTLES);
-//        
-//        ModalLayer::showModalDialog(this);
-//        HttpClient::getInstance()->sendImmediate(request);
-//        request->release();
 }
 
 void FindPlayer::afterAnimation(){

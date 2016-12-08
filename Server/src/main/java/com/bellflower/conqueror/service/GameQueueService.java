@@ -7,12 +7,9 @@ import java.util.concurrent.BlockingQueue;
 
 import javax.annotation.Resource;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
-import com.bellflower.conqueror.module.OnlineBattleMap;
 import com.bellflower.conqueror.module.OnlineBean;
 
 @Service

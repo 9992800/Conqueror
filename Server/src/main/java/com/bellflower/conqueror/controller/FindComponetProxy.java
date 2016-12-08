@@ -36,8 +36,9 @@ public class FindComponetProxy extends AbstractWebSocketHandler {
 		 SessionUtils.parseParam(bean, session); 
 		
 		 sessionManager.userOnline(bean.getUserId(), session);
-		
+		 
 		 JSONObject resut = gameQueue.findOppoent(bean);
+		 resut.put("msg_type", MESSGAE_TYPE_CONSTS.ONLINE_MESSAGE_RESPONSE_TYPE_FIND_COMPONENT);
 		 
 		 session.sendMessage(new TextMessage(resut.toString()));	
 	}

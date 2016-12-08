@@ -102,7 +102,6 @@
 		7C6E80051DD9687D00C5E374 /* history_data.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E80021DD9687D00C5E374 /* history_data.png */; };
 		7C6E80061DD9687D00C5E374 /* history_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E80031DD9687D00C5E374 /* history_sel.png */; };
 		7C733B1C1DC990E200098EDD /* iphone5 in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B181DC990E200098EDD /* iphone5 */; };
-		7C733B1D1DC990E200098EDD /* iphone6 in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B191DC990E200098EDD /* iphone6 */; };
 		7C733B1E1DC990E200098EDD /* iphone6p in Resources */ = {isa = PBXBuildFile; fileRef = 7C733B1A1DC990E200098EDD /* iphone6p */; };
 		7C82E4201DD572A70019C8CF /* FindPlayerScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C82E41E1DD572A70019C8CF /* FindPlayerScene.cpp */; };
 		7C82E4261DD5768A0019C8CF /* BattleFieldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C82E4241DD5768A0019C8CF /* BattleFieldScene.cpp */; };
@@ -305,7 +304,6 @@
 		7C6E80021DD9687D00C5E374 /* history_data.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = history_data.png; sourceTree = "<group>"; };
 		7C6E80031DD9687D00C5E374 /* history_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = history_sel.png; sourceTree = "<group>"; };
 		7C733B181DC990E200098EDD /* iphone5 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone5; sourceTree = "<group>"; };
-		7C733B191DC990E200098EDD /* iphone6 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6; sourceTree = "<group>"; };
 		7C733B1A1DC990E200098EDD /* iphone6p */ = {isa = PBXFileReference; lastKnownFileType = folder; path = iphone6p; sourceTree = "<group>"; };
 		7C82E41E1DD572A70019C8CF /* FindPlayerScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FindPlayerScene.cpp; sourceTree = "<group>"; };
 		7C82E41F1DD572A70019C8CF /* FindPlayerScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FindPlayerScene.hpp; sourceTree = "<group>"; };
@@ -528,7 +526,6 @@
 				7C21A0DB1DC9C06C0035ECC6 /* sliderProgress.png */,
 				7C558EB81DEC1D52007722D7 /* sliderProgress_back.png */,
 				7C733B181DC990E200098EDD /* iphone5 */,
-				7C733B191DC990E200098EDD /* iphone6 */,
 				7C733B1A1DC990E200098EDD /* iphone6p */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
@@ -833,7 +830,6 @@
 				BB51F1091DCF66D50031296E /* share_sel.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				7C733B1C1DC990E200098EDD /* iphone5 in Resources */,
-				7C733B1D1DC990E200098EDD /* iphone6 in Resources */,
 				7C558EC21DEC28F6007722D7 /* dice_2.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,

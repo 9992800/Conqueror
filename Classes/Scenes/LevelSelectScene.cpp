@@ -14,6 +14,7 @@
 #include "json/rapidjson.h"
 #include "json/document.h"
 #include "FindPlayerScene.hpp"
+#include "ui/UIScale9Sprite.h"
 
 enum {
         GAME_LEVEL_INDEX_1 = 1,
@@ -138,7 +139,8 @@ void LevelSelect::initMenuSelections(){
         auto character_back = Sprite::create("level/character_sel_back.png");
         auto size = character_back->getContentSize();
         auto visible_size = Director::getInstance()->getVisibleSize();
-        character_back->setPosition(Vec2(size.width, visible_size.height / 2));
+        auto position = Vec2(size.width, visible_size.height / 2);
+        character_back->setPosition(position);
         this->addChild(character_back, ZORDER_BACK_LAYERS);
         
         _characterToChoose = std::vector<Sprite*>();
@@ -167,6 +169,50 @@ void LevelSelect::initMenuSelections(){
         auto menu = Menu::create(btn_up, btn_down, NULL);
         menu->setPosition(Vec2::ZERO);
         character_back->addChild(menu, ZORDER_ITEM_CONTROL);
+        
+        
+        auto chose_num_back = Sprite::create("level/player_num_sel_back.png");
+        auto num_size = chose_num_back->getContentSize();
+        auto position_num = Vec2(position.x + num_size.width / 2 + 5 + size.width / 2,
+                              position.y);
+        chose_num_back->setPosition(position_num);
+        this->addChild(chose_num_back, ZORDER_BACK_LAYERS);
+        
+        auto soldier_back = Sprite::create("level/soldier_back.png");
+        soldier_back->setPosition(Vec2(num_size.width / 2,
+                                         (num_size.height - soldier_back->getContentSize().height) / 2 + num_size.height / 2));
+        chose_num_back->addChild(soldier_back);
+        
+        _levelPlayerNUm = 2;
+        
+        _num_sel_back_grd = Sprite::create("level/sel_num_btn_back.png");
+        auto btn_size = _num_sel_back_grd->getContentSize();
+        Size gap(btn_size.width / 3, btn_size.height / 4);
+        btn_size = btn_size * 0.9;
+        auto pos_1 = Vec2(btn_size / 2 + gap);
+        
+        for (int i = 2; i <= 8; i++){
+                auto sel_num_2 = Button::create("");
+                sel_num_2->setContentSize(btn_size);
+                sel_num_2->setPosition(Vec2(pos_1.x + (i - 2) * btn_size.width, pos_1.y));
+                std::string str = StringUtils::format("%d", i);
+                sel_num_2->setTitleText(str);
+                sel_num_2->setTitleFontSize(36);
+                sel_num_2->addClickEventListener(CC_CALLBACK_1(LevelSelect::btnChosePlayerNum, this, i));
+                chose_num_back->addChild(sel_num_2);
+        }
+        
+        
+        _num_sel_back_grd->setPosition(pos_1);
+        chose_num_back->addChild(_num_sel_back_grd);
+        
+        
+        auto chose_color_back = Sprite::create("level/chose_color_bck.png");
+        chose_color_back->setPosition(Vec2(position_num.x +
+                                           num_size.width / 2 + 5
+                                           + chose_color_back->getContentSize().width / 2,
+                                           position_num.y));
+        this->addChild(chose_color_back, ZORDER_BACK_LAYERS);
 }
 
 void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
@@ -193,7 +239,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         
         auto online_game = MenuItemImage::create("online_battle.png", "online_battle_sel.png",
                               CC_CALLBACK_1(LevelSelect::menuOnlineBattle, this));
-        online_game->setPosition(Vec2(visibleSize.width -  online_game->getContentSize().width,
+        online_game->setPosition(Vec2(visibleSize.width -  online_game->getContentSize().width / 2,
                                         visibleSize.height/ 2 ));
         
         /*
@@ -251,6 +297,12 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
 
 #pragma mark - button action callback
 
+void LevelSelect::btnChosePlayerNum(Ref* btn, int num){
+        Button* sel_btn = ((Button*)btn);
+        _levelPlayerNUm = num;
+        _num_sel_back_grd->setPosition(sel_btn->getPosition());
+}
+
 void LevelSelect::menuCharactorUpDown(Ref* btn, int dir){
         if (dir == 0){
 //                _cur
@@ -262,44 +314,6 @@ void LevelSelect::menuOnlineBattle(Ref* btn){
         Director::getInstance()->pushScene(scene);
 }
 void LevelSelect::menuStartGame(Ref* btn){
-        
-        _levelPlayerNUm = ((Node*)btn)->getTag();
-        std::string product_name;
-        bool need_buy = false;
-        switch (_levelPlayerNUm) {
-                case 3:
-                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_2_LOCK_STATE_KEY, true);
-                        product_name = LEVEL_2_PRODUCT_NAME_KEY;
-                        break;
-                case 4:
-                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_3_LOCK_STATE_KEY, true);
-                        product_name = LEVEL_3_PRODUCT_NAME_KEY;
-                        break;
-                case 5:
-                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_4_LOCK_STATE_KEY, true);
-                        product_name = LEVEL_4_PRODUCT_NAME_KEY;
-                        break;
-                case 6:
-                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_5_LOCK_STATE_KEY, true);
-                        product_name = LEVEL_5_PRODUCT_NAME_KEY;
-                        break;
-                case 7:
-                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_6_LOCK_STATE_KEY, true);
-                        product_name = LEVEL_6_PRODUCT_NAME_KEY;
-                        break;
-                case 8:
-                        need_buy = !UserDefault::getInstance()->getBoolForKey(LEVEL_7_LOCK_STATE_KEY, true);
-                        product_name = LEVEL_7_PRODUCT_NAME_KEY;
-                        break;
-                default:
-                        need_buy = false;
-                        break;
-        }
-        
-        if (need_buy){
-                IAP::purchase(product_name);
-                return;
-        }
         
         auto scene = GameScene::createScene(_levelPlayerNUm);
         Director::getInstance()->pushScene(scene);

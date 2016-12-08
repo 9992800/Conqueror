@@ -44,7 +44,7 @@ protected:
         void menuGetMoreDices(Ref* btn);
         void menuPlayHistory(Ref* btn);
         void menuCharactorUpDown(Ref*, int);
-        
+        void btnChosePlayerNum(Ref*, int);
 private:
         void initButtons(Vec2 center, Size visibleSize);
         void initMenuSelections();
@@ -73,6 +73,7 @@ private:
         Vec2                    _mostRight, _mostLeft;
         LoadingBar*             _loadingBar;
         Sprite*                 _loadingBarBack;
+        Sprite*                 _num_sel_back_grd;
         MenuItemImage*          _soundCtrl;
         map<string, Product>    _productsMap;
         HistoryReplayData       _historyData;

@@ -44,7 +44,6 @@ protected:
         void menuGetMoreDices(Ref* btn);
         void menuPlayHistory(Ref* btn);
         void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
-        void menuColorUpDown(Ref*, int);
         void btnChosePlayerNum(Ref*, int);
 private:
         void initButtons(Vec2 center, Size visibleSize);
@@ -79,6 +78,7 @@ private:
         map<string, Product>    _productsMap;
         HistoryReplayData       _historyData;
         int                     _curChIdx;
+        int                     _curColorIdx;
 };
 
 

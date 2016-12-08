@@ -226,7 +226,7 @@ void LevelSelect::initMenuSelections(){
         
         
         
-        
+        _curColorIdx = 0;
         auto chose_color_back = Sprite::create("level/chose_color_bck.png");
         chose_color_back->setPosition(Vec2(position_num.x +
                                            num_size.width / 2 + 5
@@ -237,40 +237,48 @@ void LevelSelect::initMenuSelections(){
         auto color_size = chose_color_back->getContentSize();
         auto color_idicator = Sprite::create("level/color_idicator.png");
         color_idicator->setPosition(color_size / 2);
-        chose_color_back->addChild(color_idicator);
+        chose_color_back->addChild(color_idicator, ZORDER_ITEM_CONTROL);
         this->addChild(chose_color_back, ZORDER_BACK_LAYERS);
         
         
-        auto color_up = MenuItemImage::create("level/arrow_up.png", "level/arrow_up.png",
-                                            CC_CALLBACK_1(LevelSelect::menuColorUpDown, this, 0));
+        auto color_list = ListView::create();
+        color_list->setDirection(cocos2d::ui::ScrollView::Direction::VERTICAL);
+        color_list->setContentSize(color_size);
+        color_list->setScrollBarPositionFromCorner(Vec2(7, 7));
+//        color_list->setItemsMargin(2.0f);
+        color_list->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        color_list->setPosition(Vec2(color_size.width / 2 + 10,
+                                     color_size.height / 2));
+        chose_color_back->addChild(color_list, ZORDER_ITEM_SHOW);
+        
+        int color_num = 8;
+        for (int i = 0; i < color_num; i++){
+                std::string str = StringUtils::format("level/player_color_%d.png", i);
+                auto color = ImageView::create(str);
+                auto color_size = color->getContentSize();
+                color_list->pushBackCustomItem(color);
+        }
+        auto color_up = Button::create("level/arrow_up.png");
         color_up->setPosition(Vec2(color_size.width / 2,
                                  color_size.height + color_up->getContentSize().height / 2 + 5));
         
-        auto color_down = MenuItemImage::create("level/arrow_down.png", "level/arrow_down.png",
-                                              CC_CALLBACK_1(LevelSelect::menuColorUpDown, this, 1));
+        color_up->addClickEventListener([=](Ref*){
+                _curColorIdx = (_curColorIdx + 1) % color_num;
+                color_list->scrollToItem(_curColorIdx, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
+        });
+        chose_color_back->addChild(color_up, ZORDER_ITEM_CONTROL);
+        
+        
+        auto color_down = Button::create("level/arrow_down.png");
         
         color_down->setPosition(Vec2(color_size.width / 2,
                                    - color_down->getContentSize().height / 2 - 5));
+        color_down->addClickEventListener([=](Ref*){
+                _curColorIdx = (_curColorIdx - 1 + color_num) % color_num;
+                color_list->scrollToItem(_curColorIdx, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
+        });
+        chose_color_back->addChild(color_down, ZORDER_ITEM_CONTROL);
         
-        auto menu2 = Menu::create(color_up, color_down, NULL);
-        menu2->setPosition(Vec2::ZERO);
-        chose_color_back->addChild(menu2, ZORDER_ITEM_SHOW);
-        
-        auto _colorLayer = Layer::create();
-        float layer_height = 0.f;
-        for (int i = 0; i < 8; i++){
-                std::string str = StringUtils::format("level/player_color_%d.png", i);
-                auto color = Sprite::create(str);
-                auto color_size = color->getContentSize();
-                layer_height += color_size.height;
-                color->setPosition(color_size.width / 2,
-                                   color_size.height / 2 + i * color_size.height);
-                _colorLayer->addChild(color);
-        }
-        _colorLayer->setContentSize(Size(color_size.width, layer_height));
-        
-        _colorLayer->setPosition(Size(color_size.width / 2, 0.f));
-        chose_color_back->addChild(_colorLayer);
 }
 
 void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
@@ -380,11 +388,6 @@ void LevelSelect::pageViewEvent(Ref *pSender, PageView::EventType type)
                 default:
                 break;
         }
-}
-
-
-void LevelSelect::menuColorUpDown(Ref*, int){
-        
 }
 
 void LevelSelect::menuOnlineBattle(Ref* btn){

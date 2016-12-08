@@ -45,7 +45,6 @@ protected:
         void menuPlayHistory(Ref* btn);
         
 private:
-        void loadLevelShow(Vec2 center, Size visibleSize);        
         void initButtons(Vec2 center, Size visibleSize);
         
 private:
@@ -72,11 +71,9 @@ private:
         Vec2            _mostRight, _mostLeft;
         LoadingBar*     _loadingBar; 
         Sprite*         _loadingBarBack;
-        MenuItemImage*  _soundCtrl;
-        MenuItemImage*  _historyPlayItem;
+        MenuItemImage*  _soundCtrl; 
         map<string, Product> _productsMap;
         HistoryReplayData _historyData;
-        LayerColor      *_levelBackTopHalf, *_levelBackBottomHalf;
 };
 
 

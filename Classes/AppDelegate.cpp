@@ -38,18 +38,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
         auto frameSize = glview->getFrameSize();
         
         std::vector<std::string> searchPath;
-        if (frameSize.height > mediumResource.size.height)
+        if (frameSize.height > smallResource.size.height)
         {
                 MapResolustion::initConfig(MapResolustion::BIG_SCREEN_RESOLUTION);
                 searchPath.push_back(largeResource.directory);
                 director->setContentScaleFactor(largeResource.size.height/designResolutionSize.height);
-        }
-        else if (frameSize.height > smallResource.size.height)
-        {
-                MapResolustion::initConfig(MapResolustion::MEDIUM_SCREEN_RESOLUTION);
-                searchPath.push_back(mediumResource.directory);
-                director->setContentScaleFactor(mediumResource.size.height/designResolutionSize.height);
-        }
+        } 
         else
         {
                 MapResolustion::initConfig(MapResolustion::SMALL_SCREEN_RESOLUTION);

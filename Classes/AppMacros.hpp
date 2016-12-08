@@ -12,8 +12,7 @@ typedef struct tagResource
 }Resource;
 
 
-static Resource smallResource  =  { cocos2d::Size(1136, 640),   "iphone5" };
-static Resource mediumResource =  { cocos2d::Size(1334, 750),   "iphone6" };
+static Resource smallResource  =  { cocos2d::Size(1136, 640),   "iphone5" }; 
 static Resource largeResource  =  { cocos2d::Size(1704, 960),   "iphone6p"};
 static Size designResolutionSize = cocos2d::Size(1136, 640);
 

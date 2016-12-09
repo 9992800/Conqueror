@@ -14,14 +14,12 @@ import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
 import com.bellflower.conqueror.Utils.SessionUtils;
 import com.bellflower.conqueror.module.OnlineBean;
-import com.bellflower.conqueror.service.GameQueueService;
-import com.bellflower.conqueror.service.GameSessionManager;
+import com.bellflower.conqueror.service.GameDispatchService;
 
 public class FindComponetProxy extends AbstractWebSocketHandler {
 	private static final Logger logger =
 	    LoggerFactory.getLogger(FindComponetProxy.class);
-	  @Resource GameQueueService gameQueue;
-	  @Resource GameSessionManager sessionManager;
+	  @Resource GameDispatchService gameDispatchService;
 	  
 	 protected void handleTextMessage(
 	     WebSocketSession session, TextMessage message) throws Exception {
@@ -31,20 +29,20 @@ public class FindComponetProxy extends AbstractWebSocketHandler {
 	  }
 	  
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		 logger.info("session getId: " + session.getId());
 		 OnlineBean bean = new OnlineBean();		
 		 SessionUtils.parseParam(bean, session); 
-		
-		 sessionManager.userOnline(bean.getUserId(), session);
+		 logger.info("user online: " + bean.toString());  
 		 
-		 JSONObject resut = gameQueue.findOppoent(bean);
-		 resut.put("msg_type", MESSGAE_TYPE_CONSTS.ONLINE_MESSAGE_RESPONSE_TYPE_FIND_COMPONENT);
+		 JSONObject resut = gameDispatchService.findOppoent(bean, session);
+		 resut.put("msg_type", MESSGAE_TYPE_CONSTS.ONLINE_MESSAGE_RESPONSE_TYPE_FIND_COMPONENT.getType());
 		 
 		 session.sendMessage(new TextMessage(resut.toString()));	
 	}
 	  
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		 logger.info("session getId: " + session.getId()+" status ="+status);
+
+		 gameDispatchService.userOffline(session);
 	}
 	
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) throws Exception {

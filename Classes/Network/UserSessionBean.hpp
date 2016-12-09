@@ -15,7 +15,7 @@
 #include "PluginFacebook/PluginFacebook.h"
 #include "picojson.h"
 
-using namespace network;
+using namespace cocos2d::network;
 USING_NS_CC;
 typedef std::function<void(std::string)> ccReloadAvatarCallback;
 class UserSessionBean:public Ref, sdkbox::FacebookListener{

@@ -27,6 +27,7 @@
 #import "cocos2d.h"
 #import "AppDelegate.hpp"
 #import "RootViewController.h"
+#import "AppMacros.hpp"
 
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
@@ -90,9 +91,11 @@ static AppDelegate s_sharedApplication;
         bool ret= [[FBSDKApplicationDelegate sharedInstance] application:application
                                            didFinishLaunchingWithOptions:launchOptions];
         
+        NSString* uid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
         app->run();
         
-        return ret;
+        cocos2d::UserDefault::getInstance()->setStringForKey(USER_DEVICE_UUID, [uid UTF8String]);
+                 return ret;
 }
 
 

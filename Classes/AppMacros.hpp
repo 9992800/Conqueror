@@ -3,8 +3,6 @@
 
 #include "cocos2d.h"
 
-USING_NS_CC;
-
 typedef struct tagResource
 {
     cocos2d::Size size;
@@ -14,7 +12,7 @@ typedef struct tagResource
 
 static Resource smallResource  =  { cocos2d::Size(1136, 640),   "iphone5" }; 
 static Resource largeResource  =  { cocos2d::Size(1704, 960),   "iphone6p"};
-static Size designResolutionSize = cocos2d::Size(1136, 640);
+static cocos2d::Size designResolutionSize = cocos2d::Size(1136, 640);
 
 //static Resource smallResource  =  { cocos2d::Size(480, 320),   "iphone5" };
 //static Resource mediumResource =  { cocos2d::Size(1024, 768),   "iphone6" };
@@ -156,7 +154,7 @@ return nullptr; \
 #define LAYER_NAME_IN_TILE_MAP "map"
 
 #define NET_WORK_FIND_COMPONET          "findOponent"
-#define WEB_SOCKET_SERVER_BASE_URL      "ws://192.168.1.39:9900/"
+#define WEB_SOCKET_SERVER_BASE_URL      "ws://192.168.1.200:9900/"
 #define GAME_SERVICE_SERVER_URL         "http://192.168.1.39:9900/serverHome"
 
 template<typename T> extern std::vector<T> parseData(const char* key);
@@ -208,5 +206,7 @@ enum {
         ONLINE_MESSAGE_REQUEST_TYPE_FIND_COMPONENT = 1001,
         ONLINE_MESSAGE_RESPONSE_TYPE_FIND_COMPONENT = 3001
 };
+
+#define USER_DEVICE_UUID        "user_device_uuid"
 
 #endif /* __APPMACROS_H__ */

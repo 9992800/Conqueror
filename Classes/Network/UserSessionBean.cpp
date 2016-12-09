@@ -43,6 +43,8 @@ UserSessionBean::~UserSessionBean(){
 void UserSessionBean::initSession(){
         std::string basic_info = UserDefault::getInstance()->getStringForKey(FACEBOOK_INFO_USER_FB_BASIC, "");
         
+        std::string uuid = cocos2d::UserDefault::getInstance()->getStringForKey(USER_DEVICE_UUID, "");
+        
         if (!PluginFacebook::isLoggedIn() || basic_info.length() == 0){
                 std::vector<std::string> permissions;
                 permissions.push_back(FB_PERM_READ_PUBLIC_PROFILE);

@@ -1,12 +1,12 @@
 package com.bellflower.conqueror.service;
 
 import java.util.concurrent.ConcurrentHashMap;
+
 import javax.annotation.Resource;
-import org.json.JSONObject;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
 
-import com.bellflower.conqueror.controller.APPLICATION_CONSTS;
 import com.bellflower.conqueror.module.OnlineBean;
 
 @Service
@@ -44,14 +44,8 @@ public class GameDispatchService {
 		sessionCache.remove(session.getId());
 	}
 	
-	public JSONObject findOppoent(OnlineBean me, WebSocketSession session) throws InterruptedException {
-		this.userOnline(session, me);
-		
-		JSONObject result = new JSONObject(); 
-		result.put("msg_type", APPLICATION_CONSTS.ONLINE_MESSAGE_RESPONSE_TYPE_FIND_COMPONENT.getValue());
-		result.put("status", finding_status_wait);
-		result.put("online_users", olineUsersCache.size()); 			
-		return result;
+	public void findOpponent(OnlineBean me, WebSocketSession session) throws InterruptedException {
+		this.userOnline(session, me); 	
 	}
 
 	public int getOnlineUsers() { 

@@ -11,7 +11,6 @@ import org.springframework.web.socket.PongMessage;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
-
 import com.bellflower.conqueror.Utils.SessionUtils;
 import com.bellflower.conqueror.module.OnlineBean;
 import com.bellflower.conqueror.service.GameDispatchService;
@@ -31,17 +30,13 @@ public class FindComponetProxy extends AbstractWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		 OnlineBean bean = new OnlineBean();		
 		 SessionUtils.parseParam(bean, session); 
-		 logger.info("user online: " + bean.toString());  
-		 
+		 logger.info("user online: " + bean.toString());   
 		 JSONObject resut = gameDispatchService.findOppoent(bean, session);
-		 resut.put("msg_type", MESSGAE_TYPE_CONSTS.ONLINE_MESSAGE_RESPONSE_TYPE_FIND_COMPONENT.getType());
-		 
 		 session.sendMessage(new TextMessage(resut.toString()));	
 	}
 	  
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		 logger.info("session getId: " + session.getId()+" status ="+status);
-
 		 gameDispatchService.userOffline(session);
 	}
 	

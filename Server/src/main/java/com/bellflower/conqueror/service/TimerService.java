@@ -14,7 +14,9 @@ public class TimerService {
 	@Resource GameDispatchService gameDispatchService;
 	@Resource GameRoomManager roomManager;
 	
-	@Scheduled(fixedRate=10000)
+	@Scheduled(fixedRate=1000)
 	public void prepairGameRoom(){  
+		logger.info("waiting in room:"+roomManager.getRoomNumbers());
+		logger.info("online users:"+gameDispatchService.getOnlineUsers());
 	}
 }

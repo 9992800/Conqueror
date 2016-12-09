@@ -3,10 +3,7 @@ package com.bellflower.conqueror.module;
 import org.springframework.web.socket.WebSocketSession;
 
 public class OnlineBean {
-	@Override
-	public String toString() {
-		return "OnlineBean [userId=" + userId + ", sessionId=" + sessionId + "]";
-	}
+ 
 
 	String userId;
 	String sessionId;
@@ -35,5 +32,19 @@ public class OnlineBean {
 	
 	public WebSocketSession getSession(){
 		return this.session;
+	}
+
+	public String getMapId() {
+		return mapId;
+	}
+
+	public void setMapId(String mapId) {
+		this.mapId = mapId;
+	}
+
+	@Override
+	public String toString() {
+		return "OnlineBean [userId=" + userId + ", sessionId=" + sessionId + ", mapId=" + mapId + ", session=" + session
+				+ "]";
 	}
 }

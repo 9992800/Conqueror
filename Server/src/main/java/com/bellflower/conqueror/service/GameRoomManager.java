@@ -1,13 +1,11 @@
 package com.bellflower.conqueror.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+
 import javax.annotation.Resource;
-import org.json.JSONArray;
-import org.json.JSONObject;
+
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
@@ -19,52 +17,49 @@ public class GameRoomManager {
 
 	@Resource ThreadPoolTaskExecutor taskExecutor;
 	
-	ConcurrentHashMap<String, GameRoomWaitor> roomLeader = 
-			new ConcurrentHashMap<String, GameRoomWaitor>(10000);
+	//TODO:: 10000 should be replaced
+	ConcurrentHashMap<String, GameRoomWaitor> allManagedRooms = 
+			new ConcurrentHashMap<String, GameRoomWaitor>(20000);
 	
-	static final BlockingQueue<OnlineBean> threeWaitingTable = 
-			new ArrayBlockingQueue<>(3);
-	
-	public JSONObject createGameRoom(List<OnlineBean> data) {
-		JSONObject result = new JSONObject();
-		JSONArray payer_ids = new JSONArray();
-		for (int i = 0; i < data.size(); i++){
-			OnlineBean bean = data.get(i);
-			payer_ids.put(bean.getUserId());
+	BlockingQueue<GameRoomWaitor> waitingRoom = 
+			new ArrayBlockingQueue<GameRoomWaitor>(20000);
+
+	public void enterRoom(OnlineBean bean) throws InterruptedException {
+		if (waitingRoom.isEmpty()){
+			GameRoomWaitor gameRoomWaitor = new GameRoomWaitor(); 
+			waitingRoom.put(gameRoomWaitor); 
+			allManagedRooms.put(gameRoomWaitor.getMapId(), gameRoomWaitor);
+			bean.setMapId(gameRoomWaitor.getMapId());
+			gameRoomWaitor.enterRoom(bean, this);
+			taskExecutor.execute(gameRoomWaitor);
+		}else{
+			GameRoomWaitor availbel_room = waitingRoom.element();
+			bean.setMapId(availbel_room.getMapId());
+			availbel_room.enterRoom(bean, this);
 		} 
-		
-		GameRoomWaitor gameRoomWaitor = new GameRoomWaitor(data); 
-		result.put("payer_ids", payer_ids);
-		result.put("player_num", data.size());
-		result.put("room_id", gameRoomWaitor.getMapId());		
-		
-		taskExecutor.execute(gameRoomWaitor);
-		
-		roomLeader.put(gameRoomWaitor.getMapId(), gameRoomWaitor);
-		
-		return result;
 	} 
 
-	public void enterRoom(OnlineBean bean) throws InterruptedException { 
-		threeWaitingTable.put(bean);
-		if (threeWaitingTable.size() >= 3){
-			this.createGameRoom();
-		}
+	public void leaveRoom(OnlineBean bean) throws InterruptedException {
+		GameRoomWaitor roomWaitor = allManagedRooms.get(bean.getMapId()); 
+		if (null != roomWaitor){
+			roomWaitor.leaveRoom(bean, this);
+		}	 
 	}
 
-	private void createGameRoom() throws InterruptedException {		 
-		
-		
-		List<OnlineBean> data = new ArrayList<>(threeWaitingTable);
-		threeWaitingTable.clear();
-		
-		GameRoomWaitor gameRoomWaitor = new GameRoomWaitor(data);  		
-		taskExecutor.execute(gameRoomWaitor);
-		
-		roomLeader.put(gameRoomWaitor.getMapId(), gameRoomWaitor);
+	public int getRoomNumbers() { 
+		return allManagedRooms.size();
 	}
 
-	public void leaveRoom(OnlineBean bean) { 
-		threeWaitingTable.remove(bean);
+	public void startToPlay(GameRoomWaitor gameRoomWaitor) {
+		waitingRoom.remove(gameRoomWaitor);
 	}
+
+	public void removeThisRoom(GameRoomWaitor gameRoomWaitor) {
+		allManagedRooms.remove(gameRoomWaitor.getMapId());
+		waitingRoom.remove(gameRoomWaitor.getMapId());
+	}
+
+	public void waitNewPlayer(GameRoomWaitor gameRoomWaitor) throws InterruptedException {
+		waitingRoom.put(gameRoomWaitor);
+	} 
 }

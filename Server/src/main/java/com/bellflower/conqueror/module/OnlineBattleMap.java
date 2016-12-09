@@ -1,13 +1,10 @@
 package com.bellflower.conqueror.module;
 
-import java.util.List;
-
 import org.json.JSONArray;
 
 public class OnlineBattleMap {
 	String id;
-	int playerNum;
-	List<OnlineBean> players;
+	int playerNum; 
 	JSONArray	mapData;
 	public int getPlayerNum() {
 		return playerNum;
@@ -15,16 +12,7 @@ public class OnlineBattleMap {
 
 	public void setPlayerNum(int playerNum) {
 		this.playerNum = playerNum;
-	}
-
-	public List<OnlineBean> getPlayers() {
-		return players;
-	}
-
-	public void setPlayers(List<OnlineBean> players) {
-		this.players = players;
-	}
-
+	} 
 	public String getId() {
 		return id;
 	}

@@ -5,6 +5,8 @@ import javax.annotation.Resource;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.WebSocketSession;
+
+import com.bellflower.conqueror.controller.APPLICATION_CONSTS;
 import com.bellflower.conqueror.module.OnlineBean;
 
 @Service
@@ -15,6 +17,7 @@ public class GameDispatchService {
 	public static final int finding_status_wait = 1;
 	public static final int finding_status_create = 2; 
 	
+	//TODO:: 20000 should be replaced by config
 	public static final int max_player_in_one_server = 20000;
 	static final ConcurrentHashMap<String, WebSocketSession> sessionCache = 
 			new ConcurrentHashMap<>(max_player_in_one_server);
@@ -32,7 +35,7 @@ public class GameDispatchService {
 		roomManager.enterRoom(bean);
 	}
 
-	public void userOffline(WebSocketSession session) { 
+	public void userOffline(WebSocketSession session) throws InterruptedException { 
 		String user_id = (String) session.getAttributes().get("user_id");
 
 		OnlineBean bean = olineUsersCache.get(user_id);
@@ -45,8 +48,13 @@ public class GameDispatchService {
 		this.userOnline(session, me);
 		
 		JSONObject result = new JSONObject(); 
+		result.put("msg_type", APPLICATION_CONSTS.ONLINE_MESSAGE_RESPONSE_TYPE_FIND_COMPONENT.getValue());
 		result.put("status", finding_status_wait);
-		result.put("wait_num", sessionCache.size()); 			
+		result.put("online_users", olineUsersCache.size()); 			
 		return result;
+	}
+
+	public int getOnlineUsers() { 
+		return sessionCache.size();
 	}  
 }

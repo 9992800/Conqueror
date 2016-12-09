@@ -415,11 +415,14 @@ void FindPlayer::onMessage(network::WebSocket* ws, const network::WebSocket::Dat
         std::string msg(data.bytes);
         log("-----------%s---------------", msg.c_str());
         
-        rapidjson::Document msg_d;
-        msg_d.Parse<0>(msg.c_str());
-        if (msg_d.HasParseError()) {
-                CCLOG("GetParseError %u\n",msg_d.GetParseError());
+        picojson::value json_result;
+        std::string error = picojson::parse(json_result, msg);
+        if (error.length() > 0) {
+                CCLOGWARN("---data from game server failed: %s\n",error.c_str());
+                return;
         }
+        
+        picojson::object result = json_result.get<picojson::object>();
 }
 
 void FindPlayer::onClose(network::WebSocket* ws){

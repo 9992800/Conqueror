@@ -3,6 +3,7 @@ package com.bellflower.conqueror.service;
 import java.util.List;
 
 import javax.annotation.Resource;
+
 import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,10 +14,10 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+
 import com.bellflower.conqueror.module.BattleFieldsBasic;
 import com.bellflower.conqueror.module.BattleFieldsMap;
 import com.bellflower.conqueror.module.OnlineBattleMap;
-import com.bellflower.conqueror.module.OnlineBean;
 import com.bellflower.conqueror.module.RandomMap;
 import com.mongodb.WriteResult;
  
@@ -66,11 +67,10 @@ public class BattleFiledService {
 	}
 	
 
-	public OnlineBattleMap createOnlineBattle(List<OnlineBean> bean) {
+	public OnlineBattleMap createOnlineBattle(int p_n) {
 		OnlineBattleMap map = new OnlineBattleMap();
-		map.setPlayerNum(bean.size());
-		map.setPlayers(bean);
-		RandomMap r_m = new RandomMap(bean.size());
+		map.setPlayerNum(p_n);
+		RandomMap r_m = new RandomMap(p_n);
 		map.setMapData(r_m.getCellData());
 		
 		mongoService.insert(map);

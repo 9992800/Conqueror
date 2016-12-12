@@ -136,16 +136,62 @@ bool LevelSelect::init()
 }
 
 void LevelSelect::initMenuSelections(){
+        auto visible_size = Director::getInstance()->getVisibleSize();
+        
+        
+        auto chose_num_back = Sprite::create("level/player_num_sel_back.png");
+        auto num_size = chose_num_back->getContentSize();
+        auto position_num = Vec2(visible_size.width / 2, visible_size.height * 0.55);
+        chose_num_back->setPosition(position_num);
+        this->addChild(chose_num_back, ZORDER_BACK_LAYERS);
+        
+        auto soldier_back = Sprite::create("level/soldier_back.png");
+        soldier_back->setPosition(Vec2(num_size.width / 2,
+                                       num_size.height - soldier_back->getContentSize().height / 2 - 8));
+        chose_num_back->addChild(soldier_back);
+        
+        _levelPlayerNUm = 2;
+        
+        _num_sel_back_grd = Sprite::create("level/sel_num_btn_back.png");
+        auto btn_size = _num_sel_back_grd->getContentSize();
+        Size gap(btn_size.width / 3, btn_size.height / 6);
+        btn_size = btn_size * 0.9;
+        auto pos_1 = Vec2(btn_size / 2 + gap);
+        
+        for (int i = 2; i <= 8; i++){
+                auto sel_num_2 = Button::create("level/sel_num_btn_back_em.png");
+                sel_num_2->setPosition(Vec2(pos_1.x + (i - 2) * btn_size.width, pos_1.y));
+                std::string str = StringUtils::format("%d", i);
+                sel_num_2->setTitleText(str);
+                sel_num_2->setTitleFontSize(42);
+                sel_num_2->addClickEventListener(CC_CALLBACK_1(LevelSelect::btnChosePlayerNum, this, i));
+                chose_num_back->addChild(sel_num_2);
+        }
+        
+        
+        _num_sel_back_grd->setPosition(pos_1);
+        chose_num_back->addChild(_num_sel_back_grd);
+        
+        auto chose_num_header = Sprite::create("level/sel_num_header.png");
+        chose_num_header->setPosition(Vec2(num_size.width / 2,
+                                           num_size.height - chose_num_header->getContentSize().height / 2 + 8));
+        chose_num_back->addChild(chose_num_header);
+        
+        
+
+        
+        
         auto character_back = Sprite::create("level/character_sel_back.png");
         auto size = character_back->getContentSize();
-        auto visible_size = Director::getInstance()->getVisibleSize();
-        auto position = Vec2(size.width, visible_size.height / 2);
+        auto position = Vec2(position_num.x -
+                             num_size.width / 2 - 5
+                             - character_back->getContentSize().width / 2,
+                             position_num.y);
         character_back->setPosition(position);
         this->addChild(character_back, ZORDER_BACK_LAYERS);
         
         PageView* pageView = PageView::create();
         pageView->setContentSize(size);
-//        pageView->setPosition(Vec2(size / 2));
         pageView->setDirection(ui::PageView::Direction::VERTICAL);
         pageView->removeAllItems();
         _curChIdx = 0;
@@ -182,48 +228,6 @@ void LevelSelect::initMenuSelections(){
         character_back->addChild(btn_down);
         
         
-        auto chose_num_back = Sprite::create("level/player_num_sel_back.png");
-        auto num_size = chose_num_back->getContentSize();
-        auto position_num = Vec2(position.x + num_size.width / 2 + 5 + size.width / 2,
-                              position.y);
-        chose_num_back->setPosition(position_num);
-        this->addChild(chose_num_back, ZORDER_BACK_LAYERS);
-        
-        auto soldier_back = Sprite::create("level/soldier_back.png");
-        soldier_back->setPosition(Vec2(num_size.width / 2,
-                                         (num_size.height - soldier_back->getContentSize().height) / 2 + num_size.height / 2));
-        chose_num_back->addChild(soldier_back);
-        
-        _levelPlayerNUm = 2;
-        
-        _num_sel_back_grd = Sprite::create("level/sel_num_btn_back.png");
-        auto btn_size = _num_sel_back_grd->getContentSize();
-        Size gap(btn_size.width / 3, btn_size.height / 4);
-        btn_size = btn_size * 0.9;
-        auto pos_1 = Vec2(btn_size / 2 + gap);
-        
-        for (int i = 2; i <= 8; i++){
-                auto sel_num_2 = Button::create("");
-                sel_num_2->setContentSize(btn_size);
-                sel_num_2->setPosition(Vec2(pos_1.x + (i - 2) * btn_size.width, pos_1.y));
-                std::string str = StringUtils::format("%d", i);
-                sel_num_2->setTitleText(str);
-                sel_num_2->setTitleFontSize(36);
-                sel_num_2->addClickEventListener(CC_CALLBACK_1(LevelSelect::btnChosePlayerNum, this, i));
-                chose_num_back->addChild(sel_num_2);
-        }
-        
-        
-        _num_sel_back_grd->setPosition(pos_1);
-        chose_num_back->addChild(_num_sel_back_grd);
-        
-        auto chose_num_header = Sprite::create("level/sel_num_header.png");
-        chose_num_header->setPosition(Vec2(num_size.width / 2,
-                                      num_size.height - chose_num_header->getContentSize().height / 2));
-        chose_num_back->addChild(chose_num_header);
-        
-        
-        
         
         
         _curColorIdx = 0;
@@ -232,12 +236,11 @@ void LevelSelect::initMenuSelections(){
                                            num_size.width / 2 + 5
                                            + chose_color_back->getContentSize().width / 2,
                                            position_num.y));
-        
-        
         auto color_size = chose_color_back->getContentSize();
-        auto color_idicator = Sprite::create("level/color_idicator.png");
-        color_idicator->setPosition(color_size / 2);
-        chose_color_back->addChild(color_idicator, ZORDER_ITEM_CONTROL);
+        
+//        auto color_idicator = Sprite::create("level/color_idicator.png");
+//        color_idicator->setPosition(color_size / 2);
+//        chose_color_back->addChild(color_idicator, ZORDER_ITEM_CONTROL);
         this->addChild(chose_color_back, ZORDER_BACK_LAYERS);
         
         
@@ -245,7 +248,6 @@ void LevelSelect::initMenuSelections(){
         color_list->setDirection(cocos2d::ui::ScrollView::Direction::VERTICAL);
         color_list->setContentSize(color_size);
         color_list->setScrollBarPositionFromCorner(Vec2(7, 7));
-//        color_list->setItemsMargin(2.0f);
         color_list->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         color_list->setPosition(Vec2(color_size.width / 2 + 10,
                                      color_size.height / 2));
@@ -305,8 +307,8 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         
         auto online_game = MenuItemImage::create("online_battle.png", "online_battle_sel.png",
                               CC_CALLBACK_1(LevelSelect::menuOnlineBattle, this));
-        online_game->setPosition(Vec2(visibleSize.width -  online_game->getContentSize().width / 2,
-                                        visibleSize.height/ 2 ));
+        online_game->setPosition(Vec2(online_game->getContentSize().width,
+                                        visibleSize.height  -  online_game->getContentSize().height / 2 ));
         
         /*
          /////////////////////////////////////////////////////////
@@ -364,6 +366,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
 #pragma mark - button action callback
 
 void LevelSelect::btnChosePlayerNum(Ref* btn, int num){
+        CCLOG("------------%d--------", num);
         Button* sel_btn = ((Button*)btn);
         _levelPlayerNUm = num;
         _num_sel_back_grd->setPosition(sel_btn->getPosition());

@@ -39,7 +39,9 @@ enum{
         key_loading_bar3,
         kLevelLockedTag,
         kMenuGreatWallTag,
-        kMainMenuBackTag
+        kMainMenuBackTag,
+        kSoldierBackTag,
+        kChoseNumBackTag,
 };
 
 enum{
@@ -134,12 +136,12 @@ Size LevelSelect::initCenterMainFrame(Vec2 position_num){
         auto chose_num_back = Sprite::create("level/player_num_sel_back.png");
         auto num_size = chose_num_back->getContentSize();
         chose_num_back->setPosition(position_num);
-        this->addChild(chose_num_back, ZORDER_BACK_LAYERS);
+        this->addChild(chose_num_back, ZORDER_BACK_LAYERS, kChoseNumBackTag);
         
         auto soldier_back = Sprite::create("level/soldier_back.png");
         soldier_back->setPosition(Vec2(num_size.width / 2,
                                        num_size.height - soldier_back->getContentSize().height / 2 - 8));
-        chose_num_back->addChild(soldier_back);
+        chose_num_back->addChild(soldier_back, ZORDER_ITEM_SHOW, kSoldierBackTag);
         
         _levelPlayerNUm = 2;
         
@@ -149,7 +151,7 @@ Size LevelSelect::initCenterMainFrame(Vec2 position_num){
         btn_size = btn_size * 0.9;
         auto pos_1 = Vec2(btn_size / 2 + gap);
         
-        for (int i = 2; i <= 8; i++){
+        for (int i = 2; i <= MAX_PLAYER; i++){
                 auto sel_num_2 = Button::create("level/sel_num_btn_back_em.png");
                 sel_num_2->setPosition(Vec2(pos_1.x + (i - 2) * btn_size.width, pos_1.y));
                 std::string str = StringUtils::format("%d", i);
@@ -160,20 +162,18 @@ Size LevelSelect::initCenterMainFrame(Vec2 position_num){
         }
         
         auto back_size = soldier_back->getContentSize();
-        auto empty_chara = ImageView::create("level/ch_player_samll_e.png");
-        auto empty_chara_size = empty_chara->getContentSize();
-        for (int i = 0; i <= 3; i++){
-                auto empty_chara1 = empty_chara->clone();
-                empty_chara1->setPosition(Vec2(back_size.width / 2 - 0.5 *( 2 * i + 1) * empty_chara_size.width, empty_chara_size.height * 0.6));
-                
-                
-                auto empty_chara2 = empty_chara->clone();
-                empty_chara2->setPosition(Vec2(back_size.width / 2 + 0.5 *( 2 * i + 1) * empty_chara_size.width, empty_chara_size.height * 0.6));
-                
-                soldier_back->addChild(empty_chara1);
-                soldier_back->addChild(empty_chara2);
-        }
         
+                //tips:: default 2 players
+        auto empty_chara_0 = ImageView::create("level/ch_player_samll_0.png");
+        auto empty_chara_size = empty_chara_0->getContentSize();
+        empty_chara_0->setPosition(Vec2(back_size.width / 2 -
+                                        0.5 * empty_chara_size.width, empty_chara_size.height * 0.6));
+        soldier_back->addChild(empty_chara_0);
+        
+        auto empty_chara_1 = ImageView::create("level/ch_player_samll_1.png");;
+        empty_chara_1->setPosition(Vec2(back_size.width / 2 + 0.5 * empty_chara_size.width,
+                                        empty_chara_size.height * 0.6));
+        soldier_back->addChild(empty_chara_1);
         
         _num_sel_back_grd->setPosition(pos_1);
         chose_num_back->addChild(_num_sel_back_grd);
@@ -378,6 +378,23 @@ void LevelSelect::btnChosePlayerNum(Ref* btn, int num){
         Button* sel_btn = ((Button*)btn);
         _levelPlayerNUm = num;
         _num_sel_back_grd->setPosition(sel_btn->getPosition());
+        
+        auto center_back = this->getChildByTag(kChoseNumBackTag);
+        auto soldier_back = center_back->getChildByTag(kSoldierBackTag);
+        soldier_back->removeAllChildren();
+        auto back_size = soldier_back->getContentSize();
+        
+        for (int i = 0; i < num; i++){
+                std::string str = StringUtils::format("level/ch_player_samll_%d.png", i);
+                auto empty_chara = ImageView::create(str);
+                auto empty_chara_size = empty_chara->getContentSize();
+                int  sign = (i % 2 == 0) ? -1 * (i + 1) : i;
+                auto pos = Vec2(back_size.width / 2 + 0.5 * sign
+                                * empty_chara_size.width,
+                                empty_chara_size.height * 0.6);
+                empty_chara->setPosition(pos);
+                soldier_back->addChild(empty_chara);
+        }
 }
 
 void LevelSelect::pageViewEvent(Ref *pSender, PageView::EventType type)
@@ -558,7 +575,7 @@ void LevelSelect::onEnter(){
         int running_p_no = random(2, 4);
         auto cache = AnimationCache::getInstance();
         for (int i = 0; i < running_p_no; i++){
-                int p_i_r = random(0, 1);//TODO::max_player;
+                int p_i_r = random(0, MAX_PLAYER - 1);
                 std::string name = StringUtils::format("level/ch_player_%d.png", p_i_r);
                 auto runner = Sprite::create(name);
                 Vec2 gap = great_wall_size * 0.1;

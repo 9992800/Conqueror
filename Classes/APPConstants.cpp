@@ -89,7 +89,7 @@ GolbalAnimations::~GolbalAnimations(){
 
 void GolbalAnimations::initAnimation(){
         auto frameCache = SpriteFrameCache::getInstance();
-        float frame_delay = 1.f / 25;
+        float frame_delay = 1.f / 24;
         //战士
         Vector<SpriteFrame*> animFrames(12); 
         char str[100] = {0};

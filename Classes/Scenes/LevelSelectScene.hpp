@@ -47,8 +47,12 @@ protected:
         void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
         void btnChosePlayerNum(Ref*, int);
 private:
+        Size initCenterMainFrame(Vec2);
+        void initCharactorSel(Vec2, Size);
+        void initColorSel(Vec2, Size);
+        void initWalls(Sprite*);
         void initButtons(Vec2 center, Size visibleSize);
-        void initMenuSelections();
+        void initMainMenu();
         
 private:
         void onInitialized(bool success)override{

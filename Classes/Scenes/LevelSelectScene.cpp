@@ -103,7 +103,7 @@ bool LevelSelect::init()
         
         this->initButtons(origin, visibleSize);
         
-        this->initMenuSelections();
+        this->initMainMenu();
         
         IAP::setDebug(true);
         IAP::setListener(this);
@@ -131,68 +131,10 @@ bool LevelSelect::init()
         return true;
 }
 
-void LevelSelect::initMenuSelections(){
-        
-        auto frameCache = SpriteFrameCache::getInstance();
-        frameCache->addSpriteFramesWithFile("anim/hanshirun.plist", "anim/hanshirun.png");
-        frameCache->addSpriteFramesWithFile("anim/xunshoushirun.plist", "anim/xunshoushirun.png");
-        
-        
-        Vector<SpriteFrame*> animFrames(12);
-        char str[100] = {0};
-        for(int i = 1; i <= 12; i++){
-                sprintf(str, "renwurun%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "zhanshi_run");
-        
-        animFrames.clear();
-        for (int i = 1; i<= 12; i++){
-                sprintf(str, "xssrun%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
-        
-        auto visible_size = Director::getInstance()->getVisibleSize();
-        Vec2 center = visible_size / 2;
-
-        auto back_ground = Sprite::create("level/level_select_back.png");
-        back_ground->setPosition(center);
-        //城墙及动画选择
-        auto chengqiang = Sprite::create("level/chengqiang.png");
-        auto great_wall_size = chengqiang->getContentSize();
-        chengqiang->setPosition(Vec2(great_wall_size / 2));
-        
-        back_ground->addChild(chengqiang);
-        this->addChild(back_ground, ZORDER_BACK_GROUND);
-        
-        int running_p_no = random(2, 4);
-        auto cache = AnimationCache::getInstance();
-        for (int i = 0; i < running_p_no; i++){
-                int p_i_r = random(0, 1);//TODO::max_player;
-                std::string name = StringUtils::format("level/ch_player_%d.png", p_i_r);
-                auto runner = Sprite::create(name);
-                runner->setPosition(Vec2(great_wall_size.width * 0.1 * i, great_wall_size.height * 0.4));
-                chengqiang->addChild(runner);
-                
-                auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[p_i_r]);
-                run_anim->setRestoreOriginalFrame(true);
-                run_anim->setLoops(2);
-                auto run_action = Animate::create(run_anim);
-                auto move =  MoveBy::create(4.f, Vec2(great_wall_size.width * 0.7, 0));
-                Spawn* p_run = Spawn::create(run_action, FlipX::create(false), move, NULL);
-                Spawn* p_run_back = Spawn::create(run_action, FlipX::create(true) , move->reverse(), NULL);
-                runner->runAction(RepeatForever::create( Sequence::create(p_run, p_run_back, NULL)));
-        }
-        
+Size LevelSelect::initCenterMainFrame(Vec2 position_num){
         //中间的主界面背景
         auto chose_num_back = Sprite::create("level/player_num_sel_back.png");
         auto num_size = chose_num_back->getContentSize();
-        auto position_num = Vec2(visible_size.width / 2, visible_size.height * 0.55);
         chose_num_back->setPosition(position_num);
         this->addChild(chose_num_back, ZORDER_BACK_LAYERS);
         
@@ -243,9 +185,9 @@ void LevelSelect::initMenuSelections(){
                                            num_size.height - chose_num_header->getContentSize().height / 2 + 8));
         chose_num_back->addChild(chose_num_header);
         
-        
-
-        
+        return num_size;
+}
+void LevelSelect::initCharactorSel(Vec2 position_num, Size num_size) {
         //人物选择
         auto character_back = Sprite::create("level/character_sel_back.png");
         auto size = character_back->getContentSize();
@@ -278,11 +220,10 @@ void LevelSelect::initMenuSelections(){
         
         auto btn_down = Button::create("level/arrow_down.png");
         btn_down->setPosition(Vec2(size.width / 2,
-                                 - btn_down->getContentSize().height / 2 - 5));
+                                   - btn_down->getContentSize().height / 2 - 5));
         character_back->addChild(btn_down);
-        
-        
-        
+}
+void LevelSelect::initColorSel(Vec2 position_num, Size num_size){
         //颜色选择
         _curColorIdx = 0;
         auto chose_color_back = Sprite::create("level/chose_color_bck.png");
@@ -292,7 +233,7 @@ void LevelSelect::initMenuSelections(){
                                            position_num.y));
         auto color_size = chose_color_back->getContentSize();
         this->addChild(chose_color_back, ZORDER_BACK_LAYERS);
-
+        
         
         
         PageView* color_list = PageView::create();
@@ -316,14 +257,83 @@ void LevelSelect::initMenuSelections(){
         
         auto color_up = Button::create("level/arrow_up.png");
         color_up->setPosition(Vec2(color_size.width / 2,
-                                 color_size.height + color_up->getContentSize().height / 2 + 5));
+                                   color_size.height + color_up->getContentSize().height / 2 + 5));
         
         chose_color_back->addChild(color_up, ZORDER_ITEM_CONTROL);
         
         auto color_down = Button::create("level/arrow_down.png");
         color_down->setPosition(Vec2(color_size.width / 2,
-                                   - color_down->getContentSize().height / 2 - 5));
+                                     - color_down->getContentSize().height / 2 - 5));
         chose_color_back->addChild(color_down, ZORDER_ITEM_CONTROL);
+}
+
+void LevelSelect::initWalls(Sprite* back_ground){
+        auto frameCache = SpriteFrameCache::getInstance();
+        frameCache->addSpriteFramesWithFile("anim/hanshirun.plist", "anim/hanshirun.png");
+        frameCache->addSpriteFramesWithFile("anim/xunshoushirun.plist", "anim/xunshoushirun.png");
+        
+        
+        Vector<SpriteFrame*> animFrames(12);
+        char str[100] = {0};
+        for(int i = 1; i <= 12; i++){
+                sprintf(str, "renwurun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "zhanshi_run");
+        
+        animFrames.clear();
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
+        
+        auto chengqiang = Sprite::create("level/chengqiang.png");
+        auto great_wall_size = chengqiang->getContentSize();
+        chengqiang->setPosition(Vec2(great_wall_size / 2));
+        
+        back_ground->addChild(chengqiang);
+        
+        int running_p_no = random(2, 4);
+        auto cache = AnimationCache::getInstance();
+        for (int i = 0; i < running_p_no; i++){
+                int p_i_r = random(0, 1);//TODO::max_player;
+                std::string name = StringUtils::format("level/ch_player_%d.png", p_i_r);
+                auto runner = Sprite::create(name);
+                runner->setPosition(Vec2(great_wall_size.width * 0.1 * i, great_wall_size.height * 0.4));
+                chengqiang->addChild(runner);
+                
+                auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[p_i_r]);
+                run_anim->setRestoreOriginalFrame(true);
+                run_anim->setLoops(2);
+                auto run_action = Animate::create(run_anim);
+                auto move =  MoveBy::create(4.f, Vec2(great_wall_size.width * 0.7, 0));
+                Spawn* p_run = Spawn::create(run_action, FlipX::create(false), move, NULL);
+                Spawn* p_run_back = Spawn::create(run_action, FlipX::create(true) , move->reverse(), NULL);
+                runner->runAction(RepeatForever::create( Sequence::create(p_run, p_run_back, NULL)));
+        }
+}
+
+void LevelSelect::initMainMenu(){
+        
+        auto visible_size = Director::getInstance()->getVisibleSize();
+        Vec2 center = visible_size / 2;
+
+        auto back_ground = Sprite::create("level/level_select_back.png");
+        back_ground->setPosition(center);
+        this->addChild(back_ground, ZORDER_BACK_GROUND);
+        
+        
+        auto position_num = Vec2(visible_size.width / 2, visible_size.height * 0.55);
+        Size num_size = this->initCenterMainFrame(position_num);
+        this->initCharactorSel(position_num, num_size);
+        this->initColorSel(position_num, num_size);
+        this->initWalls(back_ground);
         
 }
 

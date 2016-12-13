@@ -13,6 +13,7 @@
 #include "GamePayUtil.hpp"
 #include "PopUpOkCancelDialog.hpp"
 #include "LevelSelectScene.hpp"
+#include "APPConstants.hpp"
 
 #pragma makr - init scene
 Scene* Splash::createScene()
@@ -54,6 +55,8 @@ bool Splash::init()
         auto label = Label::createWithTTF("Loading", "fonts/Marker Felt.ttf", 24);
         label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
         this->addChild(label, 3);
+        
+        GolbalAnimations::getInstance()->initAnimation();
         
         return true;
 }

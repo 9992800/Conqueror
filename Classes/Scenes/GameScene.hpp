@@ -64,7 +64,6 @@ private:
         void loadMoNv();
         void loadDaoZei();
         void loadFightCloud();
-        void loadFightResult();
         void loadDiceResultLayer();
         void initMapSize(GameData*);
         

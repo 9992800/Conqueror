@@ -31,3 +31,287 @@ std::string ANIM_NAME_FIGHT_RUN[]        = {"zhanshi_run", "xunshoushi_run", "xu
 
 std::string ANIM_NAME_FIGHT_STAND[]      = {"zhanshi_sd", "xunshoushi_sd", "xunshoushi_sd", "xunshoushi_sd",
         "xunshoushi_sd", "xunshoushi_sd", "xunshoushi_sd", "xunshoushi_sd"};
+
+
+
+
+static GolbalAnimations* s_SharedBean;
+
+GolbalAnimations* GolbalAnimations::getInstance()
+{
+        if (!s_SharedBean){
+                s_SharedBean = new (std::nothrow) GolbalAnimations();
+                CCASSERT(s_SharedBean, "FATAL: Not enough memory");
+                s_SharedBean->init();
+        }
+        
+        return s_SharedBean;
+}
+
+bool GolbalAnimations::init(){
+        return true;
+}
+
+GolbalAnimations::GolbalAnimations(){        
+        
+        auto frameCache = SpriteFrameCache::getInstance();
+        frameCache->addSpriteFramesWithFile("anim/hanshirun.plist", "anim/hanshirun.png");
+        frameCache->addSpriteFramesWithFile("anim/hanshisd.plist", "anim/hanshisd.png");
+        frameCache->addSpriteFramesWithFile("anim/xunshoushirun.plist", "anim/xunshoushirun.png");
+        frameCache->addSpriteFramesWithFile("anim/xunshoushisd.plist", "anim/xunshoushisd.png");
+        frameCache->addSpriteFramesWithFile("anim/yanwu.plist", "anim/yanwu.png");
+        frameCache->addSpriteFramesWithFile("anim/zssl.plist", "anim/zssl.png");
+        frameCache->addSpriteFramesWithFile("anim/XX.plist", "anim/XX.png");
+        frameCache->addSpriteFramesWithFile("anim/xssHIT1.plist", "anim/xssHIT1.png");
+        frameCache->addSpriteFramesWithFile("anim/xssHIT2.plist", "anim/xssHIT2.png");
+        frameCache->addSpriteFramesWithFile("anim/zhanshiHIT1.plist", "anim/zhanshiHIT1.png");
+        frameCache->addSpriteFramesWithFile("anim/zhanshiHIT2.plist", "anim/zhanshiHIT2.png");
+        frameCache->addSpriteFramesWithFile("anim/dice_colors.plist", "anim/dice_colors.png");
+}
+
+GolbalAnimations::~GolbalAnimations(){
+        
+        
+        auto frameCache = SpriteFrameCache::getInstance();
+        frameCache->removeSpriteFramesFromFile("anim/hanshirun.plist");
+        frameCache->removeSpriteFramesFromFile("anim/hanshisd.plist");
+        frameCache->removeSpriteFramesFromFile("anim/xunshoushirun.plist");
+        frameCache->removeSpriteFramesFromFile("anim/xunshoushisd.plist");
+        frameCache->removeSpriteFramesFromFile("anim/yanwu.plist");
+        frameCache->removeSpriteFramesFromFile("anim/zssl.plist");
+        frameCache->removeSpriteFramesFromFile("anim/XX.plist");
+        frameCache->removeSpriteFramesFromFile("anim/xssHIT1.plist");
+        frameCache->removeSpriteFramesFromFile("anim/xssHIT2.plist");
+        frameCache->removeSpriteFramesFromFile("anim/zhanshiHIT1.plist");
+        frameCache->removeSpriteFramesFromFile("anim/zhanshiHIT2.plist");
+        frameCache->removeSpriteFramesFromFile("anim/dice_colors.plist");
+}
+
+void GolbalAnimations::initAnimation(){
+        auto frameCache = SpriteFrameCache::getInstance();
+        //战士
+        Vector<SpriteFrame*> animFrames(12);
+        Vector<SpriteFrame*> animFrames_back(12);
+        char str[100] = {0};
+        for(int i = 1; i <= 12; i++){
+                sprintf(str, "renwurun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "zhanshi_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "renwu_sd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "zhanshi_sd");
+        
+        
+        //驯兽师
+        animFrames.clear();
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "xsssd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
+        
+        
+        //骑士
+        animFrames.clear();
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "xsssd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
+        
+        
+        //弓箭手
+        animFrames.clear();
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "xsssd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
+        
+        //炮手
+        animFrames.clear();
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "xsssd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
+        
+        
+        //兽人
+        animFrames.clear();
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "xsssd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
+        
+        //魔女
+        animFrames.clear();
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "xsssd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
+        
+        
+        //盗贼
+        animFrames.clear();
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "xsssd%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
+        
+        
+        //战斗云
+        animFrames.clear();
+        for (int i = 1; i<= 26; i++){
+                sprintf(str, "yw%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "finght_cloud");
+        
+        
+        //地盘显示战斗结果动画
+        animFrames.clear();
+        for (int i = 1; i<= 9; i++){
+                sprintf(str, "XX%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "finght_occupay");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i <= 14; i++){
+                sprintf(str, "zhanshi_HIT%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "zhangshi_hit1");
+        
+        animFrames.clear();
+        for (int i = 1; i <= 14; i++){
+                sprintf(str, "zhanshi_HIT2%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "zhangshi_hit2");
+        
+        animFrames.clear();
+        for (int i = 1; i <= 14; i++){
+                sprintf(str, "xunshoushi_HIT%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_hit1");
+        
+        animFrames.clear();
+        for (int i = 1; i <= 14; i++){
+                sprintf(str, "xunshoushi_HIT2%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_hit2");
+}

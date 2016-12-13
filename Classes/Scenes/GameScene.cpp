@@ -43,20 +43,6 @@ Scene* GameScene::createScene(int gameLevel)
 
 GameScene::~GameScene(){
         _theGameLogic->release();
-        
-        auto frameCache = SpriteFrameCache::getInstance();
-        frameCache->removeSpriteFramesFromFile("anim/hanshirun.plist");
-        frameCache->removeSpriteFramesFromFile("anim/hanshisd.plist");
-        frameCache->removeSpriteFramesFromFile("anim/xunshoushirun.plist");
-        frameCache->removeSpriteFramesFromFile("anim/xunshoushisd.plist");
-        frameCache->removeSpriteFramesFromFile("anim/yanwu.plist");
-        frameCache->removeSpriteFramesFromFile("anim/zssl.plist");
-        frameCache->removeSpriteFramesFromFile("anim/XX.plist");
-        frameCache->removeSpriteFramesFromFile("anim/xssHIT1.plist");
-        frameCache->removeSpriteFramesFromFile("anim/xssHIT2.plist");
-        frameCache->removeSpriteFramesFromFile("anim/zhanshiHIT1.plist");
-        frameCache->removeSpriteFramesFromFile("anim/zhanshiHIT2.plist");
-        frameCache->removeSpriteFramesFromFile("anim/dice_colors.plist");
 }
 
 
@@ -65,20 +51,6 @@ bool GameScene::init()
         if (!Layer::init()){
                 return false;
         }
-        
-        auto frameCache = SpriteFrameCache::getInstance();
-        frameCache->addSpriteFramesWithFile("anim/hanshirun.plist", "anim/hanshirun.png");
-        frameCache->addSpriteFramesWithFile("anim/hanshisd.plist", "anim/hanshisd.png");
-        frameCache->addSpriteFramesWithFile("anim/xunshoushirun.plist", "anim/xunshoushirun.png");
-        frameCache->addSpriteFramesWithFile("anim/xunshoushisd.plist", "anim/xunshoushisd.png");
-        frameCache->addSpriteFramesWithFile("anim/yanwu.plist", "anim/yanwu.png");
-        frameCache->addSpriteFramesWithFile("anim/zssl.plist", "anim/zssl.png");
-        frameCache->addSpriteFramesWithFile("anim/XX.plist", "anim/XX.png");
-        frameCache->addSpriteFramesWithFile("anim/xssHIT1.plist", "anim/xssHIT1.png");
-        frameCache->addSpriteFramesWithFile("anim/xssHIT2.plist", "anim/xssHIT2.png");
-        frameCache->addSpriteFramesWithFile("anim/zhanshiHIT1.plist", "anim/zhanshiHIT1.png");
-        frameCache->addSpriteFramesWithFile("anim/zhanshiHIT2.plist", "anim/zhanshiHIT2.png");
-        frameCache->addSpriteFramesWithFile("anim/dice_colors.plist", "anim/dice_colors.png");
         
         this->initMapLayer();
         
@@ -177,27 +149,6 @@ void GameScene::loadZhanshi(){
         
         auto frameCache = SpriteFrameCache::getInstance();
         
-        Vector<SpriteFrame*> animFrames(12);
-        Vector<SpriteFrame*> animFrames_back(12);
-        char str[100] = {0};
-        for(int i = 1; i <= 12; i++){
-                sprintf(str, "renwurun%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "zhanshi_run");
-        
-        
-        animFrames.clear();
-        for (int i = 1; i<= 20; i++){
-                sprintf(str, "renwu_sd%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "zhanshi_sd");
-        
         auto frame = frameCache->getSpriteFrameByName("renwurun0001.png");
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto zhanshi = Sprite::create();
@@ -210,29 +161,7 @@ void GameScene::loadZhanshi(){
 
 void GameScene::loadXunShouShi(){
         
-        auto frameCache = SpriteFrameCache::getInstance();
-        
-        Vector<SpriteFrame*> animFrames(12);
-        char str[100] = {0};
-        
-        for (int i = 1; i<= 12; i++){
-                sprintf(str, "xssrun%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
-        
-        
-        animFrames.clear();
-        for (int i = 1; i<= 20; i++){
-                sprintf(str, "xsssd%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
-                 
+        auto frameCache = SpriteFrameCache::getInstance();                  
         auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto xunshoushi = Sprite::create();
@@ -247,26 +176,7 @@ void GameScene::loadQiShi(){
         
         auto frameCache = SpriteFrameCache::getInstance();
         
-        Vector<SpriteFrame*> animFrames(12);
-        char str[100] = {0};
         
-        for (int i = 1; i<= 12; i++){
-                sprintf(str, "xssrun%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
-        
-        
-        animFrames.clear();
-        for (int i = 1; i<= 20; i++){
-                sprintf(str, "xsssd%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
         
         auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
@@ -280,29 +190,7 @@ void GameScene::loadQiShi(){
 
 void GameScene::loadGongJianShou(){
         
-        auto frameCache = SpriteFrameCache::getInstance();
-        
-        Vector<SpriteFrame*> animFrames(12);
-        char str[100] = {0};
-        
-        for (int i = 1; i<= 12; i++){
-                sprintf(str, "xssrun%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
-        
-        
-        animFrames.clear();
-        for (int i = 1; i<= 20; i++){
-                sprintf(str, "xsssd%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
-        
+        auto frameCache = SpriteFrameCache::getInstance();         
         auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto xunshoushi = Sprite::create();
@@ -315,29 +203,7 @@ void GameScene::loadGongJianShou(){
 
 void GameScene::loadPaoShou(){
         
-        auto frameCache = SpriteFrameCache::getInstance();
-        
-        Vector<SpriteFrame*> animFrames(12);
-        char str[100] = {0};
-        
-        for (int i = 1; i<= 12; i++){
-                sprintf(str, "xssrun%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
-        
-        
-        animFrames.clear();
-        for (int i = 1; i<= 20; i++){
-                sprintf(str, "xsssd%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
-        
+        auto frameCache = SpriteFrameCache::getInstance(); 
         auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto xunshoushi = Sprite::create();
@@ -350,29 +216,7 @@ void GameScene::loadPaoShou(){
 
 void GameScene::loadShouRen(){
         
-        auto frameCache = SpriteFrameCache::getInstance();
-        
-        Vector<SpriteFrame*> animFrames(12);
-        char str[100] = {0};
-        
-        for (int i = 1; i<= 12; i++){
-                sprintf(str, "xssrun%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
-        
-        
-        animFrames.clear();
-        for (int i = 1; i<= 20; i++){
-                sprintf(str, "xsssd%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
-        
+        auto frameCache = SpriteFrameCache::getInstance();         
         auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto xunshoushi = Sprite::create();
@@ -385,29 +229,7 @@ void GameScene::loadShouRen(){
 
 void GameScene::loadMoNv(){
         
-        auto frameCache = SpriteFrameCache::getInstance();
-        
-        Vector<SpriteFrame*> animFrames(12);
-        char str[100] = {0};
-        
-        for (int i = 1; i<= 12; i++){
-                sprintf(str, "xssrun%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
-        
-        
-        animFrames.clear();
-        for (int i = 1; i<= 20; i++){
-                sprintf(str, "xsssd%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
-        
+        auto frameCache = SpriteFrameCache::getInstance();         
         auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto xunshoushi = Sprite::create();
@@ -420,29 +242,7 @@ void GameScene::loadMoNv(){
 
 void GameScene::loadDaoZei(){
         
-        auto frameCache = SpriteFrameCache::getInstance();
-        
-        Vector<SpriteFrame*> animFrames(12);
-        char str[100] = {0};
-        
-        for (int i = 1; i<= 12; i++){
-                sprintf(str, "xssrun%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
-        
-        
-        animFrames.clear();
-        for (int i = 1; i<= 20; i++){
-                sprintf(str, "xsssd%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
-        
+        auto frameCache = SpriteFrameCache::getInstance();         
         auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
                 auto xunshoushi = Sprite::create();
@@ -457,78 +257,12 @@ void GameScene::loadFightCloud(){
         
         auto frameCache = SpriteFrameCache::getInstance();
         
-        Vector<SpriteFrame*> animFrames(26);
-        char str[100] = {0};
-        
-        for (int i = 1; i<= 26; i++){
-                sprintf(str, "yw%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "finght_cloud");
-        
         auto frame = frameCache->getSpriteFrameByName("yw0001.png");
         auto xingyun = Sprite::create();
         xingyun->setSpriteFrame(frame);
         _allFightingCharacters[FIGHT_ANIM_TYPE_XINYUN][0] = xingyun;
         xingyun->setVisible(false);
         _animationLayer->addChild(xingyun);
-}
-
-void GameScene::loadFightResult(){
-        auto frameCache = SpriteFrameCache::getInstance();
-        
-        Vector<SpriteFrame*> animFrames(9);
-        char str[100] = {0};
-        
-        for (int i = 1; i<= 9; i++){
-                sprintf(str, "XX%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "finght_occupay");
-        
-//        auto frame = frameCache->getSpriteFrameByName("XX0001.png");
-//        auto fire = Sprite::create();
-//        fire->setSpriteFrame(frame);
-        
-        animFrames.clear();
-        for (int i = 1; i <= 14; i++){
-                sprintf(str, "zhanshi_HIT%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "zhangshi_hit1");
-        
-        animFrames.clear();
-        for (int i = 1; i <= 14; i++){
-                sprintf(str, "zhanshi_HIT2%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "zhangshi_hit2");
-        
-        animFrames.clear();
-        for (int i = 1; i <= 14; i++){
-                sprintf(str, "xunshoushi_HIT%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_hit1");
-        
-        animFrames.clear();
-        for (int i = 1; i <= 14; i++){
-                sprintf(str, "xunshoushi_HIT2%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_hit2");
 }
 
 void GameScene::loadDiceResultLayer(){
@@ -580,9 +314,7 @@ void GameScene::initAnimationLayer(){
         
         this->loadDaoZei();
         
-        this->loadFightCloud();
-        
-        this->loadFightResult();
+        this->loadFightCloud(); 
         
 }
 #pragma mark - touch and menu event

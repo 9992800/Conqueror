@@ -17,4 +17,15 @@ extern std::string ANIM_NAME_FIGHT_STAND[];
 extern Vec2 invader_pos[];
 extern Vec2 keeper_pos[];
 extern std::string DICE_PIC_NAME_STR[8][6];
+
+
+class GolbalAnimations:public Ref{
+public:
+        static GolbalAnimations* getInstance();
+        void initAnimation();
+protected:
+        GolbalAnimations();
+        ~GolbalAnimations();
+        bool init();
+};
 #endif /* APPConstants_hpp */

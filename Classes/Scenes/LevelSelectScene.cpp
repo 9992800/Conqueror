@@ -38,6 +38,8 @@ enum{
         key_loading_bar2,
         key_loading_bar3,
         kLevelLockedTag,
+        kMenuGreatWallTag,
+        kMainMenuBackTag
 };
 
 enum{
@@ -86,10 +88,6 @@ Scene* LevelSelect::createScene()
 }
 
 LevelSelect::~LevelSelect(){
-        
-        auto frameCache = SpriteFrameCache::getInstance();
-        frameCache->removeSpriteFramesFromFile("anim/hanshirun.plist");
-        frameCache->removeSpriteFramesFromFile("anim/xunshoushirun.plist");
 }
 
 bool LevelSelect::init()
@@ -268,36 +266,11 @@ void LevelSelect::initColorSel(Vec2 position_num, Size num_size){
 }
 
 void LevelSelect::initWalls(Sprite* back_ground){
-        auto frameCache = SpriteFrameCache::getInstance();
-        frameCache->addSpriteFramesWithFile("anim/hanshirun.plist", "anim/hanshirun.png");
-        frameCache->addSpriteFramesWithFile("anim/xunshoushirun.plist", "anim/xunshoushirun.png");
-        
-        
-        Vector<SpriteFrame*> animFrames(12);
-        char str[100] = {0};
-        for(int i = 1; i <= 12; i++){
-                sprintf(str, "renwurun%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "zhanshi_run");
-        
-        animFrames.clear();
-        for (int i = 1; i<= 12; i++){
-                sprintf(str, "xssrun%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
-        
-        
         auto chengqiang = Sprite::create("level/chengqiang.png");
         auto great_wall_size = chengqiang->getContentSize();
         chengqiang->setPosition(Vec2(great_wall_size / 2));
         
-        back_ground->addChild(chengqiang);
+        back_ground->addChild(chengqiang, ZORDER_BACK_LAYERS, kMenuGreatWallTag);
         
         int running_p_no = random(2, 4);
         auto cache = AnimationCache::getInstance();
@@ -310,9 +283,8 @@ void LevelSelect::initWalls(Sprite* back_ground){
                 
                 auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[p_i_r]);
                 run_anim->setRestoreOriginalFrame(true);
-                run_anim->setLoops(2);
                 auto run_action = Animate::create(run_anim);
-                auto move =  MoveBy::create(4.f, Vec2(great_wall_size.width * 0.7, 0));
+                auto move =  MoveBy::create(2.f, Vec2(great_wall_size.width * 0.7, 0));
                 Spawn* p_run = Spawn::create(run_action, FlipX::create(false), move, NULL);
                 Spawn* p_run_back = Spawn::create(run_action, FlipX::create(true) , move->reverse(), NULL);
                 runner->runAction(RepeatForever::create( Sequence::create(p_run, p_run_back, NULL)));
@@ -326,7 +298,7 @@ void LevelSelect::initMainMenu(){
 
         auto back_ground = Sprite::create("level/level_select_back.png");
         back_ground->setPosition(center);
-        this->addChild(back_ground, ZORDER_BACK_GROUND);
+        this->addChild(back_ground, ZORDER_BACK_GROUND, kMainMenuBackTag);
         
         
         auto position_num = Vec2(visible_size.width / 2, visible_size.height * 0.55);
@@ -613,6 +585,12 @@ void LevelSelect::onExit(){
         _count = 0;
         unscheduleUpdate();
         AsyncTaskPool::getInstance()->stopTasks(AsyncTaskPool::TaskType::TASK_IO);
+        auto back_layer = this->getChildByTag(kMainMenuBackTag);
+        auto the_wall = back_layer->getChildByTag(kMenuGreatWallTag);
+        Vector<Node*> runners = the_wall->getChildren();
+        for (Vector<Node*>::iterator it = runners.begin(); it != runners.end(); ++it){
+                (*it)->stopAllActions();
+        }
 }
 
 

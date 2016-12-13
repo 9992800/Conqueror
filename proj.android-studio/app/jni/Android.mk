@@ -18,6 +18,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += sdkbox
 
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/AppDelegate.cpp \
+                   ../../../Classes/APPConstants.cpp \
                    ../../../Classes/Scenes/SplashScene.cpp \
                    ../../../Classes/Scenes/StartingScene.cpp \
                    ../../../Classes/Scenes/LevelSelectScene.cpp \

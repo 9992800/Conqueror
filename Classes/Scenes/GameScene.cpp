@@ -32,11 +32,13 @@ enum{
 
 
 #pragma mark - constructor
-Scene* GameScene::createScene(int gameLevel)
+Scene* GameScene::createScene(int gameLevel, int charactorIdx, int colorIdx)
 {
         auto scene = Scene::create();
-        auto layer = GameScene::create(gameLevel);
-        
+        _playerNumber = gameLevel;
+        _charactorIdx = charactorIdx;
+        _colorIdx = colorIdx;
+        auto layer = GameScene::create();
         scene->addChild(layer); 
         return scene;
 }

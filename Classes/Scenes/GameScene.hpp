@@ -19,13 +19,12 @@ class GameScene : public cocos2d::Layer
 {
         
 public:
-        static Scene* createScene(int gameLevel);
+        static Scene* createScene(int gameLevel, int charactorIdx = 0, int colorIdx = 0);
         virtual bool init() override;
-        CREATE_FUNC2(GameScene, int, level);
-        GameScene(int level):_isMoved(false),
+        CREATE_FUNC(GameScene);
+        GameScene():_isMoved(false),
         _isPalyingAnim(false),
-        _gameStatus(GAME_STATUS_INIT),
-        _playerNumber(level){
+        _gameStatus(GAME_STATUS_INIT){
         }     
         ~GameScene();
         
@@ -73,7 +72,7 @@ private:
         void WinnerBack(FightResultData*, CallFunc*);
         void ShowResultData(FightResultData*);
 private:
-        int             _playerNumber;
+        static int      _playerNumber, _charactorIdx, _colorIdx;
         Layer*          _controlLayer;
         Layer*          _diceResultLayer;
         Sprite*         _animationLayer;

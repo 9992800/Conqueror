@@ -71,7 +71,7 @@ private:
         
 private:
         int             _count;
-        int             _levelPlayerNUm;
+        int             _levelPlayerNum;
         int             _coinsNum;
         int             _dicesNum;
         

@@ -143,7 +143,7 @@ Size LevelSelect::initCenterMainFrame(Vec2 position_num){
                                        num_size.height - soldier_back->getContentSize().height / 2 - 8));
         chose_num_back->addChild(soldier_back, ZORDER_ITEM_SHOW, kSoldierBackTag);
         
-        _levelPlayerNUm = 2;
+        _levelPlayerNum = 2;
         
         _num_sel_back_grd = Sprite::create("level/sel_num_btn_back.png");
         auto btn_size = _num_sel_back_grd->getContentSize();
@@ -207,6 +207,7 @@ void LevelSelect::initCharactorSel(Vec2 position_num, Size num_size) {
                 ch->setPosition(Vec2(size / 2));
                 pageView->insertCustomItem(ch, i);
         }
+        pageView->setTag(1);
         pageView->addEventListener(CC_CALLBACK_2(LevelSelect::pageViewEvent, this));
         character_back->addChild(pageView);
         
@@ -249,6 +250,8 @@ void LevelSelect::initColorSel(Vec2 position_num, Size num_size){
         
         color_list->setContentSize(Size(width, color_size.height));
         color_list->setCurrentPageIndex(0);
+        
+        color_list->setTag(2);
         color_list->addEventListener(CC_CALLBACK_2(LevelSelect::pageViewEvent, this));
         color_list->setPosition(Vec2((color_size - color_list->getContentSize()) / 2));
         chose_color_back->addChild(color_list);
@@ -376,7 +379,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
 void LevelSelect::btnChosePlayerNum(Ref* btn, int num){
         CCLOG("------------%d--------", num);
         Button* sel_btn = ((Button*)btn);
-        _levelPlayerNUm = num;
+        _levelPlayerNum = num;
         _num_sel_back_grd->setPosition(sel_btn->getPosition());
         
         auto center_back = this->getChildByTag(kChoseNumBackTag);
@@ -399,22 +402,13 @@ void LevelSelect::btnChosePlayerNum(Ref* btn, int num){
 
 void LevelSelect::pageViewEvent(Ref *pSender, PageView::EventType type)
 {
+        PageView* pageView = dynamic_cast<PageView*>(pSender);
         
-//                ch_player_samll_0.png
-//                ch_player_samll_1.png
-
-        switch (type)
-        {
-                case PageView::EventType::TURNING:
-                {
-                PageView* pageView = dynamic_cast<PageView*>(pSender);
-                
-                std::string str = StringUtils::format("page = %ld", static_cast<long>(pageView->getCurrentPageIndex() + 1));
-                }
-                break;
-                
-                default:
-                break;
+        CCLOGWARN("log:%zd tag(%d)", pageView->getCurrentPageIndex(), pageView->getTag());
+        if ( 1 == pageView->getTag()){
+                _curChIdx = (int)pageView->getCurrentPageIndex();
+        }else if (2 == pageView->getTag()){
+                _curColorIdx = (int)pageView->getCurrentPageIndex();
         }
 }
 
@@ -424,7 +418,7 @@ void LevelSelect::menuOnlineBattle(Ref* btn){
 }
 void LevelSelect::menuStartGame(Ref* btn){
         
-        auto scene = GameScene::createScene(_levelPlayerNUm);
+        auto scene = GameScene::createScene(_levelPlayerNum);
         Director::getInstance()->pushScene(scene);
 }
 

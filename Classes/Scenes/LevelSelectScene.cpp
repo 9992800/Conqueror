@@ -181,7 +181,7 @@ Size LevelSelect::initCenterMainFrame(Vec2 position_num){
         auto chose_num_header = Sprite::create("level/sel_num_header.png");
         chose_num_header->setPosition(Vec2(num_size.width / 2,
                                            num_size.height - chose_num_header->getContentSize().height / 2 + 8));
-        chose_num_back->addChild(chose_num_header);
+        chose_num_back->addChild(chose_num_header, ZORDER_ITEM_SHOW);
         
         return num_size;
 }

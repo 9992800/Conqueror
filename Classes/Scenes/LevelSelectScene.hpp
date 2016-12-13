@@ -27,6 +27,7 @@ public:
         static Scene* createScene();
         virtual bool init() override;
         CREATE_FUNC(LevelSelect);
+        ~LevelSelect();
         
         void onEnter() override;
         void update(float delta)override;

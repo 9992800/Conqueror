@@ -2,6 +2,7 @@
 #define __APPMACROS_H__
 
 #include "cocos2d.h"
+#include "APPConstants.hpp"
 
 typedef struct tagResource
 {

@@ -85,6 +85,13 @@ Scene* LevelSelect::createScene()
         return scene;
 }
 
+LevelSelect::~LevelSelect(){
+        
+        auto frameCache = SpriteFrameCache::getInstance();
+        frameCache->removeSpriteFramesFromFile("anim/hanshirun.plist");
+        frameCache->removeSpriteFramesFromFile("anim/xunshoushirun.plist");
+}
+
 bool LevelSelect::init()
 {
         if (!Layer::init()){
@@ -93,17 +100,6 @@ bool LevelSelect::init()
         
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
-        Vec2 center = origin + visibleSize / 2;
-        
-        auto back_ground = Sprite::create("level/level_select_back.png");
-        back_ground->setPosition(center);
-        
-        auto chengqiang = Sprite::create("level/chengqiang.png");
-        auto size = chengqiang->getContentSize();
-        chengqiang->setPosition(Vec2(size / 2));
-        
-        back_ground->addChild(chengqiang);
-        this->addChild(back_ground, ZORDER_BACK_GROUND);
         
         this->initButtons(origin, visibleSize);
         
@@ -136,9 +132,64 @@ bool LevelSelect::init()
 }
 
 void LevelSelect::initMenuSelections(){
+        
+        auto frameCache = SpriteFrameCache::getInstance();
+        frameCache->addSpriteFramesWithFile("anim/hanshirun.plist", "anim/hanshirun.png");
+        frameCache->addSpriteFramesWithFile("anim/xunshoushirun.plist", "anim/xunshoushirun.png");
+        
+        
+        Vector<SpriteFrame*> animFrames(12);
+        char str[100] = {0};
+        for(int i = 1; i <= 12; i++){
+                sprintf(str, "renwurun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "zhanshi_run");
+        
+        animFrames.clear();
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "xssrun%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
+        
         auto visible_size = Director::getInstance()->getVisibleSize();
+        Vec2 center = visible_size / 2;
+
+        auto back_ground = Sprite::create("level/level_select_back.png");
+        back_ground->setPosition(center);
+        //城墙及动画选择
+        auto chengqiang = Sprite::create("level/chengqiang.png");
+        auto great_wall_size = chengqiang->getContentSize();
+        chengqiang->setPosition(Vec2(great_wall_size / 2));
         
+        back_ground->addChild(chengqiang);
+        this->addChild(back_ground, ZORDER_BACK_GROUND);
         
+        int running_p_no = random(2, 4);
+        auto cache = AnimationCache::getInstance();
+        for (int i = 0; i < running_p_no; i++){
+                int p_i_r = random(0, 1);//TODO::max_player;
+                std::string name = StringUtils::format("level/ch_player_%d.png", p_i_r);
+                auto runner = Sprite::create(name);
+                runner->setPosition(Vec2(great_wall_size.width * 0.1 * i, great_wall_size.height * 0.4));
+                chengqiang->addChild(runner);
+                
+                auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[p_i_r]);
+                run_anim->setRestoreOriginalFrame(true);
+                run_anim->setLoops(2);
+                auto run_action = Animate::create(run_anim);
+                auto move =  MoveBy::create(4.f, Vec2(great_wall_size.width * 0.7, 0));
+                Spawn* p_run = Spawn::create(run_action, FlipX::create(false), move, NULL);
+                Spawn* p_run_back = Spawn::create(run_action, FlipX::create(true) , move->reverse(), NULL);
+                runner->runAction(RepeatForever::create( Sequence::create(p_run, p_run_back, NULL)));
+        }
+        
+        //中间的主界面背景
         auto chose_num_back = Sprite::create("level/player_num_sel_back.png");
         auto num_size = chose_num_back->getContentSize();
         auto position_num = Vec2(visible_size.width / 2, visible_size.height * 0.55);
@@ -168,6 +219,21 @@ void LevelSelect::initMenuSelections(){
                 chose_num_back->addChild(sel_num_2);
         }
         
+        auto back_size = soldier_back->getContentSize();
+        auto empty_chara = ImageView::create("level/ch_player_samll_e.png");
+        auto empty_chara_size = empty_chara->getContentSize();
+        for (int i = 0; i <= 3; i++){
+                auto empty_chara1 = empty_chara->clone();
+                empty_chara1->setPosition(Vec2(back_size.width / 2 - 0.5 *( 2 * i + 1) * empty_chara_size.width, empty_chara_size.height * 0.6));
+                
+                
+                auto empty_chara2 = empty_chara->clone();
+                empty_chara2->setPosition(Vec2(back_size.width / 2 + 0.5 *( 2 * i + 1) * empty_chara_size.width, empty_chara_size.height * 0.6));
+                
+                soldier_back->addChild(empty_chara1);
+                soldier_back->addChild(empty_chara2);
+        }
+        
         
         _num_sel_back_grd->setPosition(pos_1);
         chose_num_back->addChild(_num_sel_back_grd);
@@ -180,7 +246,7 @@ void LevelSelect::initMenuSelections(){
         
 
         
-        
+        //人物选择
         auto character_back = Sprite::create("level/character_sel_back.png");
         auto size = character_back->getContentSize();
         auto position = Vec2(position_num.x -
@@ -195,8 +261,7 @@ void LevelSelect::initMenuSelections(){
         pageView->setDirection(ui::PageView::Direction::VERTICAL);
         pageView->removeAllItems();
         _curChIdx = 0;
-        int charactor_num = 2;
-        for (int i = 0; i < charactor_num; i++){
+        for (int i = 0; i < MAX_PLAYER; i++){
                 std::string name = StringUtils::format("level/ch_player_%d.png", i);
                 auto ch = ImageView::create(name);
                 ch->setPosition(Vec2(size / 2));
@@ -208,28 +273,17 @@ void LevelSelect::initMenuSelections(){
         auto btn_up = Button::create("level/arrow_up.png");
         btn_up->setPosition(Vec2(size.width / 2,
                                  size.height + btn_up->getContentSize().height / 2 + 5));
-        btn_up->addClickEventListener([=](Ref*){
-                int indx = (1 + _curChIdx) % charactor_num;
-                pageView->setCurrentPageIndex(indx);
-                _curChIdx = indx;
-        });
         character_back->addChild(btn_up);
         
         
         auto btn_down = Button::create("level/arrow_down.png");
-        
         btn_down->setPosition(Vec2(size.width / 2,
                                  - btn_down->getContentSize().height / 2 - 5));
-        btn_down->addClickEventListener([=](Ref*){
-                int indx = (charactor_num + _curChIdx - 1) % charactor_num;
-                pageView->setCurrentPageIndex(indx);
-                _curChIdx = indx;
-        });
         character_back->addChild(btn_down);
         
         
         
-        
+        //颜色选择
         _curColorIdx = 0;
         auto chose_color_back = Sprite::create("level/chose_color_bck.png");
         chose_color_back->setPosition(Vec2(position_num.x +
@@ -237,48 +291,38 @@ void LevelSelect::initMenuSelections(){
                                            + chose_color_back->getContentSize().width / 2,
                                            position_num.y));
         auto color_size = chose_color_back->getContentSize();
-        
-//        auto color_idicator = Sprite::create("level/color_idicator.png");
-//        color_idicator->setPosition(color_size / 2);
-//        chose_color_back->addChild(color_idicator, ZORDER_ITEM_CONTROL);
         this->addChild(chose_color_back, ZORDER_BACK_LAYERS);
+
         
         
-        auto color_list = ListView::create();
-        color_list->setDirection(cocos2d::ui::ScrollView::Direction::VERTICAL);
+        PageView* color_list = PageView::create();
+        color_list->setDirection(ui::PageView::Direction::VERTICAL);
         color_list->setContentSize(color_size);
-        color_list->setScrollBarPositionFromCorner(Vec2(7, 7));
-        color_list->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-        color_list->setPosition(Vec2(color_size.width / 2 + 10,
-                                     color_size.height / 2));
-        chose_color_back->addChild(color_list, ZORDER_ITEM_SHOW);
-        
+        color_list->removeAllItems();
         int color_num = 8;
+        float width = 0;
         for (int i = 0; i < color_num; i++){
-                std::string str = StringUtils::format("level/player_color_%d.png", i);
-                auto color = ImageView::create(str);
-                auto color_size = color->getContentSize();
-                color_list->pushBackCustomItem(color);
+                std::string name = StringUtils::format("level/player_color_%d.png", i);
+                auto color = ImageView::create(name);
+                width = color->getContentSize().width;
+                color_list->insertCustomItem(color, i);
         }
+        
+        color_list->setContentSize(Size(width, color_size.height));
+        color_list->setCurrentPageIndex(0);
+        color_list->addEventListener(CC_CALLBACK_2(LevelSelect::pageViewEvent, this));
+        color_list->setPosition(Vec2((color_size - color_list->getContentSize()) / 2));
+        chose_color_back->addChild(color_list);
+        
         auto color_up = Button::create("level/arrow_up.png");
         color_up->setPosition(Vec2(color_size.width / 2,
                                  color_size.height + color_up->getContentSize().height / 2 + 5));
         
-        color_up->addClickEventListener([=](Ref*){
-                _curColorIdx = (_curColorIdx + 1) % color_num;
-                color_list->scrollToItem(_curColorIdx, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
-        });
         chose_color_back->addChild(color_up, ZORDER_ITEM_CONTROL);
         
-        
         auto color_down = Button::create("level/arrow_down.png");
-        
         color_down->setPosition(Vec2(color_size.width / 2,
                                    - color_down->getContentSize().height / 2 - 5));
-        color_down->addClickEventListener([=](Ref*){
-                _curColorIdx = (_curColorIdx - 1 + color_num) % color_num;
-                color_list->scrollToItem(_curColorIdx, Vec2::ANCHOR_MIDDLE, Vec2::ANCHOR_MIDDLE);
-        });
         chose_color_back->addChild(color_down, ZORDER_ITEM_CONTROL);
         
 }
@@ -307,8 +351,8 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         
         auto online_game = MenuItemImage::create("online_battle.png", "online_battle_sel.png",
                               CC_CALLBACK_1(LevelSelect::menuOnlineBattle, this));
-        online_game->setPosition(Vec2(online_game->getContentSize().width,
-                                        visibleSize.height  -  online_game->getContentSize().height / 2 ));
+        online_game->setPosition(Vec2(online_game->getContentSize().width / 2,
+                                        online_game->getContentSize().height / 2 ));
         
         /*
          /////////////////////////////////////////////////////////
@@ -543,6 +587,7 @@ void LevelSelect::menuSoundControl(Ref* btn){
 void LevelSelect::onEnter(){
         Layer::onEnter();
         IAP::refresh();
+        
 }
 
 void LevelSelect::update(float delta){

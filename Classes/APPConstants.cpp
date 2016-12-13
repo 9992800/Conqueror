@@ -89,16 +89,16 @@ GolbalAnimations::~GolbalAnimations(){
 
 void GolbalAnimations::initAnimation(){
         auto frameCache = SpriteFrameCache::getInstance();
+        float frame_delay = 1.f / 25;
         //战士
-        Vector<SpriteFrame*> animFrames(12);
-        Vector<SpriteFrame*> animFrames_back(12);
+        Vector<SpriteFrame*> animFrames(12); 
         char str[100] = {0};
         for(int i = 1; i <= 12; i++){
                 sprintf(str, "renwurun%04d.png", i);
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        auto animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        auto animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "zhanshi_run");
         
         
@@ -108,7 +108,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "zhanshi_sd");
         
         
@@ -119,7 +119,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
         
         
@@ -129,7 +129,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
         
         
@@ -140,7 +140,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
         
         
@@ -150,7 +150,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
         
         
@@ -161,7 +161,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
         
         
@@ -171,7 +171,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
         
         //炮手
@@ -181,7 +181,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
         
         
@@ -191,7 +191,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
         
         
@@ -202,7 +202,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
         
         
@@ -212,7 +212,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
         
         //魔女
@@ -222,7 +222,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
         
         
@@ -232,7 +232,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
         
         
@@ -243,7 +243,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
         
         
@@ -253,7 +253,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
         
         
@@ -264,7 +264,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "finght_cloud");
         
         
@@ -275,7 +275,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "finght_occupay");
         
         
@@ -285,7 +285,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "zhangshi_hit1");
         
         animFrames.clear();
@@ -294,7 +294,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "zhangshi_hit2");
         
         animFrames.clear();
@@ -303,7 +303,7 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_hit1");
         
         animFrames.clear();
@@ -312,6 +312,6 @@ void GolbalAnimations::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_hit2");
 }

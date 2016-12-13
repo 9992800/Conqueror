@@ -271,24 +271,6 @@ void LevelSelect::initWalls(Sprite* back_ground){
         chengqiang->setPosition(Vec2(great_wall_size / 2));
         
         back_ground->addChild(chengqiang, ZORDER_BACK_LAYERS, kMenuGreatWallTag);
-        
-        int running_p_no = random(2, 4);
-        auto cache = AnimationCache::getInstance();
-        for (int i = 0; i < running_p_no; i++){
-                int p_i_r = random(0, 1);//TODO::max_player;
-                std::string name = StringUtils::format("level/ch_player_%d.png", p_i_r);
-                auto runner = Sprite::create(name);
-                runner->setPosition(Vec2(great_wall_size.width * 0.1 * i, great_wall_size.height * 0.4));
-                chengqiang->addChild(runner);
-                
-                auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[p_i_r]);
-                run_anim->setRestoreOriginalFrame(true);
-                auto run_action = Animate::create(run_anim);
-                auto move =  MoveBy::create(2.f, Vec2(great_wall_size.width * 0.7, 0));
-                Spawn* p_run = Spawn::create(run_action, FlipX::create(false), move, NULL);
-                Spawn* p_run_back = Spawn::create(run_action, FlipX::create(true) , move->reverse(), NULL);
-                runner->runAction(RepeatForever::create( Sequence::create(p_run, p_run_back, NULL)));
-        }
 }
 
 void LevelSelect::initMainMenu(){
@@ -570,6 +552,44 @@ void LevelSelect::onEnter(){
         Layer::onEnter();
         IAP::refresh();
         
+        auto back_layer = this->getChildByTag(kMainMenuBackTag);
+        auto chengqiang = back_layer->getChildByTag(kMenuGreatWallTag);
+        auto great_wall_size = chengqiang->getContentSize();
+        int running_p_no = random(2, 4);
+        auto cache = AnimationCache::getInstance();
+        for (int i = 0; i < running_p_no; i++){
+                int p_i_r = random(0, 1);//TODO::max_player;
+                std::string name = StringUtils::format("level/ch_player_%d.png", p_i_r);
+                auto runner = Sprite::create(name);
+                Vec2 gap = great_wall_size * 0.1;
+                auto runner_size = runner->getContentSize();
+                bool is_odd = i % 2 == 1;
+                chengqiang->addChild(runner);
+                
+                auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[p_i_r])->clone();                
+                run_anim->setRestoreOriginalFrame(true);
+                run_anim->setLoops(5);
+                float scale = (1 - 0.1 * i);
+                auto run_action = Animate::create(run_anim);
+                
+                if (is_odd){
+                        runner->setPosition(Vec2(great_wall_size.width - gap.x * i - runner_size.width / 2, gap.y * i + runner_size.height / 4));
+                        auto move =  MoveBy::create(2.3f, -Vec2(scale * great_wall_size.width * 0.7, 0));
+                        Spawn* p_run = Spawn::create(run_action, FlipX::create(true), move, NULL);
+                        Spawn* p_run_back = Spawn::create(run_action, FlipX::create(false) , move->reverse(), NULL);
+                        runner->runAction(RepeatForever::create( Sequence::create(p_run, p_run_back, NULL)));
+                        
+                        runner->setScale(1.4);
+                }else{
+                        runner->setPosition(Vec2(gap.x * i + runner_size.width / 2, gap.y * i + runner_size.height / 4));
+                        auto move =  MoveBy::create(2.3f, Vec2(scale * great_wall_size.width * 0.7, 0));
+                        Spawn* p_run = Spawn::create(run_action, FlipX::create(false), move, NULL);
+                        Spawn* p_run_back = Spawn::create(run_action, FlipX::create(true) , move->reverse(), NULL);
+                        runner->runAction(RepeatForever::create( Sequence::create(p_run, p_run_back, NULL)));
+                        
+                        runner->setScale(1.4);
+                }
+        }
 }
 
 void LevelSelect::update(float delta){
@@ -591,6 +611,7 @@ void LevelSelect::onExit(){
         for (Vector<Node*>::iterator it = runners.begin(); it != runners.end(); ++it){
                 (*it)->stopAllActions();
         }
+        the_wall->removeAllChildren();
 }
 
 

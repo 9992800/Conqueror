@@ -98,7 +98,7 @@ void GameScene::initControlLayer(){
         
         
         _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
-        int game_speed = _animationIsOn ?  3 : UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
+        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
         
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         
@@ -778,12 +778,10 @@ void GameScene::menuAnimSwitch(Ref* btn){
         if (_animationIsOn){
                 _animationIsOn = false;
                 label->setString("打开动画");
-                Director::getInstance()->getScheduler()->setTimeScale(2);
                 _animationLayer->setVisible(false);
         }else{
                 label->setString("关闭动画");
                 _animationIsOn = true;
-                Director::getInstance()->getScheduler()->setTimeScale(3);
         }
         
         UserDefault::getInstance()->setBoolForKey(ANIMATION_SWITCH_KEY, _animationIsOn);

@@ -7,6 +7,7 @@
 //
 
 #include "APPConstants.hpp"
+
 int READY_DISTANCE_POS = 242;
 
 Vec2 invader_pos[] = {{242,250}, {203,265}, {182,236}, {156,280}, {136,250}, {116,221},{91, 265}, {70,236}, {30,250}};
@@ -32,6 +33,35 @@ std::string ANIM_NAME_FIGHT_RUN[]        = {"zhanshi_run", "xunshoushi_run", "xu
 std::string ANIM_NAME_FIGHT_STAND[]      = {"zhanshi_sd", "xunshoushi_sd", "xunshoushi_sd", "xunshoushi_sd",
         "xunshoushi_sd", "xunshoushi_sd", "xunshoushi_sd", "xunshoushi_sd"};
 
+
+
+std::string CHARACTER_NAME[] = {"zhanshi_pos.png", "xunshoushi_pos.png", "xunshoushi_pos.png", "xunshoushi_pos.png",
+        "xunshoushi_pos.png", "xunshoushi_pos.png","xunshoushi_pos.png", "xunshoushi_pos.png"};
+
+std::string CHARACTER_NAME_2[] = {"zhanshi_pos2.png", "xunshoushi_pos2.png", "xunshoushi_pos2.png", "xunshoushi_pos2.png",
+        "xunshoushi_pos2.png", "xunshoushi_pos2.png","xunshoushi_pos2.png", "xunshoushi_pos2.png"};
+
+std::string ANIM_NAME_DEFEATED_SHOW[2][8] = {
+        {"zhangshi_hit1", "xunshoushi_hit1","xunshoushi_hit1",
+                "xunshoushi_hit1","xunshoushi_hit1", "xunshoushi_hit1",
+                "xunshoushi_hit1", "xunshoushi_hit1"},
+        
+        {"zhangshi_hit2", "xunshoushi_hit2", "xunshoushi_hit2",
+                "xunshoushi_hit2", "xunshoushi_hit2", "xunshoushi_hit2",
+                "xunshoushi_hit2", "xunshoushi_hit2"}
+};
+
+Color4F AreaBackGroundColors[] = {Color4F((float)0xCE/0xff, (float)0x84/0xff, (float)0x39/0xff, 1),
+        Color4F((float)0xD7/0xff, (float)0x45/0xff, (float)0x13/0xff, 1),
+        Color4F((float)0xE0/0xff, (float)0xE9/0xff, (float)0x83/0xff, 1),
+        Color4F((float)0x6F/0xff, (float)0xCF/0xff, (float)0x00/0xff, 1),
+        Color4F((float)0x84/0xff, (float)0x6F/0xff, (float)0xE0/0xff, 1),
+        Color4F((float)0xE0/0xff, (float)0x00/0xff, (float)0xBC/0xff, 1),
+        Color4F((float)0x44/0xff, (float)0x6F/0xff, (float)0x00/0xff, 1),
+        Color4F((float)0x6F/0xff, (float)0xA0/0xff, (float)0xE0/0xff, 1)};
+
+Color4F border_color = Color4F(0.0, 0.0, 0.0, 1.0);
+Color4F selected_color = Color4F(0.2, 0.0, 0.0, 0.7);
 
 
 

@@ -31,7 +31,7 @@ class GameData: public Ref{
         friend class GameAI;
         friend class LevelSelect;
         friend class ReplayLast;
-        
+        friend class GameScene;
 public:
         static GameData* create(int n)
         {
@@ -55,9 +55,7 @@ public:
         bool init(GameData* data);
         ~GameData();
         
-        inline std::vector<int>& getMapData(){
-                return _mapData;
-        }
+        void initPlayerChAndColor(int, int);
         
 public:
         void reshDataByMapInfo(TMXTiledMap* map);

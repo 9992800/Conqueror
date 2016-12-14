@@ -65,6 +65,21 @@ public:
         inline int getGid(){
                 return _gid_inmap;
         }
+        
+        inline void setFlagImg(std::string str){
+                this->_flagImg = str;
+        }
+        inline std::string getFlagImge(){
+                return this->_flagImg;
+        }
+        
+        inline void setAreaColor(Color4F c){
+                this->_areaColor = c;
+        }
+        inline Color4F getAreaColor(){
+                return this->_areaColor;
+        }
+        
 private:
         int     _player_id;
         int     _area_c;
@@ -72,6 +87,8 @@ private:
         int     _dice_c;
         int     _dice_jun;
         int     _stock;
+        std::string _flagImg;
+        Color4F _areaColor;
 private:
         int     _gid_inmap;
 };

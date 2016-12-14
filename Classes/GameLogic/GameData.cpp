@@ -7,8 +7,10 @@
 //
 
 #include "GameData.hpp"
+#include "APPConstants.hpp"
 #include "ScreenCoordinate.hpp"
 #include "editor-support/cocostudio/CocoStudio.h"
+
 using namespace cocos2d::ui;
 using namespace cocostudio;
 using namespace cocostudio::timeline;
@@ -197,4 +199,29 @@ void GameData::reshDataByMapInfo(TMXTiledMap* map){
                 Sprite* dice = area->createSprite();
                 map->addChild(dice, AREA_SPRITE_ZORDER, AREA_TAG_ID_INMAP(i));
         }
+}
+
+void GameData::initPlayerChAndColor(int ch, int color){
+        std::string player_flag_img = StringUtils::format("maps/supply_back_%d.png", ch);
+        Color4F player_color = AreaBackGroundColors[color];
+        
+        for (int i = 0; i < _curPlayerNum; i++){
+                std::string str = StringUtils::format("maps/supply_back_%d.png", ch);
+                this->_player[i]->setFlagImg(str);
+                Color4F cc = AreaBackGroundColors[color];
+                this->_player[i]->setAreaColor(cc);
+        }
+        
+        
+        if (ch < _curPlayerNum){
+                std::string str = this->_player[_userId]->getFlagImge();
+                this->_player[ch]->setFlagImg(str);
+        }
+        this->_player[_userId]->setFlagImg(player_flag_img);
+        
+        if (color < _curPlayerNum){
+                Color4F cc = this->_player[_userId]->getAreaColor();
+                this->_player[color]->setAreaColor(cc);
+        }
+        this->_player[_userId]->setAreaColor(player_color);
 }

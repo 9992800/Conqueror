@@ -96,6 +96,28 @@ void GameScene::initMapLayer(){
         auto data = _theGameLogic->initGameData(_playerNumber);
         
         this->initMapSize(data);
+        
+        data->initPlayerChAndColor(_charactorIdx, _colorIdx);
+        
+        
+        auto visible_size = Director::getInstance()->getVisibleSize();
+        auto player_0 = cocos2d::ui::ImageView::create("maps/supply_back_0.png");
+        auto p_size = player_0->getContentSize();
+        auto roll = cocos2d::ui::Scale9Sprite::create("maps/supply_back_roll.png");
+        
+        auto bakc_size = Size(42 + p_size.width * _playerNumber,
+                              roll->getContentSize().height);
+        roll->setContentSize(bakc_size);
+        roll->setCapInsets(Rect(21, 6, 27, 14));
+        roll->setPosition(Vec2(visible_size.width / 2,
+                               visible_size.height - bakc_size.height/2));
+        this->addChild(roll, 1);
+        
+        for (int i = 0; i < _playerNumber; i++){
+                auto p = player_0->clone();
+                p->setPosition(Vec2(21 +  0.5 * (i * 2 + 1) * p_size.width,  0));
+                roll->addChild(p);
+        }
 }
 
 void GameScene::initControlLayer(){

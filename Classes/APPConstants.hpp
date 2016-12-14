@@ -17,7 +17,12 @@ extern std::string ANIM_NAME_FIGHT_STAND[];
 extern Vec2 invader_pos[];
 extern Vec2 keeper_pos[];
 extern std::string DICE_PIC_NAME_STR[8][6];
-
+extern std::string CHARACTER_NAME[];
+extern std::string CHARACTER_NAME_2[];
+extern std::string ANIM_NAME_DEFEATED_SHOW[2][8];
+extern Color4F AreaBackGroundColors[];
+extern Color4F border_color;
+extern Color4F selected_color;
 
 class GolbalAnimations:public Ref{
 public:

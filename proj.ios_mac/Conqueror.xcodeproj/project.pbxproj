@@ -82,16 +82,9 @@
 		7C4BA1D41DDF0A90004F9770 /* UserSessionBean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C4BA1D21DDF0A90004F9770 /* UserSessionBean.cpp */; };
 		7C4DA6A51DE2E973001CC255 /* BattleFieldBean.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C4DA6A31DE2E973001CC255 /* BattleFieldBean.cpp */; };
 		7C4DA6A81DE43C1B001CC255 /* green_edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DA6A71DE43C1B001CC255 /* green_edit.png */; };
-		7C4DA6AA1DE44548001CC255 /* battle_field.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DA6A91DE44548001CC255 /* battle_field.png */; };
 		7C4DA6AF1DE6A7EB001CC255 /* deault_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DA6AE1DE6A7EB001CC255 /* deault_avatar.png */; };
 		7C4DA6B21DE82466001CC255 /* SpriteEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C4DA6B01DE82466001CC255 /* SpriteEx.cpp */; };
 		7C558EB91DEC1D52007722D7 /* sliderProgress_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EB81DEC1D52007722D7 /* sliderProgress_back.png */; };
-		7C558EC11DEC28F6007722D7 /* dice_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EBB1DEC28F6007722D7 /* dice_1.png */; };
-		7C558EC21DEC28F6007722D7 /* dice_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EBC1DEC28F6007722D7 /* dice_2.png */; };
-		7C558EC31DEC28F6007722D7 /* dice_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EBD1DEC28F6007722D7 /* dice_3.png */; };
-		7C558EC41DEC28F6007722D7 /* dice_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EBE1DEC28F6007722D7 /* dice_4.png */; };
-		7C558EC51DEC28F6007722D7 /* dice_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EBF1DEC28F6007722D7 /* dice_5.png */; };
-		7C558EC61DEC28F6007722D7 /* dice_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EC01DEC28F6007722D7 /* dice_6.png */; };
 		7C558EC81DED138A007722D7 /* zhandou_beijing.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EC71DED138A007722D7 /* zhandou_beijing.png */; };
 		7C558EDE1DEE7560007722D7 /* xunshoushi_pos.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EDC1DEE7560007722D7 /* xunshoushi_pos.png */; };
 		7C558EDF1DEE7560007722D7 /* zhanshi_pos.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EDD1DEE7560007722D7 /* zhanshi_pos.png */; };
@@ -281,18 +274,11 @@
 		7C4DA6A31DE2E973001CC255 /* BattleFieldBean.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BattleFieldBean.cpp; sourceTree = "<group>"; };
 		7C4DA6A41DE2E973001CC255 /* BattleFieldBean.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BattleFieldBean.hpp; sourceTree = "<group>"; };
 		7C4DA6A71DE43C1B001CC255 /* green_edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green_edit.png; sourceTree = "<group>"; };
-		7C4DA6A91DE44548001CC255 /* battle_field.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = battle_field.png; sourceTree = "<group>"; };
 		7C4DA6AD1DE69258001CC255 /* picojson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = picojson.h; sourceTree = "<group>"; };
 		7C4DA6AE1DE6A7EB001CC255 /* deault_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deault_avatar.png; sourceTree = "<group>"; };
 		7C4DA6B01DE82466001CC255 /* SpriteEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteEx.cpp; sourceTree = "<group>"; };
 		7C4DA6B11DE82466001CC255 /* SpriteEx.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpriteEx.hpp; sourceTree = "<group>"; };
 		7C558EB81DEC1D52007722D7 /* sliderProgress_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sliderProgress_back.png; sourceTree = "<group>"; };
-		7C558EBB1DEC28F6007722D7 /* dice_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dice_1.png; sourceTree = "<group>"; };
-		7C558EBC1DEC28F6007722D7 /* dice_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dice_2.png; sourceTree = "<group>"; };
-		7C558EBD1DEC28F6007722D7 /* dice_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dice_3.png; sourceTree = "<group>"; };
-		7C558EBE1DEC28F6007722D7 /* dice_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dice_4.png; sourceTree = "<group>"; };
-		7C558EBF1DEC28F6007722D7 /* dice_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dice_5.png; sourceTree = "<group>"; };
-		7C558EC01DEC28F6007722D7 /* dice_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dice_6.png; sourceTree = "<group>"; };
 		7C558EC71DED138A007722D7 /* zhandou_beijing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhandou_beijing.png; sourceTree = "<group>"; };
 		7C558EDC1DEE7560007722D7 /* xunshoushi_pos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xunshoushi_pos.png; sourceTree = "<group>"; };
 		7C558EDD1DEE7560007722D7 /* zhanshi_pos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhanshi_pos.png; sourceTree = "<group>"; };
@@ -504,14 +490,7 @@
 				7C558EDC1DEE7560007722D7 /* xunshoushi_pos.png */,
 				7C558EDD1DEE7560007722D7 /* zhanshi_pos.png */,
 				7C558EC71DED138A007722D7 /* zhandou_beijing.png */,
-				7C558EBB1DEC28F6007722D7 /* dice_1.png */,
-				7C558EBC1DEC28F6007722D7 /* dice_2.png */,
-				7C558EBD1DEC28F6007722D7 /* dice_3.png */,
-				7C558EBE1DEC28F6007722D7 /* dice_4.png */,
-				7C558EBF1DEC28F6007722D7 /* dice_5.png */,
-				7C558EC01DEC28F6007722D7 /* dice_6.png */,
 				7C4DA6AE1DE6A7EB001CC255 /* deault_avatar.png */,
-				7C4DA6A91DE44548001CC255 /* battle_field.png */,
 				7C4DA6A71DE43C1B001CC255 /* green_edit.png */,
 				7C4BA1CF1DDEF682004F9770 /* waiting_ring.png */,
 				7C6E80011DD9687D00C5E374 /* history_data_sel.png */,
@@ -827,7 +806,6 @@
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
-				7C558EC41DEC28F6007722D7 /* dice_4.png in Resources */,
 				7C6E80001DD9575A00C5E374 /* history.png in Resources */,
 				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
 				46880B7D19C43A67006E1F66 /* CloseSelected.png in Resources */,
@@ -835,7 +813,6 @@
 				BB51F1091DCF66D50031296E /* share_sel.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				7C733B1C1DC990E200098EDD /* iphone5 in Resources */,
-				7C558EC21DEC28F6007722D7 /* dice_2.png in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
 				521A8E6519F0C34300D177D7 /* Default-736h@3x.png in Resources */,
 				BBC12E501DCDFC470035A571 /* sdkbox_config.json in Resources */,
@@ -843,7 +820,6 @@
 				7C4DA6AF1DE6A7EB001CC255 /* deault_avatar.png in Resources */,
 				7C558EB91DEC1D52007722D7 /* sliderProgress_back.png in Resources */,
 				BB60FC161DEF26D400904ABC /* xunshoushi_pos2.png in Resources */,
-				7C558EC61DEC28F6007722D7 /* dice_6.png in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				7C21A0DC1DC9C06C0035ECC6 /* sliderProgress.png in Resources */,
 				BB62DFD31DCD9E7A0037DE0A /* anim in Resources */,
@@ -853,11 +829,9 @@
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				7C558EDF1DEE7560007722D7 /* zhanshi_pos.png in Resources */,
-				7C558EC11DEC28F6007722D7 /* dice_1.png in Resources */,
 				7C4BA1D01DDEF682004F9770 /* waiting_ring.png in Resources */,
 				7C6E80051DD9687D00C5E374 /* history_data.png in Resources */,
 				BB51F10A1DCF66D50031296E /* share.png in Resources */,
-				7C4DA6AA1DE44548001CC255 /* battle_field.png in Resources */,
 				BB34FAAA1DD35B7A0070B4E4 /* sounds in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				7C82E4281DD57EDD0019C8CF /* online_battle.png in Resources */,
@@ -871,8 +845,6 @@
 				BBBA8DD81DCCE3C6006A6471 /* NextButton.png in Resources */,
 				7C6E80061DD9687D00C5E374 /* history_sel.png in Resources */,
 				7C82E42A1DD581610019C8CF /* online_battle_sel.png in Resources */,
-				7C558EC51DEC28F6007722D7 /* dice_5.png in Resources */,
-				7C558EC31DEC28F6007722D7 /* dice_3.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
 				46880B7B19C43A67006E1F66 /* CloseNormal.png in Resources */,
 				7C558EDE1DEE7560007722D7 /* xunshoushi_pos.png in Resources */,

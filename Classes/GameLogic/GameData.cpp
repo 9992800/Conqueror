@@ -210,6 +210,7 @@ void GameData::initPlayerChAndColor(int character, int color){
                 this->_player[i]->setFlagImg(str);
                 Color4F cc = AreaBackGroundColors[i];
                 this->_player[i]->setAreaColor(cc);
+                this->_player[i]->setPosCharactorIdx(i);
         }
         
         
@@ -221,4 +222,10 @@ void GameData::initPlayerChAndColor(int character, int color){
         }
         this->_player[_userId]->setFlagImg(player_flag_img);
         this->_player[_userId]->setAreaColor(player_color);
+        
+        if (character < _curPlayerNum){
+                int idx = this->_player[_userId]->getPosCharactorIdx();
+                this->_player[character]->setPosCharactorIdx(idx);
+        }
+        this->_player[_userId]->setPosCharactorIdx(character);
 }

@@ -80,6 +80,13 @@ public:
                 return this->_areaColor;
         }
         
+        inline void setPosCharactorIdx(int i){
+                this->_charactorIdx = i;
+        }
+        inline int getPosCharactorIdx(){
+                return this->_charactorIdx;
+        }
+        
 private:
         int     _player_id;
         int     _area_c;
@@ -89,6 +96,7 @@ private:
         int     _stock;
         std::string _flagImg;
         Color4F _areaColor;
+        int     _charactorIdx;
 private:
         int     _gid_inmap;
 };

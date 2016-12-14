@@ -201,27 +201,24 @@ void GameData::reshDataByMapInfo(TMXTiledMap* map){
         }
 }
 
-void GameData::initPlayerChAndColor(int ch, int color){
-        std::string player_flag_img = StringUtils::format("maps/supply_back_%d.png", ch);
+void GameData::initPlayerChAndColor(int character, int color){
+        std::string player_flag_img = StringUtils::format("maps/supply_back_%d.png", color);
         Color4F player_color = AreaBackGroundColors[color];
         
         for (int i = 0; i < _curPlayerNum; i++){
-                std::string str = StringUtils::format("maps/supply_back_%d.png", ch);
+                std::string str = StringUtils::format("maps/supply_back_%d.png", i);
                 this->_player[i]->setFlagImg(str);
-                Color4F cc = AreaBackGroundColors[color];
+                Color4F cc = AreaBackGroundColors[i];
                 this->_player[i]->setAreaColor(cc);
         }
         
         
-        if (ch < _curPlayerNum){
-                std::string str = this->_player[_userId]->getFlagImge();
-                this->_player[ch]->setFlagImg(str);
-        }
-        this->_player[_userId]->setFlagImg(player_flag_img);
-        
         if (color < _curPlayerNum){
+                std::string str = this->_player[_userId]->getFlagImge();
+                this->_player[color]->setFlagImg(str);
                 Color4F cc = this->_player[_userId]->getAreaColor();
                 this->_player[color]->setAreaColor(cc);
         }
+        this->_player[_userId]->setFlagImg(player_flag_img);
         this->_player[_userId]->setAreaColor(player_color);
 }

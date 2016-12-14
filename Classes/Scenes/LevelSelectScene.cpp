@@ -418,7 +418,7 @@ void LevelSelect::menuOnlineBattle(Ref* btn){
 }
 void LevelSelect::menuStartGame(Ref* btn){
         
-        auto scene = GameScene::createScene(_levelPlayerNum);
+        auto scene = GameScene::createScene(_levelPlayerNum, _curChIdx, _curColorIdx);
         Director::getInstance()->pushScene(scene);
 }
 

@@ -111,10 +111,12 @@ void GameScene::initMapLayer(){
         roll->setCapInsets(Rect(21, 6, 27, 14));
         roll->setPosition(Vec2(visible_size.width / 2,
                                visible_size.height - bakc_size.height/2));
-        this->addChild(roll, 1);
+        this->addChild(roll, 2);
         
         for (int i = 0; i < _playerNumber; i++){
-                auto p = player_0->clone();
+                int indx = data->_jun[i];
+                std::string p_f_i = data->_player[indx]->getFlagImge();
+                auto p = cocos2d::ui::ImageView::create(p_f_i);;
                 p->setPosition(Vec2(21 +  0.5 * (i * 2 + 1) * p_size.width,  0));
                 roll->addChild(p);
         }

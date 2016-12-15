@@ -410,8 +410,7 @@ int DiceGame::set_area_tc(int pid){
                 }
         }
         
-        player->setAreaTc(tc);
-        printf("\r\n\r\n---player:(%d) tc=%d---", pid, tc);
+        player->setAreaTc(tc);         
         
         return tc;
 }

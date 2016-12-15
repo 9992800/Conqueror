@@ -31,6 +31,7 @@ public:
 private:
         
         void initMapLayer();
+        void initAreaTcShow();
         void initControlLayer();
         void initAnimationLayer();
         
@@ -44,6 +45,7 @@ private:
         void playSupplyAnimation(CallFunc*);
         void afterRobootSupply();
         void afterPlayerSupply();
+        void refreshAreaTcShow(std::map<int, int>);
         void gameAction();
 
         
@@ -54,15 +56,7 @@ private:
         void gameOver(Ref*, int);
         void menuAnimSwitch(Ref* btn);
         
-        void loadXunShouShi();
-        void loadZhanshi();
-        void loadQiShi();
-        void loadGongJianShou();
-        void loadPaoShou();
-        void loadShouRen();
-        void loadMoNv();
-        void loadDaoZei();
-        void loadFightCloud();
+        void loadCharact(int, std::string);
         void loadDiceResultLayer();
         void initMapSize(GameData*);
         
@@ -86,6 +80,8 @@ private:
         bool            _animationIsOn;
         Vec2            _minLeftBottom;
         Vec2            _invaderPos[8], _keeperPos[8];
+        GameData*       _curGameData;
+        std::map<int, Label*> _supplyLabelMap;
 };
 
 

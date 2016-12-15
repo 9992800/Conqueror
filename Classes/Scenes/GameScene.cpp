@@ -27,7 +27,8 @@ enum{
         key_ctrl_layer_tag,
         key_anim_layer_tag,
         key_dice_layer_tag,
-        key_dialog_layer_tag
+        key_dialog_layer_tag,
+        key_roll_show_tag
 };
 
 
@@ -95,11 +96,13 @@ void GameScene::initMapLayer(){
         _theGameLogic = DiceGame::create();
         _theGameLogic->retain();
         
-        auto data = _theGameLogic->initGameData(_playerNumber);
+        _curGameData = _theGameLogic->initGameData(_playerNumber);
         
-        this->initMapSize(data);
-        
-        
+        this->initMapSize(_curGameData);
+}
+
+
+void GameScene::initAreaTcShow(){
         auto visible_size = Director::getInstance()->getVisibleSize();
         auto player_0 = cocos2d::ui::ImageView::create("maps/supply_back_0.png");
         auto p_size = player_0->getContentSize();
@@ -111,20 +114,21 @@ void GameScene::initMapLayer(){
         roll->setCapInsets(Rect(21, 6, 27, 14));
         roll->setPosition(Vec2(visible_size.width / 2,
                                visible_size.height - bakc_size.height/2));
-        this->addChild(roll, 2);
+        
         
         for (int i = 0; i < _playerNumber; i++){
-                int indx = data->_jun[i];
-                GamePlayer* player = data->_player[indx];
+                int player_uid = _curGameData->_jun[i];
+                GamePlayer* player = _curGameData->_player[player_uid];
                 std::string p_f_i = player->getFlagImge();
                 auto p = Sprite::create(p_f_i);
                 p->setPosition(Vec2(21 +  0.5 * (i * 2 + 1) * p_size.width,  roll->getContentSize().height - p_size.height / 2));
+                p->setTag(player_uid);
                 roll->addChild(p);
                 
                 int chara_idx = player->getPosCharactorIdx();
                 std::string charactr_name =   CHARACTER_NAME[chara_idx];
                 auto character = Sprite::create(charactr_name);
-                character->setScale(0.8);
+                character->setScale(0.7);
                 auto ch_size = character->getContentSize();
                 
                 std::string tc_str = StringUtils::format("X%d", player->getAreaTc());
@@ -132,9 +136,13 @@ void GameScene::initMapLayer(){
                 character->addChild(numbser);
                 numbser->setPosition(Vec2(ch_size.width, ch_size.height / 2));
                 
-                character->setPosition(p_size.width * 0.4,  p_size.height * 0.6);
+                character->setPosition(p_size.width * 0.4,  p_size.height * 0.7);
                 p->addChild(character);
+                
+                _supplyLabelMap.insert(std::pair<int, Label*>(player_uid, numbser));
         }
+        
+        _controlLayer->addChild(roll, ZORDER_MAP_GROUND, key_roll_show_tag);
 }
 
 void GameScene::initControlLayer(){
@@ -180,6 +188,8 @@ void GameScene::initControlLayer(){
         menu->setPosition(Vec2::ZERO);
         _controlLayer->addChild(menu);
         
+        this->initAreaTcShow();
+        
         this->addChild(_controlLayer, ZORDER_CRTL_LAYERS, key_ctrl_layer_tag);
         
         Director::getInstance()->setDepthTest(true);
@@ -187,127 +197,6 @@ void GameScene::initControlLayer(){
         listener->onTouchesMoved = CC_CALLBACK_2(GameScene::onTouchesMoved, this);
         listener->onTouchesEnded = CC_CALLBACK_2(GameScene::onTouchesEnded, this);
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-}
-
-
-void GameScene::loadZhanshi(){
-        
-        auto frameCache = SpriteFrameCache::getInstance();
-        
-        auto frame = frameCache->getSpriteFrameByName("renwurun0001.png");
-        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
-                auto zhanshi = Sprite::create();
-                zhanshi->setSpriteFrame(frame);
-                _allFightingCharacters[PLAYER_ROLE_TYPE_ZHANSHI][i] = zhanshi;
-                zhanshi->setVisible(false);
-                _animationLayer->addChild(zhanshi);
-        }
-}
-
-void GameScene::loadXunShouShi(){
-        
-        auto frameCache = SpriteFrameCache::getInstance();                  
-        auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
-        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
-                auto xunshoushi = Sprite::create();
-                xunshoushi->setSpriteFrame(frame);
-                _allFightingCharacters[PLAYER_ROLE_TYPE_XUNSHOUSHI][i] = xunshoushi;
-                _animationLayer->addChild(xunshoushi);
-                xunshoushi->setVisible(false);
-        }
-}
-
-void GameScene::loadQiShi(){
-        
-        auto frameCache = SpriteFrameCache::getInstance();
-        
-        
-        
-        auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
-        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
-                auto xunshoushi = Sprite::create();
-                xunshoushi->setSpriteFrame(frame);
-                _allFightingCharacters[PLAYER_ROLE_TYPE_QISHI][i] = xunshoushi;
-                _animationLayer->addChild(xunshoushi);
-                xunshoushi->setVisible(false);
-        }
-}
-
-void GameScene::loadGongJianShou(){
-        
-        auto frameCache = SpriteFrameCache::getInstance();         
-        auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
-        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
-                auto xunshoushi = Sprite::create();
-                xunshoushi->setSpriteFrame(frame);
-                _allFightingCharacters[PLAYER_ROLE_TYPE_GONGJIANSHOU][i] = xunshoushi;
-                _animationLayer->addChild(xunshoushi);
-                xunshoushi->setVisible(false);
-        }
-}
-
-void GameScene::loadPaoShou(){
-        
-        auto frameCache = SpriteFrameCache::getInstance(); 
-        auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
-        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
-                auto xunshoushi = Sprite::create();
-                xunshoushi->setSpriteFrame(frame);
-                _allFightingCharacters[PLAYER_ROLE_TYPE_PAOSHOU][i] = xunshoushi;
-                _animationLayer->addChild(xunshoushi);
-                xunshoushi->setVisible(false);
-        }
-}
-
-void GameScene::loadShouRen(){
-        
-        auto frameCache = SpriteFrameCache::getInstance();         
-        auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
-        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
-                auto xunshoushi = Sprite::create();
-                xunshoushi->setSpriteFrame(frame);
-                _allFightingCharacters[PLAYER_ROLE_TYPE_SHOUREN][i] = xunshoushi;
-                _animationLayer->addChild(xunshoushi);
-                xunshoushi->setVisible(false);
-        }
-}
-
-void GameScene::loadMoNv(){
-        
-        auto frameCache = SpriteFrameCache::getInstance();         
-        auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
-        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
-                auto xunshoushi = Sprite::create();
-                xunshoushi->setSpriteFrame(frame);
-                _allFightingCharacters[PLAYER_ROLE_TYPE_MONV][i] = xunshoushi;
-                _animationLayer->addChild(xunshoushi);
-                xunshoushi->setVisible(false);
-        }
-}
-
-void GameScene::loadDaoZei(){
-        
-        auto frameCache = SpriteFrameCache::getInstance();         
-        auto frame = frameCache->getSpriteFrameByName("xssrun0001.png");
-        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
-                auto xunshoushi = Sprite::create();
-                xunshoushi->setSpriteFrame(frame);
-                _allFightingCharacters[PLAYER_ROLE_TYPE_DAOZEI][i] = xunshoushi;
-                _animationLayer->addChild(xunshoushi);
-                xunshoushi->setVisible(false);
-        }
-}
-
-void GameScene::loadFightCloud(){
-        
-        auto frameCache = SpriteFrameCache::getInstance();
-        
-        auto frame = frameCache->getSpriteFrameByName("yw0001.png");
-        auto xingyun = Sprite::create();
-        xingyun->setSpriteFrame(frame);
-        _allFightingCharacters[FIGHT_ANIM_TYPE_XINYUN][0] = xingyun;
-        xingyun->setVisible(false);
-        _animationLayer->addChild(xingyun);
 }
 
 void GameScene::loadDiceResultLayer(){
@@ -331,6 +220,20 @@ void GameScene::loadDiceResultLayer(){
         READY_DISTANCE_POS *= (1.f / scale_factor);
 }
 
+void GameScene::loadCharact(int idx, std::string ch_name){
+        auto frameCache = SpriteFrameCache::getInstance();
+        
+        auto frame = frameCache->getSpriteFrameByName(ch_name);
+        for (int i = 0; i < MAX_DICE_PER_AREA; i++){
+                auto charactor = Sprite::create();
+                charactor->setSpriteFrame(frame);
+                _allFightingCharacters[idx][i] = charactor;
+                charactor->setVisible(false);
+                _animationLayer->addChild(charactor);
+        }
+}
+
+
 void GameScene::initAnimationLayer(){
         auto visibleSize = Director::getInstance()->getVisibleSize();
         _animationLayer = Sprite::create("zhandou_beijing.png");
@@ -343,24 +246,23 @@ void GameScene::initAnimationLayer(){
         
         this->loadDiceResultLayer();
         
-        this->loadZhanshi();
+        this->loadCharact(PLAYER_ROLE_TYPE_ZHANSHI, "renwurun0001.png");
         
-        this->loadXunShouShi();
+        this->loadCharact(PLAYER_ROLE_TYPE_XUNSHOUSHI, "xssrun0001.png");
         
-        this->loadQiShi();
+        this->loadCharact(PLAYER_ROLE_TYPE_QISHI, "xssrun0001.png");
         
-        this->loadGongJianShou();
+        this->loadCharact(PLAYER_ROLE_TYPE_GONGJIANSHOU, "xssrun0001.png");
         
-        this->loadPaoShou();
+        this->loadCharact(PLAYER_ROLE_TYPE_PAOSHOU, "xssrun0001.png");
         
-        this->loadShouRen();
+        this->loadCharact(PLAYER_ROLE_TYPE_SHOUREN, "xssrun0001.png");
         
-        this->loadMoNv();
+        this->loadCharact(PLAYER_ROLE_TYPE_MONV, "xssrun0001.png");
         
-        this->loadDaoZei();
+        this->loadCharact(PLAYER_ROLE_TYPE_DAOZEI, "xssrun0001.png");
         
-        this->loadFightCloud(); 
-        
+        this->loadCharact(FIGHT_ANIM_TYPE_XINYUN, "yw0001.png");
 }
 #pragma mark - touch and menu event
 
@@ -421,8 +323,8 @@ void GameScene::tryAgain(){
         auto layer = this->getChildByTag(key_map_tag);
         layer->removeFromParentAndCleanup(true);
         
-        auto data = _theGameLogic->resetInitData();
-        this->initMapSize(data);
+        _curGameData = _theGameLogic->resetInitData();
+        this->initMapSize(_curGameData);
         
         _startPlayMenuItem->setVisible(true);
         _endTurnMenuItem->setVisible(false);
@@ -447,10 +349,11 @@ void GameScene::afterPlayerBattle(FightResultData* result){
                 this->addChild(dialog, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
                 return;
         }
+        this->refreshAreaTcShow(survival);
 }
 
 void GameScene::afterRobootBattle(FightResultData* result){
-        _theGameLogic->cleanUpBattleField(result);
+        std::map<int, int> survival = _theGameLogic->cleanUpBattleField(result);
         
         _isPalyingAnim = false;
         _diceResultLayer->setVisible(false);
@@ -469,9 +372,47 @@ void GameScene::afterRobootBattle(FightResultData* result){
                 return;
         }
         
+        this->refreshAreaTcShow(survival);
         this->gameAction();
 }
 
+
+void GameScene::refreshAreaTcShow(std::map<int, int> survival){
+        bool need_to_repaint = false;
+        for (std::map<int, Label*>::iterator it = _supplyLabelMap.begin();
+             it != _supplyLabelMap.end(); it++){
+                
+                std::map<int, int>::iterator it_tc = survival.find(it->first);
+                if (survival.end() == it_tc){
+                        need_to_repaint = true;
+                        continue;
+                }
+                std::string tc_num_str = StringUtils::format("X%d", it_tc->second);
+                it->second->setString(tc_num_str);
+        }
+        
+        if (need_to_repaint){
+                
+                cocos2d::ui::Scale9Sprite* roll = (cocos2d::ui::Scale9Sprite*)_controlLayer->getChildByTag(key_roll_show_tag);
+                Vector<Node*> flag_nodes = roll->getChildren();
+                auto p_size = flag_nodes.at(0)->getContentSize();
+                
+                auto bakc_size = Size(42 + p_size.width * survival.size(),
+                                      roll->getContentSize().height);
+                roll->setContentSize(bakc_size);
+                
+                
+                for (int i = 0; i < flag_nodes.size(); i++){
+                        auto flag_obj = flag_nodes.at(i);
+                        int player_uid =  flag_obj->getTag();
+                        GamePlayer* player = _curGameData->_player[player_uid];
+                        if (player->getAreaTc() == 0){
+                                roll->removeChild(flag_obj);
+                                _supplyLabelMap.erase(player_uid);
+                        }
+                } 
+        }
+}
 
 void GameScene::afterPlayerSupply(){
         _theGameLogic->next_player();

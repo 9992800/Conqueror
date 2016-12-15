@@ -458,7 +458,7 @@ void LevelSelect::loadResourceInBg(int* loader, HistoryReplayData* data){
                         CCLOG("GetParseError %u\n",area_d.GetParseError());
                 }
                 
-                AreaData* area = new AreaData(i);
+                AreaData* area = new AreaData(i, game_data);
                 
                 const rapidjson::Value& basic = area_d["basic"];
                 area->_arm      = basic["_arm"].GetInt();

@@ -105,7 +105,7 @@ bool GameData::init(GameData* data){
         
         this->_areaData = std::vector<AreaData*>(AREA_MAX);
         for (int i = 0; i < this->_areaData.size(); i++){
-                this->_areaData[i] = new AreaData(data->_areaData[i]);
+                this->_areaData[i] = new AreaData(data->_areaData[i], this);
         }
         
         this->_player = std::vector<GamePlayer*>(MAX_PLAYER);

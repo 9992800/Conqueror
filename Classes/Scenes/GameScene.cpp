@@ -84,9 +84,11 @@ void GameScene::initMapSize(GameData* data){
                               visibleSize.height - map_size.height - MAP_GAM_HEIGHT);
         ScreenCoordinate::getInstance()->configScreen(map_size);
         
+        data->initPlayerChAndColor(_charactorIdx, _colorIdx);
+        
         data->reshDataByBackGrnd(back_layer);
         back_layer->setPosition(-MAP_GAM_WIDTH / 2, -MAP_GAM_HEIGHT / 2);
-        this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);
+        this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);         
 }
 
 void GameScene::initMapLayer(){
@@ -96,8 +98,6 @@ void GameScene::initMapLayer(){
         auto data = _theGameLogic->initGameData(_playerNumber);
         
         this->initMapSize(data);
-        
-        data->initPlayerChAndColor(_charactorIdx, _colorIdx);
         
         
         auto visible_size = Director::getInstance()->getVisibleSize();
@@ -116,7 +116,7 @@ void GameScene::initMapLayer(){
         for (int i = 0; i < _playerNumber; i++){
                 int indx = data->_jun[i];
                 std::string p_f_i = data->_player[indx]->getFlagImge();
-                auto p = cocos2d::ui::ImageView::create(p_f_i);;
+                auto p = cocos2d::ui::ImageView::create(p_f_i);
                 p->setPosition(Vec2(21 +  0.5 * (i * 2 + 1) * p_size.width,  0));
                 roll->addChild(p);
         }

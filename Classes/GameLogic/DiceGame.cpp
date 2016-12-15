@@ -132,7 +132,7 @@ void DiceGame::makeNewMapData(){
         
         for (int i = 0 ; i < AREA_MAX; i++){            
                 
-                _data->_areaData[i] = new AreaData(i);
+                _data->_areaData[i] = new AreaData(i, _data);
         }
         
         for (int i = 0; i < CEL_MAX; i++){

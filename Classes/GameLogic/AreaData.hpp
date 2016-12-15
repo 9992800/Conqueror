@@ -18,13 +18,13 @@ USING_NS_CC;
 class GameData;
 class LevelSelect;
 class ReplayLast;
-
+class GameData;
 class AreaData: public Ref{
         friend class LevelSelect;
         friend class ReplayLast;
 public:
-        AreaData(int id);
-        AreaData(AreaData* obj);
+        AreaData(int id, GameData*);
+        AreaData(AreaData* obj, GameData*);
         virtual ~AreaData();
         
         inline void increaseSize(int cell) {
@@ -138,5 +138,6 @@ private:
         std::vector<int>    _line_dir;
         std::set<int>       _cell_idxs;
         std::vector<int>    _fight_values;
+        GameData*           _parentPtr;
 };
 #endif /* AreaData_hpp */

@@ -16,9 +16,11 @@
 #include "json/rapidjson.h"
 #include "json/document.h"
 #include "APPConstants.hpp" 
+#include "GameData.hpp"
 
-AreaData::AreaData(int id)
+AreaData::AreaData(int id, GameData* p)
 :_areaId(id),
+_parentPtr(p),
 _drawNode(nullptr),
 _size(0),
 _cpos(0),
@@ -48,9 +50,11 @@ AreaData::~AreaData(){
 }
 
 
-AreaData::AreaData (AreaData* obj){
+AreaData::AreaData (AreaData* obj, GameData* parent){
         this->_size = obj->_size;
         
+        
+        this->_parentPtr= parent;
         this->_size     = obj->_size;
         this->_cpos     = obj->_cpos;
         this->_arm      = obj->_arm;
@@ -231,7 +235,8 @@ void AreaData::drawPolyGon(int owner){
         if (-1 == owner){
                 fillColor = selected_color;
         }else{
-                fillColor = AreaBackGroundColors[owner];
+                
+                fillColor = _parentPtr->_player[owner]->getAreaColor();
         }
         
         for (std::set<int>::iterator it = _cell_idxs.begin(); it != _cell_idxs.end(); ++it){

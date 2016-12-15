@@ -115,10 +115,25 @@ void GameScene::initMapLayer(){
         
         for (int i = 0; i < _playerNumber; i++){
                 int indx = data->_jun[i];
-                std::string p_f_i = data->_player[indx]->getFlagImge();
-                auto p = cocos2d::ui::ImageView::create(p_f_i);
-                p->setPosition(Vec2(21 +  0.5 * (i * 2 + 1) * p_size.width,  0));
+                GamePlayer* player = data->_player[indx];
+                std::string p_f_i = player->getFlagImge();
+                auto p = Sprite::create(p_f_i);
+                p->setPosition(Vec2(21 +  0.5 * (i * 2 + 1) * p_size.width,  roll->getContentSize().height - p_size.height / 2));
                 roll->addChild(p);
+                
+                int chara_idx = player->getPosCharactorIdx();
+                std::string charactr_name =   CHARACTER_NAME[chara_idx];
+                auto character = Sprite::create(charactr_name);
+                character->setScale(0.8);
+                auto ch_size = character->getContentSize();
+                
+                std::string tc_str = StringUtils::format("X%d", player->getAreaTc());
+                auto numbser = Label::createWithSystemFont(tc_str, "arial", 26);
+                character->addChild(numbser);
+                numbser->setPosition(Vec2(ch_size.width, ch_size.height / 2));
+                
+                character->setPosition(p_size.width * 0.4,  p_size.height * 0.6);
+                p->addChild(character);
         }
 }
 

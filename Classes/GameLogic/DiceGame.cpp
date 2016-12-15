@@ -543,8 +543,7 @@ FightResultData* DiceGame::startRobootAttack(){
                 return data;
         }else{
                 return this->startBattle();
-        }
-        
+        }        
 }
 
 std::map<int, int> DiceGame::cleanUpBattleField(FightResultData* res_data){

@@ -391,6 +391,8 @@ void GameScene::refreshAreaTcShow(std::map<int, int> survival){
                 it->second->setString(tc_num_str);
         }
         
+       
+        
         if (need_to_repaint){
                 
                 cocos2d::ui::Scale9Sprite* roll = (cocos2d::ui::Scale9Sprite*)_controlLayer->getChildByTag(key_roll_show_tag);
@@ -401,7 +403,6 @@ void GameScene::refreshAreaTcShow(std::map<int, int> survival){
                                       roll->getContentSize().height);
                 roll->setContentSize(bakc_size);
                 
-                
                 for (int i = 0; i < flag_nodes.size(); i++){
                         auto flag_obj = flag_nodes.at(i);
                         int player_uid =  flag_obj->getTag();
@@ -410,7 +411,13 @@ void GameScene::refreshAreaTcShow(std::map<int, int> survival){
                                 roll->removeChild(flag_obj);
                                 _supplyLabelMap.erase(player_uid);
                         }
-                } 
+                }
+                
+                flag_nodes = roll->getChildren();
+                for (int i = 0; i < flag_nodes.size(); i++){
+                        Node* one_flag = flag_nodes.at(i);
+                        one_flag->setPosition(Vec2(21 +  0.5 * (i * 2 + 1) * p_size.width,  roll->getContentSize().height - p_size.height / 2));
+                }
         }
 }
 

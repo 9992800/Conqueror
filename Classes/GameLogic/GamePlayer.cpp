@@ -29,4 +29,7 @@ GamePlayer::GamePlayer(GamePlayer* obj){
         this->_dice_jun         = obj->_dice_jun;
         this->_stock            = obj->_stock;
         this->_gid_inmap        = obj->_gid_inmap;
+        this->_flagImg          = obj->_flagImg;
+        this->_areaColor        = obj->_areaColor;
+        this->_charactorIdx     = obj->_charactorIdx;
 }

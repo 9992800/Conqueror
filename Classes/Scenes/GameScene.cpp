@@ -28,7 +28,10 @@ enum{
         key_anim_layer_tag,
         key_dice_layer_tag,
         key_dialog_layer_tag,
-        key_roll_show_tag
+        key_roll_show_tag,
+        key_operate_board_tag_l,
+        key_operate_board_tag_m,
+        key_operate_board_tag_r
 };
 
 
@@ -58,11 +61,14 @@ bool GameScene::init()
         if (!Layer::init()){
                 return false;
         }
+        _theGameLogic = DiceGame::create();
+        _theGameLogic->retain();
         
-        this->initMapLayer();
+        _curGameData = _theGameLogic->initGameData(_playerNumber);
+        _curGameData->initPlayerChAndColor(_charactorIdx, _colorIdx);
         
         this->initControlLayer();
-        
+        this->initMapSize(_curGameData);
         this->initAnimationLayer();
         
         return true;
@@ -85,20 +91,9 @@ void GameScene::initMapSize(GameData* data){
                               visibleSize.height - map_size.height - MAP_GAM_HEIGHT);
         ScreenCoordinate::getInstance()->configScreen(map_size);
         
-        data->initPlayerChAndColor(_charactorIdx, _colorIdx);
-        
         data->reshDataByBackGrnd(back_layer);
         back_layer->setPosition(-MAP_GAM_WIDTH / 2, -MAP_GAM_HEIGHT / 2);
         this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);         
-}
-
-void GameScene::initMapLayer(){
-        _theGameLogic = DiceGame::create();
-        _theGameLogic->retain();
-        
-        _curGameData = _theGameLogic->initGameData(_playerNumber);
-        
-        this->initMapSize(_curGameData);
 }
 
 
@@ -145,10 +140,19 @@ void GameScene::initAreaTcShow(){
         _controlLayer->addChild(roll, ZORDER_MAP_GROUND, key_roll_show_tag);
 }
 
-void GameScene::initControlLayer(){
+void GameScene::initOperateBoard(){
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
+        auto operat_board_m = Sprite::create("maps/openrate_back_m.png");
+        operat_board_m->setPosition(Vec2(visibleSize.width / 2, operat_board_m->getContentSize().height / 2));
+        _controlLayer->addChild(operat_board_m, ZORDER_MAP_GROUND, key_operate_board_tag_m);
         
+        auto operat_board_l = Sprite::create("maps/openrate_back_l.png");
+        operat_board_l->setPosition(Vec2(visibleSize.width / 2, operat_board_l->getContentSize().height / 2));
+        _controlLayer->addChild(operat_board_l, ZORDER_MAP_GROUND, key_operate_board_tag_l);
+}
+
+void GameScene::initControlLayer(){
         
         _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
         int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
@@ -157,36 +161,8 @@ void GameScene::initControlLayer(){
         
         
         _controlLayer = Layer::create();
-        _endTurnMenuItem = MenuItemImage::create("NextButton.png", "NextButton.png",
-                                             CC_CALLBACK_1(GameScene::menuEndTurn, this));
-        _endTurnMenuItem->setPosition(Vec2(origin.x + visibleSize.width - _endTurnMenuItem->getContentSize().width,
-                                       origin.y + _endTurnMenuItem->getContentSize().height));
-        _endTurnMenuItem->setVisible(false);
         
-        _startPlayMenuItem = MenuItemImage::create("start.png", "start.png",
-                                             CC_CALLBACK_1(GameScene::menuStartGame, this));
-        _startPlayMenuItem->setPosition(Vec2(origin.x + visibleSize.width - _startPlayMenuItem->getContentSize().width,
-                                       origin.y +_startPlayMenuItem->getContentSize().height));
-        
-        auto return_back = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
-                                             CC_CALLBACK_1(GameScene::menuExit, this));
-        return_back->setPosition(Vec2(origin.x + return_back->getContentSize().width + 10,
-                                       origin.y + visibleSize.height - return_back->getContentSize().height - 10));
-        
-        auto colse_anim = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
-                                              CC_CALLBACK_1(GameScene::menuAnimSwitch, this));
-        colse_anim->setPosition(Vec2(visibleSize.width - colse_anim->getContentSize().width - 10,
-                                      visibleSize.height - colse_anim->getContentSize().height - 10));
-        
-        auto label = Label::createWithSystemFont("关闭动画", "", 32);
-        label->setTextColor(Color4B::RED);
-        colse_anim->addChild(label, 1, 111);
-        if (!_animationIsOn){
-                label->setString("打开动画");
-        }
-        auto menu = Menu::create(_endTurnMenuItem, _startPlayMenuItem, return_back, colse_anim, NULL);
-        menu->setPosition(Vec2::ZERO);
-        _controlLayer->addChild(menu);
+        this->initOperateBoard();
         
         this->initAreaTcShow();
         

@@ -28,10 +28,9 @@ public:
         }     
         ~GameScene();
         
-private:
-        
-        void initMapLayer();
+private:         
         void initAreaTcShow();
+        void initOperateBoard();
         void initControlLayer();
         void initAnimationLayer();
         

@@ -168,6 +168,35 @@ void GameScene::initOperateBoard(){
         auto operat_board_r = Sprite::create("maps/openrate_back_r.png");
         operat_board_r->setPosition(Vec2(visibleSize.width - operat_board_r->getContentSize().width / 2,operat_board_r->getContentSize().height / 2));
         _controlLayer->addChild(operat_board_r, ZORDER_MAP_GROUND, key_operate_board_tag_r);
+        
+       
+        
+        auto first_tip_layer = Layer::create();
+        first_tip_layer->setContentSize(operat_board_m->getContentSize());
+        first_tip_layer->setPosition(operat_board_m->getContentSize() / 2);
+        first_tip_layer->setIgnoreAnchorPointForPosition(false);
+        first_tip_layer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        
+        auto tips = Label::createWithSystemFont("Do you want to use this map?", "", 40);
+        tips->setPosition(Vec2(0, tips->getContentSize().height / 2));
+        first_tip_layer->addChild(tips);
+        
+        operat_board_m->addChild(first_tip_layer);
+        
+         auto OK_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
+        OK_btn->setTitleText("YES");
+        OK_btn->addClickEventListener([=](Ref* btn){
+                first_tip_layer->setVisible(false);
+                
+        });
+        OK_btn->setPosition(Vec2(tips->getContentSize().width + OK_btn->getContentSize().width / 2, operat_board_m->getContentSize().height / 2));
+        first_tip_layer->addChild(OK_btn);
+        
+        auto NO_btn = cocos2d::ui::Button::create("DIALOG_CANCEL.png", "DIALOG_CANCEL_SEL.png");
+        NO_btn->setTitleText("NO");
+        NO_btn->setPosition(Vec2(OK_btn->getPosition().x + 5 + NO_btn->getContentSize().width,
+                            operat_board_m->getContentSize().height / 2));
+        first_tip_layer->addChild(NO_btn);
 }
 
 void GameScene::initControlLayer(){

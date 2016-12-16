@@ -77,10 +77,12 @@ private:
         MenuItemImage*  _endTurnMenuItem;
         MenuItemImage*  _startPlayMenuItem;
         bool            _animationIsOn;
-        Vec2            _minLeftBottom;
+        Size            _showAreaSize;
         Vec2            _invaderPos[8], _keeperPos[8];
         GameData*       _curGameData;
         std::map<int, Label*> _supplyLabelMap;
+        LayerColor      *_mapLayer;
+        Rect            _minFrameShow, _maxFrameShow;
 };
 
 

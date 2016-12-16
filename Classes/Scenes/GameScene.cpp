@@ -23,8 +23,7 @@ enum{
         ZORDER_DIALOG_LAYER
 };
 enum{
-        key_map_tag             = 1,
-        key_ctrl_layer_tag,
+        key_ctrl_layer_tag = 1,
         key_anim_layer_tag,
         key_dice_layer_tag,
         key_dialog_layer_tag,
@@ -36,7 +35,7 @@ enum{
 
 
 #pragma mark - constructor
-
+#define MAP_SCALE_V 1.6f
 int GameScene::_playerNumber = 2;
 int GameScene::_charactorIdx = 0;
 int GameScene::_colorIdx = 0;
@@ -67,6 +66,7 @@ bool GameScene::init()
         _curGameData = _theGameLogic->initGameData(_playerNumber);
         _curGameData->initPlayerChAndColor(_charactorIdx, _colorIdx);
         
+        _showAreaSize = Director::getInstance()->getVisibleSize();
         this->initControlLayer();
         this->initMapSize(_curGameData);
         this->initAnimationLayer();
@@ -82,18 +82,27 @@ void GameScene::initMapSize(GameData* data){
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         Vec2 center = origin + visibleSize / 2;
         
-        auto map_size = visibleSize * 1.2f;
-        auto back_layer = LayerColor::create(TILE_COLOR_BACKGRUND,
-                                             map_size.width + MAP_GAM_WIDTH ,
-                                             map_size.height + MAP_GAM_HEIGHT);
+        _showAreaSize.width *= 0.9;
+        _mapLayer = LayerColor::create();
+        _mapLayer->changeWidthAndHeight(_showAreaSize.width ,
+                                        _showAreaSize.height);
+        _mapLayer->setIgnoreAnchorPointForPosition(false);
+        _mapLayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         
-        _minLeftBottom = Vec2(visibleSize.width - map_size.width - MAP_GAM_WIDTH,
-                              visibleSize.height - map_size.height - MAP_GAM_HEIGHT);
-        ScreenCoordinate::getInstance()->configScreen(map_size);
+        ScreenCoordinate::getInstance()->configScreen(_showAreaSize);
         
-        data->reshDataByBackGrnd(back_layer);
-        back_layer->setPosition(-MAP_GAM_WIDTH / 2, -MAP_GAM_HEIGHT / 2);
-        this->addChild(back_layer, ZORDER_MAP_GROUND, key_map_tag);         
+        data->reshDataByBackGrnd(_mapLayer);
+        _mapLayer->setPosition(visibleSize);
+        
+        auto back_ground = LayerColor::create(TILE_COLOR_BACKGRUND, visibleSize.width * 2 , visibleSize.height * 2);
+        back_ground->addChild(_mapLayer);
+        back_ground->setIgnoreAnchorPointForPosition(false);
+        back_ground->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        back_ground->setPosition(visibleSize / 2);
+        this->addChild(back_ground, ZORDER_MAP_GROUND);
+        
+        _minFrameShow = Rect(0, visibleSize.height - 30, 0, 60);
+        _maxFrameShow = Rect(visibleSize.width * 0.6, visibleSize.height * 0.6, visibleSize.width * 1.4, visibleSize.height * 1.4);
 }
 
 
@@ -102,6 +111,8 @@ void GameScene::initAreaTcShow(){
         auto player_0 = cocos2d::ui::ImageView::create("maps/supply_back_0.png");
         auto p_size = player_0->getContentSize();
         auto roll = cocos2d::ui::Scale9Sprite::create("maps/supply_back_roll.png");
+        
+        _showAreaSize.height -= p_size.height;
         
         auto bakc_size = Size(42 + p_size.width * _playerNumber,
                               roll->getContentSize().height);
@@ -143,13 +154,20 @@ void GameScene::initAreaTcShow(){
 void GameScene::initOperateBoard(){
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
+        
         auto operat_board_m = Sprite::create("maps/openrate_back_m.png");
         operat_board_m->setPosition(Vec2(visibleSize.width / 2, operat_board_m->getContentSize().height / 2));
         _controlLayer->addChild(operat_board_m, ZORDER_MAP_GROUND, key_operate_board_tag_m);
         
+        _showAreaSize.height -= operat_board_m->getContentSize().height;
+        
         auto operat_board_l = Sprite::create("maps/openrate_back_l.png");
-        operat_board_l->setPosition(Vec2(visibleSize.width / 2, operat_board_l->getContentSize().height / 2));
+        operat_board_l->setPosition(operat_board_l->getContentSize() / 2);
         _controlLayer->addChild(operat_board_l, ZORDER_MAP_GROUND, key_operate_board_tag_l);
+        
+        auto operat_board_r = Sprite::create("maps/openrate_back_r.png");
+        operat_board_r->setPosition(Vec2(visibleSize.width - operat_board_r->getContentSize().width / 2,operat_board_r->getContentSize().height / 2));
+        _controlLayer->addChild(operat_board_r, ZORDER_MAP_GROUND, key_operate_board_tag_r);
 }
 
 void GameScene::initControlLayer(){
@@ -251,22 +269,34 @@ void GameScene::onTouchesMoved(const std::vector<Touch*>& touches, Event* event)
             || diff.x <= -0.001f ||diff.y <= -0.001f){
                 _isMoved = true;
         }
-         
-        auto map = this->getChildByTag(key_map_tag);
-        auto currentPos = map->getPosition();
         
-        if (0 < (currentPos.y + diff.y) || (currentPos.y + diff.y) < _minLeftBottom.y){
-                diff.y = 0;
-        }
+        auto currentPos = _mapLayer->getPosition();
         
-        if (0 < (currentPos.x + diff.x) || (currentPos.x + diff.x) < _minLeftBottom.x){
+        if (GAME_STATUS_INUSERTURN == _gameStatus){
+                 if (_maxFrameShow.getMaxY() < (currentPos.y + diff.y)
+                     || (currentPos.y + diff.y) < _maxFrameShow.getMinY()){
+                         diff.y = 0;
+                 }
+        
+                if (_maxFrameShow.getMaxX() < (currentPos.x + diff.x)
+                    || (currentPos.x + diff.x) < _maxFrameShow.getMinX()){
+                        diff.x = 0;
+                }
+        }else{
                 diff.x = 0;
+                printf("=(%2.f, %2.f)=", _minFrameShow.getMaxY(), _minFrameShow.getMinY());
+                if (_minFrameShow.getMaxY() < (currentPos.y + diff.y)
+                    || (currentPos.y + diff.y) < _minFrameShow.getMinY()){
+                        diff.y = 0;
+                }
         }
         
-        map->setPosition(currentPos + diff);
+       
+        
+        _mapLayer->setPosition(currentPos + diff);
 }
 
-void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event){        
+void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event){
         
         if (_isMoved || _isPalyingAnim
             ||_gameStatus != GAME_STATUS_INUSERTURN) {
@@ -276,8 +306,7 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         
         auto touch = touches[0];
         auto position = touch->getLocation();
-        auto map = this->getChildByTag(key_map_tag);
-        Vec2 pos_in_map = map->convertToNodeSpace(position);
+        Vec2 pos_in_map = _mapLayer->convertToNodeSpace(position);
         
         if (pos_in_map.x < 0 || pos_in_map.y < 0){
                 return;
@@ -296,8 +325,7 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
 }
 
 void GameScene::tryAgain(){
-        auto layer = this->getChildByTag(key_map_tag);
-        layer->removeFromParentAndCleanup(true);
+        _mapLayer->removeFromParentAndCleanup(true);
         
         _curGameData = _theGameLogic->resetInitData();
         this->initMapSize(_curGameData);

@@ -51,14 +51,14 @@ std::string ANIM_NAME_DEFEATED_SHOW[2][8] = {
                 "xunshoushi_hit2", "xunshoushi_hit2"}
 };
 
-Color4F AreaBackGroundColors[] = {Color4F((float)0xCE/0xff, (float)0x84/0xff, (float)0x39/0xff, 1),
-        Color4F((float)0xD7/0xff, (float)0x45/0xff, (float)0x13/0xff, 1),
-        Color4F((float)0xE0/0xff, (float)0xE9/0xff, (float)0x83/0xff, 1),
-        Color4F((float)0x6F/0xff, (float)0xCF/0xff, (float)0x00/0xff, 1),
-        Color4F((float)0x84/0xff, (float)0x6F/0xff, (float)0xE0/0xff, 1),
-        Color4F((float)0xE0/0xff, (float)0x00/0xff, (float)0xBC/0xff, 1),
-        Color4F((float)0x44/0xff, (float)0x6F/0xff, (float)0x00/0xff, 1),
-        Color4F((float)0x6F/0xff, (float)0xA0/0xff, (float)0xE0/0xff, 1)};
+Color4F AreaBackGroundColors[] = {Color4F((float)200/255, (float)180/255, (float)20/255, 1),//huang
+        Color4F((float)200/255, 0.f, 0.f, 1),//hong
+        Color4F((float)220/255, (float)100/255, (float)0.f, 1),//chengse
+        Color4F((float)140/255, (float)180/255, (float)80/255, 1),//qianlv
+        Color4F((float)100/255, 0.f, (float)220/255, 1),//zise
+        Color4F((float)230/255, (float)50/255, (float)230/255, 1),//fenhong
+        Color4F((float)10/255, (float)90/255, (float)60/255, 1),//shenglv
+        Color4F((float)0.f, (float)80/255, (float)220/255, 1)};//langse
 
 Color4F border_color = Color4F(0.0, 0.0, 0.0, 1.0);
 Color4F selected_color = Color4F(0.2, 0.0, 0.0, 0.7);

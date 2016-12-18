@@ -36,7 +36,7 @@ enum{
 
 
 #pragma mark - constructor
-#define MAP_SCALE_V    1.6f
+#define MAP_SCALE_V    1.4f
 #define MAP_BACK_SIZE  2.0f
 
 int GameScene::_playerNumber = 2;
@@ -223,6 +223,7 @@ void GameScene::initOperateBoard(){
         auto end_turn_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
         end_turn_btn->cocos2d::Node::setScale(1.2f);
         end_turn_btn->setTitleText("END TURN");
+        end_turn_btn->setTitleFontSize(12);
         end_turn_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuEndTurn, this));
         end_turn_btn->setPosition(Vec2(operat_board_m->getContentSize().width - 48 - end_turn_btn->getContentSize().width / 2,
                                  operat_board_m->getContentSize().height / 2));
@@ -509,10 +510,17 @@ void GameScene::afterRobootSupply(){
 
 void GameScene::gameAction(){
         FightResultData* res_data = _theGameLogic->startRobootAttack();
+        
         if (nullptr == res_data || res_data->_result == ATTACK_RES_NONE){
-                _mapLayer->setScale(MAP_SCALE_V);
-                _endTurnTipsLayer->setVisible(true);
-                _gameStatus = GAME_STATUS_INUSERTURN;
+                auto visible_size = Director::getInstance()->getVisibleSize();
+                _mapLayer->setPosition(visible_size);
+                auto scale = ScaleTo::create(0.3, MAP_SCALE_V);
+                _mapLayer->runAction(Sequence::create(scale, CallFunc::create( [&](){
+                        _endTurnTipsLayer->setVisible(true);
+                        _gameStatus = GAME_STATUS_INUSERTURN;
+                        _animationLayer->setVisible(false);
+                }), NULL));
+                
                 return;
         }
         
@@ -792,16 +800,24 @@ void GameScene::menuEndTurn(Ref* pSender){
         if (_isPalyingAnim){
                 return;
         }
-        auto visible_size = Director::getInstance()->getVisibleSize();
-        _mapLayer->setScale(1.f);
-        _mapLayer->setPosition(visible_size);
-        _endTurnTipsLayer->setVisible(false);
-        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);
         
         _theGameLogic->clearManulAction();
-        _gameStatus = GAME_STATUS_AIRUNNING;
-        CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootSupply, this));
-        this->playSupplyAnimation(callback);
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);
+        
+        auto visible_size = Director::getInstance()->getVisibleSize();
+        _mapLayer->setPosition(visible_size);
+        
+        auto scale = ScaleTo::create(0.3, 1.f);
+        _mapLayer->runAction(Sequence::create(scale, CallFunc::create( [&](){
+                _endTurnTipsLayer->setVisible(false);
+                _gameStatus = GAME_STATUS_AIRUNNING;
+                
+                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootSupply, this));
+                this->playSupplyAnimation(callback);
+                
+        }), NULL));
+        
+        
 }
 
 void GameScene::createNewMap(Ref* pSender){

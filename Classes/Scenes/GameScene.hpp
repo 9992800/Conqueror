@@ -88,6 +88,7 @@ private:
         LayerColor      *_mapLayer;
         Rect            _minFrameShow, _maxFrameShow;
         cocos2d::ui::Button*         _animCtlBtn;
+        Sprite*         _curPlayerSupFlag;
 };
 
 

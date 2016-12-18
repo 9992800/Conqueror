@@ -14,7 +14,7 @@ bool DiceGame::init(){
         return true;
 }
 
-GameData* DiceGame::initGameData(int num){
+GameData* DiceGame::initGameData(int num, int character, int color){
         _data =  GameData::create(num);
         
         this->makeNewMapData();
@@ -34,6 +34,35 @@ GameData* DiceGame::initGameData(int num){
                         _data->_mapData[i] = 1;
         }
         _data->retain();
+        
+        
+        
+        std::string player_flag_img = StringUtils::format("maps/supply_back_%d.png", color);
+        Color4F player_color = AreaBackGroundColors[color];
+        
+        for (int i = 0; i < num; i++){
+                std::string str = StringUtils::format("maps/supply_back_%d.png", i);
+                _data->_player[i]->setFlagImg(str);
+                Color4F cc = AreaBackGroundColors[i];
+                _data->_player[i]->setAreaColor(cc);
+                _data->_player[i]->setPosCharactorIdx(i);
+        }
+        
+        
+        if (color < num){
+                std::string str = _data->_player[_data->_userId]->getFlagImge();
+                _data->_player[color]->setFlagImg(str);
+                Color4F cc = _data->_player[_data->_userId]->getAreaColor();
+                _data->_player[color]->setAreaColor(cc);
+        }
+        _data->_player[_data->_userId]->setFlagImg(player_flag_img);
+        _data->_player[_data->_userId]->setAreaColor(player_color);
+        
+        if (character < num){
+                int idx = _data->_player[_data->_userId]->getPosCharactorIdx();
+                _data->_player[character]->setPosCharactorIdx(idx);
+        }
+        _data->_player[_data->_userId]->setPosCharactorIdx(character);
         
         _clonedGameData = GameData::createWithData(_data);
         _clonedGameData->retain();

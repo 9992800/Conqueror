@@ -65,8 +65,7 @@ bool GameScene::init()
         _theGameLogic = DiceGame::create();
         _theGameLogic->retain();
         
-        _curGameData = _theGameLogic->initGameData(_playerNumber);
-        _curGameData->initPlayerChAndColor(_charactorIdx, _colorIdx);
+        _curGameData = _theGameLogic->initGameData(_playerNumber, _charactorIdx, _colorIdx); 
        
         this->initControlLayer();
         this->initMapSize(_curGameData);
@@ -164,11 +163,12 @@ void GameScene::initOperateBoard(){
         _controlLayer->addChild(operat_board_l, ZORDER_MAP_GROUND, key_operate_board_tag_l);
         
         _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
-        _animCtlBtn = cocos2d::ui::Button::create("maps/close_anim.png",
-                                                    "maps/close_anim.png",
-                                                    "maps/open_anim.png");
+        _animCtlBtn = cocos2d::ui::Button::create("maps/open_anim.png",
+                                                    "maps/open_anim.png",
+                                                    "maps/close_anim.png");
         
         _animCtlBtn->setEnabled(_animationIsOn);
+        _animCtlBtn->setBright(_animationIsOn);
         _animCtlBtn->addClickEventListener(CC_CALLBACK_1(GameScene::menuAnimSwitch, this));
         _animCtlBtn->setPosition(operat_board_l->getContentSize() / 2);
         operat_board_l->addChild(_animCtlBtn);
@@ -232,7 +232,7 @@ void GameScene::initOperateBoard(){
         auto end_turn_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
         end_turn_btn->cocos2d::Node::setScale(1.2f);
         end_turn_btn->setTitleText("END TURN");
-        end_turn_btn->setTitleFontSize(24);
+        end_turn_btn->setTitleFontSize(16);
         end_turn_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuEndTurn, this));
         end_turn_btn->setPosition(Vec2(operat_board_m->getContentSize().width - 48 - end_turn_btn->getContentSize().width / 2,
                                  operat_board_m->getContentSize().height / 2));
@@ -414,6 +414,7 @@ void GameScene::tryAgain(){
         this->initMapSize(_curGameData);
         
         this->refreshSupplyDiceNum();
+        _endTurnTipsLayer->setVisible(true);
 }
 
 #pragma mark - animation 
@@ -830,8 +831,7 @@ void GameScene::menuEndTurn(Ref* pSender){
 
 void GameScene::createNewMap(Ref* pSender){
         _curGameData->release();
-        _curGameData = _theGameLogic->initGameData(_playerNumber);
-        _curGameData->initPlayerChAndColor(_charactorIdx, _colorIdx);
+        _curGameData = _theGameLogic->initGameData(_playerNumber, _charactorIdx, _colorIdx);
         this->removeChildByTag(key_map_back_layer);
         this->initMapSize(_curGameData);
         
@@ -883,6 +883,7 @@ void GameScene::gameOver(Ref* btn, int result){
 void GameScene::menuAnimSwitch(Ref* btn){
         _animationIsOn = !_animationIsOn;
         _animCtlBtn->setEnabled(_animationIsOn);
+        _animCtlBtn->setBright(_animationIsOn);
 
         if (!_animationIsOn){
                 //TODO:: finish animation quickly.

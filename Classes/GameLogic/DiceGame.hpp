@@ -23,7 +23,7 @@ public:
                 _clonedGameData->release();
         }
 public:
-        GameData* initGameData(int num);
+        GameData* initGameData(int, int, int);
         GameData* resetInitData();        
         FightResultData* startPlayerAttack(int cell_sel);
         FightResultData* startRobootAttack();

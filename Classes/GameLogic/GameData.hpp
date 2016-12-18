@@ -54,9 +54,7 @@ public:
         inline bool init(){return true;}
         bool init(GameData* data);
         ~GameData();
-        
-        void initPlayerChAndColor(int, int);
-        
+                
 public:
         void reshDataByMapInfo(TMXTiledMap* map);
         void reshDataByBackGrnd(Node* backGrd);

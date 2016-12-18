@@ -200,32 +200,4 @@ void GameData::reshDataByMapInfo(TMXTiledMap* map){
                 map->addChild(dice, AREA_SPRITE_ZORDER, AREA_TAG_ID_INMAP(i));
         }
 }
-
-void GameData::initPlayerChAndColor(int character, int color){
-        std::string player_flag_img = StringUtils::format("maps/supply_back_%d.png", color);
-        Color4F player_color = AreaBackGroundColors[color];
-        
-        for (int i = 0; i < _curPlayerNum; i++){
-                std::string str = StringUtils::format("maps/supply_back_%d.png", i);
-                this->_player[i]->setFlagImg(str);
-                Color4F cc = AreaBackGroundColors[i];
-                this->_player[i]->setAreaColor(cc);
-                this->_player[i]->setPosCharactorIdx(i);
-        }
-        
-        
-        if (color < _curPlayerNum){
-                std::string str = this->_player[_userId]->getFlagImge();
-                this->_player[color]->setFlagImg(str);
-                Color4F cc = this->_player[_userId]->getAreaColor();
-                this->_player[color]->setAreaColor(cc);
-        }
-        this->_player[_userId]->setFlagImg(player_flag_img);
-        this->_player[_userId]->setAreaColor(player_color);
-        
-        if (character < _curPlayerNum){
-                int idx = this->_player[_userId]->getPosCharactorIdx();
-                this->_player[character]->setPosCharactorIdx(idx);
-        }
-        this->_player[_userId]->setPosCharactorIdx(character);
-}
+ 

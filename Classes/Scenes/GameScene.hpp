@@ -45,6 +45,7 @@ private:
         void afterRobootSupply();
         void afterPlayerSupply();
         void refreshAreaTcShow(std::map<int, int>);
+        void refreshSupplyDiceNum();
         void gameAction();
 
         
@@ -65,18 +66,18 @@ private:
         void Fighting(FightResultData*, CallFunc*);
         void WinnerBack(FightResultData*, CallFunc*);
         void ShowResultData(FightResultData*);
+        
 private:
         static int      _playerNumber, _charactorIdx, _colorIdx;
         Layer*          _controlLayer;
         Layer*          _diceResultLayer;
+        Layer*          _endTurnTipsLayer;
         Sprite*         _animationLayer;
         DiceGame*       _theGameLogic;
         bool            _isMoved;
         bool            _isPalyingAnim; 
         Sprite*         _allFightingCharacters[FIGH_ANIM_MAX][MAX_DICE_PER_AREA];
         int             _gameStatus;
-        MenuItemImage*  _endTurnMenuItem;
-        MenuItemImage*  _startPlayMenuItem;
         bool            _animationIsOn;
         Size            _showAreaSize;
         Vec2            _invaderPos[8], _keeperPos[8];

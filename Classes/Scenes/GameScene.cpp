@@ -36,7 +36,9 @@ enum{
 
 
 #pragma mark - constructor
-#define MAP_SCALE_V 1.6f
+#define MAP_SCALE_V    1.6f
+#define MAP_BACK_SIZE  2.0f
+
 int GameScene::_playerNumber = 2;
 int GameScene::_charactorIdx = 0;
 int GameScene::_colorIdx = 0;
@@ -93,7 +95,7 @@ void GameScene::initMapSize(GameData* data){
         data->reshDataByBackGrnd(_mapLayer);
         _mapLayer->setPosition(visibleSize);
         
-        auto back_ground = LayerColor::create(TILE_COLOR_BACKGRUND, visibleSize.width * 2 , visibleSize.height * 2);
+        auto back_ground = LayerColor::create(TILE_COLOR_BACKGRUND, visibleSize.width * MAP_BACK_SIZE , visibleSize.height * MAP_BACK_SIZE);
         back_ground->addChild(_mapLayer);
         back_ground->setIgnoreAnchorPointForPosition(false);
         back_ground->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
@@ -101,7 +103,8 @@ void GameScene::initMapSize(GameData* data){
         this->addChild(back_ground, ZORDER_MAP_GROUND, key_map_back_layer);
         
         _minFrameShow = Rect(0, visibleSize.height - 30, 0, 60);
-        _maxFrameShow = Rect(visibleSize.width * 0.6, visibleSize.height * 0.6, visibleSize.width * 1.4, visibleSize.height * 1.4);
+        float gap = (MAP_SCALE_V - 1) ;
+        _maxFrameShow = Rect(visibleSize.width * (1 - gap * 0.5), visibleSize.height * (1 - gap * 0.5), visibleSize.width * gap * 2, visibleSize.height * gap * 2);
 }
 
 
@@ -111,15 +114,12 @@ void GameScene::initAreaTcShow(){
         auto p_size = player_0->getContentSize();
         auto roll = cocos2d::ui::Scale9Sprite::create("maps/supply_back_roll.png");
         
-        _showAreaSize.height -= p_size.height;
-        
         auto bakc_size = Size(42 + p_size.width * _playerNumber,
                               roll->getContentSize().height);
         roll->setContentSize(bakc_size);
         roll->setCapInsets(Rect(21, 6, 27, 14));
         roll->setPosition(Vec2(visible_size.width / 2,
                                visible_size.height - bakc_size.height/2));
-        
         
         for (int i = 0; i < _playerNumber; i++){
                 int player_uid = _curGameData->_jun[i];
@@ -184,7 +184,7 @@ void GameScene::initOperateBoard(){
         
         operat_board_m->addChild(first_tip_layer);
         
-         auto OK_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
+        auto OK_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
         OK_btn->cocos2d::Node::setScale(1.2f);
         OK_btn->setTitleText("YES");
         OK_btn->setTitleFontSize(24);
@@ -202,6 +202,31 @@ void GameScene::initOperateBoard(){
                             operat_board_m->getContentSize().height / 2));
         NO_btn->addClickEventListener(CC_CALLBACK_1(GameScene::createNewMap, this));
         first_tip_layer->addChild(NO_btn);
+        
+        
+        
+        _endTurnTipsLayer = Layer::create();
+        _endTurnTipsLayer->setContentSize(operat_board_m->getContentSize());
+        _endTurnTipsLayer->setPosition(operat_board_m->getContentSize() / 2);
+        _endTurnTipsLayer->setIgnoreAnchorPointForPosition(false);
+        _endTurnTipsLayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        _endTurnTipsLayer->setVisible(false);
+        
+        
+        auto attack_tips = Label::createWithSystemFont("1.Click your area. 2.Click neighbor to attack", "", 30);
+        attack_tips->setPosition(Vec2(attack_tips->getContentSize().width / 2 + 20,
+                               _endTurnTipsLayer->getContentSize().height / 2));
+        _endTurnTipsLayer->addChild(attack_tips);
+        
+        operat_board_m->addChild(_endTurnTipsLayer);
+        
+        auto end_turn_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
+        end_turn_btn->cocos2d::Node::setScale(1.2f);
+        end_turn_btn->setTitleText("END TURN");
+        end_turn_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuEndTurn, this));
+        end_turn_btn->setPosition(Vec2(operat_board_m->getContentSize().width - 48 - end_turn_btn->getContentSize().width / 2,
+                                 operat_board_m->getContentSize().height / 2));
+        _endTurnTipsLayer->addChild(end_turn_btn);
 }
 
 void GameScene::initControlLayer(){
@@ -218,8 +243,9 @@ void GameScene::initControlLayer(){
         
         this->initOperateBoard();
         
-        this->initAreaTcShow();
-        
+        auto player_0 = cocos2d::ui::ImageView::create("maps/supply_back_0.png");
+        auto p_size = player_0->getContentSize();
+        _showAreaSize.height -= p_size.height;
         _showAreaSize.width *= 0.9;
         
         this->addChild(_controlLayer, ZORDER_CRTL_LAYERS, key_ctrl_layer_tag);
@@ -362,14 +388,23 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         }
 }
 
+void GameScene::refreshSupplyDiceNum(){
+        for (std::map<int, Label*>::iterator it = _supplyLabelMap.begin();
+             it != _supplyLabelMap.end(); it++){
+                int p_uid = it->first;
+                std::string s_u = StringUtils::format("X%d",
+                                                      _curGameData->_player[p_uid]->getAreaTc());
+                it->second->setString(s_u);
+        }
+}
+
 void GameScene::tryAgain(){
-        _mapLayer->removeFromParentAndCleanup(true);
+        this->removeChildByTag(key_map_back_layer);
         
         _curGameData = _theGameLogic->resetInitData();
         this->initMapSize(_curGameData);
         
-        _startPlayMenuItem->setVisible(true);
-        _endTurnMenuItem->setVisible(false);
+        this->refreshSupplyDiceNum();
 }
 
 #pragma mark - animation 
@@ -475,7 +510,8 @@ void GameScene::afterRobootSupply(){
 void GameScene::gameAction(){
         FightResultData* res_data = _theGameLogic->startRobootAttack();
         if (nullptr == res_data || res_data->_result == ATTACK_RES_NONE){
-                //TODO::show tips and end turns
+                _mapLayer->setScale(MAP_SCALE_V);
+                _endTurnTipsLayer->setVisible(true);
                 _gameStatus = GAME_STATUS_INUSERTURN;
                 return;
         }
@@ -756,10 +792,12 @@ void GameScene::menuEndTurn(Ref* pSender){
         if (_isPalyingAnim){
                 return;
         }
-        
+        auto visible_size = Director::getInstance()->getVisibleSize();
+        _mapLayer->setScale(1.f);
+        _mapLayer->setPosition(visible_size);
+        _endTurnTipsLayer->setVisible(false);
         CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);
         
-        ((MenuItemImage*)pSender)->setVisible(false);
         _theGameLogic->clearManulAction();
         _gameStatus = GAME_STATUS_AIRUNNING;
         CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootSupply, this));
@@ -773,16 +811,11 @@ void GameScene::createNewMap(Ref* pSender){
         this->removeChildByTag(key_map_back_layer);
         this->initMapSize(_curGameData);
         
-        for (std::map<int, Label*>::iterator it = _supplyLabelMap.begin();
-             it != _supplyLabelMap.end(); it++){
-                int p_uid = it->first;
-                std::string s_u = StringUtils::format("X%d",
-                                                      _curGameData->_player[p_uid]->getAreaTc());
-                it->second->setString(s_u);
-        }
+        this->refreshSupplyDiceNum();
 }
 
 void GameScene::menuStartGame(Ref* pSender, Layer* parent){
+        this->initAreaTcShow();
         _theGameLogic->initHistoryRecord();
         parent->setVisible(false);
         CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);

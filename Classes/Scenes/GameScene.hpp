@@ -49,7 +49,8 @@ private:
 
         
         void menuEndTurn(Ref* pSender);
-        void menuStartGame(Ref* pSender);
+        void createNewMap(Ref* pSender);
+        void menuStartGame(Ref* pSender, Layer*);
         void menuExit(Ref* pSender);
         void gameExit(Ref*, int);
         void gameOver(Ref*, int);

@@ -104,7 +104,7 @@ void GameScene::initMapSize(GameData* data){
         
         _minFrameShow = Rect(0, visibleSize.height - 30, 0, 60);
         float gap = (MAP_SCALE_V - 1) ;
-        _maxFrameShow = Rect(visibleSize.width * (1 - gap * 0.5), visibleSize.height * (1 - gap * 0.5), visibleSize.width * gap * 2, visibleSize.height * gap * 2);
+        _maxFrameShow = Rect(visibleSize.width * (1 - gap * 0.5), visibleSize.height * (1 - gap * 0.5), visibleSize.width * gap, visibleSize.height * gap);
 }
 
 

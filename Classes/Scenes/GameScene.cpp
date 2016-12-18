@@ -11,8 +11,7 @@
 #include "ScreenCoordinate.hpp"
 #include "SimpleAudioEngine.h"
 #include "PopUpOkCancelDialog.hpp"
-#include "PopUpOkDialog.hpp"
-#include "ui/CocosGUI.h" 
+#include "PopUpOkDialog.hpp" 
 
 enum{
         ZORDER_BACK_GROUND = 0,
@@ -164,6 +163,16 @@ void GameScene::initOperateBoard(){
         operat_board_l->setPosition(operat_board_l->getContentSize() / 2);
         _controlLayer->addChild(operat_board_l, ZORDER_MAP_GROUND, key_operate_board_tag_l);
         
+        _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
+        _animCtlBtn = cocos2d::ui::Button::create("maps/close_anim.png",
+                                                    "maps/close_anim.png",
+                                                    "maps/open_anim.png");
+        
+        _animCtlBtn->setEnabled(_animationIsOn);
+        _animCtlBtn->addClickEventListener(CC_CALLBACK_1(GameScene::menuAnimSwitch, this));
+        _animCtlBtn->setPosition(operat_board_l->getContentSize() / 2);
+        operat_board_l->addChild(_animCtlBtn);
+        
         auto operat_board_r = Sprite::create("maps/openrate_back_r.png");
         operat_board_r->setPosition(Vec2(visibleSize.width - operat_board_r->getContentSize().width / 2,
                                          operat_board_r->getContentSize().height / 2));
@@ -187,7 +196,7 @@ void GameScene::initOperateBoard(){
         auto OK_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
         OK_btn->cocos2d::Node::setScale(1.2f);
         OK_btn->setTitleText("YES");
-        OK_btn->setTitleFontSize(24);
+        OK_btn->setTitleFontSize(18);
         OK_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuStartGame, this, first_tip_layer));
         OK_btn->setPosition(Vec2(tips->getContentSize().width + 48 + OK_btn->getContentSize().width / 2,
                                  operat_board_m->getContentSize().height / 2));
@@ -223,7 +232,7 @@ void GameScene::initOperateBoard(){
         auto end_turn_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
         end_turn_btn->cocos2d::Node::setScale(1.2f);
         end_turn_btn->setTitleText("END TURN");
-        end_turn_btn->setTitleFontSize(12);
+        end_turn_btn->setTitleFontSize(24);
         end_turn_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuEndTurn, this));
         end_turn_btn->setPosition(Vec2(operat_board_m->getContentSize().width - 48 - end_turn_btn->getContentSize().width / 2,
                                  operat_board_m->getContentSize().height / 2));
@@ -233,7 +242,6 @@ void GameScene::initOperateBoard(){
 void GameScene::initControlLayer(){
         
         
-        _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
         int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
         
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
@@ -873,14 +881,11 @@ void GameScene::gameOver(Ref* btn, int result){
 }
 
 void GameScene::menuAnimSwitch(Ref* btn){
-        auto label = (Label*)((Node*)btn)->getChildByTag(111);
-        if (_animationIsOn){
-                _animationIsOn = false;
-                label->setString("打开动画");
-                _animationLayer->setVisible(false);
-        }else{
-                label->setString("关闭动画");
-                _animationIsOn = true;
+        _animationIsOn = !_animationIsOn;
+        _animCtlBtn->setEnabled(_animationIsOn);
+
+        if (!_animationIsOn){
+                //TODO:: finish animation quickly.
         }
         
         UserDefault::getInstance()->setBoolForKey(ANIMATION_SWITCH_KEY, _animationIsOn);

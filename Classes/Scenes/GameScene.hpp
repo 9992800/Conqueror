@@ -11,6 +11,7 @@
 #include "DiceGame.hpp"
 #include "cocos2d.h"
 #include "FightResultData.hpp"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
@@ -85,6 +86,7 @@ private:
         std::map<int, Label*> _supplyLabelMap;
         LayerColor      *_mapLayer;
         Rect            _minFrameShow, _maxFrameShow;
+        cocos2d::ui::Button*         _animCtlBtn;
 };
 
 

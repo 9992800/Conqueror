@@ -43,8 +43,7 @@ private:
         void afterRobootBattle(FightResultData*);
         void playBattleAnimation(FightResultData*, CallFunc*, bool);
         void playSupplyAnimation(CallFunc*);
-        void afterRobootSupply();
-        void afterPlayerSupply();
+        void afterSupply();
         void refreshAreaTcShow(std::map<int, int>);
         void refreshSupplyDiceNum();
         void gameAction();
@@ -87,7 +86,8 @@ private:
         std::map<int, Label*> _supplyLabelMap;
         LayerColor      *_mapLayer;
         Rect            _minFrameShow, _maxFrameShow;
-        cocos2d::ui::Button*         _animCtlBtn;
+        cocos2d::ui::Button*         _animCtlBtn, *_addArmyBtn;
+        int             _addtionalSupplyTimes;
         Sprite*         _curPlayerSupFlag;
 };
 

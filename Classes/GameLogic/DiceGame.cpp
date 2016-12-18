@@ -441,7 +441,7 @@ int DiceGame::set_area_tc(int pid){
         
         player->setAreaTc(tc);         
         
-        return tc;
+        return player->getAreaTc();
 }
 
 #pragma mark - game logic process

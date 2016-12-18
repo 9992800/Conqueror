@@ -62,6 +62,7 @@ bool GameScene::init()
         if (!Layer::init()){
                 return false;
         }
+        _gameStatus = GAME_STATUS_INIT;
         _theGameLogic = DiceGame::create();
         _theGameLogic->retain();
         
@@ -77,7 +78,7 @@ bool GameScene::init()
 #pragma mark - initilization
 
 void GameScene::initMapSize(GameData* data){
-        _gameStatus = GAME_STATUS_INIT;
+        
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         Vec2 center = origin + visibleSize / 2;
@@ -143,6 +144,9 @@ void GameScene::initAreaTcShow(){
                 p->addChild(character);
                 
                 _supplyLabelMap.insert(std::pair<int, Label*>(player_uid, numbser));
+                if (player_uid == _curGameData->_userId){
+                        _curPlayerSupFlag = p;
+                }
         }
         
         _controlLayer->addChild(roll, ZORDER_MAP_GROUND, key_roll_show_tag);
@@ -173,9 +177,9 @@ void GameScene::initOperateBoard(){
         _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
         _animCtlBtn = cocos2d::ui::Button::create();
         if (_animationIsOn)
-                _animCtlBtn->loadTextureNormal("maps/close_anim.png");
-        else
                 _animCtlBtn->loadTextureNormal("maps/open_anim.png");
+        else
+                _animCtlBtn->loadTextureNormal("maps/close_anim.png");
         
         _animCtlBtn->addClickEventListener(CC_CALLBACK_1(GameScene::menuAnimSwitch, this));
         _animCtlBtn->setPosition(operat_board_l->getContentSize() / 2);
@@ -186,10 +190,11 @@ void GameScene::initOperateBoard(){
                                          operat_board_r->getContentSize().height * 0.6));
         operat_board->addChild(operat_board_r, 1);
         
-        auto add_army_btn = cocos2d::ui::Button::create("maps/addtion_supply_arm.png");
-        add_army_btn->setPosition(operat_board_r->getContentSize() / 2);
-        add_army_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuAddArmy, this));
-        operat_board_r->addChild(add_army_btn);
+        _addtionalSupplyTimes = 1;
+        _addArmyBtn = cocos2d::ui::Button::create("maps/addtion_supply_arm.png");
+        _addArmyBtn->setPosition(operat_board_r->getContentSize() / 2);
+        _addArmyBtn->addClickEventListener(CC_CALLBACK_1(GameScene::menuAddArmy, this));
+        operat_board_r->addChild(_addArmyBtn);
        
         
         auto first_tip_layer = Layer::create();
@@ -523,11 +528,9 @@ void GameScene::refreshAreaTcShow(std::map<int, int> survival){
         }
 }
 
-void GameScene::afterPlayerSupply(){
-        _theGameLogic->next_player();
-        this->gameAction();
-}
-void GameScene::afterRobootSupply(){
+void GameScene::afterSupply(){
+        
+        _curGameData->_player[_curGameData->_userId]->useTheAddSupply();
         _theGameLogic->next_player();
         this->gameAction();
 }
@@ -555,7 +558,7 @@ void GameScene::gameAction(){
                 
         }else if(ATTACK_RES_GOTSUPPLY == res_data->_result){
                 
-                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootSupply, this));
+                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterSupply, this));
                 this->playSupplyAnimation(callback);
         }
 }
@@ -836,7 +839,7 @@ void GameScene::menuEndTurn(Ref* pSender){
                 _endTurnTipsLayer->setVisible(false);
                 _gameStatus = GAME_STATUS_AIRUNNING;
                 
-                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootSupply, this));
+                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterSupply, this));
                 this->playSupplyAnimation(callback);
                 
         }), NULL));
@@ -898,9 +901,9 @@ void GameScene::gameOver(Ref* btn, int result){
 void GameScene::menuAnimSwitch(Ref* btn){
         _animationIsOn = !_animationIsOn;
         if (_animationIsOn)
-                _animCtlBtn->loadTextureNormal("maps/close_anim.png");
-        else
                 _animCtlBtn->loadTextureNormal("maps/open_anim.png");
+        else
+                _animCtlBtn->loadTextureNormal("maps/close_anim.png");
         
         if (!_animationIsOn){
                 //TODO:: finish animation quickly.
@@ -911,8 +914,25 @@ void GameScene::menuAnimSwitch(Ref* btn){
 }
 
 void GameScene::menuAddArmy(Ref* btn){
-        int cur_tc = _curGameData->_player[_curGameData->_userId]->getAreaTc();
-        _curGameData->_player[_curGameData->_userId]->setAreaTc(cur_tc + TC_VALUE_ONE_SUPPLY);
-        //TODO::minus supply no available ,and make ture one times
-        this->refreshSupplyDiceNum();
+        if (GAME_STATUS_INUSERTURN != _gameStatus
+            ||_addtionalSupplyTimes-- <= 0){
+                return;
+        }
+        
+        _curGameData->_player[_curGameData->_userId]->addMoreSupply();
+        auto parent = _addArmyBtn->getParent();
+        Vec2 pos = parent->convertToNodeSpace(_curPlayerSupFlag->getParent()->convertToWorldSpace(_curPlayerSupFlag->getPosition()));
+        auto move = MoveTo::create(0.8,  pos);
+        auto scale = ScaleTo::create(0.8, 0.6f);
+        auto sup_btn = _addArmyBtn->clone();
+                sup_btn->runAction(Sequence::create( Spawn::create(move, scale, NULL),
+                                            CallFunc::create( [this, sup_btn](){
+                if (_addtionalSupplyTimes <= 0){
+                        _addArmyBtn->setVisible(false);
+                }
+
+                this->refreshSupplyDiceNum();
+                auto scale_s = ScaleBy::create(0.4, 1.4f);
+                _curPlayerSupFlag->runAction(Sequence::create(scale_s, scale_s->reverse(), NULL));
+        }), NULL));
 }

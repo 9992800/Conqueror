@@ -13,7 +13,8 @@ GamePlayer::GamePlayer(int id)
 ,_area_tc(0)
 ,_dice_c(0)
 ,_dice_jun(id)
-,_stock(0){
+,_stock(0)
+,_addtionalSupply(0){
         _gid_inmap = id + 2;
 }
 
@@ -32,4 +33,5 @@ GamePlayer::GamePlayer(GamePlayer* obj){
         this->_flagImg          = obj->_flagImg;
         this->_areaColor        = obj->_areaColor;
         this->_charactorIdx     = obj->_charactorIdx;
+        this->_addtionalSupply  = obj->_addtionalSupply;
 }

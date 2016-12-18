@@ -25,7 +25,7 @@ public:
                 _area_tc = tc;
         }
         inline int getAreaTc(){
-                return _area_tc;
+                return _area_tc + _addtionalSupply;
         }
         inline void increaseAreaC(){
                 ++_area_c;
@@ -49,7 +49,7 @@ public:
                 _dice_c = 0;
         }
         inline void setStock(){
-                _stock += _area_tc;
+                _stock += (_area_tc + _addtionalSupply);
                 if (_stock >= STOCK_MAX){
                         _stock = STOCK_MAX;
                 }
@@ -87,6 +87,12 @@ public:
                 return this->_charactorIdx;
         }
         
+        inline void addMoreSupply(){
+                _addtionalSupply += TC_VALUE_ONE_SUPPLY;
+        }
+        inline void useTheAddSupply(){
+                _addtionalSupply = 0;
+        }
 private:
         int     _player_id;
         int     _area_c;
@@ -97,6 +103,7 @@ private:
         std::string _flagImg;
         Color4F _areaColor;
         int     _charactorIdx;
+        int     _addtionalSupply;
 private:
         int     _gid_inmap;
 };

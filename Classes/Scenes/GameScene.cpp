@@ -23,7 +23,8 @@ enum{
         ZORDER_DIALOG_LAYER
 };
 enum{
-        key_ctrl_layer_tag = 1,
+        key_map_back_layer = 1,
+        key_ctrl_layer_tag,
         key_anim_layer_tag,
         key_dice_layer_tag,
         key_dialog_layer_tag,
@@ -65,8 +66,7 @@ bool GameScene::init()
         
         _curGameData = _theGameLogic->initGameData(_playerNumber);
         _curGameData->initPlayerChAndColor(_charactorIdx, _colorIdx);
-        
-        _showAreaSize = Director::getInstance()->getVisibleSize();
+       
         this->initControlLayer();
         this->initMapSize(_curGameData);
         this->initAnimationLayer();
@@ -82,7 +82,6 @@ void GameScene::initMapSize(GameData* data){
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         Vec2 center = origin + visibleSize / 2;
         
-        _showAreaSize.width *= 0.9;
         _mapLayer = LayerColor::create();
         _mapLayer->changeWidthAndHeight(_showAreaSize.width ,
                                         _showAreaSize.height);
@@ -99,7 +98,7 @@ void GameScene::initMapSize(GameData* data){
         back_ground->setIgnoreAnchorPointForPosition(false);
         back_ground->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         back_ground->setPosition(visibleSize / 2);
-        this->addChild(back_ground, ZORDER_MAP_GROUND);
+        this->addChild(back_ground, ZORDER_MAP_GROUND, key_map_back_layer);
         
         _minFrameShow = Rect(0, visibleSize.height - 30, 0, 60);
         _maxFrameShow = Rect(visibleSize.width * 0.6, visibleSize.height * 0.6, visibleSize.width * 1.4, visibleSize.height * 1.4);
@@ -166,7 +165,8 @@ void GameScene::initOperateBoard(){
         _controlLayer->addChild(operat_board_l, ZORDER_MAP_GROUND, key_operate_board_tag_l);
         
         auto operat_board_r = Sprite::create("maps/openrate_back_r.png");
-        operat_board_r->setPosition(Vec2(visibleSize.width - operat_board_r->getContentSize().width / 2,operat_board_r->getContentSize().height / 2));
+        operat_board_r->setPosition(Vec2(visibleSize.width - operat_board_r->getContentSize().width / 2,
+                                         operat_board_r->getContentSize().height / 2));
         _controlLayer->addChild(operat_board_r, ZORDER_MAP_GROUND, key_operate_board_tag_r);
         
        
@@ -178,40 +178,49 @@ void GameScene::initOperateBoard(){
         first_tip_layer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         
         auto tips = Label::createWithSystemFont("Do you want to use this map?", "", 40);
-        tips->setPosition(Vec2(0, tips->getContentSize().height / 2));
+        tips->setPosition(Vec2(tips->getContentSize().width / 2 + 20,
+                               first_tip_layer->getContentSize().height / 2));
         first_tip_layer->addChild(tips);
         
         operat_board_m->addChild(first_tip_layer);
         
          auto OK_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
+        OK_btn->cocos2d::Node::setScale(1.2f);
         OK_btn->setTitleText("YES");
-        OK_btn->addClickEventListener([=](Ref* btn){
-                first_tip_layer->setVisible(false);
-                
-        });
-        OK_btn->setPosition(Vec2(tips->getContentSize().width + OK_btn->getContentSize().width / 2, operat_board_m->getContentSize().height / 2));
+        OK_btn->setTitleFontSize(24);
+        OK_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuStartGame, this, first_tip_layer));
+        OK_btn->setPosition(Vec2(tips->getContentSize().width + 48 + OK_btn->getContentSize().width / 2,
+                                 operat_board_m->getContentSize().height / 2));
         first_tip_layer->addChild(OK_btn);
         
+        
         auto NO_btn = cocos2d::ui::Button::create("DIALOG_CANCEL.png", "DIALOG_CANCEL_SEL.png");
+        NO_btn->cocos2d::Node::setScale(1.2f);
         NO_btn->setTitleText("NO");
-        NO_btn->setPosition(Vec2(OK_btn->getPosition().x + 5 + NO_btn->getContentSize().width,
+        NO_btn->setTitleFontSize(24);
+        NO_btn->setPosition(Vec2(OK_btn->getPosition().x + 48 + NO_btn->getContentSize().width,
                             operat_board_m->getContentSize().height / 2));
+        NO_btn->addClickEventListener(CC_CALLBACK_1(GameScene::createNewMap, this));
         first_tip_layer->addChild(NO_btn);
 }
 
 void GameScene::initControlLayer(){
+        
         
         _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
         int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
         
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         
+        _showAreaSize = Director::getInstance()->getVisibleSize();
         
         _controlLayer = Layer::create();
         
         this->initOperateBoard();
         
         this->initAreaTcShow();
+        
+        _showAreaSize.width *= 0.9;
         
         this->addChild(_controlLayer, ZORDER_CRTL_LAYERS, key_ctrl_layer_tag);
         
@@ -466,9 +475,8 @@ void GameScene::afterRobootSupply(){
 void GameScene::gameAction(){
         FightResultData* res_data = _theGameLogic->startRobootAttack();
         if (nullptr == res_data || res_data->_result == ATTACK_RES_NONE){
-                
+                //TODO::show tips and end turns
                 _gameStatus = GAME_STATUS_INUSERTURN;
-                _endTurnMenuItem->setVisible(true);
                 return;
         }
         
@@ -758,9 +766,25 @@ void GameScene::menuEndTurn(Ref* pSender){
         this->playSupplyAnimation(callback);
 }
 
-void GameScene::menuStartGame(Ref* pSender){
+void GameScene::createNewMap(Ref* pSender){
+        _curGameData->release();
+        _curGameData = _theGameLogic->initGameData(_playerNumber);
+        _curGameData->initPlayerChAndColor(_charactorIdx, _colorIdx);
+        this->removeChildByTag(key_map_back_layer);
+        this->initMapSize(_curGameData);
+        
+        for (std::map<int, Label*>::iterator it = _supplyLabelMap.begin();
+             it != _supplyLabelMap.end(); it++){
+                int p_uid = it->first;
+                std::string s_u = StringUtils::format("X%d",
+                                                      _curGameData->_player[p_uid]->getAreaTc());
+                it->second->setString(s_u);
+        }
+}
+
+void GameScene::menuStartGame(Ref* pSender, Layer* parent){
         _theGameLogic->initHistoryRecord();
-        ((MenuItemImage*)pSender)->setVisible(false);
+        parent->setVisible(false);
         CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);
         _gameStatus = GAME_STATUS_AIRUNNING;
         this->gameAction();

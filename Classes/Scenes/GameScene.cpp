@@ -408,13 +408,16 @@ void GameScene::refreshSupplyDiceNum(){
 }
 
 void GameScene::tryAgain(){
+        _theGameLogic->initHistoryRecord();
         this->removeChildByTag(key_map_back_layer);
         
         _curGameData = _theGameLogic->resetInitData();
         this->initMapSize(_curGameData);
         
         this->refreshSupplyDiceNum();
-        _endTurnTipsLayer->setVisible(true);
+        
+        _gameStatus = GAME_STATUS_AIRUNNING;
+        this->gameAction();
 }
 
 #pragma mark - animation 

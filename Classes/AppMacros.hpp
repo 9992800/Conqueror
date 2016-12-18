@@ -214,5 +214,6 @@ enum {
 #define USER_DEVICE_UUID        "user_device_uuid"
 
 #define TC_VALUE_ONE_SUPPLY (8)
+#define ADDTIONAL_SUPPLY_TIME_PER_GAME (2)
 
 #endif /* __APPMACROS_H__ */

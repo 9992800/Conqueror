@@ -190,7 +190,7 @@ void GameScene::initOperateBoard(){
                                          operat_board_r->getContentSize().height * 0.6));
         operat_board->addChild(operat_board_r, 1);
         
-        _addtionalSupplyTimes = 1;
+        _addtionalSupplyTimes = ADDTIONAL_SUPPLY_TIME_PER_GAME;
         _addArmyBtn = cocos2d::ui::Button::create("maps/addtion_supply_arm.png");
         _addArmyBtn->setPosition(operat_board_r->getContentSize() / 2);
         _addArmyBtn->addClickEventListener(CC_CALLBACK_1(GameScene::menuAddArmy, this));
@@ -434,6 +434,8 @@ void GameScene::tryAgain(){
         this->refreshSupplyDiceNum();
         
         _gameStatus = GAME_STATUS_AIRUNNING;
+        _addtionalSupplyTimes = ADDTIONAL_SUPPLY_TIME_PER_GAME;
+        _addArmyBtn->setVisible(true);
         this->gameAction();
 }
 
@@ -919,14 +921,17 @@ void GameScene::menuAddArmy(Ref* btn){
                 return;
         }
         
+        auto btn_anim = _addArmyBtn->clone();
         _curGameData->_player[_curGameData->_userId]->addMoreSupply();
         auto parent = _addArmyBtn->getParent();
+        btn_anim->setPosition(_addArmyBtn->getPosition());
+        parent->addChild(btn_anim);
         Vec2 pos = parent->convertToNodeSpace(_curPlayerSupFlag->getParent()->convertToWorldSpace(_curPlayerSupFlag->getPosition()));
         auto move = MoveTo::create(0.8,  pos);
         auto scale = ScaleTo::create(0.8, 0.6f);
-        auto sup_btn = _addArmyBtn->clone();
-                sup_btn->runAction(Sequence::create( Spawn::create(move, scale, NULL),
-                                            CallFunc::create( [this, sup_btn](){
+        btn_anim->runAction(Sequence::create( Spawn::create(move, scale, NULL),
+                                    CallFunc::create( [this, btn_anim](){
+                btn_anim->removeFromParentAndCleanup(true);
                 if (_addtionalSupplyTimes <= 0){
                         _addArmyBtn->setVisible(false);
                 }

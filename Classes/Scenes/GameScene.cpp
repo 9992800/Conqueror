@@ -150,34 +150,46 @@ void GameScene::initAreaTcShow(){
 
 void GameScene::initOperateBoard(){
         auto visibleSize = Director::getInstance()->getVisibleSize();
-        Vec2 origin = Director::getInstance()->getVisibleOrigin();
         
-        auto operat_board_m = Sprite::create("maps/openrate_back_m.png");
-        operat_board_m->setPosition(Vec2(visibleSize.width / 2, operat_board_m->getContentSize().height / 2));
-        _controlLayer->addChild(operat_board_m, ZORDER_MAP_GROUND, key_operate_board_tag_m);
+        auto operat_board = Sprite::create("maps/openrate_back.png");
+        operat_board->setPosition(Vec2(visibleSize.width / 2, operat_board->getContentSize().height / 2));
+        _controlLayer->addChild(operat_board, ZORDER_MAP_GROUND, key_operate_board_tag_m);
         
-        _showAreaSize.height -= operat_board_m->getContentSize().height;
+        _showAreaSize.height -= operat_board->getContentSize().height;
         
-        auto operat_board_l = Sprite::create("maps/openrate_back_l.png");
-        operat_board_l->setPosition(operat_board_l->getContentSize() / 2);
-        _controlLayer->addChild(operat_board_l, ZORDER_MAP_GROUND, key_operate_board_tag_l);
+        auto operat_board_m = Sprite::create("maps/openrate_board_m.png");
+        operat_board_m->setPosition(Vec2(operat_board->getContentSize().width / 2,
+                                         operat_board_m->getContentSize().height * 0.6));
+        operat_board->addChild(operat_board_m, 1);
         
+        auto board_v = Sprite::create("maps/openrate_board_v.png");
+        board_v->setPosition(operat_board->getContentSize() / 2);
+        operat_board->addChild(board_v, 2);
+        
+        auto operat_board_l = Sprite::create("maps/openrate_board_btn.png");
+        operat_board_l->setPosition(operat_board_l->getContentSize() * 0.6);
+        operat_board->addChild(operat_board_l, 1);
+
         _animationIsOn = UserDefault::getInstance()->getBoolForKey(ANIMATION_SWITCH_KEY, true);
-        _animCtlBtn = cocos2d::ui::Button::create("maps/open_anim.png",
-                                                    "maps/open_anim.png",
-                                                    "maps/close_anim.png");
+        _animCtlBtn = cocos2d::ui::Button::create();
+        if (_animationIsOn)
+                _animCtlBtn->loadTextureNormal("maps/close_anim.png");
+        else
+                _animCtlBtn->loadTextureNormal("maps/open_anim.png");
         
-        _animCtlBtn->setEnabled(_animationIsOn);
-        _animCtlBtn->setBright(_animationIsOn);
         _animCtlBtn->addClickEventListener(CC_CALLBACK_1(GameScene::menuAnimSwitch, this));
         _animCtlBtn->setPosition(operat_board_l->getContentSize() / 2);
         operat_board_l->addChild(_animCtlBtn);
+
+        auto operat_board_r = Sprite::create("maps/openrate_board_btn.png");
+        operat_board_r->setPosition(Vec2(visibleSize.width - operat_board_r->getContentSize().width * 0.6,
+                                         operat_board_r->getContentSize().height * 0.6));
+        operat_board->addChild(operat_board_r, 1);
         
-        auto operat_board_r = Sprite::create("maps/openrate_back_r.png");
-        operat_board_r->setPosition(Vec2(visibleSize.width - operat_board_r->getContentSize().width / 2,
-                                         operat_board_r->getContentSize().height / 2));
-        _controlLayer->addChild(operat_board_r, ZORDER_MAP_GROUND, key_operate_board_tag_r);
-        
+        auto add_army_btn = cocos2d::ui::Button::create("maps/addtion_supply_arm.png");
+        add_army_btn->setPosition(operat_board_r->getContentSize() / 2);
+        add_army_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuAddArmy, this));
+        operat_board_r->addChild(add_army_btn);
        
         
         auto first_tip_layer = Layer::create();
@@ -192,7 +204,7 @@ void GameScene::initOperateBoard(){
         first_tip_layer->addChild(tips);
         
         operat_board_m->addChild(first_tip_layer);
-        
+
         auto OK_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
         OK_btn->cocos2d::Node::setScale(1.2f);
         OK_btn->setTitleText("YES");
@@ -885,13 +897,22 @@ void GameScene::gameOver(Ref* btn, int result){
 
 void GameScene::menuAnimSwitch(Ref* btn){
         _animationIsOn = !_animationIsOn;
-        _animCtlBtn->setEnabled(_animationIsOn);
-        _animCtlBtn->setBright(_animationIsOn);
-
+        if (_animationIsOn)
+                _animCtlBtn->loadTextureNormal("maps/close_anim.png");
+        else
+                _animCtlBtn->loadTextureNormal("maps/open_anim.png");
+        
         if (!_animationIsOn){
                 //TODO:: finish animation quickly.
         }
         
         UserDefault::getInstance()->setBoolForKey(ANIMATION_SWITCH_KEY, _animationIsOn);
         UserDefault::getInstance()->flush();
+}
+
+void GameScene::menuAddArmy(Ref* btn){
+        int cur_tc = _curGameData->_player[_curGameData->_userId]->getAreaTc();
+        _curGameData->_player[_curGameData->_userId]->setAreaTc(cur_tc + TC_VALUE_ONE_SUPPLY);
+        //TODO::minus supply no available ,and make ture one times
+        this->refreshSupplyDiceNum();
 }

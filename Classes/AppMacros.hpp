@@ -120,6 +120,9 @@ enum {
 #define LEVEL_7_LOCK_STATE_KEY          "_key_level_7_lock_state"
 #define ADS_LOCK_STATE_KEY              "_key_ads_lock_state"
 
+#define USER_CURRENT_COINS              "_key_user_current_coins_v"
+#define USER_CURRENT_SUPPLY_NO          "_key_user_current_supply_no"
+
 #define LEVEL_2_PRODUCT_NAME_KEY        "open_level2"
 #define LEVEL_3_PRODUCT_NAME_KEY        "open_level3"
 #define LEVEL_4_PRODUCT_NAME_KEY        "open_level4"
@@ -209,5 +212,7 @@ enum {
 };
 
 #define USER_DEVICE_UUID        "user_device_uuid"
+
+#define TC_VALUE_ONE_SUPPLY (8)
 
 #endif /* __APPMACROS_H__ */

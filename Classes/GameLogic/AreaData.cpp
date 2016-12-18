@@ -270,6 +270,7 @@ Sprite* AreaData::createSprite(){
         numbser->setPosition(Vec2(ch_size.width / 2, ch_size.height / 4));
         
         character->setPosition(pos);
+        character->setScale(0.8f);
         return character;
 }
 

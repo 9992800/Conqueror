@@ -57,6 +57,7 @@ private:
         void gameExit(Ref*, int);
         void gameOver(Ref*, int);
         void menuAnimSwitch(Ref* btn);
+        void menuAddArmy(Ref*);
         
         void loadCharact(int, std::string);
         void loadDiceResultLayer();

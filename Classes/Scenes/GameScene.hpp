@@ -59,7 +59,6 @@ private:
         void menuAddArmy(Ref*);
         
         void loadCharact(int, std::string);
-        void loadDiceResultLayer();
         void initMapSize(GameData*);
         
         void afterShowFightBg(FightResultData*, CallFunc*);

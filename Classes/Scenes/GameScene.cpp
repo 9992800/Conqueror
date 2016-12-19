@@ -254,6 +254,15 @@ void GameScene::initOperateBoard(){
         end_turn_btn->setPosition(Vec2(operat_board_m->getContentSize().width - 48 - end_turn_btn->getContentSize().width / 2,
                                  operat_board_m->getContentSize().height / 2));
         _endTurnTipsLayer->addChild(end_turn_btn);
+
+
+        _diceResultLayer = Layer::create();
+        _diceResultLayer->setIgnoreAnchorPointForPosition(false);
+        _diceResultLayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        _diceResultLayer->setContentSize(operat_board_m->getContentSize());
+        _diceResultLayer->setPosition(operat_board_m->getContentSize() / 2);
+        operat_board_m->addChild(_diceResultLayer, ZORDER_DICE_LAYER, key_dice_layer_tag);
+        _diceResultLayer->setVisible(false);
 }
 
 void GameScene::initControlLayer(){
@@ -283,27 +292,6 @@ void GameScene::initControlLayer(){
         _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 }
 
-void GameScene::loadDiceResultLayer(){
-        
-        auto visibleSize = Director::getInstance()->getVisibleSize();
-        auto anim_back_size = _animationLayer->getContentSize();
-        _diceResultLayer = Layer::create();
-        auto dice_size = Size(anim_back_size.width, anim_back_size.height / 3);
-        _diceResultLayer->setContentSize(dice_size);
-        _diceResultLayer->setPosition(Vec2((visibleSize - dice_size) / 2));
-        this->addChild(_diceResultLayer, ZORDER_DICE_LAYER, key_dice_layer_tag);
-        _diceResultLayer->setVisible(false);
-        
-        float scale_factor = Director::getInstance()->getContentScaleFactor();
-        for (int i = 0; i < MAX_PLAYER; i++){
-                _invaderPos[i]  = invader_pos[i] * (1.f / scale_factor);
-                _keeperPos[i]   = keeper_pos[i] * (1.f / scale_factor);
-                _keeperPos[i].x = anim_back_size.width + _keeperPos[i].x;
-        }
-        
-        READY_DISTANCE_POS *= (1.f / scale_factor);
-}
-
 void GameScene::loadCharact(int idx, std::string ch_name){
         auto frameCache = SpriteFrameCache::getInstance();
         
@@ -321,15 +309,22 @@ void GameScene::loadCharact(int idx, std::string ch_name){
 void GameScene::initAnimationLayer(){
         auto visibleSize = Director::getInstance()->getVisibleSize();
         _animationLayer = Sprite::create("zhandou_beijing.png");
+         auto anim_back_size = _animationLayer->getContentSize();
         _animationLayer->setScale(0.1f, 0.1f);
-        
-        
         _animationLayer->setPosition(Vec2(visibleSize / 2));
         _animationLayer->setVisible(false);
+
         this->addChild(_animationLayer, ZORDER_ANIM_LAYER, key_anim_layer_tag);
-        
-        this->loadDiceResultLayer();
-        
+
+        float scale_factor = Director::getInstance()->getContentScaleFactor();
+        for (int i = 0; i < MAX_PLAYER; i++){
+                _invaderPos[i]  = invader_pos[i] * (1.f / scale_factor);
+                _keeperPos[i]   = keeper_pos[i] * (1.f / scale_factor);
+                _keeperPos[i].x = anim_back_size.width + _keeperPos[i].x;
+        }
+
+        READY_DISTANCE_POS *= (1.f / scale_factor);
+
         this->loadCharact(PLAYER_ROLE_TYPE_ZHANSHI, "renwurun0001.png");
         
         this->loadCharact(PLAYER_ROLE_TYPE_XUNSHOUSHI, "xssrun0001.png");
@@ -447,6 +442,7 @@ void GameScene::afterPlayerBattle(FightResultData* result){
         _isPalyingAnim = false;
         _diceResultLayer->setVisible(false);
         _diceResultLayer->removeAllChildren();
+        _endTurnTipsLayer->setVisible(true);
         if (survival.size() == 1){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_WIN);
                 Director::getInstance()->pause();
@@ -467,7 +463,7 @@ void GameScene::afterRobootBattle(FightResultData* result){
         _isPalyingAnim = false;
         _diceResultLayer->setVisible(false);
         _diceResultLayer->removeAllChildren();
-        
+        _endTurnTipsLayer->setVisible(true);
         int user_tc = _theGameLogic->getUserTC();
         if (0 == user_tc){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_LOSE);
@@ -545,7 +541,6 @@ void GameScene::gameAction(){
                 _mapLayer->setPosition(visible_size);
                 auto scale = ScaleTo::create(0.3, MAP_SCALE_V);
                 _mapLayer->runAction(Sequence::create(scale, CallFunc::create( [&](){
-                        _endTurnTipsLayer->setVisible(true);
                         _gameStatus = GAME_STATUS_INUSERTURN;
                         _animationLayer->setVisible(false);
                 }), NULL));
@@ -669,10 +664,10 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
 
 void GameScene::ShowResultData(FightResultData* resut_data){
         _diceResultLayer->setVisible(true);
+        _endTurnTipsLayer->setVisible(false);
         auto back_size = _diceResultLayer->getContentSize();
         auto frameCache = SpriteFrameCache::getInstance();
-        
-        
+
         for (int i = 0; i < resut_data->_from.size(); i++){
                 int value = resut_data->_from[i];
                 auto str = DICE_PIC_NAME_STR[resut_data->_fromPlayer][value - 1];
@@ -680,10 +675,17 @@ void GameScene::ShowResultData(FightResultData* resut_data){
                 auto dice = Sprite::create();
                 dice->setSpriteFrame(frame);
                 auto dice_size = dice->getContentSize();
-                dice->setPosition(Vec2(dice_size.width * (i + 1), dice_size.height));
+                Vec2 pos(back_size.width / 2 - dice_size.width * (i + 1), dice_size.height);
+                dice->setPosition(pos);
                 _diceResultLayer->addChild(dice);
+
+                if (i == resut_data->_from.size() - 1){
+                        auto from_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_fromSum), "arial", 40);
+                        from_value->setPosition(Vec2(pos.x - dice_size.width - 10, pos.y));
+                        _diceResultLayer->addChild(from_value);
+                }
         }
-        
+
         for (int i = 0; i < resut_data->_to.size(); i++){
                 int value = resut_data->_to[i];
                 auto str = DICE_PIC_NAME_STR[resut_data->_toPlayer][value - 1];
@@ -691,19 +693,22 @@ void GameScene::ShowResultData(FightResultData* resut_data){
                 auto dice = Sprite::create();
                 dice->setSpriteFrame(frame);
                 auto dice_size = dice->getContentSize();
-                dice->setPosition(Vec2(back_size.width - dice_size.width * (i + 1),  dice_size.height));
+                Vec2 pos(back_size.width / 2 + dice_size.width * (i + 1),  dice_size.height);
+                dice->setPosition(pos);
                 _diceResultLayer->addChild(dice);
+
+                if (i == resut_data->_to.size() - 1){
+                        auto to_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_toSum), "arial", 40);
+                        to_value->setPosition(Vec2(pos.x + dice_size.width + 10, pos.y));
+                        _diceResultLayer->addChild(to_value);
+                }
         }
+
+
+
+
         
-        auto from_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_fromSum), "", 78);
-        from_value->setColor(Color3B::BLUE);
-        from_value->setPosition(Vec2(back_size.width / 2 - 100, back_size.height - 20 ));
-        _diceResultLayer->addChild(from_value);
-        
-        auto to_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_toSum), "", 78);
-        to_value->setColor(Color3B::BLUE);
-        to_value->setPosition(Vec2(back_size.width / 2 + 100, back_size.height - 20));
-        _diceResultLayer->addChild(to_value);
+
 }
 
 void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){

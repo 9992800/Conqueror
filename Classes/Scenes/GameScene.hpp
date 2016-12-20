@@ -43,6 +43,7 @@ private:
         void afterRobootBattle(FightResultData*);
         void playBattleAnimation(FightResultData*, CallFunc*, bool);
         void playSupplyAnimation(CallFunc*);
+        void playSupplyAnimation2(CallFunc*, GamePlayer*);
         void afterSupply();
         void refreshAreaTcShow(std::map<int, int>);
         void refreshSupplyDiceNum();

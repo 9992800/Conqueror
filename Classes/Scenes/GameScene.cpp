@@ -871,32 +871,12 @@ void GameScene::playBattleAnimation(FightResultData* resut_data, CallFunc* callb
         }
 }
 
-void GameScene::playSupplyAnimation(CallFunc* callback){
-        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_SUPPLY);
-        _supplyShowLayer->setVisible(true);
-        int player_id = _curGameData->_jun[_curGameData->_ban];
-        GamePlayer* player = _curGameData->_player[player_id];
-        int total_stock = player->setStock();
-        
-        auto back_size = _supplyShowLayer->getContentSize();
-        for (int i = 0; i < total_stock; i++){
-                int ch_idx = player->getPosCharactorIdx();
-                std::string charact_name = CHARACTER_NAME[ch_idx];
-                
-                auto character = Sprite::create(charact_name);
-                character->setScale(0.5f);
-                Vec2 pos;
-                pos.x = (2 * i + 1) * 0.5f * character->getContentSize().width;
-                pos.y = (((int)(i / AREA_MAX)) * 2 + 1) * back_size.height * 0.25f;
-                character->setPosition(pos);
-                _supplyShowLayer->addChild(character);
-        }
+void GameScene::playSupplyAnimation2(CallFunc* callback, GamePlayer* player){
         
         std::map<AreaData*, int> supply_data = _theGameLogic->starSupplyDice(player);
         
         Vector<Node*> supp_nodes = _supplyShowLayer->getChildren();
         int idx = 0;
-        callback->retain();
         for (std::map<AreaData*, int>::iterator it = supply_data.begin();
              it != supply_data.end(); ++it){
                 
@@ -923,12 +903,37 @@ void GameScene::playSupplyAnimation(CallFunc* callback){
                                 }
                         }),NULL));
                 }
-                
-                
-                
-                
                 idx += sup_num;
         }
+}
+
+void GameScene::playSupplyAnimation(CallFunc* callback){
+        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_SUPPLY);
+        _supplyShowLayer->setVisible(true);
+        int player_id = _curGameData->_jun[_curGameData->_ban];
+        GamePlayer* player = _curGameData->_player[player_id];
+        int total_stock = player->setStock();
+        
+        auto back_size = _supplyShowLayer->getContentSize();
+        for (int i = 0; i < total_stock; i++){
+                int ch_idx = player->getPosCharactorIdx();
+                std::string charact_name = CHARACTER_NAME[ch_idx];
+                
+                auto character = Sprite::create(charact_name);
+                character->setScale(0.5f);
+                auto ch_size = character->getContentSize() * 0.5f;
+                Vec2 pos;
+                pos.x = (2 * i + 1) * 0.5f * ch_size.width;
+                pos.y = (((int)(i / AREA_MAX)) * 2 + 1) * back_size.height * 0.25f;
+                character->setPosition(pos);
+                _supplyShowLayer->addChild(character);
+        }
+        
+        auto scale = ScaleTo::create(0.6f, 1.0f);
+        callback->retain();
+        CallFunc* cb = CallFunc::create(std::bind(&GameScene::playSupplyAnimation2, this, callback, player));
+        cb->retain();
+        _supplyShowLayer->runAction(Sequence::create(scale, cb, NULL));
 }
 
 #pragma mark - menu callback actions

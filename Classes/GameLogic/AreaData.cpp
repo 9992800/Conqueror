@@ -250,7 +250,12 @@ void AreaData::drawPolyGon(int owner){
                 _drawNode->drawPolygon(points, 6, fillColor, 0.5f, Color4F(0.0f,0.f,0.f,.5f));
         }
 }
- 
+
+
+Vec2 AreaData::getSpriteWorldPos(){
+        Vec2 pos = ScreenCoordinate::getInstance()->getAreaCenterPos(_cpos);
+        return _parentPtr->_referedLayer->convertToWorldSpace(pos);
+}
 
 Sprite* AreaData::createSprite(){
         Vec2 pos = ScreenCoordinate::getInstance()->getAreaCenterPos(_cpos);
@@ -279,12 +284,19 @@ Sprite* AreaData::createSprite(){
 void AreaData::drawSupply(Node* back){
         //TODO::play Animation.
         
-        std::string filename = "particles/ExplodingRing.plist";
-        _emitter = ParticleSystemQuad::create(filename);
-        _emitter->retain();
-        back->addChild(_emitter, 10);
-        Vec2 pos = ScreenCoordinate::getInstance()->getAreaCenterPos(_cpos);
-        _emitter->setPosition(pos);
+//        std::string filename = "particles/ExplodingRing.plist";
+//        _emitter = ParticleSystemQuad::create(filename);
+//        _emitter->retain();
+//        back->addChild(_emitter, 10);
+//        Vec2 pos = ScreenCoordinate::getInstance()->getAreaCenterPos(_cpos);
+//        _emitter->setPosition(pos);
+        
+        Sprite* sprite = (Sprite*)back->getChildByTag(AREA_TAG_ID_INMAP(_areaId));
+        float orig_scal = sprite->getScale();
+        auto scale = ScaleTo::create(0.2f, orig_scal * 1.4f);
+        auto scale_r = ScaleTo::create(0.2f, orig_scal);
+        
+        sprite->runAction(Sequence::create(scale, scale_r, NULL));
 }
 
 void AreaData::updatePawn(Node* back){
@@ -317,7 +329,6 @@ void AreaData::playOccupaiedAnimation(CallFunc* cb, Node* back){
         Sequence* s = Sequence::create(Animate::create(character_hit), cb, NULL);
         sprite->runAction(s);
 }
-
 
 std::string AreaData::serializeData(){
         

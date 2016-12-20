@@ -26,6 +26,7 @@ enum{
         key_ctrl_layer_tag,
         key_anim_layer_tag,
         key_dice_layer_tag,
+        key_supply_layer_tag,
         key_dialog_layer_tag,
         key_roll_show_tag,
         key_operate_board_tag_l,
@@ -269,6 +270,15 @@ void GameScene::initOperateBoard(){
         _diceResultLayer->setPosition(operat_board_m->getContentSize() / 2);
         operat_board_m->addChild(_diceResultLayer, ZORDER_DICE_LAYER, key_dice_layer_tag);
         _diceResultLayer->setVisible(false);
+        
+        
+        _supplyShowLayer = Layer::create();
+        _supplyShowLayer->setIgnoreAnchorPointForPosition(false);
+        _supplyShowLayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        _supplyShowLayer->setContentSize(operat_board_m->getContentSize());
+        _supplyShowLayer->setPosition(operat_board_m->getContentSize() / 2);
+        operat_board_m->addChild(_supplyShowLayer, ZORDER_DICE_LAYER, key_supply_layer_tag);
+        _supplyShowLayer->setVisible(false);
 }
 
 void GameScene::initControlLayer(){
@@ -562,6 +572,7 @@ void GameScene::refreshAreaTcShow(std::map<int, int> survival){
 
 void GameScene::afterSupply(){
         _endTurnTipsLayer->setVisible(true);
+        _supplyShowLayer->setVisible(false);
         _curGameData->_player[_curGameData->_userId]->useTheAddSupply();
         this->refreshSupplyDiceNum();
         _theGameLogic->next_player();
@@ -862,7 +873,62 @@ void GameScene::playBattleAnimation(FightResultData* resut_data, CallFunc* callb
 
 void GameScene::playSupplyAnimation(CallFunc* callback){
         CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_SUPPLY);
-        _theGameLogic->starSupplyDice(callback);
+        _supplyShowLayer->setVisible(true);
+        int player_id = _curGameData->_jun[_curGameData->_ban];
+        GamePlayer* player = _curGameData->_player[player_id];
+        int total_stock = player->setStock();
+        
+        auto back_size = _supplyShowLayer->getContentSize();
+        for (int i = 0; i < total_stock; i++){
+                int ch_idx = player->getPosCharactorIdx();
+                std::string charact_name = CHARACTER_NAME[ch_idx];
+                
+                auto character = Sprite::create(charact_name);
+                character->setScale(0.5f);
+                Vec2 pos;
+                pos.x = (2 * i + 1) * 0.5f * character->getContentSize().width;
+                pos.y = (((int)(i / AREA_MAX)) * 2 + 1) * back_size.height * 0.25f;
+                character->setPosition(pos);
+                _supplyShowLayer->addChild(character);
+        }
+        
+        std::map<AreaData*, int> supply_data = _theGameLogic->starSupplyDice(player);
+        
+        Vector<Node*> supp_nodes = _supplyShowLayer->getChildren();
+        int idx = 0;
+        callback->retain();
+        for (std::map<AreaData*, int>::iterator it = supply_data.begin();
+             it != supply_data.end(); ++it){
+                
+                int sup_num = it->second;
+                AreaData*  cur_area = it->first;
+                Vec2 pos = cur_area->getSpriteWorldPos();
+                Vec2 rel_pos = _supplyShowLayer->convertToNodeSpace(pos);
+                auto move = MoveTo::create(1.2f, rel_pos);
+                
+                for (int i = idx; i < idx + sup_num; i++){
+                        Node* sup_one = supp_nodes.at(i);
+                        
+                        bool is_last = i == idx + sup_num - 1;
+                        
+                        sup_one->runAction(Sequence::create(move->clone(), CallFunc::create( [this, sup_one, callback, is_last, cur_area](){
+                                
+                                _supplyShowLayer->removeChild(sup_one);
+                                if (_supplyShowLayer->getChildren().size() == 0){
+                                        callback->execute();
+                                }
+                                if (is_last){
+                                        cur_area->updatePawn(_curGameData->_referedLayer);
+                                        cur_area->drawSupply(_curGameData->_referedLayer);
+                                }
+                        }),NULL));
+                }
+                
+                
+                
+                
+                idx += sup_num;
+        }
 }
 
 #pragma mark - menu callback actions

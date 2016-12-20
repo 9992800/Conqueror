@@ -29,7 +29,7 @@ public:
         FightResultData* startRobootAttack();
         std::map<int, int> cleanUpBattleField(FightResultData* );
         void clearManulAction();
-        void starSupplyDice(CallFunc*);
+        std::map<AreaData*, int> starSupplyDice(GamePlayer*);
         
         inline int getUserTC(){return _data->_player[_data->_userId]->getAreaTc();}
         inline void next_player(){

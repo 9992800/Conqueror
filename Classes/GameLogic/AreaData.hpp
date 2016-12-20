@@ -111,6 +111,8 @@ public:
         
         void playOccupaiedAnimation(CallFunc*, Node*);
         
+        Vec2 getSpriteWorldPos();
+        
 private:
         void drawBorder();
         void drawPolyGon(int owner);

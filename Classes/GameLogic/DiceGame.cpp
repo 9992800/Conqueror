@@ -621,12 +621,9 @@ void DiceGame::clearManulAction(){
 }
 
 
-void DiceGame::starSupplyDice(CallFunc* callback){
-        int player_id = _data->_jun[_data->_ban];
-        GamePlayer* player = _data->_player[player_id];
-        player->setStock();
+std::map<AreaData*, int> DiceGame::starSupplyDice(GamePlayer* player){         
         
-        
+        std::map<AreaData*, int> supply_data;
         std::set<int> affected_aread;
         while (player->getStock() > 0){
                 
@@ -635,7 +632,7 @@ void DiceGame::starSupplyDice(CallFunc* callback){
                 for (int i = 0; i < AREA_MAX; i++){
                         AreaData* area = _data->_areaData[i];
                         if (area->isEmpty()
-                            ||area->getOwner() != player_id
+                            ||area->getOwner() != player->getPlayerUid()
                             ||area->getDice() >= MAX_DICE_PER_AREA){
                                 continue;
                         }
@@ -649,7 +646,15 @@ void DiceGame::starSupplyDice(CallFunc* callback){
                 
                 int random_area = random(0, count - 1);
                 int selected_area = list[random_area];
-                _data->_areaData[selected_area]->increaseDice();
+                
+                AreaData* s_area = _data->_areaData[selected_area];
+                s_area->increaseDice();
+                std::map<AreaData*, int>::iterator it = supply_data.find(s_area);
+                if (it == supply_data.end()){
+                        it = supply_data.insert(std::pair<AreaData*, int>(s_area, 0)).first;
+                }
+                it->second++;
+                
                 player->decreaseStock();
                 affected_aread.insert(selected_area);
         }
@@ -658,13 +663,10 @@ void DiceGame::starSupplyDice(CallFunc* callback){
         _historyRes.push_back(ATTACK_RES_GOTSUPPLY);
         for(std::set<int>::iterator it = affected_aread.begin(); it != affected_aread.end(); ++it){
                 AreaData* area = _data->_areaData[*it];
-                area->updatePawn(_data->_referedLayer);
-                area->drawSupply(_data->_referedLayer);
                 _historySup.push_back(Vec2(*it, area->getDice()));
         }
         _historyTo.push_back((int)_historySup.size());
-        
-        callback->execute();
+        return supply_data;
 }
 
 void DiceGame::occupayAnimation(FightResultData* resut_data, CallFunc* cb){

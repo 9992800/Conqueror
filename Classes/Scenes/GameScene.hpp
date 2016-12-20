@@ -72,6 +72,7 @@ private:
         Layer*          _controlLayer;
         Layer*          _diceResultLayer;
         Layer*          _endTurnTipsLayer;
+        Layer*          _supplyShowLayer;
         Sprite*         _animationLayer;
         DiceGame*       _theGameLogic;
         bool            _isMoved;

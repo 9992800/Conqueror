@@ -48,11 +48,12 @@ public:
                 _area_c = 0;
                 _dice_c = 0;
         }
-        inline void setStock(){
+        inline int setStock(){
                 _stock += (_area_tc + _addtionalSupply);
                 if (_stock >= STOCK_MAX){
                         _stock = STOCK_MAX;
                 }
+                return _stock;
         }
         inline int getStock(){
                 return _stock;
@@ -92,6 +93,9 @@ public:
         }
         inline void useTheAddSupply(){
                 _addtionalSupply = 0;
+        }
+        inline int getPlayerUid(){
+                return _player_id;
         }
 private:
         int     _player_id;

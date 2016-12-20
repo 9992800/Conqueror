@@ -450,7 +450,8 @@ void GameScene::tryAgain(){
         _curGameData = _theGameLogic->resetInitData();
         this->initMapSize(_curGameData);
         
-        this->refreshSupplyDiceNum();
+        _controlLayer->removeChildByTag(key_roll_show_tag);
+        this->initAreaTcShow();
         
         _gameStatus = GAME_STATUS_AIRUNNING;
         _addtionalSupplyTimes = ADDTIONAL_SUPPLY_TIME_PER_GAME;

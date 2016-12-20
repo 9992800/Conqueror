@@ -875,6 +875,9 @@ void GameScene::playBattleAnimation(FightResultData* resut_data, CallFunc* callb
 void GameScene::playSupplyAnimation2(CallFunc* callback, GamePlayer* player){
         
         std::map<AreaData*, int> supply_data = _theGameLogic->starSupplyDice(player);
+        if (supply_data.size() == 0){
+                callback->execute();
+        }
         
         Vector<Node*> supp_nodes = _supplyShowLayer->getChildren();
         int idx = 0;
@@ -897,7 +900,7 @@ void GameScene::playSupplyAnimation2(CallFunc* callback, GamePlayer* player){
                         
                         bool is_last = i == idx + sup_num - 1;
                         CallFunc*  cb = CallFunc::create([this, sup_one, callback, is_t_last, is_last, cur_area](){
-                                
+
                                 if (is_last){
                                         cur_area->updatePawn(_curGameData->_referedLayer);
                                         if (is_t_last){

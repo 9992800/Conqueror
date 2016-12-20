@@ -550,17 +550,25 @@ void GameScene::refreshAreaTcShow(std::map<int, int> survival){
                         Node* one_flag = flag_nodes.at(i);
                         one_flag->setPosition(Vec2(21 +  0.5 * (i * 2 + 1) * p_size.width,  roll->getContentSize().height - p_size.height / 2));
                 }
+                
+                int cur_uid = _curGameData->_jun[_curGameData->_ban];
+                auto num_lab = _supplyLabelMap.find(cur_uid);
+                Node* grad_node = num_lab->second->getParent()->getParent();
+                _curInTurnBack->setPosition(grad_node->getPosition());
         }
 }
 
 void GameScene::afterSupply(){
         _endTurnTipsLayer->setVisible(true);
         _curGameData->_player[_curGameData->_userId]->useTheAddSupply();
+        this->refreshSupplyDiceNum();
         _theGameLogic->next_player();
         int cur_uid = _curGameData->_jun[_curGameData->_ban];
         auto num_lab = _supplyLabelMap.find(cur_uid);
-        Node* grad_node = num_lab->second->getParent()->getParent();
-        _curInTurnBack->setPosition(grad_node->getPosition());
+        if (num_lab != _supplyLabelMap.end()){
+                Node* grad_node = num_lab->second->getParent()->getParent();
+                _curInTurnBack->setPosition(grad_node->getPosition());
+        }        
         this->gameAction();
 }
 
@@ -967,7 +975,8 @@ void GameScene::menuAddArmy(Ref* btn){
                 }
 
                 this->refreshSupplyDiceNum();
-                auto scale_s = ScaleBy::create(0.4, 1.4f);
-                _curPlayerSupFlag->runAction(Sequence::create(scale_s, scale_s->reverse(), NULL));
+                auto scale_s = ScaleTo::create(0.3, 1.4f);
+                auto scale_s_r = ScaleTo::create(0.3, 1.0f);
+                _curPlayerSupFlag->runAction(Sequence::create(scale_s, scale_s_r, NULL));
         }), NULL));
 }

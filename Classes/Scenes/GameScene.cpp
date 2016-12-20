@@ -571,7 +571,7 @@ void GameScene::refreshAreaTcShow(std::map<int, int> survival){
 }
 
 void GameScene::afterSupply(){
-        _endTurnTipsLayer->setVisible(true); 
+        _endTurnTipsLayer->setVisible(true);
         _curGameData->_player[_curGameData->_userId]->useTheAddSupply();
         this->refreshSupplyDiceNum();
         _theGameLogic->next_player();
@@ -885,25 +885,30 @@ void GameScene::playSupplyAnimation2(CallFunc* callback, GamePlayer* player){
                 Vec2 pos = cur_area->getSpriteWorldPos();
                 Vec2 rel_pos = _supplyShowLayer->convertToNodeSpace(pos);
                 auto move = MoveTo::create(1.2f, rel_pos);
+                std::map<AreaData*, int>::iterator it_end = supply_data.end();
+                it_end--;
                 
-                bool is_t_last = it == --(supply_data.end());
+                bool is_t_last = it == it_end;
+//                bool is_t_last = false;
                 for (int i = idx; i < idx + sup_num; i++){
                         Node* sup_one = supp_nodes.at(i);
                         
                         bool is_last = i == idx + sup_num - 1;
-                        
-                        sup_one->runAction(Sequence::create(move->clone(), CallFunc::create( [this, sup_one, callback, is_t_last, is_last, cur_area](){
+                        CallFunc*  cb = CallFunc::create( [this, sup_one, callback, is_t_last, is_last, cur_area](){
+                                
+                                if (is_last){
+                                        cur_area->updatePawn(_curGameData->_referedLayer);
+                                        cur_area->drawSupply(_curGameData->_referedLayer);
+                                }
                                 
                                 if (is_t_last){
                                         _supplyShowLayer->removeAllChildren();
                                         _supplyShowLayer->setVisible(false);
                                         callback->execute();
                                 }
-                                if (is_last){
-                                        cur_area->updatePawn(_curGameData->_referedLayer);
-                                        cur_area->drawSupply(_curGameData->_referedLayer);
-                                }
-                        }),NULL));
+                        });
+                        cb->retain();
+                        sup_one->runAction(Sequence::create(move->clone(), cb,NULL));
                 }
                 idx += sup_num;
         }

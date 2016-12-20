@@ -87,7 +87,7 @@ private:
         Rect            _minFrameShow, _maxFrameShow;
         cocos2d::ui::Button*         _animCtlBtn, *_addArmyBtn;
         int             _addtionalSupplyTimes;
-        Sprite*         _curPlayerSupFlag;
+        Sprite*         _curPlayerSupFlag, *_curInTurnBack;
 };
 
 

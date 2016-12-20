@@ -266,11 +266,12 @@ Sprite* AreaData::createSprite(){
         
         auto numbser = Sprite::create();
         numbser->setSpriteFrame(frame);
+        numbser->setScale(2.f);
         character->addChild(numbser);
         numbser->setPosition(Vec2(ch_size.width / 2, ch_size.height / 4));
         
         character->setPosition(pos);
-        character->setScale(0.8f);
+        character->setScale(0.6f);
         return character;
 }
 

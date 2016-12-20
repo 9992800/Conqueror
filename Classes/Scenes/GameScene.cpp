@@ -127,7 +127,13 @@ void GameScene::initAreaTcShow(){
                 auto p = Sprite::create(p_f_i);
                 p->setPosition(Vec2(21 +  0.5 * (i * 2 + 1) * p_size.width,  roll->getContentSize().height - p_size.height / 2));
                 p->setTag(player_uid);
-                roll->addChild(p);
+                roll->addChild(p, 1);
+                if ( i == 0){
+                        _curInTurnBack = Sprite::create("maps/current_turn.png");
+                        _curInTurnBack->setPosition(p->getPosition());
+                        _curInTurnBack->setTag(-1);
+                        roll->addChild(_curInTurnBack, 2);
+                }
                 
                 int chara_idx = player->getPosCharactorIdx();
                 std::string charactr_name =   CHARACTER_NAME[chara_idx];
@@ -136,7 +142,7 @@ void GameScene::initAreaTcShow(){
                 auto ch_size = character->getContentSize();
                 
                 std::string tc_str = StringUtils::format("X%d", player->getAreaTc());
-                auto numbser = Label::createWithSystemFont(tc_str, "arial", 26);
+                auto numbser = Label::createWithSystemFont(tc_str, "Arial", 26);
                 character->addChild(numbser);
                 numbser->setPosition(Vec2(ch_size.width, ch_size.height / 2));
                 
@@ -148,7 +154,6 @@ void GameScene::initAreaTcShow(){
                         _curPlayerSupFlag = p;
                 }
         }
-        
         _controlLayer->addChild(roll, ZORDER_MAP_GROUND, key_roll_show_tag);
 }
 
@@ -186,12 +191,14 @@ void GameScene::initOperateBoard(){
         operat_board_l->addChild(_animCtlBtn);
 
         auto operat_board_r = Sprite::create("maps/openrate_board_btn.png");
-        operat_board_r->setPosition(Vec2(visibleSize.width - operat_board_r->getContentSize().width * 0.6,
+        operat_board_r->setPosition(Vec2(operat_board->getContentSize().width - operat_board_r->getContentSize().width * 0.6,
                                          operat_board_r->getContentSize().height * 0.6));
         operat_board->addChild(operat_board_r, 1);
         
         _addtionalSupplyTimes = ADDTIONAL_SUPPLY_TIME_PER_GAME;
-        _addArmyBtn = cocos2d::ui::Button::create("maps/addtion_supply_arm.png");
+        _addArmyBtn = cocos2d::ui::Button::create("maps/addtion_supply_arm.png",
+                                                  "maps/addtion_supply_arm.png",
+                                                  "maps/supply_finished.png");
         _addArmyBtn->setPosition(operat_board_r->getContentSize() / 2);
         _addArmyBtn->addClickEventListener(CC_CALLBACK_1(GameScene::menuAddArmy, this));
         operat_board_r->addChild(_addArmyBtn);
@@ -229,8 +236,6 @@ void GameScene::initOperateBoard(){
         NO_btn->addClickEventListener(CC_CALLBACK_1(GameScene::createNewMap, this));
         first_tip_layer->addChild(NO_btn);
         
-        
-        
         _endTurnTipsLayer = Layer::create();
         _endTurnTipsLayer->setContentSize(operat_board_m->getContentSize());
         _endTurnTipsLayer->setPosition(operat_board_m->getContentSize() / 2);
@@ -239,7 +244,7 @@ void GameScene::initOperateBoard(){
         _endTurnTipsLayer->setVisible(false);
         
         
-        auto attack_tips = Label::createWithSystemFont("1.Click your area. 2.Click neighbor to attack", "", 30);
+        auto attack_tips = Label::createWithSystemFont("1.Click your area. 2.Click neighbor to attack", "Arial", 30);
         attack_tips->setPosition(Vec2(attack_tips->getContentSize().width / 2 + 20,
                                _endTurnTipsLayer->getContentSize().height / 2));
         _endTurnTipsLayer->addChild(attack_tips);
@@ -267,13 +272,12 @@ void GameScene::initOperateBoard(){
 
 void GameScene::initControlLayer(){
         
-        
         int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
         
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         
-        _showAreaSize = Director::getInstance()->getVisibleSize();
-        
+        auto visible_size = Director::getInstance()->getVisibleSize();
+        _showAreaSize = visible_size;
         _controlLayer = Layer::create();
         
         this->initOperateBoard();
@@ -282,9 +286,17 @@ void GameScene::initControlLayer(){
         auto p_size = player_0->getContentSize();
         _showAreaSize.height -= p_size.height;
         _showAreaSize.width *= 0.9;
+
+
+        auto exit_btn = cocos2d::ui::Button::create("CloseNormal.png", "CloseSelected.png");
+        exit_btn->setPosition(Vec2(exit_btn->getContentSize().width / 2,
+                              visible_size.height - exit_btn->getContentSize().height / 2));
+        exit_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuExit, this));
+        _controlLayer->addChild(exit_btn);
         
         this->addChild(_controlLayer, ZORDER_CRTL_LAYERS, key_ctrl_layer_tag);
-        
+
+
         Director::getInstance()->setDepthTest(true);
         auto listener = EventListenerTouchAllAtOnce::create();
         listener->onTouchesMoved = CC_CALLBACK_2(GameScene::onTouchesMoved, this);
@@ -346,39 +358,51 @@ void GameScene::initAnimationLayer(){
 #pragma mark - touch and menu event
 
 void GameScene::onTouchesMoved(const std::vector<Touch*>& touches, Event* event){
-        
-        auto touch = touches[0];
-        auto diff = touch->getDelta();
 
-        if (diff.x >= 0.001f || diff.y >= 0.001
-            || diff.x <= -0.001f ||diff.y <= -0.001f){
-                _isMoved = true;
-        }
         
-        auto currentPos = _mapLayer->getPosition();
-        
-        if (GAME_STATUS_INUSERTURN == _gameStatus){
-                 if (_maxFrameShow.getMaxY() < (currentPos.y + diff.y)
-                     || (currentPos.y + diff.y) < _maxFrameShow.getMinY()){
-                         diff.y = 0;
-                 }
-        
-                if (_maxFrameShow.getMaxX() < (currentPos.x + diff.x)
-                    || (currentPos.x + diff.x) < _maxFrameShow.getMinX()){
-                        diff.x = 0;
-                }
+        if (touches.size() >= 2){
+                auto touch1 = touches[0];
+                auto touch2 = touches[1];
+
+                CCLOG("---touche1=delat(%.f,%.f)---",
+                      touch1->getDelta().x, touch1->getDelta().y);
+                CCLOG("---touche1=delat(%.f,%.f)---",
+                      touch2->getDelta().x, touch2->getDelta().y);
         }else{
-                diff.x = 0;
-                printf("=(%2.f, %2.f)=", _minFrameShow.getMaxY(), _minFrameShow.getMinY());
-                if (_minFrameShow.getMaxY() < (currentPos.y + diff.y)
-                    || (currentPos.y + diff.y) < _minFrameShow.getMinY()){
-                        diff.y = 0;
+                auto touch = touches[0];
+                auto diff = touch->getDelta();
+
+                if (diff.x >= 0.001f || diff.y >= 0.001
+                    || diff.x <= -0.001f ||diff.y <= -0.001f){
+                        _isMoved = true;
                 }
+
+                auto currentPos = _mapLayer->getPosition();
+
+                if (GAME_STATUS_INUSERTURN == _gameStatus){
+
+                         if (_maxFrameShow.getMaxY() < (currentPos.y + diff.y)
+                             || (currentPos.y + diff.y) < _maxFrameShow.getMinY()){
+                                 diff.y = 0;
+                         }
+
+                        if (_maxFrameShow.getMaxX() < (currentPos.x + diff.x)
+                            || (currentPos.x + diff.x) < _maxFrameShow.getMinX()){
+                                diff.x = 0;
+                        }
+                }else{
+                        diff.x = 0;
+                        printf("=(%2.f, %2.f)=", _minFrameShow.getMaxY(), _minFrameShow.getMinY());
+                        if (_minFrameShow.getMaxY() < (currentPos.y + diff.y)
+                            || (currentPos.y + diff.y) < _minFrameShow.getMinY()){
+                                diff.y = 0;
+                        }
+                }
+
+
+
+                _mapLayer->setPosition(currentPos + diff);
         }
-        
-       
-        
-        _mapLayer->setPosition(currentPos + diff);
 }
 
 void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event){
@@ -430,7 +454,8 @@ void GameScene::tryAgain(){
         
         _gameStatus = GAME_STATUS_AIRUNNING;
         _addtionalSupplyTimes = ADDTIONAL_SUPPLY_TIME_PER_GAME;
-        _addArmyBtn->setVisible(true);
+        _addArmyBtn->setEnabled(true);
+        _addArmyBtn->setBright(true);
         this->gameAction();
 }
 
@@ -463,7 +488,6 @@ void GameScene::afterRobootBattle(FightResultData* result){
         _isPalyingAnim = false;
         _diceResultLayer->setVisible(false);
         _diceResultLayer->removeAllChildren();
-        _endTurnTipsLayer->setVisible(true);
         int user_tc = _theGameLogic->getUserTC();
         if (0 == user_tc){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_LOSE);
@@ -511,6 +535,9 @@ void GameScene::refreshAreaTcShow(std::map<int, int> survival){
                 for (int i = 0; i < flag_nodes.size(); i++){
                         auto flag_obj = flag_nodes.at(i);
                         int player_uid =  flag_obj->getTag();
+                        if (-1 ==  player_uid){//it's color back ground.
+                                continue;
+                        }
                         GamePlayer* player = _curGameData->_player[player_uid];
                         if (player->getAreaTc() == 0){
                                 roll->removeChild(flag_obj);
@@ -527,9 +554,13 @@ void GameScene::refreshAreaTcShow(std::map<int, int> survival){
 }
 
 void GameScene::afterSupply(){
-        
+        _endTurnTipsLayer->setVisible(true);
         _curGameData->_player[_curGameData->_userId]->useTheAddSupply();
         _theGameLogic->next_player();
+        int cur_uid = _curGameData->_jun[_curGameData->_ban];
+        auto num_lab = _supplyLabelMap.find(cur_uid);
+        Node* grad_node = num_lab->second->getParent()->getParent();
+        _curInTurnBack->setPosition(grad_node->getPosition());
         this->gameAction();
 }
 
@@ -543,6 +574,7 @@ void GameScene::gameAction(){
                 _mapLayer->runAction(Sequence::create(scale, CallFunc::create( [&](){
                         _gameStatus = GAME_STATUS_INUSERTURN;
                         _animationLayer->setVisible(false);
+                        _endTurnTipsLayer->setVisible(true);
                 }), NULL));
                 
                 return;
@@ -680,7 +712,7 @@ void GameScene::ShowResultData(FightResultData* resut_data){
                 _diceResultLayer->addChild(dice);
 
                 if (i == resut_data->_from.size() - 1){
-                        auto from_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_fromSum), "arial", 40);
+                        auto from_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_fromSum), "Arial", 40);
                         from_value->setPosition(Vec2(pos.x - dice_size.width - 10, pos.y));
                         _diceResultLayer->addChild(from_value);
                 }
@@ -698,17 +730,11 @@ void GameScene::ShowResultData(FightResultData* resut_data){
                 _diceResultLayer->addChild(dice);
 
                 if (i == resut_data->_to.size() - 1){
-                        auto to_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_toSum), "arial", 40);
+                        auto to_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_toSum), "Arial", 40);
                         to_value->setPosition(Vec2(pos.x + dice_size.width + 10, pos.y));
                         _diceResultLayer->addChild(to_value);
                 }
         }
-
-
-
-
-        
-
 }
 
 void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
@@ -850,8 +876,6 @@ void GameScene::menuEndTurn(Ref* pSender){
                 this->playSupplyAnimation(callback);
                 
         }), NULL));
-        
-        
 }
 
 void GameScene::createNewMap(Ref* pSender){
@@ -938,7 +962,8 @@ void GameScene::menuAddArmy(Ref* btn){
                                     CallFunc::create( [this, btn_anim](){
                 btn_anim->removeFromParentAndCleanup(true);
                 if (_addtionalSupplyTimes <= 0){
-                        _addArmyBtn->setVisible(false);
+                        _addArmyBtn->setEnabled(false);
+                        _addArmyBtn->setBright(false);
                 }
 
                 this->refreshSupplyDiceNum();

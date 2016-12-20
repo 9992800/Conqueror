@@ -571,8 +571,7 @@ void GameScene::refreshAreaTcShow(std::map<int, int> survival){
 }
 
 void GameScene::afterSupply(){
-        _endTurnTipsLayer->setVisible(true);
-        _supplyShowLayer->setVisible(false);
+        _endTurnTipsLayer->setVisible(true); 
         _curGameData->_player[_curGameData->_userId]->useTheAddSupply();
         this->refreshSupplyDiceNum();
         _theGameLogic->next_player();
@@ -880,21 +879,24 @@ void GameScene::playSupplyAnimation2(CallFunc* callback, GamePlayer* player){
         for (std::map<AreaData*, int>::iterator it = supply_data.begin();
              it != supply_data.end(); ++it){
                 
+                
                 int sup_num = it->second;
                 AreaData*  cur_area = it->first;
                 Vec2 pos = cur_area->getSpriteWorldPos();
                 Vec2 rel_pos = _supplyShowLayer->convertToNodeSpace(pos);
                 auto move = MoveTo::create(1.2f, rel_pos);
                 
+                bool is_t_last = it == --(supply_data.end());
                 for (int i = idx; i < idx + sup_num; i++){
                         Node* sup_one = supp_nodes.at(i);
                         
                         bool is_last = i == idx + sup_num - 1;
                         
-                        sup_one->runAction(Sequence::create(move->clone(), CallFunc::create( [this, sup_one, callback, is_last, cur_area](){
+                        sup_one->runAction(Sequence::create(move->clone(), CallFunc::create( [this, sup_one, callback, is_t_last, is_last, cur_area](){
                                 
-                                _supplyShowLayer->removeChild(sup_one);
-                                if (_supplyShowLayer->getChildren().size() == 0){
+                                if (is_t_last){
+                                        _supplyShowLayer->removeAllChildren();
+                                        _supplyShowLayer->setVisible(false);
                                         callback->execute();
                                 }
                                 if (is_last){

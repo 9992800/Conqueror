@@ -103,7 +103,7 @@ public:
         
         inline int getAreaId(){return _areaId;}
         
-        void drawSupply(Node* map);
+        void drawSupply(Node* map, CallFunc*);
         
         void updatePawn(Node*);
         

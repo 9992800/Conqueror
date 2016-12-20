@@ -281,7 +281,7 @@ Sprite* AreaData::createSprite(){
 }
 
 
-void AreaData::drawSupply(Node* back){
+void AreaData::drawSupply(Node* back, CallFunc* call_back){
         //TODO::play Animation.
         
 //        std::string filename = "particles/ExplodingRing.plist";
@@ -295,8 +295,12 @@ void AreaData::drawSupply(Node* back){
         float orig_scal = sprite->getScale();
         auto scale = ScaleTo::create(0.2f, orig_scal * 1.4f);
         auto scale_r = ScaleTo::create(0.2f, orig_scal);
+        if (NULL == call_back){
+                sprite->runAction(Sequence::create(scale, scale_r, NULL));
+        }else{
+                sprite->runAction(Sequence::create(scale, scale_r, call_back, NULL));
+        }
         
-        sprite->runAction(Sequence::create(scale, scale_r, NULL));
 }
 
 void AreaData::updatePawn(Node* back){

@@ -572,6 +572,8 @@ void GameScene::refreshAreaTcShow(std::map<int, int> survival){
 
 void GameScene::afterSupply(){
         _endTurnTipsLayer->setVisible(true);
+        _supplyShowLayer->removeAllChildren();
+        _supplyShowLayer->setVisible(false);
         _curGameData->_player[_curGameData->_userId]->useTheAddSupply();
         this->refreshSupplyDiceNum();
         _theGameLogic->next_player();
@@ -894,17 +896,15 @@ void GameScene::playSupplyAnimation2(CallFunc* callback, GamePlayer* player){
                         Node* sup_one = supp_nodes.at(i);
                         
                         bool is_last = i == idx + sup_num - 1;
-                        CallFunc*  cb = CallFunc::create( [this, sup_one, callback, is_t_last, is_last, cur_area](){
+                        CallFunc*  cb = CallFunc::create([this, sup_one, callback, is_t_last, is_last, cur_area](){
                                 
                                 if (is_last){
                                         cur_area->updatePawn(_curGameData->_referedLayer);
-                                        cur_area->drawSupply(_curGameData->_referedLayer);
-                                }
-                                
-                                if (is_t_last){
-                                        _supplyShowLayer->removeAllChildren();
-                                        _supplyShowLayer->setVisible(false);
-                                        callback->execute();
+                                        if (is_t_last){
+                                                cur_area->drawSupply(_curGameData->_referedLayer, callback);
+                                        }else{
+                                                cur_area->drawSupply(_curGameData->_referedLayer, NULL);
+                                        }
                                 }
                         });
                         cb->retain();

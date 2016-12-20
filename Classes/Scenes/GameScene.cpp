@@ -112,6 +112,7 @@ void GameScene::initAreaTcShow(){
         auto player_0 = cocos2d::ui::ImageView::create("maps/supply_back_0.png");
         auto p_size = player_0->getContentSize();
         auto roll = cocos2d::ui::Scale9Sprite::create("maps/supply_back_roll.png");
+        _supplyLabelMap = std::map<int, Label*>();
         
         auto bakc_size = Size(42 + p_size.width * _playerNumber,
                               roll->getContentSize().height);

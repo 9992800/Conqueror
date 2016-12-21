@@ -677,9 +677,8 @@ void GameScene::WinnerBack(){
         auto when_back_home = CallFunc::create(std::bind(&GameScene::afterFightFinished, this));
         
         int player_uid = ATTACK_RES_WIN == _attackResult->_result ? _attackResult->_fromPlayer : _attackResult->_toPlayer;
-        auto run_back_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[player_uid]);
+        auto run_back_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[player_uid])->clone();
         run_back_anim->setRestoreOriginalFrame(true);
-        auto run_back_act = Animate::create(run_back_anim);
         
         auto back_wait = cache->getAnimation(ANIM_NAME_FIGHT_STAND[player_uid]);
         back_wait->setRestoreOriginalFrame(true);
@@ -693,13 +692,15 @@ void GameScene::WinnerBack(){
                         _animationLayer->removeChild(keeper, true);//TODO::
                 }
                 
-                auto moveby = MoveBy::create(2, Vec2(READY_DISTANCE_POS - back_size.width / 2,0));
-                auto run_back = Spawn::create(run_back_act, FlipX::create(true), moveby, NULL);
+                auto moveby = MoveBy::create(0.5, Vec2(READY_DISTANCE_POS - back_size.width / 2,0));
+                auto run_back = Spawn::create(Animate::create(run_back_anim), FlipX::create(true), moveby, NULL);
                 
                 auto fight_back = Animate::create(back_wait);
                 
-                auto move = MoveBy::create(2, Vec2(-READY_DISTANCE_POS,0));
-                Spawn* back_home = Spawn::create(run_back_act->clone(), move, NULL);
+                auto move = MoveBy::create(1.f, Vec2(-READY_DISTANCE_POS,0));
+                auto run_back_anim2 = run_back_anim->clone();
+                run_back_anim2->setLoops(2);
+                Spawn* back_home = Spawn::create(Animate::create(run_back_anim2), move, NULL);
                 
                 Sequence* invade_back = Sequence::create(run_back, fight_back,  back_home, NULL);
                 
@@ -721,13 +722,15 @@ void GameScene::WinnerBack(){
                         _animationLayer->removeChild(invader, true);//TODO::
                 }
                 
-                auto moveby = MoveBy::create(2, Vec2(back_size.width / 2 - READY_DISTANCE_POS, 0));
-                auto run_back = Spawn::create(run_back_act, FlipX::create(false), moveby, NULL);
+                auto moveby = MoveBy::create(0.5f, Vec2(back_size.width / 2 - READY_DISTANCE_POS, 0));
+                auto run_back = Spawn::create(Animate::create(run_back_anim), FlipX::create(false), moveby, NULL);
                 
                 auto fight_back = Animate::create(back_wait);
                 
-                auto move = MoveBy::create(2, Vec2(READY_DISTANCE_POS, 0));
-                Spawn* back_home = Spawn::create(run_back_act->clone(), move, NULL);
+                auto move = MoveBy::create(1.f, Vec2(READY_DISTANCE_POS, 0));
+                auto run_back_anim2 = run_back_anim->clone();
+                run_back_anim2->setLoops(2);
+                Spawn* back_home = Spawn::create(Animate::create(run_back_anim2), move, NULL);
                 
                 Sequence* keeper_back = Sequence::create(run_back, fight_back, back_home, NULL);
 
@@ -746,7 +749,6 @@ void GameScene::WinnerBack(){
 
 void GameScene::ShowResultData(){
         _diceResultLayer->setVisible(true);
-        _endTurnTipsLayer->setVisible(false);
         auto back_size = _diceResultLayer->getContentSize();
         auto frameCache = SpriteFrameCache::getInstance();
 
@@ -799,7 +801,7 @@ void GameScene::Fighting(){
         
         fight_cloud->setPosition(Vec2(size.width / 2, size.height * 0.4));
         fight_cloud->setScale(2.0f);
-        auto anim_cloud = cache->getAnimation("finght_cloud");
+        auto anim_cloud = cache->getAnimation("finght_cloud")->clone();
         anim_cloud->setRestoreOriginalFrame(true);
         auto anim_action = Animate::create(anim_cloud);
         
@@ -810,79 +812,83 @@ void GameScene::afterShowFightBg(){
         Size back_size = _animationLayer->getContentSize();
         auto cache = AnimationCache::getInstance();
         
-        //FIGHTER
-        {
-                int player_uid = _attackResult->_fromPlayer;
+        //FIGHTER------------------------
+{
+        int player_uid = _attackResult->_fromPlayer;
+
+        auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[player_uid])->clone();
+        run_anim->setRestoreOriginalFrame(true);
+        auto run_action = Animate::create(run_anim);
+        auto move = MoveBy::create(0.5, Vec2(READY_DISTANCE_POS,0));
+        Spawn* get_ready = Spawn::create(run_action, FlipX::create(false), move, NULL);
         
-                auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[player_uid]);
-                run_anim->setRestoreOriginalFrame(true);
-                auto run_action = Animate::create(run_anim);
-                auto move = MoveBy::create(2, Vec2(READY_DISTANCE_POS,0));
-                Spawn* get_ready = Spawn::create(run_action, FlipX::create(false), move, NULL);
-                
-                
-                
-                auto stand_wait = cache->getAnimation(ANIM_NAME_FIGHT_STAND[player_uid]);
-                stand_wait->setRestoreOriginalFrame(true);
-                auto fight_wait = Animate::create(stand_wait);
-                
-                
-                auto moveby = MoveBy::create(2, Vec2(back_size.width / 2 - READY_DISTANCE_POS,0));
-                auto run_to_fight = Spawn::create(run_action->clone(), moveby, NULL);
-                
         
-                Sequence* invade_seq = Sequence::create(get_ready, fight_wait,  run_to_fight, NULL);
+        
+        auto stand_wait = cache->getAnimation(ANIM_NAME_FIGHT_STAND[player_uid])->clone();
+        stand_wait->setRestoreOriginalFrame(true);
+        auto fight_wait = Animate::create(stand_wait);
+        
+        
+        auto moveby = MoveBy::create(1.f, Vec2(back_size.width / 2 - READY_DISTANCE_POS,0));
+        auto run_anim2 = run_anim->clone();
+        run_anim2->setLoops(2);
+        auto run_to_fight = Spawn::create(Animate::create(run_anim2), moveby, NULL);
+        
+
+        Sequence* invade_seq = Sequence::create(get_ready, fight_wait,  run_to_fight, NULL);
+        
+        for (int i = 0; i < _attackResult->_from.size(); i++){
                 
-                for (int i = 0; i < _attackResult->_from.size(); i++){
-                        
-                        auto invader = _allFightingCharacters[_attackResult->_fromPlayer][i];
-                        invader->setPosition(_invaderPos[i] - Vec2(READY_DISTANCE_POS, 0));
-                        _animationLayer->addChild(invader);
-                        
-                        if (i == 0){
-                                auto fighting = CallFunc::create(std::bind(&GameScene::Fighting, this));
-                                auto s_with_cc = Sequence::create(get_ready, fight_wait,  run_to_fight, fighting, NULL);
-                                invader->runAction(s_with_cc);
-                        }else{
-                                invader->runAction(invade_seq->clone());
-                        }
+                auto invader = _allFightingCharacters[_attackResult->_fromPlayer][i];
+                invader->setPosition(_invaderPos[i] - Vec2(READY_DISTANCE_POS, 0));
+                _animationLayer->addChild(invader);
+                
+                if (i == 0){
+                        auto fighting = CallFunc::create(std::bind(&GameScene::Fighting, this));
+                        auto s_with_cc = Sequence::create(get_ready, fight_wait,  run_to_fight, fighting, NULL);
+                        invader->runAction(s_with_cc);
+                }else{
+                        invader->runAction(invade_seq->clone());
                 }
         }
+}
         
         
-        //KEEPER
-        {
-                int player_uid = _attackResult->_toPlayer;
-                
-                auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[player_uid]);
-                run_anim->setRestoreOriginalFrame(true);
-                auto run_act = Animate::create(run_anim);
-                
-                auto move = MoveBy::create(2, Vec2(-READY_DISTANCE_POS,0));
-                Spawn* get_ready = Spawn::create(run_act, FlipX::create(true), move, NULL);
-                
-                
-                auto stand_wait = cache->getAnimation(ANIM_NAME_FIGHT_STAND[player_uid]);
-                stand_wait->setRestoreOriginalFrame(true);
-                auto fight_wait = Animate::create(stand_wait);
-                
-                
-                auto moveby = MoveBy::create(2, Vec2(READY_DISTANCE_POS - back_size.width / 2 ,0));
-                auto run_to_fight = Spawn::create(run_act, moveby, NULL);
-                
-                Sequence* keeper_seq = Sequence::create(get_ready, fight_wait, run_to_fight, NULL);
-                
-                for (int i = 0; i < _attackResult->_to.size(); i++){
-                        auto keeper = _allFightingCharacters[player_uid][i];
-                        _animationLayer->addChild(keeper);
-                        keeper->setPosition(_keeperPos[i] + Vec2(READY_DISTANCE_POS, 0));
-                        keeper->runAction(keeper_seq->clone());
-                }
+        //KEEPER------------------------
+{
+        int player_uid = _attackResult->_toPlayer;
+        
+        auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[player_uid])->clone();
+        run_anim->setRestoreOriginalFrame(true);
+        
+        auto move = MoveBy::create(0.5, Vec2(-READY_DISTANCE_POS,0));
+        Spawn* get_ready = Spawn::create(Animate::create(run_anim), FlipX::create(true), move, NULL);
+        
+        
+        auto stand_wait = cache->getAnimation(ANIM_NAME_FIGHT_STAND[player_uid]);
+        stand_wait->setRestoreOriginalFrame(true);
+        auto fight_wait = Animate::create(stand_wait);
+        
+        
+        auto moveby = MoveBy::create(1.f, Vec2(READY_DISTANCE_POS - back_size.width / 2 ,0));
+        auto run_anim2 = run_anim->clone();
+        run_anim2->setLoops(2);
+        auto run_to_fight = Spawn::create(Animate::create(run_anim2), moveby, NULL);
+        
+        Sequence* keeper_seq = Sequence::create(get_ready, fight_wait, run_to_fight, NULL);
+        
+        for (int i = 0; i < _attackResult->_to.size(); i++){
+                auto keeper = _allFightingCharacters[player_uid][i];
+                _animationLayer->addChild(keeper);
+                keeper->setPosition(_keeperPos[i] + Vec2(READY_DISTANCE_POS, 0));
+                keeper->runAction(keeper_seq->clone());
         }
+}
 }
 
 void GameScene::playBattleAnimation(bool isMaunual){
         
+        _endTurnTipsLayer->setVisible(false);
         if (_animationIsOn && isMaunual){
                 _isPalyingAnim = true;
                 _animationLayer->setVisible(true);

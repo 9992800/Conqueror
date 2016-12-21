@@ -366,6 +366,20 @@ void GameScene::initAnimationLayer(){
         
         this->loadCharact(FIGHT_ANIM_TYPE_XINYUN, "yw0001.png");
 }
+
+
+void GameScene::initDialog(){
+        auto visible_size = Director::getInstance()->getVisibleSize();
+        _winDialogLayer = Layer::create();
+        _winDialogLayer->setIgnoreAnchorPointForPosition(false);
+        _winDialogLayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        _winDialogLayer->setPosition(visible_size / 2);
+        
+        auto game_win_back = Sprite::create("game_win_back.png");
+        game_win_back->setPosition(game_win_back->getContentSize() / 2);
+        _winDialogLayer->setContentSize(game_win_back->getContentSize());
+        _winDialogLayer->addChild(game_win_back);         
+}
 #pragma mark - touch and menu event
 
 void GameScene::onTouchesMoved(const std::vector<Touch*>& touches, Event* event){

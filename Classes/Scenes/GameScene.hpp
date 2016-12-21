@@ -35,6 +35,7 @@ private:
         void initOperateBoard();
         void initControlLayer();
         void initAnimationLayer();
+        void initDialog();
         
         void onTouchesMoved(const std::vector<Touch*>& touches, Event* event)override;
         void onTouchesEnded(const std::vector<Touch*>& touches, Event *event)override;
@@ -93,6 +94,7 @@ private:
         Sprite*         _curPlayerSupFlag, *_curInTurnBack;
         FightResultData* _attackResult;
         CallFunc*       _afterBattleCallback;
+        Layer           *_winDialogLayer, *_lostDialogLayer,*_exitTipsLayer;
 };
 
 

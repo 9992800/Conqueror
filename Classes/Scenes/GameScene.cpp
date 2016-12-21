@@ -378,8 +378,9 @@ void GameScene::initDialog(){
         auto game_win_back = Sprite::create("game_win_back.png");
         game_win_back->setPosition(game_win_back->getContentSize() / 2);
         _winDialogLayer->setContentSize(game_win_back->getContentSize());
-        _winDialogLayer->addChild(game_win_back);         
+        _winDialogLayer->addChild(game_win_back);
 }
+
 #pragma mark - touch and menu event
 
 void GameScene::onTouchesMoved(const std::vector<Touch*>& touches, Event* event){

@@ -44,7 +44,7 @@ public:
         inline AreaData* getArea(int area_id){
                 return _data->_areaData[area_id];
         }
-        void occupayAnimation(FightResultData* resut_data, CallFunc* cb);
+        void occupayAnimation(int area_id, CallFunc* cb);
 private:
         void makeNewMapData();
         int percolate(int pt, int cmax, int an);

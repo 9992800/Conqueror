@@ -454,11 +454,11 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
                 return;
         }
         
-        FightResultData* result = _theGameLogic->startPlayerAttack(cell_id);
+        _attackResult = _theGameLogic->startPlayerAttack(cell_id);
         
-        if (nullptr != result){
-                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this, result));
-                this->playBattleAnimation(result, callback, true);
+        if (nullptr != _attackResult){
+                _afterBattleCallback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this));
+                this->playBattleAnimation(true);
         }
 }
 
@@ -491,8 +491,8 @@ void GameScene::tryAgain(){
 
 #pragma mark - animation 
 
-void GameScene::afterPlayerBattle(FightResultData* result){
-        std::map<int, int> survival = _theGameLogic->cleanUpBattleField(result);
+void GameScene::afterPlayerBattle(){
+        std::map<int, int> survival = _theGameLogic->cleanUpBattleField(_attackResult);
         
         _isPalyingAnim = false;
         _diceResultLayer->setVisible(false);
@@ -512,8 +512,8 @@ void GameScene::afterPlayerBattle(FightResultData* result){
         this->refreshAreaTcShow(survival);
 }
 
-void GameScene::afterRobootBattle(FightResultData* result){
-        std::map<int, int> survival = _theGameLogic->cleanUpBattleField(result);
+void GameScene::afterRobootBattle(){
+        std::map<int, int> survival = _theGameLogic->cleanUpBattleField(_attackResult);
         
         _isPalyingAnim = false;
         _diceResultLayer->setVisible(false);
@@ -604,9 +604,9 @@ void GameScene::afterSupply(){
 }
 
 void GameScene::gameAction(){
-        FightResultData* res_data = _theGameLogic->startRobootAttack();
+        _attackResult = _theGameLogic->startRobootAttack();
         
-        if (nullptr == res_data || res_data->_result == ATTACK_RES_NONE){
+        if (nullptr == _attackResult || _attackResult->_result == ATTACK_RES_NONE){
                 auto visible_size = Director::getInstance()->getVisibleSize();
                 _mapLayer->setPosition(visible_size);
                 auto scale = ScaleTo::create(0.3, MAP_SCALE_V);
@@ -619,42 +619,51 @@ void GameScene::gameAction(){
                 return;
         }
         
-        if (ATTACK_RES_WIN == res_data->_result || ATTACK_RES_DEFEATED == res_data->_result){
+        if (ATTACK_RES_WIN == _attackResult->_result
+            || ATTACK_RES_DEFEATED == _attackResult->_result){
                 
-                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this, res_data));
-                this->playBattleAnimation(res_data, callback, false);
+                _afterBattleCallback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this));
+                this->playBattleAnimation(false);
                 
-        }else if(ATTACK_RES_GOTSUPPLY == res_data->_result){
+        }else if(ATTACK_RES_GOTSUPPLY == _attackResult->_result){
                 
                 CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterSupply, this));
                 this->playSupplyAnimation(callback);
         }
 }
 
-void GameScene::afterFightFinished(FightResultData* resut_data, CallFunc* cb){
+void GameScene::afterFightFinished(){
         for (int i = 0; i < MAX_DICE_PER_AREA; i++){
-                _allFightingCharacters[resut_data->_fromPlayer][i]->setVisible(false);
-                _allFightingCharacters[resut_data->_toPlayer][i]->setVisible(false);
+                _allFightingCharacters[_attackResult->_fromPlayer][i]->setVisible(false);
+                _allFightingCharacters[_attackResult->_toPlayer][i]->setVisible(false);
         }
         _allFightingCharacters[FIGHT_ANIM_TYPE_XINYUN][0]->setVisible(false);
         
-        auto occupay_cc = CallFunc::create(std::bind(&DiceGame::occupayAnimation, _theGameLogic, resut_data, cb));
+        int area_id = ATTACK_RES_DEFEATED == _attackResult->_result ? _attackResult->_fromArea : _attackResult->_toArea;
         
-        auto hide = ScaleTo::create(1.0f, .1f);
-        _animationLayer->runAction(Sequence::create(hide,
-                CallFunc::create( [&](){
-                _animationLayer->setVisible(false);
-        }), occupay_cc, NULL));
+        _afterBattleCallback->retain();
+        if (_animationIsOn){
+                auto occupay_cc = CallFunc::create(std::bind(&DiceGame::occupayAnimation, _theGameLogic, area_id, _afterBattleCallback));
+                
+                auto hide = ScaleTo::create(1.0f, .1f);
+                _animationLayer->runAction(Sequence::create(hide,
+                                                            CallFunc::create( [&](){
+                        _animationLayer->setVisible(false);
+                }), occupay_cc, NULL));
+        }else{
+                _theGameLogic->occupayAnimation(area_id, _afterBattleCallback);
+        }
+        
 }
 
 
-void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
+void GameScene::WinnerBack(){
         
-        this->ShowResultData(res_data);
+        this->ShowResultData();
         
-        if (ATTACK_RES_WIN == res_data->_result){
+        if (ATTACK_RES_WIN == _attackResult->_result){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_WIN);
-        }else if (ATTACK_RES_DEFEATED == res_data->_result){
+        }else if (ATTACK_RES_DEFEATED == _attackResult->_result){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_DEFEAT);
         }
         
@@ -663,9 +672,9 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
         
         Size back_size = _animationLayer->getContentSize();
         auto cache = AnimationCache::getInstance();
-        auto when_back_home = CallFunc::create(std::bind(&GameScene::afterFightFinished, this,res_data, cb));
+        auto when_back_home = CallFunc::create(std::bind(&GameScene::afterFightFinished, this));
         
-        int player_uid = ATTACK_RES_WIN == res_data->_result ? res_data->_fromPlayer : res_data->_toPlayer;
+        int player_uid = ATTACK_RES_WIN == _attackResult->_result ? _attackResult->_fromPlayer : _attackResult->_toPlayer;
         auto run_back_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[player_uid]);
         run_back_anim->setRestoreOriginalFrame(true);
         auto run_back_act = Animate::create(run_back_anim);
@@ -674,10 +683,10 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
         back_wait->setRestoreOriginalFrame(true);
         
         
-        if (ATTACK_RES_WIN == res_data->_result){
+        if (ATTACK_RES_WIN == _attackResult->_result){
                 
-                int keeper_uid = res_data->_toPlayer;
-                for (int i = 0; i < res_data->_to.size(); i++){
+                int keeper_uid = _attackResult->_toPlayer;
+                for (int i = 0; i < _attackResult->_to.size(); i++){
                         auto keeper = _allFightingCharacters[keeper_uid][i];
                         keeper->setVisible(false);
                 }
@@ -692,7 +701,7 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
                 
                 Sequence* invade_back = Sequence::create(run_back, fight_back,  back_home, NULL);
                 
-                for (int i = 0; i < res_data->_from.size(); i++){
+                for (int i = 0; i < _attackResult->_from.size(); i++){
                         auto invader = _allFightingCharacters[player_uid][i];
                         
                         if (i == 0){
@@ -704,8 +713,8 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
                 }
         }else{
                 
-                int invader_uid = res_data->_fromPlayer;
-                for (int i = 0; i < res_data->_from.size(); i++){
+                int invader_uid = _attackResult->_fromPlayer;
+                for (int i = 0; i < _attackResult->_from.size(); i++){
                         auto invader = _allFightingCharacters[invader_uid][i];
                         invader->setVisible(false);
                 }
@@ -720,7 +729,7 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
                 
                 Sequence* keeper_back = Sequence::create(run_back, fight_back, back_home, NULL);
 
-                for (int i = 0; i < res_data->_to.size(); i++){
+                for (int i = 0; i < _attackResult->_to.size(); i++){
                         auto keeper = _allFightingCharacters[player_uid][i];
                         
                         if (0 == i){
@@ -733,15 +742,15 @@ void GameScene::WinnerBack(FightResultData* res_data, CallFunc* cb){
         }
 }
 
-void GameScene::ShowResultData(FightResultData* resut_data){
+void GameScene::ShowResultData(){
         _diceResultLayer->setVisible(true);
         _endTurnTipsLayer->setVisible(false);
         auto back_size = _diceResultLayer->getContentSize();
         auto frameCache = SpriteFrameCache::getInstance();
 
-        for (int i = 0; i < resut_data->_from.size(); i++){
-                int value = resut_data->_from[i];
-                auto str = DICE_PIC_NAME_STR[resut_data->_fromPlayer][value - 1];
+        for (int i = 0; i < _attackResult->_from.size(); i++){
+                int value = _attackResult->_from[i];
+                auto str = DICE_PIC_NAME_STR[_attackResult->_fromPlayer][value - 1];
                 auto frame = frameCache->getSpriteFrameByName(str);
                 auto dice = Sprite::create();
                 dice->setSpriteFrame(frame);
@@ -750,16 +759,16 @@ void GameScene::ShowResultData(FightResultData* resut_data){
                 dice->setPosition(pos);
                 _diceResultLayer->addChild(dice);
 
-                if (i == resut_data->_from.size() - 1){
-                        auto from_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_fromSum), "Arial", 40);
+                if (i == _attackResult->_from.size() - 1){
+                        auto from_value = Label::createWithSystemFont(StringUtils::format("%d", _attackResult->_fromSum), "Arial", 40);
                         from_value->setPosition(Vec2(pos.x - dice_size.width - 10, pos.y));
                         _diceResultLayer->addChild(from_value);
                 }
         }
 
-        for (int i = 0; i < resut_data->_to.size(); i++){
-                int value = resut_data->_to[i];
-                auto str = DICE_PIC_NAME_STR[resut_data->_toPlayer][value - 1];
+        for (int i = 0; i < _attackResult->_to.size(); i++){
+                int value = _attackResult->_to[i];
+                auto str = DICE_PIC_NAME_STR[_attackResult->_toPlayer][value - 1];
                 auto frame = frameCache->getSpriteFrameByName(str);
                 auto dice = Sprite::create();
                 dice->setSpriteFrame(frame);
@@ -768,17 +777,17 @@ void GameScene::ShowResultData(FightResultData* resut_data){
                 dice->setPosition(pos);
                 _diceResultLayer->addChild(dice);
 
-                if (i == resut_data->_to.size() - 1){
-                        auto to_value = Label::createWithSystemFont(StringUtils::format("%d", resut_data->_toSum), "Arial", 40);
+                if (i == _attackResult->_to.size() - 1){
+                        auto to_value = Label::createWithSystemFont(StringUtils::format("%d", _attackResult->_toSum), "Arial", 40);
                         to_value->setPosition(Vec2(pos.x + dice_size.width + 10, pos.y));
                         _diceResultLayer->addChild(to_value);
                 }
         }
 }
 
-void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
+void GameScene::Fighting(){
         
-        auto winner_back = CallFunc::create(std::bind(&GameScene::WinnerBack, this, resut_data, cb));
+        auto winner_back = CallFunc::create(std::bind(&GameScene::WinnerBack, this));
         
         auto fight_cloud = _allFightingCharacters[FIGHT_ANIM_TYPE_XINYUN][0];
         fight_cloud->setVisible(true);
@@ -795,13 +804,13 @@ void GameScene::Fighting(FightResultData* resut_data, CallFunc* cb){
         fight_cloud->runAction(Sequence::create(anim_action, winner_back, NULL));
 }
 
-void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
+void GameScene::afterShowFightBg(){
         Size back_size = _animationLayer->getContentSize();
         auto cache = AnimationCache::getInstance();
         
         //FIGHTER
         {
-                int player_uid = res_data->_fromPlayer;
+                int player_uid = _attackResult->_fromPlayer;
         
                 auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[player_uid]);
                 run_anim->setRestoreOriginalFrame(true);
@@ -822,14 +831,14 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
         
                 Sequence* invade_seq = Sequence::create(get_ready, fight_wait,  run_to_fight, NULL);
                 
-                for (int i = 0; i < res_data->_from.size(); i++){
+                for (int i = 0; i < _attackResult->_from.size(); i++){
                         
-                        auto invader = _allFightingCharacters[res_data->_fromPlayer][i];
+                        auto invader = _allFightingCharacters[_attackResult->_fromPlayer][i];
                         invader->setVisible(true);
                         invader->setPosition(_invaderPos[i] - Vec2(READY_DISTANCE_POS, 0));
                         
                         if (i == 0){
-                                auto fighting = CallFunc::create(std::bind(&GameScene::Fighting, this,res_data, cb));
+                                auto fighting = CallFunc::create(std::bind(&GameScene::Fighting, this));
                                 auto s_with_cc = Sequence::create(get_ready, fight_wait,  run_to_fight, fighting, NULL);
                                 invader->runAction(s_with_cc);
                         }else{
@@ -841,7 +850,7 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
         
         //KEEPER
         {
-                int player_uid = res_data->_toPlayer;
+                int player_uid = _attackResult->_toPlayer;
                 
                 auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[player_uid]);
                 run_anim->setRestoreOriginalFrame(true);
@@ -861,7 +870,7 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
                 
                 Sequence* keeper_seq = Sequence::create(get_ready, fight_wait, run_to_fight, NULL);
                 
-                for (int i = 0; i < res_data->_to.size(); i++){
+                for (int i = 0; i < _attackResult->_to.size(); i++){
                         auto keeper = _allFightingCharacters[player_uid][i];
                         keeper->setVisible(true);
                         keeper->setPosition(_keeperPos[i] + Vec2(READY_DISTANCE_POS, 0));
@@ -870,22 +879,18 @@ void GameScene::afterShowFightBg(FightResultData* res_data, CallFunc* cb){
         }
 }
 
-void GameScene::playBattleAnimation(FightResultData* resut_data, CallFunc* callback, bool isMaunual){
+void GameScene::playBattleAnimation(bool isMaunual){
         
         _isPalyingAnim = true;
         if (_animationIsOn && isMaunual){
                 _animationLayer->setVisible(true);
                 auto show = ScaleTo::create(.5f, 1.0f);
-                callback->retain();
-                resut_data->retain();
-                auto cc = CallFunc::create(std::bind(&GameScene::afterShowFightBg, this, resut_data, callback));
+                auto cc = CallFunc::create(std::bind(&GameScene::afterShowFightBg, this));
                 _animationLayer->runAction(Sequence::create(show, cc, NULL));
                 
         }else{
-                this->ShowResultData(resut_data);
-                callback->retain();
-                resut_data->retain();
-                this->afterFightFinished(resut_data, callback); 
+                this->ShowResultData();
+                this->afterFightFinished();
         }
 }
 
@@ -1039,6 +1044,11 @@ void GameScene::gameOver(Ref* btn, int result){
 }
 
 void GameScene::menuAnimSwitch(Ref* btn){
+        
+        if (GAME_STATUS_INUSERTURN != _gameStatus){
+                return;
+        }
+        
         _animationIsOn = !_animationIsOn;
         if (_animationIsOn)
                 _animCtlBtn->loadTextureNormal("maps/open_anim.png");

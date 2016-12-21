@@ -669,10 +669,7 @@ std::map<AreaData*, int> DiceGame::starSupplyDice(GamePlayer* player){
         return supply_data;
 }
 
-void DiceGame::occupayAnimation(FightResultData* resut_data, CallFunc* cb){
-        
-        int area_id = ATTACK_RES_DEFEATED == resut_data->_result ? resut_data->_fromArea : resut_data->_toArea;
-        
+void DiceGame::occupayAnimation(int area_id, CallFunc* cb){         
         AreaData* defeat_area = _data->_areaData[area_id];
         
         defeat_area->playOccupaiedAnimation(cb, _data->_referedLayer);

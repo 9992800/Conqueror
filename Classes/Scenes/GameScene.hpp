@@ -25,6 +25,7 @@ public:
         CREATE_FUNC(GameScene);
         GameScene():_isMoved(false),
         _isPalyingAnim(false),
+        _attackResult(nullptr),
         _gameStatus(GAME_STATUS_INIT){
         }     
         ~GameScene();
@@ -39,9 +40,9 @@ private:
         void onTouchesEnded(const std::vector<Touch*>& touches, Event *event)override;
         void tryAgain();
 
-        void afterPlayerBattle(FightResultData*);
-        void afterRobootBattle(FightResultData*);
-        void playBattleAnimation(FightResultData*, CallFunc*, bool);
+        void afterPlayerBattle();
+        void afterRobootBattle();
+        void playBattleAnimation(bool);
         void playSupplyAnimation(CallFunc*);
         void playSupplyAnimation2(CallFunc*, GamePlayer*);
         void afterSupply();
@@ -62,11 +63,11 @@ private:
         void loadCharact(int, std::string);
         void initMapSize(GameData*);
         
-        void afterShowFightBg(FightResultData*, CallFunc*);
-        void afterFightFinished(FightResultData*, CallFunc*);
-        void Fighting(FightResultData*, CallFunc*);
-        void WinnerBack(FightResultData*, CallFunc*);
-        void ShowResultData(FightResultData*);
+        void afterShowFightBg();
+        void afterFightFinished();
+        void Fighting();
+        void WinnerBack();
+        void ShowResultData();
         
 private:
         static int      _playerNumber, _charactorIdx, _colorIdx;
@@ -90,6 +91,8 @@ private:
         cocos2d::ui::Button*         _animCtlBtn, *_addArmyBtn;
         int             _addtionalSupplyTimes;
         Sprite*         _curPlayerSupFlag, *_curInTurnBack;
+        FightResultData* _attackResult;
+        CallFunc*       _afterBattleCallback;
 };
 
 

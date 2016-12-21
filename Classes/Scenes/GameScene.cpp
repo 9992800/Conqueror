@@ -455,9 +455,10 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         }
         
         _attackResult = _theGameLogic->startPlayerAttack(cell_id);
-        
         if (nullptr != _attackResult){
                 _afterBattleCallback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this));
+                _afterBattleCallback->retain();
+                _attackResult->retain();
                 this->playBattleAnimation(true);
         }
 }
@@ -605,7 +606,6 @@ void GameScene::afterSupply(){
 
 void GameScene::gameAction(){
         _attackResult = _theGameLogic->startRobootAttack();
-        
         if (nullptr == _attackResult || _attackResult->_result == ATTACK_RES_NONE){
                 auto visible_size = Director::getInstance()->getVisibleSize();
                 _mapLayer->setPosition(visible_size);
@@ -618,11 +618,13 @@ void GameScene::gameAction(){
                 
                 return;
         }
-        
         if (ATTACK_RES_WIN == _attackResult->_result
             || ATTACK_RES_DEFEATED == _attackResult->_result){
                 
                 _afterBattleCallback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this));
+                
+                _afterBattleCallback->retain();
+                _attackResult->retain();
                 this->playBattleAnimation(false);
                 
         }else if(ATTACK_RES_GOTSUPPLY == _attackResult->_result){

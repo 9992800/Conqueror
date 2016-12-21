@@ -654,7 +654,6 @@ void GameScene::afterFightFinished(){
         }else{
                 _theGameLogic->occupayAnimation(area_id, _afterBattleCallback);
         }
-        
 }
 
 

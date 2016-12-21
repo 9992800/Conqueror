@@ -369,51 +369,69 @@ void GameScene::initAnimationLayer(){
 #pragma mark - touch and menu event
 
 void GameScene::onTouchesMoved(const std::vector<Touch*>& touches, Event* event){
-
-        
-        if (touches.size() >= 2){
-                auto touch1 = touches[0];
-                auto touch2 = touches[1];
-
-                CCLOG("---touche1=delat(%.f,%.f)---",
-                      touch1->getDelta().x, touch1->getDelta().y);
-                CCLOG("---touche1=delat(%.f,%.f)---",
-                      touch2->getDelta().x, touch2->getDelta().y);
-        }else{
-                auto touch = touches[0];
-                auto diff = touch->getDelta();
-
-                if (diff.x >= 0.001f || diff.y >= 0.001
-                    || diff.x <= -0.001f ||diff.y <= -0.001f){
-                        _isMoved = true;
-                }
-
-                auto currentPos = _mapLayer->getPosition();
-
-                if (GAME_STATUS_INUSERTURN == _gameStatus){
-
-                         if (_maxFrameShow.getMaxY() < (currentPos.y + diff.y)
-                             || (currentPos.y + diff.y) < _maxFrameShow.getMinY()){
-                                 diff.y = 0;
-                         }
-
-                        if (_maxFrameShow.getMaxX() < (currentPos.x + diff.x)
-                            || (currentPos.x + diff.x) < _maxFrameShow.getMinX()){
-                                diff.x = 0;
+        bool need_to_scale = false;
+        float scale_v = _mapLayer->getScale();
+        if (touches.size() >= 2
+            && GAME_STATUS_INUSERTURN == _gameStatus)
+        {
+                Vec2 touch1 = touches[0]->getPreviousLocation();
+                Vec2 touch2 = touches[1]->getPreviousLocation();
+                float distance1 = touch1.distance(touch2);
+                
+                Vec2 touch3 = touches[0]->getLocation();
+                Vec2 touch4 = touches[1]->getLocation();
+                float distance2 = touch3.distance(touch4);
+                
+                float interval = ((float)distance1  - distance2)/ (float)distance2;
+                CCLOG("---dis(1=%.f, 2=%.f, s=%.4f)---", distance1, distance2, interval);
+                if (interval <-0.02f || interval > 0.02f){
+                        
+                        need_to_scale = true;
+                        scale_v *= (interval > 0) ? 0.95f: 1.05f;
+                        
+                        if (scale_v > MAP_SCALE_V){
+                                scale_v = MAP_SCALE_V;
                         }
-                }else{
-                        diff.x = 0;
-                        printf("=(%2.f, %2.f)=", _minFrameShow.getMaxY(), _minFrameShow.getMinY());
-                        if (_minFrameShow.getMaxY() < (currentPos.y + diff.y)
-                            || (currentPos.y + diff.y) < _minFrameShow.getMinY()){
-                                diff.y = 0;
+                        if (scale_v < 1.0f){
+                                scale_v = 1.0f;
                         }
                 }
-
-
-
-                _mapLayer->setPosition(currentPos + diff);
         }
+        
+        if (need_to_scale){
+                _mapLayer->setScale(scale_v);
+                return;
+        }
+
+        auto touch = touches[0];
+        auto diff = touch->getDelta();
+
+        if (diff.x >= 0.001f || diff.y >= 0.001
+            || diff.x <= -0.001f ||diff.y <= -0.001f){
+                _isMoved = true;
+        }
+
+        auto currentPos = _mapLayer->getPosition();
+
+        if (GAME_STATUS_INUSERTURN == _gameStatus){
+
+                 if (_maxFrameShow.getMaxY() < (currentPos.y + diff.y)
+                     || (currentPos.y + diff.y) < _maxFrameShow.getMinY()){
+                         diff.y = 0;
+                 }
+
+                if (_maxFrameShow.getMaxX() < (currentPos.x + diff.x)
+                    || (currentPos.x + diff.x) < _maxFrameShow.getMinX()){
+                        diff.x = 0;
+                }
+        }else{
+                diff.x = 0;
+                if (_minFrameShow.getMaxY() < (currentPos.y + diff.y)
+                    || (currentPos.y + diff.y) < _minFrameShow.getMinY()){
+                        diff.y = 0;
+                }
+        }
+        _mapLayer->setPosition(currentPos + diff);
 }
 
 void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event){

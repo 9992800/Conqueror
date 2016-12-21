@@ -642,7 +642,7 @@ void GameScene::afterFightFinished(){
         int area_id = ATTACK_RES_DEFEATED == _attackResult->_result ? _attackResult->_fromArea : _attackResult->_toArea;
         
         _afterBattleCallback->retain();
-        if (_animationIsOn){
+        if (_animationIsOn && GAME_STATUS_INUSERTURN == _gameStatus){
                 auto occupay_cc = CallFunc::create(std::bind(&DiceGame::occupayAnimation, _theGameLogic, area_id, _afterBattleCallback));
                 
                 auto hide = ScaleTo::create(1.0f, .1f);

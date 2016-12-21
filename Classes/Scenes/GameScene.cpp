@@ -571,7 +571,6 @@ void GameScene::refreshAreaTcShow(std::map<int, int> survival){
 }
 
 void GameScene::afterSupply(){
-        _endTurnTipsLayer->setVisible(true);
         _supplyShowLayer->removeAllChildren();
         _supplyShowLayer->setVisible(false);
         _curGameData->_player[_curGameData->_userId]->useTheAddSupply();
@@ -877,6 +876,7 @@ void GameScene::playSupplyAnimation2(CallFunc* callback, GamePlayer* player){
         std::map<AreaData*, int> supply_data = _theGameLogic->starSupplyDice(player);
         if (supply_data.size() == 0){
                 callback->execute();
+                return;
         }
         
         Vector<Node*> supp_nodes = _supplyShowLayer->getChildren();

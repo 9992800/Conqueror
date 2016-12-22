@@ -467,7 +467,7 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         int cell_id = ScreenCoordinate::getInstance()->getSelectedCell(pos_in_map);
         if (cell_id < 0){
                 return;
-        } 
+        }
         _attackResult = _theGameLogic->startPlayerAttack(cell_id);
         if (nullptr != _attackResult){
                 _afterBattleCallback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this));
@@ -532,7 +532,8 @@ void GameScene::afterPlayerBattle(){
 void GameScene::afterRobootBattle(){
         std::map<int, int> survival = _theGameLogic->cleanUpBattleField(_attackResult);
         _attackResult->release();
-        _attackResult = NULL; 
+        _attackResult = NULL;
+        _isPalyingAnim = false;
         _diceResultLayer->setVisible(false);
         _diceResultLayer->removeAllChildren();
         int user_tc = _theGameLogic->getUserTC();
@@ -935,7 +936,7 @@ void GameScene::playSupplyAnimation2(CallFunc* callback, GamePlayer* player){
                 AreaData*  cur_area = it->first;
                 Vec2 pos = cur_area->getSpriteWorldPos();
                 Vec2 rel_pos = _supplyShowLayer->convertToNodeSpace(pos);
-                auto move = MoveTo::create(1.2f, rel_pos);
+                auto move = MoveTo::create(0.8f, rel_pos);
                 std::map<AreaData*, int>::iterator it_end = supply_data.end();
                 it_end--;
                 

@@ -425,26 +425,27 @@ void GameScene::initDialog(){
         replay_btn->setScale(2.f);
         auto btn_pos = replay_btn->getPosition();
         auto btn_size = replay_btn->getContentSize();
+        game_win_back->addChild(replay_btn);
         replay_btn->setTitleText("重玩");
         replay_btn->setTitleFontName("Arial");
-        replay_btn->setTitleFontSize(40);
-        game_win_back->addChild(replay_btn);
+        replay_btn->setTitleFontSize(20);
+        replay_btn->setTitleColor(Color3B::BLACK);
         
         auto share_btn = (ui::Button*)replay_btn->clone();
         share_btn->setPosition(Vec2(btn_pos.x - 2.5f * btn_size.width, btn_pos.y));
         game_win_back->addChild(share_btn);
         share_btn->setTitleText("分享");
         share_btn->setTitleFontName("Arial");
-        share_btn->setTitleFontSize(40);
-
-        
+        share_btn->setTitleFontSize(20);
+        share_btn->setTitleColor(Color3B::BLACK);
         
         auto return_btn = (ui::Button*)replay_btn->clone();
         return_btn->setPosition(Vec2(btn_pos.x + 2.5f * btn_size.width, btn_pos.y));
         game_win_back->addChild(return_btn);
         return_btn->setTitleText("返回");
+        return_btn->setTitleColor(Color3B::BLACK);
         return_btn->setTitleFontName("Arial");
-        return_btn->setTitleFontSize(40);
+        return_btn->setTitleFontSize(20);
 }
 
 #pragma mark - touch and menu event

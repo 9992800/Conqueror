@@ -468,7 +468,7 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         if (cell_id < 0){
                 return;
         }
-        
+        printf("----------------1---------------");
         _attackResult = _theGameLogic->startPlayerAttack(cell_id);
         if (nullptr != _attackResult){
                 _afterBattleCallback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this));
@@ -509,12 +509,7 @@ void GameScene::tryAgain(){
 
 void GameScene::afterPlayerBattle(){
         std::map<int, int> survival = _theGameLogic->cleanUpBattleField(_attackResult);
-        _attackResult->release();
-        _attackResult = NULL;
-        _isPalyingAnim = false;
-        _diceResultLayer->setVisible(false);
-        _diceResultLayer->removeAllChildren();
-        _endTurnTipsLayer->setVisible(true);
+        
         if (survival.size() == 1){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_WIN);
                 Director::getInstance()->pause();
@@ -527,6 +522,12 @@ void GameScene::afterPlayerBattle(){
                 return;
         }
         this->refreshAreaTcShow(survival);
+        _attackResult->release();
+        _attackResult = NULL;
+        _isPalyingAnim = false;
+        _diceResultLayer->setVisible(false);
+        _diceResultLayer->removeAllChildren();
+        _endTurnTipsLayer->setVisible(true);
 }
 
 void GameScene::afterRobootBattle(){
@@ -904,8 +905,8 @@ void GameScene::afterShowFightBg(){
 void GameScene::playBattleAnimation(bool isMaunual){
         
         _endTurnTipsLayer->setVisible(false);
+        _isPalyingAnim = true;
         if (_animationIsOn && isMaunual){
-                _isPalyingAnim = true;
                 _animationLayer->setVisible(true);
                 auto show = ScaleTo::create(.4f, 1.0f);
                 auto cc = CallFunc::create(std::bind(&GameScene::afterShowFightBg, this));
@@ -980,10 +981,10 @@ void GameScene::playSupplyAnimation(CallFunc* callback){
                 character->setScale(scal_factor);
                 Vec2 pos;
                 if (i / AREA_MAX > 0){
-                        pos.x = (2 * (i - AREA_MAX) + 1) * 0.5f * ch_size.width * 0.8;
+                        pos.x = (2 * (i - AREA_MAX) + 1) * 0.5f * ch_size.width * 0.7;
                         pos.y = back_size.height * 0.25f;
                 }else{
-                        pos.x = (2 * i + 1) * 0.5f * ch_size.width * 0.8;
+                        pos.x = (2 * i + 1) * 0.5f * ch_size.width * 0.7;
                         pos.y = 3 * back_size.height * 0.25f;
                 }
                 character->setPosition(pos);

@@ -657,7 +657,7 @@ void GameScene::afterFightFinished(){
         _afterBattleCallback->retain();
         if (_animationIsOn && GAME_STATUS_INUSERTURN == _gameStatus){
                 
-                _animationLayer->removeAllChildrenWithCleanup(true);//TODO::
+                _animationLayer->removeAllChildrenWithCleanup(true);
                 auto occupay_cc = CallFunc::create(std::bind(&DiceGame::occupayAnimation, _theGameLogic, area_id, _afterBattleCallback));
                 
                 auto hide = ScaleTo::create(0.4f, .1f);
@@ -685,7 +685,7 @@ void GameScene::WinnerBack(){
         
         auto obj = _allFightingCharacters[FIGHT_ANIM_TYPE_XINYUN][0];
         
-        _animationLayer->removeChild(obj, true);//TODO::
+        _animationLayer->removeChild(obj, true);
         
         Size back_size = _animationLayer->getContentSize();
         auto cache = AnimationCache::getInstance();
@@ -704,7 +704,7 @@ void GameScene::WinnerBack(){
                 int keeper_uid = _attackResult->_toPlayer;
                 for (int i = 0; i < _attackResult->_to.size(); i++){
                         auto keeper = _allFightingCharacters[keeper_uid][i];
-                        _animationLayer->removeChild(keeper, true);//TODO::
+                        _animationLayer->removeChild(keeper, true);
                 }
                 
                 auto moveby = MoveBy::create(0.5, Vec2(READY_DISTANCE_POS - back_size.width / 2,0));
@@ -734,7 +734,7 @@ void GameScene::WinnerBack(){
                 int invader_uid = _attackResult->_fromPlayer;
                 for (int i = 0; i < _attackResult->_from.size(); i++){
                         auto invader = _allFightingCharacters[invader_uid][i];
-                        _animationLayer->removeChild(invader, true);//TODO::
+                        _animationLayer->removeChild(invader, true);
                 }
                 
                 auto moveby = MoveBy::create(0.5f, Vec2(back_size.width / 2 - READY_DISTANCE_POS, 0));
@@ -809,7 +809,7 @@ void GameScene::Fighting(){
         auto winner_back = CallFunc::create(std::bind(&GameScene::WinnerBack, this));
         
         auto fight_cloud = _allFightingCharacters[FIGHT_ANIM_TYPE_XINYUN][0];
-        _animationLayer->addChild(fight_cloud);//TODO::
+        _animationLayer->addChild(fight_cloud);
         
         auto size = _animationLayer->getContentSize();
         auto cache = AnimationCache::getInstance();
@@ -974,13 +974,18 @@ void GameScene::playSupplyAnimation(CallFunc* callback){
         for (int i = 0; i < total_stock; i++){
                 int ch_idx = player->getPosCharactorIdx();
                 std::string charact_name = CHARACTER_NAME[ch_idx];
-                
+                float scal_factor = 0.5f;
                 auto character = Sprite::create(charact_name);
-                character->setScale(0.5f);
-                auto ch_size = character->getContentSize() * 0.5f;
+                auto ch_size = character->getContentSize() * scal_factor;
+                character->setScale(scal_factor);
                 Vec2 pos;
-                pos.x = (2 * i + 1) * 0.5f * ch_size.width;
-                pos.y = (((int)(i / AREA_MAX)) * 2 + 1) * back_size.height * 0.25f;
+                if (i / AREA_MAX > 0){
+                        pos.x = (2 * (i - AREA_MAX) + 1) * 0.5f * ch_size.width * 0.8;
+                        pos.y = back_size.height * 0.25f;
+                }else{
+                        pos.x = (2 * i + 1) * 0.5f * ch_size.width * 0.8;
+                        pos.y = 3 * back_size.height * 0.25f;
+                }
                 character->setPosition(pos);
                 _supplyShowLayer->addChild(character);
         }
@@ -1089,7 +1094,7 @@ void GameScene::menuAddArmy(Ref* btn){
             ||_addtionalSupplyTimes-- <= 0){
                 return;
         }
-        
+        _isPalyingAnim = true;
         auto btn_anim = _addArmyBtn->clone();
         _curGameData->_player[_curGameData->_userId]->addMoreSupply();
         auto parent = _addArmyBtn->getParent();
@@ -1107,6 +1112,7 @@ void GameScene::menuAddArmy(Ref* btn){
                 }
 
                 this->refreshSupplyDiceNum();
+                _isPalyingAnim = false;
                 auto scale_s = ScaleTo::create(0.3, 1.4f);
                 auto scale_s_r = ScaleTo::create(0.3, 1.0f);
                 _curPlayerSupFlag->runAction(Sequence::create(scale_s, scale_s_r, NULL));

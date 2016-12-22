@@ -467,8 +467,7 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         int cell_id = ScreenCoordinate::getInstance()->getSelectedCell(pos_in_map);
         if (cell_id < 0){
                 return;
-        }
-        printf("----------------1---------------");
+        } 
         _attackResult = _theGameLogic->startPlayerAttack(cell_id);
         if (nullptr != _attackResult){
                 _afterBattleCallback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this));

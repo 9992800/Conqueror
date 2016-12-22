@@ -73,6 +73,7 @@ bool GameScene::init()
         this->initControlLayer();
         this->initMapSize(_curGameData);
         this->initAnimationLayer();
+        this->initDialog();
         
         return true;
 }
@@ -378,7 +379,72 @@ void GameScene::initDialog(){
         auto game_win_back = Sprite::create("game_win_back.png");
         game_win_back->setPosition(game_win_back->getContentSize() / 2);
         _winDialogLayer->setContentSize(game_win_back->getContentSize());
-        _winDialogLayer->addChild(game_win_back);
+        _winDialogLayer->addChild(game_win_back, 1);
+        auto win_back_size = game_win_back->getContentSize();
+        
+        auto game_win_title = Sprite::create("game_win_title.png");
+        game_win_title->setPosition(Vec2(win_back_size.width / 2, win_back_size.height + game_win_title->getContentSize().height * 0.2));
+        game_win_back->addChild(game_win_title, 2);
+        
+        auto game_win_shine = Sprite::create("game_win_shine.png");
+        game_win_shine->setPosition(game_win_title->getPosition());
+        _winDialogLayer->addChild(game_win_shine);
+        auto anim_rotate = RotateBy::create(2.f, 360);
+        game_win_shine->runAction(RepeatForever::create(anim_rotate));
+        
+        auto game_win_t_back = Sprite::create("game_win_t_back.png");
+        auto game_win_t_back_pos = Vec2(0.475 *game_win_t_back->getContentSize().width ,
+                                        win_back_size.height - game_win_t_back->getContentSize().height / 2 - 10);
+        game_win_t_back->setPosition(game_win_t_back_pos);
+        game_win_back->addChild(game_win_t_back);
+        
+        auto win_title_txt = Label::createWithSystemFont("恭喜你统一了整个岛屿!!!", "Arial", 32);
+        win_title_txt->setPosition(Vec2(win_title_txt->getContentSize().width * 0.6,
+                                        game_win_t_back->getContentSize().height * 0.7));
+        game_win_t_back->addChild(win_title_txt);
+        
+        
+        auto game_win_c_back = Sprite::create("game_win_c_back.png");
+        
+        game_win_c_back->setPosition(Vec2(win_back_size.width / 2,
+                                          game_win_t_back_pos.y - game_win_c_back->getContentSize().height * 0.63f));
+        game_win_back->addChild(game_win_c_back);
+        auto game_win_c_back_size = game_win_c_back->getContentSize();
+        auto win_tips = Label::createWithSystemFont("您获得了:", "Arial", 28);
+        win_tips->setColor(Color3B::BLACK);
+        win_tips->setPosition(Vec2(win_tips->getContentSize().width * 0.55,
+                                   game_win_c_back_size.height - win_tips->getContentSize().height * 0.6));
+        game_win_c_back->addChild(win_tips);
+        this->addChild(_winDialogLayer, ZORDER_DICE_LAYER, key_dialog_layer_tag);
+        
+        auto replay_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
+        
+        auto game_win_c_back_pos = game_win_c_back->getPosition();
+        replay_btn->setPosition(Vec2(win_back_size.width / 2,
+                                     replay_btn->getContentSize().height *1.5f));
+        replay_btn->setScale(2.f);
+        auto btn_pos = replay_btn->getPosition();
+        auto btn_size = replay_btn->getContentSize();
+        replay_btn->setTitleText("重玩");
+        replay_btn->setTitleFontName("Arial");
+        replay_btn->setTitleFontSize(40);
+        game_win_back->addChild(replay_btn);
+        
+        auto share_btn = (ui::Button*)replay_btn->clone();
+        share_btn->setPosition(Vec2(btn_pos.x - 2.5f * btn_size.width, btn_pos.y));
+        game_win_back->addChild(share_btn);
+        share_btn->setTitleText("分享");
+        share_btn->setTitleFontName("Arial");
+        share_btn->setTitleFontSize(40);
+
+        
+        
+        auto return_btn = (ui::Button*)replay_btn->clone();
+        return_btn->setPosition(Vec2(btn_pos.x + 2.5f * btn_size.width, btn_pos.y));
+        game_win_back->addChild(return_btn);
+        return_btn->setTitleText("返回");
+        return_btn->setTitleFontName("Arial");
+        return_btn->setTitleFontSize(40);
 }
 
 #pragma mark - touch and menu event

@@ -49,7 +49,6 @@ PopUpBaseDialog::PopUpBaseDialog(BaseDialogConfig config):LayerColor::LayerColor
         addChild(_content, 1, kTagContent);
         _content->setColor(Color3B::RED);
         Size content_size = _content->getContentSize();
-        _content->setPosition(Vec2::ZERO);
         _content->setAnchorPoint(Vec2(0.f, 1.0f));
         _content->setPosition(Vec2(_baseConfig._padding,
                                    layer_size.height - title_size.height - _baseConfig._paddingTop));

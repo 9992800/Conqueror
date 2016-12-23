@@ -457,9 +457,6 @@ void GameScene::initDialog(){
         return_btn->setTitleFontName("Arial");
         return_btn->addClickEventListener(CC_CALLBACK_1(GameScene::gameOver, this, 0));
         
-        this->addChild(_winDialogLayer, ZORDER_DICE_LAYER, key_dialog_layer_tag);
-        _winDialogLayer->setVisible(false);
-        
         /*
          *
          *lost dialog
@@ -485,7 +482,7 @@ void GameScene::initDialog(){
         game_lost_back->addChild(game_lost_t_bck);
         
         auto lost_title_txt = Label::createWithSystemFont("很遗憾您失去了您的国家...", "Arial", 32);
-        lost_title_txt->setPosition(Vec2(lost_title_txt->getContentSize().width * 0.5,
+        lost_title_txt->setPosition(Vec2(lost_title_txt->getContentSize().width * 0.55,
                                         game_lost_t_bck->getContentSize().height * 0.7));
         game_lost_t_bck->addChild(lost_title_txt);
         
@@ -498,21 +495,25 @@ void GameScene::initDialog(){
         game_lost_back->addChild(game_lost_c_bck);
         auto game_lost_c_bck_size = game_lost_back->getContentSize();
         auto lost_tips = Label::createWithSystemFont("您可以在战斗中补充兵力来获得更高的几率取得胜利！也可以充值购买补兵来增强您的兵力", "Arial", 28);
-        
         Size lost_tips_size = lost_tips->getContentSize();
-        lost_tips->setPosition(Vec2::ZERO);
         lost_tips->setAnchorPoint(Vec2(0.f, 1.0f));
-        lost_tips->setPosition(Vec2(5, game_lost_c_bck_size.height - 10));
-        
-        lost_tips->setDimensions(game_lost_c_bck_size.width - 10,
-                                game_lost_c_bck_size.height - 10);
+        lost_tips->setDimensions(game_lost_c_bck_size.width * 0.9,
+                                game_lost_c_bck_size.height * 0.9);
         
         lost_tips->setHorizontalAlignment(TextHAlignment::LEFT);
-        lost_tips->setColor(Color3B::BLACK); 
+        lost_tips->setColor(Color3B::BLACK);
+        lost_tips->setPosition(Vec2(game_lost_c_bck_size.width * 0.05,
+                                   lost_tips->getContentSize().height  * .5f));
         game_lost_c_bck->addChild(lost_tips);
         
         
-        this->addChild(_lostDialogLayer, ZORDER_DICE_LAYER, key_dialog_layer_tag);
+        auto return_btn_2 = (ui::Button*)return_btn->clone();
+        return_btn_2->setPosition(Vec2(lost_back_size.width / 2 + return_btn_2->getContentSize().width, return_btn_2->getContentSize().height *1.5f));
+        game_lost_back->addChild(return_btn_2);
+        
+        auto replay_btn_2 = (ui::Button*)replay_btn->clone();
+        replay_btn_2->setPosition(Vec2(lost_back_size.width / 2 - replay_btn_2->getContentSize().width, replay_btn_2->getContentSize().height *1.5f));
+        game_lost_back->addChild(replay_btn_2);
 }
 
 #pragma mark - touch and menu event

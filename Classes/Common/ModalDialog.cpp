@@ -7,6 +7,8 @@
 //
 
 #include "ModalDialog.hpp"
+#include "AppMacros.hpp"
+
 enum{
         kTagBackGrd = 1,
         kTagRing
@@ -63,9 +65,6 @@ void ModalLayer::onExit(){
         Layer::onExit();
         _waitingTips->stopAllActions();
 }
-
-#define PRIVILIEGE 10000
-#define NODETAG 10000
 void ModalLayer::showModalDialog(Node* parent){
         if (!parent)
                 return;

@@ -12,6 +12,8 @@
 #include "SimpleAudioEngine.h"
 #include "PopUpOkCancelDialog.hpp"
 #include "PopUpOkDialog.hpp"
+#include "CommonTipsDialog.hpp"
+
 
 enum{
         ZORDER_BACK_GROUND = 0,
@@ -75,6 +77,7 @@ bool GameScene::init()
         this->initAnimationLayer();
         this->initDialog();
         
+        CommonTipsDialog::showModalDialog(this, "asdfasdfasdfassfasadf");
         
         sdkbox::PluginFacebook::setListener(this);
         sdkbox::PluginFacebook::init();
@@ -508,12 +511,17 @@ void GameScene::initDialog(){
         
         
         auto return_btn_2 = (ui::Button*)return_btn->clone();
-        return_btn_2->setPosition(Vec2(lost_back_size.width / 2 + return_btn_2->getContentSize().width, return_btn_2->getContentSize().height *1.5f));
+        return_btn_2->setPosition(Vec2(lost_back_size.width / 2 + return_btn_2->getContentSize().width, return_btn_2->getContentSize().height * 1.5f));
         game_lost_back->addChild(return_btn_2);
         
         auto replay_btn_2 = (ui::Button*)replay_btn->clone();
-        replay_btn_2->setPosition(Vec2(lost_back_size.width / 2 - replay_btn_2->getContentSize().width, replay_btn_2->getContentSize().height *1.5f));
+        replay_btn_2->setPosition(Vec2(lost_back_size.width / 2 - replay_btn_2->getContentSize().width, replay_btn_2->getContentSize().height * 1.5f));
         game_lost_back->addChild(replay_btn_2);
+        
+        /*
+         *
+         *tips dialog
+         */
 }
 
 #pragma mark - touch and menu event

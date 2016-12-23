@@ -216,4 +216,9 @@ enum {
 #define TC_VALUE_ONE_SUPPLY (8)
 #define ADDTIONAL_SUPPLY_TIME_PER_GAME (2)
 
+
+
+#define PRIVILIEGE 10000
+#define NODETAG 10000
+
 #endif /* __APPMACROS_H__ */

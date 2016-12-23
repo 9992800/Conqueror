@@ -12,11 +12,12 @@
 #include "cocos2d.h"
 #include "FightResultData.hpp"
 #include "ui/CocosGUI.h"
+#include "PluginFacebook/PluginFacebook.h"
 
 USING_NS_CC;
 
 
-class GameScene : public cocos2d::Layer
+class GameScene : public cocos2d::Layer, sdkbox::FacebookListener
 {
         
 public:
@@ -58,6 +59,8 @@ private:
         void menuExit(Ref* pSender);
         void gameExit(Ref*, int);
         void gameOver(Ref*, int);
+        void shareThisGame(Ref*);
+        void afterCaptureScreen(bool yes, const std::string &outputFilename);
         void menuAnimSwitch(Ref* btn);
         void menuAddArmy(Ref*);
         
@@ -69,6 +72,19 @@ private:
         void Fighting();
         void WinnerBack();
         void ShowResultData();
+        
+protected:
+        void onLogin(bool, const std::string&)override;
+        void onSharedSuccess(const std::string&)override;
+        void onSharedFailed(const std::string&)override;
+        void onSharedCancel()override;
+        void onAPI(const std::string&, const std::string&)override;
+        void onPermission(bool, const std::string&)override;
+        void onFetchFriends(bool, const std::string&)override;
+        void onRequestInvitableFriends(const sdkbox::FBInvitableFriendsInfo&)override;
+        void onInviteFriendsWithInviteIdsResult(bool, const std::string&)override;
+        void onInviteFriendsResult(bool, const std::string&)override;
+        void onGetUserInfo(const sdkbox::FBGraphUser&)override;
         
 private:
         static int      _playerNumber, _charactorIdx, _colorIdx;

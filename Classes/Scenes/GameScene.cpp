@@ -11,7 +11,7 @@
 #include "ScreenCoordinate.hpp"
 #include "SimpleAudioEngine.h"
 #include "PopUpOkCancelDialog.hpp"
-#include "PopUpOkDialog.hpp" 
+#include "PopUpOkDialog.hpp"
 
 enum{
         ZORDER_BACK_GROUND = 0,
@@ -75,6 +75,9 @@ bool GameScene::init()
         this->initAnimationLayer();
         this->initDialog();
         
+        
+        sdkbox::PluginFacebook::setListener(this);
+        sdkbox::PluginFacebook::init();
         return true;
 }
 
@@ -430,6 +433,7 @@ void GameScene::initDialog(){
         replay_btn->setTitleFontName("Arial");
         replay_btn->setTitleFontSize(20);
         replay_btn->setTitleColor(Color3B::BLACK);
+        replay_btn->addClickEventListener(CC_CALLBACK_1(GameScene::gameOver, this, 0));
         
         auto share_btn = (ui::Button*)replay_btn->clone();
         share_btn->setPosition(Vec2(btn_pos.x - 2.5f * btn_size.width, btn_pos.y));
@@ -438,6 +442,7 @@ void GameScene::initDialog(){
         share_btn->setTitleFontName("Arial");
         share_btn->setTitleFontSize(20);
         share_btn->setTitleColor(Color3B::BLACK);
+        replay_btn->addClickEventListener(CC_CALLBACK_1(GameScene::shareThisGame, this));
         
         auto return_btn = (ui::Button*)replay_btn->clone();
         return_btn->setPosition(Vec2(btn_pos.x + 2.5f * btn_size.width, btn_pos.y));
@@ -445,6 +450,7 @@ void GameScene::initDialog(){
         return_btn->setTitleText("返回");
         return_btn->setTitleColor(Color3B::BLACK);
         return_btn->setTitleFontName("Arial");
+        return_btn->addClickEventListener(CC_CALLBACK_1(GameScene::gameOver, this, 0));
         return_btn->setTitleFontSize(20);
 }
 
@@ -1139,6 +1145,37 @@ void GameScene::gameOver(Ref* btn, int result){
         Director::getInstance()->resume();
 }
 
+void GameScene::afterCaptureScreen(bool yes, const std::string &outputFilename)
+{
+        if (!outputFilename.empty() && FileUtils::getInstance()->isFileExist(outputFilename)){
+                CCLOG("##FB afterCaptureScreen: %s", outputFilename.c_str());
+                if (yes) {
+                        
+                        sdkbox::FBShareInfo info;
+                        info.type  = sdkbox::FB_PHOTO;
+                        info.title = "capture screen";
+                        info.link = "http://www.cocos2d-x.org";
+                        info.image = outputFilename;
+                        sdkbox::PluginFacebook::dialog(info);
+                }else{
+                        sdkbox::PluginFacebook::requestPublishPermissions({sdkbox::FB_PERM_PUBLISH_POST});
+                }
+        }
+        
+}
+
+void GameScene::shareThisGame(Ref* btn){
+        if (sdkbox::PluginFacebook::isLoggedIn()){
+                utils::captureScreen(CC_CALLBACK_2(GameScene::afterCaptureScreen, this), "screen.png");
+        }else{
+                std::vector<std::string> permissions;
+                permissions.push_back(sdkbox::FB_PERM_READ_PUBLIC_PROFILE);
+                permissions.push_back(sdkbox::FB_PERM_READ_EMAIL);
+                permissions.push_back(sdkbox::FB_PERM_READ_USER_FRIENDS);
+                sdkbox::PluginFacebook::login(permissions);
+        }
+}
+
 void GameScene::menuAnimSwitch(Ref* btn){
         
         if (_animationIsOn
@@ -1185,4 +1222,40 @@ void GameScene::menuAddArmy(Ref* btn){
                 auto scale_s_r = ScaleTo::create(0.3, 1.0f);
                 _curPlayerSupFlag->runAction(Sequence::create(scale_s, scale_s_r, NULL));
         }), NULL));
+}
+
+#pragma mark - facebook share delegate
+void GameScene::onLogin(bool, const std::string&){
+        
+}
+void GameScene::onSharedSuccess(const std::string&){
+        _theGameLogic->finishHistoryRecord();
+        Director::getInstance()->popScene();
+}
+void GameScene::onSharedFailed(const std::string&){
+        
+}
+void GameScene::onSharedCancel(){
+        
+}
+void GameScene::onAPI(const std::string&, const std::string&){
+        
+}
+void GameScene::onPermission(bool, const std::string&){
+        
+}
+void GameScene::onFetchFriends(bool, const std::string&){
+        
+}
+void GameScene::onRequestInvitableFriends(const sdkbox::FBInvitableFriendsInfo&){
+        
+}
+void GameScene::onInviteFriendsWithInviteIdsResult(bool, const std::string&){
+        
+}
+void GameScene::onInviteFriendsResult(bool, const std::string&){
+        
+}
+void GameScene::onGetUserInfo(const sdkbox::FBGraphUser&){
+        
 }

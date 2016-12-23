@@ -373,6 +373,11 @@ void GameScene::initAnimationLayer(){
 
 
 void GameScene::initDialog(){
+        
+        /*
+         *
+         *win dialog
+         */
         auto visible_size = Director::getInstance()->getVisibleSize();
         _winDialogLayer = Layer::create();
         _winDialogLayer->setIgnoreAnchorPointForPosition(false);
@@ -380,10 +385,10 @@ void GameScene::initDialog(){
         _winDialogLayer->setPosition(visible_size / 2);
         
         auto game_win_back = Sprite::create("game_win_back.png");
-        game_win_back->setPosition(game_win_back->getContentSize() / 2);
-        _winDialogLayer->setContentSize(game_win_back->getContentSize());
-        _winDialogLayer->addChild(game_win_back, 1);
         auto win_back_size = game_win_back->getContentSize();
+        game_win_back->setPosition(win_back_size / 2);
+        _winDialogLayer->setContentSize(win_back_size);
+        _winDialogLayer->addChild(game_win_back, 1);
         
         auto game_win_title = Sprite::create("game_win_title.png");
         game_win_title->setPosition(Vec2(win_back_size.width / 2, win_back_size.height + game_win_title->getContentSize().height * 0.2));
@@ -418,40 +423,96 @@ void GameScene::initDialog(){
         win_tips->setPosition(Vec2(win_tips->getContentSize().width * 0.55,
                                    game_win_c_back_size.height - win_tips->getContentSize().height * 0.6));
         game_win_c_back->addChild(win_tips);
-        this->addChild(_winDialogLayer, ZORDER_DICE_LAYER, key_dialog_layer_tag);
+        
         
         auto replay_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
         
         auto game_win_c_back_pos = game_win_c_back->getPosition();
         replay_btn->setPosition(Vec2(win_back_size.width / 2,
                                      replay_btn->getContentSize().height *1.5f));
-        replay_btn->setScale(2.f);
         auto btn_pos = replay_btn->getPosition();
         auto btn_size = replay_btn->getContentSize();
         game_win_back->addChild(replay_btn);
         replay_btn->setTitleText("重玩");
+        replay_btn->setTitleFontSize(28);
         replay_btn->setTitleFontName("Arial");
-        replay_btn->setTitleFontSize(20);
         replay_btn->setTitleColor(Color3B::BLACK);
-        replay_btn->addClickEventListener(CC_CALLBACK_1(GameScene::gameOver, this, 0));
+        replay_btn->addClickEventListener(CC_CALLBACK_1(GameScene::gameOver, this, 1));
         
         auto share_btn = (ui::Button*)replay_btn->clone();
         share_btn->setPosition(Vec2(btn_pos.x - 2.5f * btn_size.width, btn_pos.y));
         game_win_back->addChild(share_btn);
         share_btn->setTitleText("分享");
+        share_btn->setTitleFontSize(28);
         share_btn->setTitleFontName("Arial");
-        share_btn->setTitleFontSize(20);
         share_btn->setTitleColor(Color3B::BLACK);
-        replay_btn->addClickEventListener(CC_CALLBACK_1(GameScene::shareThisGame, this));
+        share_btn->addClickEventListener(CC_CALLBACK_1(GameScene::shareThisGame, this));
         
         auto return_btn = (ui::Button*)replay_btn->clone();
         return_btn->setPosition(Vec2(btn_pos.x + 2.5f * btn_size.width, btn_pos.y));
         game_win_back->addChild(return_btn);
         return_btn->setTitleText("返回");
+        return_btn->setTitleFontSize(28);
         return_btn->setTitleColor(Color3B::BLACK);
         return_btn->setTitleFontName("Arial");
         return_btn->addClickEventListener(CC_CALLBACK_1(GameScene::gameOver, this, 0));
-        return_btn->setTitleFontSize(20);
+        
+        this->addChild(_winDialogLayer, ZORDER_DICE_LAYER, key_dialog_layer_tag);
+        _winDialogLayer->setVisible(false);
+        
+        /*
+         *
+         *lost dialog
+         */
+        _lostDialogLayer = Layer::create();
+        _lostDialogLayer->setIgnoreAnchorPointForPosition(false);
+        _lostDialogLayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        _lostDialogLayer->setPosition(visible_size / 2);
+        
+        auto game_lost_back = Sprite::create("game_lost_back.png");
+        auto lost_back_size = game_lost_back->getContentSize();
+        game_lost_back->setPosition(lost_back_size / 2);
+        _lostDialogLayer->setContentSize(lost_back_size);
+        _lostDialogLayer->addChild(game_lost_back, 1);
+        
+        auto game_lost_title = Sprite::create("game_lost_title.png");
+        game_lost_title->setPosition(Vec2(lost_back_size.width / 2, lost_back_size.height + game_lost_title->getContentSize().height * 0.2));
+        game_lost_back->addChild(game_lost_title, 2);
+        
+        auto game_lost_t_bck = Sprite::create("game_lost_t_bck.png");
+        auto game_lost_t_bck_pos = Vec2(0.452 * game_lost_t_bck->getContentSize().width , lost_back_size.height - game_lost_t_bck->getContentSize().height / 2 - 10);
+        game_lost_t_bck->setPosition(game_lost_t_bck_pos);
+        game_lost_back->addChild(game_lost_t_bck);
+        
+        auto lost_title_txt = Label::createWithSystemFont("很遗憾您失去了您的国家...", "Arial", 32);
+        lost_title_txt->setPosition(Vec2(lost_title_txt->getContentSize().width * 0.5,
+                                        game_lost_t_bck->getContentSize().height * 0.7));
+        game_lost_t_bck->addChild(lost_title_txt);
+        
+        
+        
+        auto game_lost_c_bck = Sprite::create("game_lost_c_bck.png");
+        
+        game_lost_c_bck->setPosition(Vec2(lost_back_size.width / 2,
+                                          game_lost_t_bck_pos.y - game_lost_c_bck->getContentSize().height * 0.63f));
+        game_lost_back->addChild(game_lost_c_bck);
+        auto game_lost_c_bck_size = game_lost_back->getContentSize();
+        auto lost_tips = Label::createWithSystemFont("您可以在战斗中补充兵力来获得更高的几率取得胜利！也可以充值购买补兵来增强您的兵力", "Arial", 28);
+        
+        Size lost_tips_size = lost_tips->getContentSize();
+        lost_tips->setPosition(Vec2::ZERO);
+        lost_tips->setAnchorPoint(Vec2(0.f, 1.0f));
+        lost_tips->setPosition(Vec2(5, game_lost_c_bck_size.height - 10));
+        
+        lost_tips->setDimensions(game_lost_c_bck_size.width - 10,
+                                game_lost_c_bck_size.height - 10);
+        
+        lost_tips->setHorizontalAlignment(TextHAlignment::LEFT);
+        lost_tips->setColor(Color3B::BLACK); 
+        game_lost_c_bck->addChild(lost_tips);
+        
+        
+        this->addChild(_lostDialogLayer, ZORDER_DICE_LAYER, key_dialog_layer_tag);
 }
 
 #pragma mark - touch and menu event

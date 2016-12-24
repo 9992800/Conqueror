@@ -14,6 +14,8 @@ void CommonTipsDialog::showModalDialog(cocos2d::Node *parent, std::string text, 
                 return;
         
         Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(parent, true);
+        
+        Director::getInstance()->pause();
         auto tips = CommonTipsDialog::create(text);
         tips->initWithCallback(okCallBack);
         parent->addChild(tips, PRIVILIEGE, NODETAG);
@@ -25,6 +27,7 @@ void CommonTipsDialog::dismissDialog(){
         
         this->removeFromParent();
         
+        Director::getInstance()->resume();
         Director::getInstance()->getEventDispatcher()->resumeEventListenersForTarget(parent, true);
 }
 

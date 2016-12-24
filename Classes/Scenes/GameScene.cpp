@@ -77,8 +77,6 @@ bool GameScene::init()
         this->initAnimationLayer();
         this->initDialog();
         
-        CommonTipsDialog::showModalDialog(this, "asdfasdfasdfassfasadf");
-        
         sdkbox::PluginFacebook::setListener(this);
         sdkbox::PluginFacebook::init();
         return true;
@@ -655,12 +653,7 @@ void GameScene::afterPlayerBattle(){
         if (survival.size() == 1){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_WIN);
                 Director::getInstance()->pause();
-                BaseDialogConfig config("胜利了!",
-                                        "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香");
-                PopUpOkCancelDialog *dialog = PopUpOkCancelDialog::create(config,
-                                                                          CC_CALLBACK_1(GameScene::gameOver, this, 1),
-                                                                          CC_CALLBACK_1(GameScene::gameOver, this, 0));
-                this->addChild(dialog, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
+                this->addChild(_winDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
                 return;
         }
         this->refreshAreaTcShow(survival);
@@ -683,12 +676,7 @@ void GameScene::afterRobootBattle(){
         if (0 == user_tc){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_LOSE);
                 Director::getInstance()->pause();
-                BaseDialogConfig config("失败，需要重试吗？",
-                                        "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香");
-                PopUpOkCancelDialog *dialog = PopUpOkCancelDialog::create(config,
-                                                                          CC_CALLBACK_1(GameScene::gameOver, this, 1),
-                                                                          CC_CALLBACK_1(GameScene::gameOver, this, 0));
-                this->addChild(dialog, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
+                this->addChild(_lostDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
                 return;
         }
         
@@ -1183,24 +1171,9 @@ void GameScene::menuStartGame(Ref* pSender, Layer* parent){
 }
 
 void GameScene::menuExit(Ref* pSender){
-        
-        Director::getInstance()->pause();
-        BaseDialogConfig config("确认要退出吗？", "娇兰傲梅世人赏，却少幽芬暗里藏。不看百花共争艳，独爱疏樱一枝香");
-        PopUpOkCancelDialog *dialog = PopUpOkCancelDialog::create(config,
-                                                                  CC_CALLBACK_1(GameScene::gameExit, this, 1),
-                                                                  CC_CALLBACK_1(GameScene::gameExit, this, 0));
-        dialog->setButtonTittle("退出","取消");
-        this->addChild(dialog, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
-}
-
-void GameScene::gameExit(Ref* btn, int result){
-        if (result == 1){
+        CommonTipsDialog::showModalDialog((Node*)this, "您确定要退出吗？", [this](Ref* sender){
                 Director::getInstance()->popScene();
-        }else{
-                this->removeChildByTag(key_dialog_layer_tag);
-        }
-        
-        Director::getInstance()->resume();        
+        });
 }
 
 void GameScene::gameOver(Ref* btn, int result){

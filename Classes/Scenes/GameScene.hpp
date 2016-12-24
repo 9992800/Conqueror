@@ -57,7 +57,6 @@ private:
         void createNewMap(Ref* pSender);
         void menuStartGame(Ref* pSender, Layer*);
         void menuExit(Ref* pSender);
-        void gameExit(Ref*, int);
         void gameOver(Ref*, int);
         void shareThisGame(Ref*);
         void afterCaptureScreen(bool yes, const std::string &outputFilename);

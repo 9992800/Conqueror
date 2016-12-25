@@ -576,21 +576,21 @@ void LevelSelect::onEnter(){
                 
                 auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[p_i_r])->clone();                
                 run_anim->setRestoreOriginalFrame(true);
-                run_anim->setLoops(6);
+                run_anim->setLoops(8);
                 float scale = (1 - 0.1 * i);
                 auto run_action = Animate::create(run_anim);
                 
                 if (is_odd){
-                        runner->setPosition(Vec2(great_wall_size.width + gap.x * i + runner_size.width / 2, gap.y * i + runner_size.height / 4));
-                        auto move =  MoveBy::create(3.0f, -Vec2(scale * great_wall_size.width * 1.4, 0));
+                        runner->setPosition(Vec2(great_wall_size.width + gap.x * i, gap.y * i + runner_size.height / 6));
+                        auto move =  MoveBy::create(4.0f, -Vec2(scale * great_wall_size.width * 1.6, 0));
                         Spawn* p_run = Spawn::create(run_action, FlipX::create(true), move, NULL);
                         Spawn* p_run_back = Spawn::create(run_action, FlipX::create(false) , move->reverse(), NULL);
                         runner->runAction(RepeatForever::create( Sequence::create(p_run, p_run_back, NULL)));
                         
                         runner->setScale(1.4);
                 }else{
-                        runner->setPosition(Vec2(-gap.x * i - runner_size.width / 2, gap.y * i + runner_size.height / 4));
-                        auto move =  MoveBy::create(3.0f, Vec2(scale * great_wall_size.width * 1.4, 0));
+                        runner->setPosition(Vec2(-gap.x * i, gap.y * i + runner_size.height / 6));
+                        auto move =  MoveBy::create(4.0f, Vec2(scale * great_wall_size.width * 1.6, 0));
                         Spawn* p_run = Spawn::create(run_action, FlipX::create(false), move, NULL);
                         Spawn* p_run_back = Spawn::create(run_action, FlipX::create(true) , move->reverse(), NULL);
                         runner->runAction(RepeatForever::create( Sequence::create(p_run, p_run_back, NULL)));

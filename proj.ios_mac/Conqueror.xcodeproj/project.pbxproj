@@ -82,9 +82,6 @@
 		7C4DA6AF1DE6A7EB001CC255 /* deault_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4DA6AE1DE6A7EB001CC255 /* deault_avatar.png */; };
 		7C4DA6B21DE82466001CC255 /* SpriteEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C4DA6B01DE82466001CC255 /* SpriteEx.cpp */; };
 		7C558EB91DEC1D52007722D7 /* sliderProgress_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EB81DEC1D52007722D7 /* sliderProgress_back.png */; };
-		7C558EC81DED138A007722D7 /* zhandou_beijing.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EC71DED138A007722D7 /* zhandou_beijing.png */; };
-		7C558EDE1DEE7560007722D7 /* xunshoushi_pos.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EDC1DEE7560007722D7 /* xunshoushi_pos.png */; };
-		7C558EDF1DEE7560007722D7 /* zhanshi_pos.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EDD1DEE7560007722D7 /* zhanshi_pos.png */; };
 		7C558EE21DEE784A007722D7 /* FightResultData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C558EE01DEE784A007722D7 /* FightResultData.cpp */; };
 		7C67A7B51DD1BE6B004B5151 /* WebSocktUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */; };
 		7C6E7FFD1DD94F5300C5E374 /* ReplayLastScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */; };
@@ -105,14 +102,9 @@
 		BB34FAAA1DD35B7A0070B4E4 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = BB34FAA91DD35B7A0070B4E4 /* sounds */; };
 		BB51F1091DCF66D50031296E /* share_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = BB51F1071DCF66D50031296E /* share_sel.png */; };
 		BB51F10A1DCF66D50031296E /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = BB51F1081DCF66D50031296E /* share.png */; };
-		BB60FC161DEF26D400904ABC /* xunshoushi_pos2.png in Resources */ = {isa = PBXBuildFile; fileRef = BB60FC141DEF26D400904ABC /* xunshoushi_pos2.png */; };
-		BB60FC171DEF26D400904ABC /* zhanshi_pos2.png in Resources */ = {isa = PBXBuildFile; fileRef = BB60FC151DEF26D400904ABC /* zhanshi_pos2.png */; };
 		BB62DFD31DCD9E7A0037DE0A /* anim in Resources */ = {isa = PBXBuildFile; fileRef = BB62DFD11DCD9E7A0037DE0A /* anim */; };
-		BB62DFD41DCD9E7A0037DE0A /* particles in Resources */ = {isa = PBXBuildFile; fileRef = BB62DFD21DCD9E7A0037DE0A /* particles */; };
 		BB9A4E241DCB7C6400E88C41 /* GameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E221DCB7C6400E88C41 /* GameData.cpp */; };
 		BB9A4E271DCB84A200E88C41 /* MapCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */; };
-		BBBA8DD81DCCE3C6006A6471 /* NextButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD31DCCE3C6006A6471 /* NextButton.png */; };
-		BBBA8DD91DCCE3C6006A6471 /* start.png in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8DD41DCCE3C6006A6471 /* start.png */; };
 		BBC12E4E1DCDFBA70035A571 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC12E4D1DCDFBA70035A571 /* StoreKit.framework */; };
 		BBC12E501DCDFC470035A571 /* sdkbox_config.json in Resources */ = {isa = PBXBuildFile; fileRef = BBC12E4F1DCDFC470035A571 /* sdkbox_config.json */; };
 		BBC12E561DCE26310035A571 /* PluginIAP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC12E541DCE26310035A571 /* PluginIAP.framework */; };
@@ -276,9 +268,6 @@
 		7C4DA6B01DE82466001CC255 /* SpriteEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpriteEx.cpp; sourceTree = "<group>"; };
 		7C4DA6B11DE82466001CC255 /* SpriteEx.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SpriteEx.hpp; sourceTree = "<group>"; };
 		7C558EB81DEC1D52007722D7 /* sliderProgress_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sliderProgress_back.png; sourceTree = "<group>"; };
-		7C558EC71DED138A007722D7 /* zhandou_beijing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhandou_beijing.png; sourceTree = "<group>"; };
-		7C558EDC1DEE7560007722D7 /* xunshoushi_pos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xunshoushi_pos.png; sourceTree = "<group>"; };
-		7C558EDD1DEE7560007722D7 /* zhanshi_pos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhanshi_pos.png; sourceTree = "<group>"; };
 		7C558EE01DEE784A007722D7 /* FightResultData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FightResultData.cpp; sourceTree = "<group>"; };
 		7C558EE11DEE784A007722D7 /* FightResultData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FightResultData.hpp; sourceTree = "<group>"; };
 		7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocktUtil.cpp; sourceTree = "<group>"; };
@@ -307,16 +296,11 @@
 		BB34FAA91DD35B7A0070B4E4 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		BB51F1071DCF66D50031296E /* share_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_sel.png; sourceTree = "<group>"; };
 		BB51F1081DCF66D50031296E /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
-		BB60FC141DEF26D400904ABC /* xunshoushi_pos2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xunshoushi_pos2.png; sourceTree = "<group>"; };
-		BB60FC151DEF26D400904ABC /* zhanshi_pos2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zhanshi_pos2.png; sourceTree = "<group>"; };
 		BB62DFD11DCD9E7A0037DE0A /* anim */ = {isa = PBXFileReference; lastKnownFileType = folder; path = anim; sourceTree = "<group>"; };
-		BB62DFD21DCD9E7A0037DE0A /* particles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particles; sourceTree = "<group>"; };
 		BB9A4E221DCB7C6400E88C41 /* GameData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameData.cpp; sourceTree = "<group>"; };
 		BB9A4E231DCB7C6400E88C41 /* GameData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameData.hpp; sourceTree = "<group>"; };
 		BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapCreator.cpp; sourceTree = "<group>"; };
 		BB9A4E261DCB84A200E88C41 /* MapCreator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapCreator.hpp; sourceTree = "<group>"; };
-		BBBA8DD31DCCE3C6006A6471 /* NextButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NextButton.png; sourceTree = "<group>"; };
-		BBBA8DD41DCCE3C6006A6471 /* start.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = start.png; sourceTree = "<group>"; };
 		BBC12E4D1DCDFBA70035A571 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.1.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		BBC12E4F1DCDFC470035A571 /* sdkbox_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sdkbox_config.json; sourceTree = "<group>"; };
 		BBC12E541DCE26310035A571 /* PluginIAP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PluginIAP.framework; sourceTree = "<group>"; };
@@ -482,11 +466,6 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BB60FC141DEF26D400904ABC /* xunshoushi_pos2.png */,
-				BB60FC151DEF26D400904ABC /* zhanshi_pos2.png */,
-				7C558EDC1DEE7560007722D7 /* xunshoushi_pos.png */,
-				7C558EDD1DEE7560007722D7 /* zhanshi_pos.png */,
-				7C558EC71DED138A007722D7 /* zhandou_beijing.png */,
 				7C4DA6AE1DE6A7EB001CC255 /* deault_avatar.png */,
 				7C4DA6A71DE43C1B001CC255 /* green_edit.png */,
 				7C4BA1CF1DDEF682004F9770 /* waiting_ring.png */,
@@ -499,9 +478,6 @@
 				BB34FAA91DD35B7A0070B4E4 /* sounds */,
 				BBC12E4F1DCDFC470035A571 /* sdkbox_config.json */,
 				BB62DFD11DCD9E7A0037DE0A /* anim */,
-				BB62DFD21DCD9E7A0037DE0A /* particles */,
-				BBBA8DD31DCCE3C6006A6471 /* NextButton.png */,
-				BBBA8DD41DCCE3C6006A6471 /* start.png */,
 				7C21A0DB1DC9C06C0035ECC6 /* sliderProgress.png */,
 				7C558EB81DEC1D52007722D7 /* sliderProgress_back.png */,
 				7C733B181DC990E200098EDD /* iphone5 */,
@@ -815,7 +791,6 @@
 				521A8EA919F11F5000D177D7 /* fonts in Resources */,
 				7C4DA6AF1DE6A7EB001CC255 /* deault_avatar.png in Resources */,
 				7C558EB91DEC1D52007722D7 /* sliderProgress_back.png in Resources */,
-				BB60FC161DEF26D400904ABC /* xunshoushi_pos2.png in Resources */,
 				50EF62A317ECD613001EB2F8 /* Icon-50.png in Resources */,
 				7C21A0DC1DC9C06C0035ECC6 /* sliderProgress.png in Resources */,
 				BB62DFD31DCD9E7A0037DE0A /* anim in Resources */,
@@ -824,7 +799,6 @@
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				50EF629617ECD46A001EB2F8 /* Icon-40.png in Resources */,
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
-				7C558EDF1DEE7560007722D7 /* zhanshi_pos.png in Resources */,
 				7C4BA1D01DDEF682004F9770 /* waiting_ring.png in Resources */,
 				7C6E80051DD9687D00C5E374 /* history_data.png in Resources */,
 				BB51F10A1DCF66D50031296E /* share.png in Resources */,
@@ -832,19 +806,13 @@
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				7C82E4281DD57EDD0019C8CF /* online_battle.png in Resources */,
 				50EF629817ECD46A001EB2F8 /* Icon-80.png in Resources */,
-				BB62DFD41DCD9E7A0037DE0A /* particles in Resources */,
-				7C558EC81DED138A007722D7 /* zhandou_beijing.png in Resources */,
 				5087E78417EB970100C73F5D /* Icon-57.png in Resources */,
-				BBBA8DD91DCCE3C6006A6471 /* start.png in Resources */,
 				7C6E80041DD9687D00C5E374 /* history_data_sel.png in Resources */,
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
-				BBBA8DD81DCCE3C6006A6471 /* NextButton.png in Resources */,
 				7C6E80061DD9687D00C5E374 /* history_sel.png in Resources */,
 				7C82E42A1DD581610019C8CF /* online_battle_sel.png in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
-				7C558EDE1DEE7560007722D7 /* xunshoushi_pos.png in Resources */,
 				7C4BA1CB1DDEA0D2004F9770 /* search_oppent_sel.png in Resources */,
-				BB60FC171DEF26D400904ABC /* zhanshi_pos2.png in Resources */,
 				50EF629717ECD46A001EB2F8 /* Icon-58.png in Resources */,
 				7C4DA6A81DE43C1B001CC255 /* green_edit.png in Resources */,
 			);

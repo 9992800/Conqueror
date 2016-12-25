@@ -39,7 +39,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
                 ok_button->setTitleText("确定");
                 ok_button->setTitleFontSize(28);
                 ok_button->setTitleColor(Color3B::BLACK);
-                ok_button->setTitleFontName("Arial");
+                ok_button->setTitleFontName("fonts/arial.ttf");
                 ok_button->addClickEventListener(CC_CALLBACK_0(CommonTipsDialog::dismissDialog, this));
                 
                 _tipsBack->addChild(ok_button);
@@ -51,7 +51,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
                 cancel_button->setTitleText("取消");
                 cancel_button->setTitleFontSize(28);
                 cancel_button->setTitleColor(Color3B::BLACK);
-                cancel_button->setTitleFontName("Arial");
+                cancel_button->setTitleFontName("fonts/arial.ttf");
                 cancel_button->addClickEventListener(CC_CALLBACK_0(CommonTipsDialog::dismissDialog, this));
                 
                 _tipsBack->addChild(cancel_button);
@@ -62,7 +62,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
                 ok_button->setTitleText("确定");
                 ok_button->setTitleFontSize(28);
                 ok_button->setTitleColor(Color3B::BLACK);
-                ok_button->setTitleFontName("Arial");
+                ok_button->setTitleFontName("fonts/arial.ttf");
                 ok_button->addClickEventListener(okCallBack);
                 
                 _tipsBack->addChild(ok_button);
@@ -96,7 +96,7 @@ bool CommonTipsDialog::init(){
         _tipsBack->addChild(content_back);
         
         
-        auto content = Label::createWithSystemFont(_contentTxt, "Arial", 24);
+        auto content = Label::createWithSystemFont(_contentTxt, "fonts/arial.ttf", 24);
         auto content_size = content->getContentSize();
         
         content->setAnchorPoint(Vec2(0.f, 1.0f));

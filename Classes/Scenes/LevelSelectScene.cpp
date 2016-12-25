@@ -114,7 +114,7 @@ bool LevelSelect::init()
         _loadingBar->setPosition(pos);
         
         Size bar_size = _loadingBar->getContentSize();
-        auto label = Label::createWithSystemFont("Loading", "Arial", 24);
+        auto label = Label::createWithSystemFont("Loading", "fonts/arial.ttf", 24);
         label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
         _loadingBar->addChild(label, 4, key_loading_bar2);
         this->addChild(_loadingBar, 3, key_loading_bar1);
@@ -332,7 +332,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         Vec2 coins_back_pos = Vec2(coins_pos.x - 60, coins_pos.y);
         coins_back->setPosition(coins_back_pos);
         _coinsNum = 100;//查询消费记录 apple
-        auto coins_label = Label::createWithSystemFont(tostr(_coinsNum), "Arial", 24);//
+        auto coins_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/arial.ttf", 24);//
         coins_back->addChild(coins_label);
         coins_label->setPosition(coins_back->getContentSize() / 2);
         this->addChild(coins_back, ZORDER_BACK_LAYERS);
@@ -356,7 +356,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         Vec2 dices_back_pos = Vec2(dices_pos.x - 60, dices_pos.y);
         dices_back->setPosition(dices_back_pos);
         _dicesNum = 100;//查询消费记录 apple
-        auto dices_label = Label::createWithSystemFont(tostr(_coinsNum), "Arial", 24);//
+        auto dices_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/arial.ttf", 24);//
         dices_back->addChild(dices_label);
         dices_label->setPosition(dices_back->getContentSize() / 2);
         this->addChild(dices_back, ZORDER_BACK_LAYERS);
@@ -611,10 +611,10 @@ void LevelSelect::onExit(){
         _loadingBar->setVisible(false);
         _loadingBarBack->setVisible(false);
         _count = 0;
-        unscheduleUpdate();
+//        unscheduleUpdate();
         AsyncTaskPool::getInstance()->stopTasks(AsyncTaskPool::TaskType::TASK_IO);
-//        auto back_layer = this->getChildByTag(kMainMenuBackTag);
-//        auto the_wall = back_layer->getChildByTag(kMenuGreatWallTag);
-//        the_wall->removeAllChildren();
+        auto back_layer = this->getChildByTag(kMainMenuBackTag);
+        auto the_wall = back_layer->getChildByTag(kMenuGreatWallTag);
+        the_wall->removeAllChildren();
 }
 

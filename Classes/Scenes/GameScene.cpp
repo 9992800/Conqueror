@@ -149,7 +149,7 @@ void GameScene::initAreaTcShow(){
                 auto ch_size = character->getContentSize();
                 
                 std::string tc_str = StringUtils::format("X%d", player->getAreaTc());
-                auto numbser = Label::createWithSystemFont(tc_str, "Arial", 26);
+                auto numbser = Label::createWithSystemFont(tc_str, "fonts/arial.ttf", 26);
                 character->addChild(numbser);
                 numbser->setPosition(Vec2(ch_size.width, ch_size.height / 2));
                 
@@ -251,7 +251,7 @@ void GameScene::initOperateBoard(){
         _endTurnTipsLayer->setVisible(false);
         
         
-        auto attack_tips = Label::createWithSystemFont("1.Click your area. 2.Click neighbor to attack", "Arial", 30);
+        auto attack_tips = Label::createWithSystemFont("1.Click your area. 2.Click neighbor to attack", "fonts/arial.ttf", 30);
         attack_tips->setPosition(Vec2(attack_tips->getContentSize().width / 2 + 20,
                                _endTurnTipsLayer->getContentSize().height / 2));
         _endTurnTipsLayer->addChild(attack_tips);
@@ -407,7 +407,7 @@ void GameScene::initDialog(){
         game_win_t_back->setPosition(game_win_t_back_pos);
         game_win_back->addChild(game_win_t_back);
         
-        auto win_title_txt = Label::createWithSystemFont("恭喜你统一了整个岛屿!!!", "Arial", 32);
+        auto win_title_txt = Label::createWithSystemFont("恭喜你统一了整个岛屿!!!", "fonts/arial.ttf", 32);
         win_title_txt->setPosition(Vec2(win_title_txt->getContentSize().width * 0.6,
                                         game_win_t_back->getContentSize().height * 0.7));
         game_win_t_back->addChild(win_title_txt);
@@ -419,7 +419,7 @@ void GameScene::initDialog(){
                                           game_win_t_back_pos.y - game_win_c_back->getContentSize().height * 0.63f));
         game_win_back->addChild(game_win_c_back);
         auto game_win_c_back_size = game_win_c_back->getContentSize();
-        auto win_tips = Label::createWithSystemFont("您获得了:", "Arial", 28);
+        auto win_tips = Label::createWithSystemFont("您获得了:", "fonts/arial.ttf", 28);
         win_tips->setColor(Color3B::BLACK);
         win_tips->setPosition(Vec2(win_tips->getContentSize().width * 0.55,
                                    game_win_c_back_size.height - win_tips->getContentSize().height * 0.6));
@@ -436,7 +436,7 @@ void GameScene::initDialog(){
         game_win_back->addChild(replay_btn);
         replay_btn->setTitleText("重玩");
         replay_btn->setTitleFontSize(28);
-        replay_btn->setTitleFontName("Arial");
+        replay_btn->setTitleFontName("fonts/arial.ttf");
         replay_btn->setTitleColor(Color3B::BLACK);
         replay_btn->addClickEventListener(CC_CALLBACK_1(GameScene::gameOver, this, 1));
         
@@ -445,7 +445,7 @@ void GameScene::initDialog(){
         game_win_back->addChild(share_btn);
         share_btn->setTitleText("分享");
         share_btn->setTitleFontSize(28);
-        share_btn->setTitleFontName("Arial");
+        share_btn->setTitleFontName("fonts/arial.ttf");
         share_btn->setTitleColor(Color3B::BLACK);
         share_btn->addClickEventListener(CC_CALLBACK_1(GameScene::shareThisGame, this));
         
@@ -455,7 +455,7 @@ void GameScene::initDialog(){
         return_btn->setTitleText("返回");
         return_btn->setTitleFontSize(28);
         return_btn->setTitleColor(Color3B::BLACK);
-        return_btn->setTitleFontName("Arial");
+        return_btn->setTitleFontName("fonts/arial.ttf");
         return_btn->addClickEventListener(CC_CALLBACK_1(GameScene::gameOver, this, 0));
         
         /*
@@ -483,7 +483,7 @@ void GameScene::initDialog(){
         game_lost_t_bck->setPosition(game_lost_t_bck_pos);
         game_lost_back->addChild(game_lost_t_bck);
         
-        auto lost_title_txt = Label::createWithSystemFont("很遗憾您失去了您的国家...", "Arial", 32);
+        auto lost_title_txt = Label::createWithSystemFont("很遗憾您失去了您的国家...", "fonts/arial.ttf", 32);
         lost_title_txt->setPosition(Vec2(lost_title_txt->getContentSize().width * 0.55,
                                         game_lost_t_bck->getContentSize().height * 0.7));
         game_lost_t_bck->addChild(lost_title_txt);
@@ -496,7 +496,7 @@ void GameScene::initDialog(){
                                           game_lost_t_bck_pos.y - game_lost_c_bck->getContentSize().height * 0.63f));
         game_lost_back->addChild(game_lost_c_bck);
         auto game_lost_c_bck_size = game_lost_back->getContentSize();
-        auto lost_tips = Label::createWithSystemFont("您可以在战斗中补充兵力来获得更高的几率取得胜利！也可以充值购买补兵来增强您的兵力", "Arial", 28);
+        auto lost_tips = Label::createWithSystemFont("您可以在战斗中补充兵力来获得更高的几率取得胜利！也可以充值购买补兵来增强您的兵力", "fonts/arial.ttf", 28);
         Size lost_tips_size = lost_tips->getContentSize();
         lost_tips->setAnchorPoint(Vec2(0.f, 1.0f));
         lost_tips->setDimensions(game_lost_c_bck_size.width * 0.9,
@@ -911,7 +911,7 @@ void GameScene::ShowResultData(){
                 _diceResultLayer->addChild(dice);
 
                 if (i == _attackResult->_from.size() - 1){
-                        auto from_value = Label::createWithSystemFont(StringUtils::format("%d", _attackResult->_fromSum), "Arial", 40);
+                        auto from_value = Label::createWithSystemFont(StringUtils::format("%d", _attackResult->_fromSum), "fonts/arial.ttf", 40);
                         from_value->setPosition(Vec2(pos.x - dice_size.width - 10, pos.y));
                         _diceResultLayer->addChild(from_value);
                 }
@@ -929,7 +929,7 @@ void GameScene::ShowResultData(){
                 _diceResultLayer->addChild(dice);
 
                 if (i == _attackResult->_to.size() - 1){
-                        auto to_value = Label::createWithSystemFont(StringUtils::format("%d", _attackResult->_toSum), "Arial", 40);
+                        auto to_value = Label::createWithSystemFont(StringUtils::format("%d", _attackResult->_toSum), "fonts/arial.ttf", 40);
                         to_value->setPosition(Vec2(pos.x + dice_size.width + 10, pos.y));
                         _diceResultLayer->addChild(to_value);
                 }

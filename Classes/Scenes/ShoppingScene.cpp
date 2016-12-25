@@ -34,7 +34,7 @@ bool Shopping::init(){
                 Director::getInstance()->popScene();
         });
         return_btn->setTitleText("返回");
-        return_btn->setTitleFontName("Arial");
+        return_btn->setTitleFontName("fonts/arial.ttf");
         return_btn->setTitleFontSize(28);
         return_btn->setScale(1.4f);
         back_ground->addChild(return_btn);
@@ -45,11 +45,11 @@ bool Shopping::init(){
         coins_item_10->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_10_COINS_KEY));
         back_ground->addChild(coins_item_10);
         
-        auto item_desc = Label::createWithSystemFont("送首充礼包!", "Arial", 24);
+        auto item_desc = Label::createWithSystemFont("送首充礼包!", "fonts/arial.ttf", 24);
         item_desc->setPosition(item_size.width *.03, item_size.height * 0.5);
         coins_item_10->addChild(item_desc);
         
-        auto item_price = Label::createWithSystemFont("6元", "Arial", 24);
+        auto item_price = Label::createWithSystemFont("6元", "fonts/arial.ttf", 24);
         item_price->setPosition(item_size.width *.05, item_size.height * 0.1);
         coins_item_10->addChild(item_price);
         return true;

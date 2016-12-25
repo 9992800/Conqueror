@@ -62,6 +62,8 @@ GameScene::~GameScene(){
                         _allFightingCharacters[i][j]->release();
                 }
         }
+        _winDialogLayer->release();
+        _lostDialogLayer->release(); 
 }
 
 
@@ -764,12 +766,12 @@ void GameScene::gameAction(){
                 auto visible_size = Director::getInstance()->getVisibleSize();
                 _mapLayer->setPosition(visible_size);
                 auto scale = ScaleTo::create(0.3, MAP_SCALE_V);
-               
-                CallFunc * callback =  CallFunc::create( [&](){
+                auto callback =  CallFunc::create( [&](){
                         _gameStatus = GAME_STATUS_INUSERTURN;
                         _animationLayer->setVisible(false);
                         _endTurnTipsLayer->setVisible(true);
                 });
+                
                 _mapLayer->runAction(Sequence::create(scale, callback, NULL));
                 
                 return;
@@ -1093,7 +1095,6 @@ void GameScene::playSupplyAnimation2(CallFunc* callback, GamePlayer* player){
                                         }
                                 }
                         });
-                        cb->autorelease();
                         sup_one->runAction(Sequence::create(move->clone(), cb,NULL));
                 }
                 idx += sup_num;
@@ -1128,9 +1129,7 @@ void GameScene::playSupplyAnimation(CallFunc* callback){
         }
         
         auto scale = ScaleTo::create(0.6f, 1.0f);
-        callback->retain();
         CallFunc* cb = CallFunc::create(std::bind(&GameScene::playSupplyAnimation2, this, callback, player));
-        cb->autorelease();
         _supplyShowLayer->runAction(Sequence::create(scale, cb, NULL));
 }
 
@@ -1151,7 +1150,7 @@ void GameScene::menuEndTurn(Ref* pSender){
                 _endTurnTipsLayer->setVisible(false);
                 _gameStatus = GAME_STATUS_AIRUNNING;
                 
-                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterSupply, this));
+                auto callback = CallFunc::create(std::bind(&GameScene::afterSupply, this));
                 this->playSupplyAnimation(callback);
                 
         }), NULL));

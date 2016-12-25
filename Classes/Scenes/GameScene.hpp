@@ -109,7 +109,7 @@ private:
         Sprite*         _curPlayerSupFlag, *_curInTurnBack;
         FightResultData* _attackResult;
         CallFunc*       _afterBattleCallback;
-        Layer           *_winDialogLayer, *_lostDialogLayer,*_exitTipsLayer;
+        Layer           *_winDialogLayer, *_lostDialogLayer;
 };
 
 

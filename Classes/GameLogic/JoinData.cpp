@@ -12,6 +12,9 @@
 JoinData::JoinData(){
         _dir = std::vector<int>(DIR_INAREA);
 }
+bool JoinData::init(){
+        return true;
+}
 JoinData::JoinData(JoinData* obj){
         this->_dir = std::vector<int>(obj->_dir);
 }

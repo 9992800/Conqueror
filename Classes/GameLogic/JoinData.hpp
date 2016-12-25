@@ -8,16 +8,18 @@
 
 #ifndef JoinData_hpp
 #define JoinData_hpp
-
-#include <stdio.h>
 #include "cocos2d.h"
+#include "AppMacros.hpp"
 USING_NS_CC;
 
 class JoinData: public Ref{
 public:
+        CREATE_FUNC(JoinData);
+        CREATE_FUNC2(JoinData, JoinData*, obj);
         JoinData();
         JoinData(JoinData* obj);
         ~JoinData();
+        bool init();
         void initdir(int cellIdx);
         
         inline int getJoinDir(int dirIdx){ return _dir[dirIdx];}

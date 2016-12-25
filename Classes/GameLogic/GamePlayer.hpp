@@ -18,7 +18,10 @@ public:
         static int getGid(int owner_id){
                 return owner_id + 2;
         }
+        CREATE_FUNC2(GamePlayer, int, id);
+        CREATE_FUNC2(GamePlayer, GamePlayer*, obj);
         GamePlayer(int id);
+        bool init(){return true;}
         GamePlayer(GamePlayer* obj);
         ~GamePlayer();
         inline void setAreaTc(int tc){

@@ -33,12 +33,42 @@ _bottom(-1),
 _cx(0),
 _cy(0),
 _len_min(9999){
+}
+
+AreaData* AreaData::create(int id, GameData* p)
+{
+        AreaData *pRet = new(std::nothrow) AreaData(id, p);
+        if (pRet && pRet->init()) {
+                pRet->autorelease();
+                return pRet;
+        }
+        else {
+                delete pRet;
+                pRet = nullptr;
+                return nullptr;
+        }
+}
+AreaData* AreaData::create(AreaData* obj, GameData* p){
+        AreaData *pRet = new(std::nothrow) AreaData(obj->_areaId, p);
+        if (pRet && pRet->init(obj, p)) {
+                pRet->autorelease();
+                return pRet;
+        }
+        else {
+                delete pRet;
+                pRet = nullptr;
+                return nullptr;
+        }
+}
+
+bool AreaData::init(){
         _join       = std::vector<bool>(AREA_MAX);
         SET_SIZE_TOZERO(_join, AREA_MAX);
         _line_cel   = std::vector<int>(MAX_LINE_INAREA);
         _line_dir   = std::vector<int>(MAX_LINE_INAREA);
         _cell_idxs  = std::set<int>();
         _fight_values = std::vector<int>(MAX_DICE_PER_AREA);
+        return true;
 }
 
 
@@ -50,9 +80,8 @@ AreaData::~AreaData(){
 }
 
 
-AreaData::AreaData (AreaData* obj, GameData* parent){
+bool AreaData::init (AreaData* obj, GameData* parent){
         this->_size = obj->_size;
-        
         
         this->_parentPtr= parent;
         this->_size     = obj->_size;
@@ -74,6 +103,8 @@ AreaData::AreaData (AreaData* obj, GameData* parent){
         this->_line_dir = std::vector<int>(obj->_line_dir);
         this->_cell_idxs= std::set<int>(obj->_cell_idxs);
         this->_fight_values= std::vector<int>(obj->_fight_values);
+        
+        return true;
 }
 
 void AreaData::initBound(int vertical, int horizen){

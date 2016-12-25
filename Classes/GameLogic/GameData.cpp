@@ -34,13 +34,13 @@ _areaTo(AREA_UNSELECTED){
 
 GameData::~GameData(){
         for (AreaData* p : _areaData){
-                delete p;
+                p->release();
         }
         for (GamePlayer* p : _player){
-                delete p;
+                p->release();
         }
         for (JoinData* p : _join){
-                delete p;
+                p->release();
         }
         
         _join.clear();
@@ -72,7 +72,8 @@ GameData* GameData::createWithData(GameData* data){
 
 bool GameData::init(){
         for (int i = 0; i < CEL_MAX; i++){
-                JoinData* join_data = new JoinData();
+                JoinData* join_data = JoinData::create();
+                join_data->retain();
                 join_data->initdir(i);
                 _join[i] = join_data;
         }
@@ -86,7 +87,8 @@ bool GameData::init(){
         }
         
         for (int i = 0; i < MAX_PLAYER; i++){
-                this->_player[i] = new GamePlayer(i);
+                this->_player[i] = GamePlayer::create(i);
+                this->_player[i]->retain();
         }
         return true;
 }
@@ -109,17 +111,20 @@ bool GameData::init(GameData* data){
         
         this->_areaData = std::vector<AreaData*>(AREA_MAX);
         for (int i = 0; i < this->_areaData.size(); i++){
-                this->_areaData[i] = new AreaData(data->_areaData[i], this);
+                this->_areaData[i] = AreaData::create(data->_areaData[i], this);
+                this->_areaData[i]->retain();
         }
         
         this->_player = std::vector<GamePlayer*>(MAX_PLAYER);
         for (int i = 0; i < this->_player.size(); i++){
-                this->_player[i] = new GamePlayer(data->_player[i]);
+                this->_player[i] = GamePlayer::create(data->_player[i]);
+                this->_player[i]->retain();
         }
         
         this->_join = std::vector<JoinData*>(CEL_MAX);
         for (int i = 0; i < this->_join.size(); i++){
-                this->_join[i] = new JoinData(data->_join[i]);
+                this->_join[i] = JoinData::create(data->_join[i]);
+                this->_join[i]->retain();
         }
         
         return true;

@@ -23,8 +23,11 @@ class AreaData: public Ref{
         friend class LevelSelect;
         friend class ReplayLast;
 public:
+        static AreaData* create(int id, GameData* p);
+        static AreaData* create(AreaData* obj, GameData*);
+        bool init();
         AreaData(int id, GameData*);
-        AreaData(AreaData* obj, GameData*);
+        bool init(AreaData* obj, GameData*);
         ~AreaData();
         
         inline void increaseSize(int cell) {

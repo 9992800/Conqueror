@@ -612,8 +612,9 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         }
         _attackResult = _theGameLogic->startPlayerAttack(cell_id);
         if (nullptr != _attackResult){
+                
                 _afterBattleCallback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this));
-//                _afterBattleCallback->retain();
+                _afterBattleCallback->autorelease();
                 _attackResult->retain();
                 this->playBattleAnimation(true);
         }
@@ -774,8 +775,7 @@ void GameScene::gameAction(){
             || ATTACK_RES_DEFEATED == _attackResult->_result){
                 
                 _afterBattleCallback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this));
-                
-//                _afterBattleCallback->retain();
+                _afterBattleCallback->autorelease();
                 _attackResult->retain();
                 this->playBattleAnimation(false);
                 
@@ -790,7 +790,6 @@ void GameScene::afterFightFinished(){
         
         int area_id = ATTACK_RES_DEFEATED == _attackResult->_result ? _attackResult->_fromArea : _attackResult->_toArea;
         
-//        _afterBattleCallback->retain();
         if (_animationIsOn && GAME_STATUS_INUSERTURN == _gameStatus){
                 
                 _animationLayer->removeAllChildrenWithCleanup(true);
@@ -1091,7 +1090,7 @@ void GameScene::playSupplyAnimation2(CallFunc* callback, GamePlayer* player){
                                         }
                                 }
                         });
-                        cb->retain();
+                        cb->autorelease();
                         sup_one->runAction(Sequence::create(move->clone(), cb,NULL));
                 }
                 idx += sup_num;

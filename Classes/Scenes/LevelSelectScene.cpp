@@ -459,7 +459,8 @@ void LevelSelect::loadResourceInBg(int* loader, HistoryReplayData* data){
                         CCLOG("GetParseError %u\n",area_d.GetParseError());
                 }
                 
-                AreaData* area = new AreaData(i, game_data);
+                AreaData* area = AreaData::create(i, game_data);
+                area->retain();
                 
                 const rapidjson::Value& basic = area_d["basic"];
                 area->_arm      = basic["_arm"].GetInt();
@@ -493,7 +494,6 @@ void LevelSelect::loadResourceInBg(int* loader, HistoryReplayData* data){
                         int cel = _cell_idxs[j].GetInt();
                         area->_cell_idxs.insert(cel);
                 }
-                
                 game_data->_areaData[i] = area;
                 *loader += 2;
         }

@@ -41,9 +41,17 @@ bool Shopping::init(){
         
         auto coins_item_10 = cocos2d::ui::Button::create("shopping/shop_item_10.png");
         auto item_size = coins_item_10->getContentSize();
-        coins_item_10->setPosition(Vec2(item_size.width * 0.8, back_ground_size.height * 0.5 + item_size.height * 0.6));
+        coins_item_10->setPosition(Vec2(item_size.width * 0.6, back_ground_size.height * 0.5 + item_size.height * 0.6));
         coins_item_10->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_10_COINS_KEY));
         back_ground->addChild(coins_item_10);
+        
+        auto item_desc = Label::createWithSystemFont("送首充礼包!", "Arial", 24);
+        item_desc->setPosition(item_size.width *.03, item_size.height * 0.5);
+        coins_item_10->addChild(item_desc);
+        
+        auto item_price = Label::createWithSystemFont("6元", "Arial", 24);
+        item_price->setPosition(item_size.width *.05, item_size.height * 0.1);
+        coins_item_10->addChild(item_price);
         return true;
 }
 

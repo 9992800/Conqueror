@@ -45,8 +45,8 @@ private:
         void afterPlayerBattle();
         void afterRobootBattle();
         void playBattleAnimation(bool);
-        void playSupplyAnimation(CallFunc*);
-        void playSupplyAnimation2(CallFunc*, GamePlayer*);
+        void playSupplyAnimation();
+        void playSupplyAnimation2(GamePlayer*);
         void afterSupply();
         void refreshAreaTcShow(std::map<int, int>);
         void refreshSupplyDiceNum();
@@ -108,7 +108,7 @@ private:
         int             _addtionalSupplyTimes;
         Sprite*         _curPlayerSupFlag, *_curInTurnBack;
         FightResultData* _attackResult;
-        CallFunc*       _afterBattleCallback;
+        CallFunc*       _afterBattleCallback, *_afterSupplyCallback;
         Layer           *_winDialogLayer, *_lostDialogLayer;
 };
 

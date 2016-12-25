@@ -746,6 +746,7 @@ void GameScene::refreshAreaTcShow(std::map<int, int> survival){
 }
 
 void GameScene::afterSupply(){
+        _afterSupplyCallback->release();
         _supplyShowLayer->removeAllChildren();
         _supplyShowLayer->setVisible(false);
         _curGameData->_player[_curGameData->_userId]->useTheAddSupply();
@@ -786,8 +787,9 @@ void GameScene::gameAction(){
                 
         }else if(ATTACK_RES_GOTSUPPLY == _attackResult->_result){
                 
-                CallFunc* callback = CallFunc::create(std::bind(&GameScene::afterSupply, this));
-                this->playSupplyAnimation(callback);
+                _afterSupplyCallback = CallFunc::create(std::bind(&GameScene::afterSupply, this));
+                _afterSupplyCallback->retain();
+                this->playSupplyAnimation();
         }
 }
 
@@ -1056,11 +1058,11 @@ void GameScene::playBattleAnimation(bool isMaunual){
         }
 }
 
-void GameScene::playSupplyAnimation2(CallFunc* callback, GamePlayer* player){
+void GameScene::playSupplyAnimation2(GamePlayer* player){
         
         std::map<AreaData*, int> supply_data = _theGameLogic->starSupplyDice(player);
         if (supply_data.size() == 0){
-                callback->execute();
+                _afterSupplyCallback->execute();
                 return;
         }
         
@@ -1078,30 +1080,30 @@ void GameScene::playSupplyAnimation2(CallFunc* callback, GamePlayer* player){
                 std::map<AreaData*, int>::iterator it_end = supply_data.end();
                 it_end--;
                 
-                bool is_t_last = it == it_end;
-//                bool is_t_last = false;
+                bool is_t_last = it == it_end; 
                 for (int i = idx; i < idx + sup_num; i++){
                         Node* sup_one = supp_nodes.at(i);
                         
                         bool is_last = i == idx + sup_num - 1;
-                        CallFunc*  cb = CallFunc::create([this, sup_one, callback, is_t_last, is_last, cur_area](){
+                        
+                        auto  cb = CallFunc::create([this, sup_one, is_t_last, is_last, cur_area](){
 
                                 if (is_last){
                                         cur_area->updatePawn(_curGameData->_referedLayer);
                                         if (is_t_last){
-                                                cur_area->drawSupply(_curGameData->_referedLayer, callback);
+                                                cur_area->drawSupply(_curGameData->_referedLayer, _afterSupplyCallback);
                                         }else{
                                                 cur_area->drawSupply(_curGameData->_referedLayer, NULL);
                                         }
                                 }
                         });
-                        sup_one->runAction(Sequence::create(move->clone(), cb,NULL));
+                        sup_one->runAction(Sequence::create(move->clone(), cb, NULL));
                 }
                 idx += sup_num;
         }
 }
 
-void GameScene::playSupplyAnimation(CallFunc* callback){
+void GameScene::playSupplyAnimation(){
         CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_SUPPLY);
         _supplyShowLayer->setVisible(true);
         int player_id = _curGameData->_jun[_curGameData->_ban];
@@ -1129,7 +1131,7 @@ void GameScene::playSupplyAnimation(CallFunc* callback){
         }
         
         auto scale = ScaleTo::create(0.6f, 1.0f);
-        CallFunc* cb = CallFunc::create(std::bind(&GameScene::playSupplyAnimation2, this, callback, player));
+        auto cb = CallFunc::create(std::bind(&GameScene::playSupplyAnimation2, this,player));
         _supplyShowLayer->runAction(Sequence::create(scale, cb, NULL));
 }
 
@@ -1146,14 +1148,16 @@ void GameScene::menuEndTurn(Ref* pSender){
         _mapLayer->setPosition(visible_size);
         
         auto scale = ScaleTo::create(0.3, 1.f);
-        _mapLayer->runAction(Sequence::create(scale, CallFunc::create( [&](){
+        auto callback_1 = CallFunc::create( [&](){
                 _endTurnTipsLayer->setVisible(false);
                 _gameStatus = GAME_STATUS_AIRUNNING;
                 
-                auto callback = CallFunc::create(std::bind(&GameScene::afterSupply, this));
-                this->playSupplyAnimation(callback);
+                _afterSupplyCallback = CallFunc::create(std::bind(&GameScene::afterSupply, this));
+                _afterSupplyCallback->retain();
+                this->playSupplyAnimation();
                 
-        }), NULL));
+        });
+        _mapLayer->runAction(Sequence::create(scale, callback_1, NULL));
 }
 
 void GameScene::createNewMap(Ref* pSender){

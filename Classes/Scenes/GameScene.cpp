@@ -14,7 +14,6 @@
 #include "PopUpOkDialog.hpp"
 #include "CommonTipsDialog.hpp"
 
-
 enum{
         ZORDER_BACK_GROUND = 0,
         ZORDER_MAP_GROUND,
@@ -381,6 +380,7 @@ void GameScene::initDialog(){
          */
         auto visible_size = Director::getInstance()->getVisibleSize();
         _winDialogLayer = Layer::create();
+        _winDialogLayer->retain();
         _winDialogLayer->setIgnoreAnchorPointForPosition(false);
         _winDialogLayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         _winDialogLayer->setPosition(visible_size / 2);
@@ -463,6 +463,7 @@ void GameScene::initDialog(){
          *lost dialog
          */
         _lostDialogLayer = Layer::create();
+        _lostDialogLayer->retain();
         _lostDialogLayer->setIgnoreAnchorPointForPosition(false);
         _lostDialogLayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         _lostDialogLayer->setPosition(visible_size / 2);
@@ -514,12 +515,7 @@ void GameScene::initDialog(){
         
         auto replay_btn_2 = (ui::Button*)replay_btn->clone();
         replay_btn_2->setPosition(Vec2(lost_back_size.width / 2 - replay_btn_2->getContentSize().width, replay_btn_2->getContentSize().height * 1.5f));
-        game_lost_back->addChild(replay_btn_2);
-        
-        /*
-         *
-         *tips dialog
-         */
+        game_lost_back->addChild(replay_btn_2); 
 }
 
 #pragma mark - touch and menu event

@@ -613,7 +613,7 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         _attackResult = _theGameLogic->startPlayerAttack(cell_id);
         if (nullptr != _attackResult){
                 _afterBattleCallback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this));
-                _afterBattleCallback->retain();
+//                _afterBattleCallback->retain();
                 _attackResult->retain();
                 this->playBattleAnimation(true);
         }
@@ -775,7 +775,7 @@ void GameScene::gameAction(){
                 
                 _afterBattleCallback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this));
                 
-                _afterBattleCallback->retain();
+//                _afterBattleCallback->retain();
                 _attackResult->retain();
                 this->playBattleAnimation(false);
                 
@@ -790,7 +790,7 @@ void GameScene::afterFightFinished(){
         
         int area_id = ATTACK_RES_DEFEATED == _attackResult->_result ? _attackResult->_fromArea : _attackResult->_toArea;
         
-        _afterBattleCallback->retain();
+//        _afterBattleCallback->retain();
         if (_animationIsOn && GAME_STATUS_INUSERTURN == _gameStatus){
                 
                 _animationLayer->removeAllChildrenWithCleanup(true);

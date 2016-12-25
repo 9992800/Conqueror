@@ -53,35 +53,19 @@ protected:
         void onHttpRequestCompleted(HttpClient *sender,
                                     HttpResponse *response);
         
-//        void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
-//        void onBattleSelected(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type);
-        
-        
         void afterAnimation();
         void menuSearching(Ref*);
         void menuCreateBattle(Ref*);
         void menuExit(Ref* pSender);
         void menuRefresh(Ref*);
-//        void initPageViews(Size, Vec2);
-//        void reloadPageData();
-//        
-//private:
-//        void getBattleListFromServer();
-//        void parseBattleFieldBeans(picojson::value&);
-        
         
 private:
         int             _curMapSel;
-        
         int             _loadingCount;
         LoadingBar*     _loadingBar;
         
         MenuItemImage* _refreshBtn;
-        LayerColor*    _searchingBgLayer;
-//        PageView*                       _batllePageViews;
-//        std::vector<BattleFieldBean*>   _battlList;
-//        int                             _curPgaeNo;
-        
+        LayerColor*    _searchingBgLayer;        
         network::WebSocket* _waitingQueue;
 };
 

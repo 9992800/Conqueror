@@ -77,10 +77,7 @@ bool FindPlayer::init(){
         
         _searchingBgLayer = LayerColor::create(Color4B::GRAY, visibleSize.width/2, visibleSize.height/2);
         this->addChild(_searchingBgLayer, 4);
-        _searchingBgLayer->setVisible(false); 
-        
-//        this->initPageViews(visibleSize, center); 
-
+        _searchingBgLayer->setVisible(false);
         return true;
 }
 
@@ -90,7 +87,6 @@ void FindPlayer::menuExit(Ref* pSender){
 }
 
 void FindPlayer::menuRefresh(Ref* pSender){
-//        this->getBattleListFromServer();
         _refreshBtn->runAction(RotateBy::create(4, 360*4));
         
 }
@@ -143,41 +139,13 @@ void FindPlayer::menuSearching(Ref*){
 void FindPlayer::afterAnimation(){
 }
 
-//void FindPlayer::getBattleListFromServer(){
-//        std::string base_url(GAME_SERVICE_SERVER_URL"/battleFields?");
-//        std::string uid = UserSessionBean::getInstance()->getUserId();
-//        if (uid.length() == 0){
-//                return;
-//        }
-//        
-//        base_url.append("user_id=");
-//        base_url.append(uid);
-//        base_url.append("&curPgaeNo=");
-//        base_url.append(tostr(_curPgaeNo));
-//        
-//        HttpRequest* request = new (std::nothrow) HttpRequest();
-//        request->setUrl(base_url);
-//        request->setRequestType(HttpRequest::Type::GET);
-//        request->setResponseCallback(CC_CALLBACK_2(FindPlayer::onHttpRequestCompleted, this));
-//        request->setTag(LIST_ALL_BATTLES);
-//        HttpClient::getInstance()->sendImmediate(request);
-//        request->release();
-//}
-
 #pragma mark - update
 void FindPlayer::onEnter(){
         Layer::onEnter();
         _loadingCount = 0;
-//        _curPgaeNo = 0;
-//        _battlList = std::vector<BattleFieldBean*>();
-//        this->getBattleListFromServer();
-        
-        
-//        scheduleUpdate();
 }
 
 void FindPlayer::update(float delta){
-//        _loadingBar->setPercent(_loadingCount++);
 }
 
 void FindPlayer::onExit(){
@@ -214,197 +182,6 @@ void FindPlayer::onHttpRequestCompleted(HttpClient *sender,
                 CCLOGWARN("---Unkown request tag:%s---", tags.c_str());
         }
 }
-
-//void FindPlayer::parseBattleFieldBeans(picojson::value& data){
-//        
-//        _battlList.clear();
-//        picojson::array& array = data.get<picojson::array>();
-//        for (picojson::array::iterator it = array.begin(); it != array.end(); it++){
-//                picojson::object& tmpObject = it->get<picojson::object>();
-//                auto BattleFieldBean = BattleFieldBean::create(tmpObject);
-//                BattleFieldBean->retain();
-//                _battlList.insert(_battlList.begin(), BattleFieldBean);
-//        }
-//        this->reloadPageData();
-//}
-
-//#pragma mark - page view actions
-//void FindPlayer::initPageViews(Size visibleSize, Vec2 center){
-//        
-//        _batllePageViews = PageView::create();
-//        _batllePageViews->setContentSize(visibleSize * 0.85);
-//        _batllePageViews->setIgnoreAnchorPointForPosition(false);
-//        _batllePageViews->setAnchorPoint(Vec2(0.5, 0.5));
-//        _batllePageViews->setPosition(center);
-//        _batllePageViews->removeAllItems();
-//        _batllePageViews->addEventListener((PageView::ccPageViewCallback)CC_CALLBACK_2(FindPlayer::pageViewEvent, this));
-//        
-//        _batllePageViews->setIndicatorEnabled(true);
-//        _batllePageViews->setIndicatorSpaceBetweenIndexNodes(5);
-//        _batllePageViews->setIndicatorIndexNodesScale(0.5);
-//        _batllePageViews->setIndicatorIndexNodesTexture("green_edit.png");
-//        _batllePageViews->setIndicatorIndexNodesColor(Color3B::BLACK);
-//        
-//        this->addChild(_batllePageViews);
-//}
-
-//#define BATTLE_ROWS  2
-//#define BATTLE_COLUM 3
-//
-//void FindPlayer::reloadPageData(){
-//        if (!_batllePageViews){
-//                return;
-//        }
-//        
-//        _batllePageViews->removeAllPages();
-//        
-//        int total_cnt = (int)_battlList.size();
-//        int battle_idx = 0;
-//        int pageCount =  total_cnt / (BATTLE_ROWS * BATTLE_COLUM) + 1;
-//        auto size = _batllePageViews->getContentSize();
-//        for (int i = 0; i < pageCount; ++i) {
-//                HBox* outerBox = HBox::create();
-//                outerBox->setContentSize(size);
-//                
-//                for (int k = 0; k < BATTLE_COLUM && total_cnt > battle_idx; ++k) {
-//                        VBox* innerBox = VBox::create();
-//                        
-//                        for (int j = 0; j < BATTLE_ROWS && total_cnt > battle_idx; j++) {
-//                                BattleFieldBean* bean = _battlList.at(battle_idx++);
-//                                
-//                                Button *btn = Button::create("battle_field.png","");
-//                                btn->setTitleText(StringUtils::format("button %d", battle_idx));
-//                                btn->setTitleColor(Color3B::RED);
-//                                btn->setTitleFontSize(24);
-//                                btn->addTouchEventListener( CC_CALLBACK_2(FindPlayer::onBattleSelected, this));
-//                                
-//                                std::set<std::string> players = bean->getCurrentPlayers();
-//                                for (std::set<std::string>::iterator it = players.begin();
-//                                     it != players.end(); it++) {
-//                                        
-//                                        sdkbox::FBGraphUser player = UserSessionBean::getInstance()->getPlayerInfo(it->c_str());
-//                                        
-//                                        auto name = Label::createWithSystemFont(player.getName(), "", 24);
-//                                        name->setColor(Color3B::RED);
-//                                        auto btn_size = btn->getContentSize();
-//                                        name->setPosition(Vec2(btn_size/2));
-//                                        btn->addChild(name, 1, 111);
-//                                        
-//                                        
-//                                        auto avatar = SpriteEx::createWithUrl(player.getPictureURL());
-//                                        avatar->setPosition(Vec2(btn_size/2) - Vec2(0, 50));
-//                                        btn->addChild(avatar, 2, 112);
-//                                }
-//                                innerBox->addChild(btn);
-//                        }
-//                        
-//                        LinearLayoutParameter *parameter = LinearLayoutParameter::create();
-//                        parameter->setMargin(Margin(size.width/8, 5,size.width/8, 5));
-//                        innerBox->setLayoutParameter(parameter);
-//                        
-//                        outerBox->addChild(innerBox);
-//                }
-//                _batllePageViews->insertCustomItem(outerBox, i);
-//        }
-//}
-//
-//void FindPlayer::pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type){
-//        CCLOG("---pageViewEvent:%d---", type);
-//}
-//void FindPlayer::onBattleSelected(cocos2d::Ref* sender, cocos2d::ui::Widget::TouchEventType type){
-//        CCLOG("---onBattleSelected:%d---", type);
-//}
-
-
-
-//#pragma mark - table view delegate , datasource
-//
-//void FindPlayer::tableCellTouched(TableView* table, TableViewCell* cell)
-//{
-//        CCLOG("cell touched at index: %ld", static_cast<long>(cell->getIdx()));
-//}
-//
-//Size FindPlayer::tableCellSizeForIndex(TableView *table, ssize_t idx)
-//{
-//        if (idx == 2) {
-//                return Size(200, 200);
-//        }
-//        return Size(200, 200);
-//}
-//
-//TableViewCell* FindPlayer::tableCellAtIndex(TableView *table, ssize_t idx)
-//{
-//        auto string = StringUtils::format("%ld", static_cast<long>(idx));
-//        TableViewCell *cell = table->dequeueCell();
-//        if (!cell) {
-//                cell = new (std::nothrow) BattleFieldCell(table->cocos2d::Node::getContentSize());
-//                cell->autorelease();
-//                auto label = (Label*)cell->getChildByTag(123);
-//                label->setString(string);
-//        }
-//        else {
-//                auto label = (Label*)cell->getChildByTag(123);
-//                label->setString(string);
-//        }
-//        
-//        
-//        return cell;
-//}
-//
-//ssize_t FindPlayer::numberOfCellsInTableView(TableView *table)
-//{
-//        return 20;
-//}
-//
-//void FindPlayer::initTableView(Size visibleSize, Vec2 center){
-//        _battleTableView = TableView::create(this, visibleSize * 0.75);
-//        _battleTableView->setDirection(extension::ScrollView::Direction::HORIZONTAL);
-//        _battleTableView->setIgnoreAnchorPointForPosition(false);
-//        _battleTableView->setAnchorPoint(Vec2(0.5, 0.5));
-//        _battleTableView->setPosition(center);
-//        _battleTableView->setDelegate(this);
-//        
-//        auto bg = LayerColor::create(Color4B::RED);
-//        bg->setIgnoreAnchorPointForPosition(false);
-//        bg->setAnchorPoint(Vec2(0.5, 0.5));
-//        bg->setPosition(center);
-//        _battleTableView->addChild(bg);
-//        
-//        
-//        this->addChild(_battleTableView);
-//        _battleTableView->reloadData();
-//}
-//
-//#pragma mark - battle field table view cell
-//
-//void BattleFieldCell::draw(Renderer *renderer, const Mat4 &transform, uint32_t flags)
-//{
-//        TableViewCell::draw(renderer, transform, flags);
-//        
-//// 	auto pos = getPosition();
-//// 	auto size = Size(178, 200);
-//// 	Vec2 vertices[4]={
-//// 		Vec2(pos.x+1, pos.y+1),
-//// 		Vec2(pos.x+size.width-1, pos.y+1),
-//// 		Vec2(pos.x+size.width-1, pos.y+size.height-1),
-//// 		Vec2(pos.x+1, pos.y+size.height-1),
-//// 	};
-//// 	DrawPrimitives::drawPoly(vertices, 4, true);
-//}
-//
-//BattleFieldCell::BattleFieldCell(Size size){ 
-//        
-//        auto sprite = Sprite::create("HelloWorld.png");
-//        sprite->setAnchorPoint(Vec2::ZERO);
-//        sprite->setPosition(Vec2(size/2));
-//        this->addChild(sprite);
-//        
-//        auto label = Label::createWithSystemFont("s", "Helvetica", 20.0);
-//        label->setPosition(Vec2::ZERO);
-//        label->setAnchorPoint(Vec2::ZERO);
-//        label->setTag(123);
-//        this->addChild(label);
-//}
 
 #pragma mark - websocket delegate
 void FindPlayer::onOpen(cocos2d::network::WebSocket* ws){

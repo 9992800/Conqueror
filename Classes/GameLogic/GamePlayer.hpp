@@ -20,7 +20,7 @@ public:
         }
         GamePlayer(int id);
         GamePlayer(GamePlayer* obj);
-        virtual ~GamePlayer();
+        ~GamePlayer();
         inline void setAreaTc(int tc){
                 _area_tc = tc;
         }

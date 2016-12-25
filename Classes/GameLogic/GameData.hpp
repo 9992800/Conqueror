@@ -51,7 +51,7 @@ public:
         
         static GameData* createWithData(GameData* data);
         GameData(int n);
-        inline bool init(){return true;}
+        bool init();
         bool init(GameData* data);
         ~GameData();
                 

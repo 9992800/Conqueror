@@ -25,7 +25,7 @@ class AreaData: public Ref{
 public:
         AreaData(int id, GameData*);
         AreaData(AreaData* obj, GameData*);
-        virtual ~AreaData();
+        ~AreaData();
         
         inline void increaseSize(int cell) {
                 _size++;

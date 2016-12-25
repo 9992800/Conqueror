@@ -17,7 +17,7 @@ class JoinData: public Ref{
 public:
         JoinData();
         JoinData(JoinData* obj);
-        virtual ~JoinData();
+        ~JoinData();
         void initdir(int cellIdx);
         
         inline int getJoinDir(int dirIdx){ return _dir[dirIdx];}

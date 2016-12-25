@@ -30,24 +30,6 @@ _areaTo(AREA_UNSELECTED){
         _mapData        = std::vector<int>(CEL_MAX, 0);
         
         SET_SIZE_TOIDX(this->_num, CEL_MAX);
-        
-        for (int i = 0; i < CEL_MAX; i++){
-                JoinData* join_data = new JoinData();
-                join_data->initdir(i);
-                _join[i] = join_data;
-        }
-        
-        SET_SIZE_TOIDX(_jun, MAX_PLAYER);
-        for (int i = 0; i < _curPlayerNum; i++){
-                int ramdom_p = random(0, _curPlayerNum - 1);
-                int tmp = this->_jun[i];
-                this->_jun[i] = this->_jun[ramdom_p];
-                this->_jun[ramdom_p] = tmp;
-        }
-        
-        for (int i = 0; i < MAX_PLAYER; i++){
-                this->_player[i] = new GamePlayer(i);
-        }
 }
 
 GameData::~GameData(){
@@ -87,6 +69,28 @@ GameData* GameData::createWithData(GameData* data){
                 return nullptr;
         }
 }
+
+bool GameData::init(){
+        for (int i = 0; i < CEL_MAX; i++){
+                JoinData* join_data = new JoinData();
+                join_data->initdir(i);
+                _join[i] = join_data;
+        }
+        
+        SET_SIZE_TOIDX(_jun, MAX_PLAYER);
+        for (int i = 0; i < _curPlayerNum; i++){
+                int ramdom_p = random(0, _curPlayerNum - 1);
+                int tmp = this->_jun[i];
+                this->_jun[i] = this->_jun[ramdom_p];
+                this->_jun[ramdom_p] = tmp;
+        }
+        
+        for (int i = 0; i < MAX_PLAYER; i++){
+                this->_player[i] = new GamePlayer(i);
+        }
+        return true;
+}
+
 bool GameData::init(GameData* data){
         this->_userId           = data->_userId;
         this->_curPlayerNum     = data->_curPlayerNum;

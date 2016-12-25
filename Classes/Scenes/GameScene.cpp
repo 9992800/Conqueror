@@ -57,6 +57,11 @@ Scene* GameScene::createScene(int gameLevel, int charactorIdx, int colorIdx)
 GameScene::~GameScene(){
         _theGameLogic->release();
         //TODO::_allFightingCharacters->release
+        for (int i = 0; i < FIGH_ANIM_MAX; i++){
+                for (int j = 0; j < MAX_DICE_PER_AREA; j++){
+                        _allFightingCharacters[i][j]->release();
+                }
+        }
 }
 
 
@@ -761,8 +766,6 @@ void GameScene::gameAction(){
                         _animationLayer->setVisible(false);
                         _endTurnTipsLayer->setVisible(true);
                 });
-                
-                callback->retain();
                 _mapLayer->runAction(Sequence::create(scale, callback, NULL));
                 
                 return;

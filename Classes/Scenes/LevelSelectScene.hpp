@@ -12,16 +12,14 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "GamePayUtil.hpp"
-#include "PluginIAP/PluginIAP.h"
 #include "GameData.hpp"
 #include "ReplayLastScene.hpp"
 
-using namespace sdkbox;
 using namespace cocos2d::ui;
 USING_NS_CC;
 using namespace std;
 
-class LevelSelect : public cocos2d::Layer, public sdkbox::IAPListener
+class LevelSelect : public cocos2d::Layer
 {
 public:
         static Scene* createScene();
@@ -32,9 +30,6 @@ public:
         void onEnter() override;
         void update(float delta)override;
         virtual void onExit()override;
-        
-//        void onTouchesMoved(Touch*, Event* event);
-//        bool onTouchBegan(Touch*, Event*)override{return true;}
         
 protected:
         void menuOnlineBattle(Ref*);
@@ -54,17 +49,7 @@ private:
         void initButtons(Vec2 center, Size visibleSize);
         void initMainMenu();
         
-private:
-        void onInitialized(bool success)override{
-        }
-        void onSuccess(const Product& p)override;
-        void onFailure(const Product& p, const std::string& msg)override;
-        void onCanceled(const Product& p)override;
-        void onRestored(const Product& p)override{
-        };
-        void onProductRequestSuccess(const std::vector<Product>& products)override;
-        void onProductRequestFailure(const std::string& msg)override;
-        void onRestoreComplete(bool ok, const std::string &msg)override;
+
         
         void loadResourceInBg(int* loader, HistoryReplayData* data);
         void afterParseArea(void*);
@@ -80,7 +65,6 @@ private:
         Sprite*                 _loadingBarBack;
         Sprite*                 _num_sel_back_grd;
         MenuItemImage*          _soundCtrl;
-        map<string, Product>    _productsMap;
         HistoryReplayData       _historyData;
         int                     _curChIdx;
         int                     _curColorIdx;

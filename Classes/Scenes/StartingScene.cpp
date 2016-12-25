@@ -111,14 +111,14 @@ void Starting::afterCaptureScreen(bool yes, const std::string &outputFilename)
                 CCLOG("##FB afterCaptureScreen: %s", outputFilename.c_str());
                 if (yes) {
                         
-                        FBShareInfo info;
-                        info.type  = FB_PHOTO;
+                        sdkbox::FBShareInfo info;
+                        info.type  = sdkbox::FB_PHOTO;
                         info.title = "capture screen";
                         info.link = "http://www.cocos2d-x.org";
                         info.image = outputFilename;
-                        PluginFacebook::dialog(info);
+                        sdkbox::PluginFacebook::dialog(info);
                 }else{
-                        PluginFacebook::requestPublishPermissions({FB_PERM_PUBLISH_POST});
+                        sdkbox::PluginFacebook::requestPublishPermissions({sdkbox::FB_PERM_PUBLISH_POST});
                 }
         }
         
@@ -127,7 +127,7 @@ void Starting::afterCaptureScreen(bool yes, const std::string &outputFilename)
 void Starting::menuShareGame(Ref* pSender){
         CCLOG("##FB %s", __FUNCTION__);
         
-        if (PluginFacebook::isLoggedIn()){
+        if (sdkbox::PluginFacebook::isLoggedIn()){
                 utils::captureScreen(CC_CALLBACK_2(Starting::afterCaptureScreen, this), "screen.png");
         }else{
                 UserSessionBean::getInstance()->initSession();

@@ -15,6 +15,7 @@
 #include "json/document.h"
 #include "FindPlayerScene.hpp"
 #include "ui/UIScale9Sprite.h"
+#include "ShoppingScene.hpp"
 
 enum {
         GAME_LEVEL_INDEX_1 = 1,
@@ -103,11 +104,7 @@ bool LevelSelect::init()
         
         this->initButtons(origin, visibleSize);
         
-        this->initMainMenu();
-        
-        IAP::setDebug(true);
-        IAP::setListener(this);
-        IAP::init();
+        this->initMainMenu();         
         
         _loadingBar = LoadingBar::create("sliderProgress.png");
         _loadingBar->setDirection(LoadingBar::Direction::LEFT);
@@ -429,7 +426,8 @@ void LevelSelect::menuShowSettigns(Ref* btn){
 
 
 void LevelSelect::menuGetMoreCoins(Ref* btn){
-        IAP::restore();
+        auto shop = Shopping::createScene();
+        Director::getInstance()->pushScene(shop);
 }
 void LevelSelect::menuGetMoreDices(Ref* btn){
         
@@ -561,7 +559,6 @@ void LevelSelect::menuSoundControl(Ref* btn){
 
 void LevelSelect::onEnter(){
         Layer::onEnter();
-        IAP::refresh();
         
         auto back_layer = this->getChildByTag(kMainMenuBackTag);
         auto chengqiang = back_layer->getChildByTag(kMenuGreatWallTag);
@@ -623,38 +620,5 @@ void LevelSelect::onExit(){
                 (*it)->stopAllActions();
         }
         the_wall->removeAllChildren();
-}
-
-
-#pragma mark - payment callback
-void LevelSelect::onSuccess(const Product& p){
-        
-}
-void LevelSelect::onFailure(const Product& p, const std::string& msg){
-         CCLOG("Purchase Failed: %s", msg.c_str());
-}
-void LevelSelect::onCanceled(const Product& p){
-        CCLOG("Purchase Canceled: %s", p.id.c_str());
-}
-
-void LevelSelect::onProductRequestSuccess(const std::vector<Product>& products){
-        _productsMap.clear();
-        for (int i=0; i < products.size(); i++){
-                CCLOG("IAP: ========= IAP Item =========");
-                CCLOG("IAP: Name: %s", products[i].name.c_str());
-                CCLOG("IAP: ID: %s", products[i].id.c_str());
-                CCLOG("IAP: Title: %s", products[i].title.c_str());
-                CCLOG("IAP: Desc: %s", products[i].description.c_str());
-                CCLOG("IAP: Price: %s", products[i].price.c_str());
-                CCLOG("IAP: Price Value: %f", products[i].priceValue);
-                _productsMap.insert(pair<string, Product>(products[i].name, products[i]));
-        }
-}
-
-void LevelSelect::onProductRequestFailure(const std::string& msg){
-        CCLOG("onProductRequestFailure Restored: %s", msg.c_str());
-}
-void LevelSelect::onRestoreComplete(bool ok, const std::string &msg){
-        CCLOG("%s:%d:%s", __func__, ok, msg.data());
 }
 

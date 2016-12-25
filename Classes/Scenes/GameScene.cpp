@@ -64,8 +64,7 @@ GameScene::~GameScene(){
         }
         _winDialogLayer->release();
         _lostDialogLayer->release(); 
-}
-
+} 
 
 bool GameScene::init()
 {

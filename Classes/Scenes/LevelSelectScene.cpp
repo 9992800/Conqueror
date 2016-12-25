@@ -611,7 +611,7 @@ void LevelSelect::onExit(){
         _loadingBar->setVisible(false);
         _loadingBarBack->setVisible(false);
         _count = 0;
-//        unscheduleUpdate();
+        unscheduleUpdate();
         AsyncTaskPool::getInstance()->stopTasks(AsyncTaskPool::TaskType::TASK_IO);
         auto back_layer = this->getChildByTag(kMainMenuBackTag);
         auto the_wall = back_layer->getChildByTag(kMenuGreatWallTag);

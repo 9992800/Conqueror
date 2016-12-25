@@ -36,7 +36,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
                 auto tips_back_size = _tipsBack->getContentSize();
                 auto ok_button = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
                 ok_button->::CommonTipsDialog::setPosition(tips_back_size.width / 2, ok_button->getContentSize().height *1.5f);
-                ok_button->setTitleText("确定");
+                ok_button->setTitleText("OK");
                 ok_button->setTitleFontSize(28);
                 ok_button->setTitleColor(Color3B::BLACK);
                 ok_button->setTitleFontName("fonts/arial.ttf");
@@ -48,7 +48,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
                 auto tips_back_size = _tipsBack->getContentSize();
                 auto cancel_button = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
                 cancel_button->::CommonTipsDialog::setPosition(tips_back_size.width / 2+ cancel_button->getContentSize().width , cancel_button->getContentSize().height *1.5f);
-                cancel_button->setTitleText("取消");
+                cancel_button->setTitleText("NO");
                 cancel_button->setTitleFontSize(28);
                 cancel_button->setTitleColor(Color3B::BLACK);
                 cancel_button->setTitleFontName("fonts/arial.ttf");
@@ -59,7 +59,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
                 
                 auto ok_button = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
                 ok_button->::CommonTipsDialog::setPosition(tips_back_size.width / 2 - ok_button->getContentSize().width, ok_button->getContentSize().height *1.5f);
-                ok_button->setTitleText("确定");
+                ok_button->setTitleText("YES");
                 ok_button->setTitleFontSize(28);
                 ok_button->setTitleColor(Color3B::BLACK);
                 ok_button->setTitleFontName("fonts/arial.ttf");

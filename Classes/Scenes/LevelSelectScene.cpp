@@ -585,7 +585,7 @@ void LevelSelect::onEnter(){
                         auto move =  MoveBy::create(4.0f, -Vec2(scale * great_wall_size.width * 1.6, 0));
                         Spawn* p_run = Spawn::create(run_action, FlipX::create(true), move, NULL);
                         Spawn* p_run_back = Spawn::create(run_action, FlipX::create(false) , move->reverse(), NULL);
-                        runner->runAction(RepeatForever::create( Sequence::create(p_run, p_run_back, NULL)));
+                        runner->runAction(RepeatForever::create(Sequence::create(p_run, p_run_back, NULL)));
                         
                         runner->setScale(1.4);
                 }else{
@@ -613,12 +613,8 @@ void LevelSelect::onExit(){
         _count = 0;
         unscheduleUpdate();
         AsyncTaskPool::getInstance()->stopTasks(AsyncTaskPool::TaskType::TASK_IO);
-        auto back_layer = this->getChildByTag(kMainMenuBackTag);
-        auto the_wall = back_layer->getChildByTag(kMenuGreatWallTag);
-        Vector<Node*> runners = the_wall->getChildren();
-        for (Vector<Node*>::iterator it = runners.begin(); it != runners.end(); ++it){
-                (*it)->stopAllActions();
-        }
-        the_wall->removeAllChildren();
+//        auto back_layer = this->getChildByTag(kMainMenuBackTag);
+//        auto the_wall = back_layer->getChildByTag(kMenuGreatWallTag);
+//        the_wall->removeAllChildren();
 }
 

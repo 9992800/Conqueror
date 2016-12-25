@@ -826,7 +826,7 @@ void GameScene::WinnerBack(){
         
         int player_uid = ATTACK_RES_WIN == _attackResult->_result ? _attackResult->_fromPlayer : _attackResult->_toPlayer;
         auto run_back_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[player_uid])->clone();
-        run_back_anim->setLoops(3);
+        run_back_anim->setLoops(2);
         run_back_anim->setRestoreOriginalFrame(true);
         
         auto back_wait = cache->getAnimation(ANIM_NAME_FIGHT_STAND[player_uid]);
@@ -841,14 +841,13 @@ void GameScene::WinnerBack(){
                         _animationLayer->removeChild(keeper, true);
                 }
                 
-                auto moveby = MoveBy::create(1.2, Vec2(READY_DISTANCE_POS - back_size.width / 2,0));
+                auto moveby = MoveBy::create(1.f, Vec2(READY_DISTANCE_POS - back_size.width / 2,0));
                 auto run_back = Spawn::create(Animate::create(run_back_anim), FlipX::create(true), moveby, NULL);
                 
                 auto fight_back = Animate::create(back_wait);
                 
-                auto move = MoveBy::create(0.6f, Vec2(-READY_DISTANCE_POS, 0));
+                auto move = MoveBy::create(0.5f, Vec2(-READY_DISTANCE_POS, 0));
                 auto run_back_anim2 = run_back_anim->clone();
-                run_back_anim2->setLoops(2);
                 Spawn* back_home = Spawn::create(Animate::create(run_back_anim2), move, NULL);
                 
                 Sequence* invade_back = Sequence::create(run_back, fight_back,  back_home, NULL);
@@ -871,14 +870,13 @@ void GameScene::WinnerBack(){
                         _animationLayer->removeChild(invader, true);
                 }
                 
-                auto moveby = MoveBy::create(1.2f, Vec2(back_size.width / 2 - READY_DISTANCE_POS, 0));
+                auto moveby = MoveBy::create(1.f, Vec2(back_size.width / 2 - READY_DISTANCE_POS, 0));
                 auto run_back = Spawn::create(Animate::create(run_back_anim), FlipX::create(false), moveby, NULL);
                 
                 auto fight_back = Animate::create(back_wait);
                 
-                auto move = MoveBy::create(0.6f, Vec2(READY_DISTANCE_POS, 0));
+                auto move = MoveBy::create(0.5f, Vec2(READY_DISTANCE_POS, 0));
                 auto run_back_anim2 = run_back_anim->clone();
-                run_back_anim2->setLoops(2);
                 Spawn* back_home = Spawn::create(Animate::create(run_back_anim2), move, NULL);
                 
                 Sequence* keeper_back = Sequence::create(run_back, fight_back, back_home, NULL);

@@ -103,6 +103,7 @@
 		BB51F1091DCF66D50031296E /* share_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = BB51F1071DCF66D50031296E /* share_sel.png */; };
 		BB51F10A1DCF66D50031296E /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = BB51F1081DCF66D50031296E /* share.png */; };
 		BB62DFD31DCD9E7A0037DE0A /* anim in Resources */ = {isa = PBXBuildFile; fileRef = BB62DFD11DCD9E7A0037DE0A /* anim */; };
+		BB8C6E921E0FB78800D091C3 /* ShoppingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB8C6E901E0FB78800D091C3 /* ShoppingScene.cpp */; };
 		BB9A4E241DCB7C6400E88C41 /* GameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E221DCB7C6400E88C41 /* GameData.cpp */; };
 		BB9A4E271DCB84A200E88C41 /* MapCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */; };
 		BBC12E4E1DCDFBA70035A571 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC12E4D1DCDFBA70035A571 /* StoreKit.framework */; };
@@ -297,6 +298,8 @@
 		BB51F1071DCF66D50031296E /* share_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_sel.png; sourceTree = "<group>"; };
 		BB51F1081DCF66D50031296E /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
 		BB62DFD11DCD9E7A0037DE0A /* anim */ = {isa = PBXFileReference; lastKnownFileType = folder; path = anim; sourceTree = "<group>"; };
+		BB8C6E901E0FB78800D091C3 /* ShoppingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShoppingScene.cpp; sourceTree = "<group>"; };
+		BB8C6E911E0FB78800D091C3 /* ShoppingScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShoppingScene.hpp; sourceTree = "<group>"; };
 		BB9A4E221DCB7C6400E88C41 /* GameData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameData.cpp; sourceTree = "<group>"; };
 		BB9A4E231DCB7C6400E88C41 /* GameData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameData.hpp; sourceTree = "<group>"; };
 		BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapCreator.cpp; sourceTree = "<group>"; };
@@ -573,6 +576,8 @@
 				7C21A0EA1DCB39050035ECC6 /* GameScene.cpp */,
 				7C6E7FFC1DD94F5300C5E374 /* ReplayLastScene.hpp */,
 				7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */,
+				BB8C6E911E0FB78800D091C3 /* ShoppingScene.hpp */,
+				BB8C6E901E0FB78800D091C3 /* ShoppingScene.cpp */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -864,6 +869,7 @@
 				7CCB51DA1DD5AAC000810354 /* JsonUtil.cpp in Sources */,
 				7C82E4201DD572A70019C8CF /* FindPlayerScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				BB8C6E921E0FB78800D091C3 /* ShoppingScene.cpp in Sources */,
 				7C4DA6A51DE2E973001CC255 /* BattleFieldBean.cpp in Sources */,
 				BBC12E5E1DCE2F830035A571 /* GamePayUtil.cpp in Sources */,
 				7C21A0F91DCB3A3C0035ECC6 /* PopUpOkDialog.cpp in Sources */,

@@ -114,7 +114,7 @@ bool LevelSelect::init()
         _loadingBar->setPosition(pos);
         
         Size bar_size = _loadingBar->getContentSize();
-        auto label = Label::createWithTTF("Loading", "fonts/Marker Felt.ttf", 24);
+        auto label = Label::createWithSystemFont("Loading", "Arial", 24);
         label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
         _loadingBar->addChild(label, 4, key_loading_bar2);
         this->addChild(_loadingBar, 3, key_loading_bar1);
@@ -332,7 +332,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         Vec2 coins_back_pos = Vec2(coins_pos.x - 60, coins_pos.y);
         coins_back->setPosition(coins_back_pos);
         _coinsNum = 100;//查询消费记录 apple
-        auto coins_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/Marker Felt.ttf", 24);//
+        auto coins_label = Label::createWithSystemFont(tostr(_coinsNum), "Arial", 24);//
         coins_back->addChild(coins_label);
         coins_label->setPosition(coins_back->getContentSize() / 2);
         this->addChild(coins_back, ZORDER_BACK_LAYERS);
@@ -356,7 +356,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         Vec2 dices_back_pos = Vec2(dices_pos.x - 60, dices_pos.y);
         dices_back->setPosition(dices_back_pos);
         _dicesNum = 100;//查询消费记录 apple
-        auto dices_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/Marker Felt.ttf", 24);//
+        auto dices_label = Label::createWithSystemFont(tostr(_coinsNum), "Arial", 24);//
         dices_back->addChild(dices_label);
         dices_label->setPosition(dices_back->getContentSize() / 2);
         this->addChild(dices_back, ZORDER_BACK_LAYERS);
@@ -576,21 +576,21 @@ void LevelSelect::onEnter(){
                 
                 auto run_anim = cache->getAnimation(ANIM_NAME_FIGHT_RUN[p_i_r])->clone();                
                 run_anim->setRestoreOriginalFrame(true);
-                run_anim->setLoops(5);
+                run_anim->setLoops(6);
                 float scale = (1 - 0.1 * i);
                 auto run_action = Animate::create(run_anim);
                 
                 if (is_odd){
-                        runner->setPosition(Vec2(great_wall_size.width - gap.x * i - runner_size.width / 2, gap.y * i + runner_size.height / 4));
-                        auto move =  MoveBy::create(2.3f, -Vec2(scale * great_wall_size.width * 0.7, 0));
+                        runner->setPosition(Vec2(great_wall_size.width + gap.x * i + runner_size.width / 2, gap.y * i + runner_size.height / 4));
+                        auto move =  MoveBy::create(3.0f, -Vec2(scale * great_wall_size.width * 1.4, 0));
                         Spawn* p_run = Spawn::create(run_action, FlipX::create(true), move, NULL);
                         Spawn* p_run_back = Spawn::create(run_action, FlipX::create(false) , move->reverse(), NULL);
                         runner->runAction(RepeatForever::create( Sequence::create(p_run, p_run_back, NULL)));
                         
                         runner->setScale(1.4);
                 }else{
-                        runner->setPosition(Vec2(gap.x * i + runner_size.width / 2, gap.y * i + runner_size.height / 4));
-                        auto move =  MoveBy::create(2.3f, Vec2(scale * great_wall_size.width * 0.7, 0));
+                        runner->setPosition(Vec2(-gap.x * i - runner_size.width / 2, gap.y * i + runner_size.height / 4));
+                        auto move =  MoveBy::create(3.0f, Vec2(scale * great_wall_size.width * 1.4, 0));
                         Spawn* p_run = Spawn::create(run_action, FlipX::create(false), move, NULL);
                         Spawn* p_run_back = Spawn::create(run_action, FlipX::create(true) , move->reverse(), NULL);
                         runner->runAction(RepeatForever::create( Sequence::create(p_run, p_run_back, NULL)));

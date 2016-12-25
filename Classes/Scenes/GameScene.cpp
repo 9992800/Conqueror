@@ -840,12 +840,12 @@ void GameScene::WinnerBack(){
                         _animationLayer->removeChild(keeper, true);
                 }
                 
-                auto moveby = MoveBy::create(0.5, Vec2(READY_DISTANCE_POS - back_size.width / 2,0));
+                auto moveby = MoveBy::create(1.0, Vec2(READY_DISTANCE_POS - back_size.width / 2,0));
                 auto run_back = Spawn::create(Animate::create(run_back_anim), FlipX::create(true), moveby, NULL);
                 
                 auto fight_back = Animate::create(back_wait);
                 
-                auto move = MoveBy::create(1.f, Vec2(-READY_DISTANCE_POS,0));
+                auto move = MoveBy::create(0.5f, Vec2(-READY_DISTANCE_POS, 0));
                 auto run_back_anim2 = run_back_anim->clone();
                 run_back_anim2->setLoops(2);
                 Spawn* back_home = Spawn::create(Animate::create(run_back_anim2), move, NULL);
@@ -870,12 +870,12 @@ void GameScene::WinnerBack(){
                         _animationLayer->removeChild(invader, true);
                 }
                 
-                auto moveby = MoveBy::create(0.5f, Vec2(back_size.width / 2 - READY_DISTANCE_POS, 0));
+                auto moveby = MoveBy::create(1.0f, Vec2(back_size.width / 2 - READY_DISTANCE_POS, 0));
                 auto run_back = Spawn::create(Animate::create(run_back_anim), FlipX::create(false), moveby, NULL);
                 
                 auto fight_back = Animate::create(back_wait);
                 
-                auto move = MoveBy::create(1.f, Vec2(READY_DISTANCE_POS, 0));
+                auto move = MoveBy::create(0.5f, Vec2(READY_DISTANCE_POS, 0));
                 auto run_back_anim2 = run_back_anim->clone();
                 run_back_anim2->setLoops(2);
                 Spawn* back_home = Spawn::create(Animate::create(run_back_anim2), move, NULL);

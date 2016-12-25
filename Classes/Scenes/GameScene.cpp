@@ -638,6 +638,7 @@ void GameScene::tryAgain(){
         _addtionalSupplyTimes = ADDTIONAL_SUPPLY_TIME_PER_GAME;
         _addArmyBtn->setEnabled(true);
         _addArmyBtn->setBright(true);
+        _diceResultLayer->setVisible(false);
         this->gameAction();
 }
 
@@ -754,11 +755,15 @@ void GameScene::gameAction(){
                 auto visible_size = Director::getInstance()->getVisibleSize();
                 _mapLayer->setPosition(visible_size);
                 auto scale = ScaleTo::create(0.3, MAP_SCALE_V);
-                _mapLayer->runAction(Sequence::create(scale, CallFunc::create( [&](){
+               
+                CallFunc * callback =  CallFunc::create( [&](){
                         _gameStatus = GAME_STATUS_INUSERTURN;
                         _animationLayer->setVisible(false);
                         _endTurnTipsLayer->setVisible(true);
-                }), NULL));
+                });
+                
+                callback->retain();
+                _mapLayer->runAction(Sequence::create(scale, callback, NULL));
                 
                 return;
         }

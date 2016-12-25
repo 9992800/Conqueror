@@ -613,9 +613,10 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
         _attackResult = _theGameLogic->startPlayerAttack(cell_id);
         if (nullptr != _attackResult){
                 
+                
                 _afterBattleCallback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this));
-                _afterBattleCallback->autorelease();
                 _attackResult->retain();
+                _afterBattleCallback->retain();
                 this->playBattleAnimation(true);
         }
 }
@@ -661,6 +662,7 @@ void GameScene::afterPlayerBattle(){
         }
         this->refreshAreaTcShow(survival);
         _attackResult->release();
+        _afterBattleCallback->release();
         _attackResult = NULL;
         _isPalyingAnim = false;
         _diceResultLayer->setVisible(false);
@@ -671,6 +673,7 @@ void GameScene::afterPlayerBattle(){
 void GameScene::afterRobootBattle(){
         std::map<int, int> survival = _theGameLogic->cleanUpBattleField(_attackResult);
         _attackResult->release();
+        _afterBattleCallback->release();
         _attackResult = NULL;
         _isPalyingAnim = false;
         _diceResultLayer->setVisible(false);
@@ -775,7 +778,7 @@ void GameScene::gameAction(){
             || ATTACK_RES_DEFEATED == _attackResult->_result){
                 
                 _afterBattleCallback = CallFunc::create(std::bind(&GameScene::afterRobootBattle, this));
-                _afterBattleCallback->autorelease();
+                _afterBattleCallback->retain();
                 _attackResult->retain();
                 this->playBattleAnimation(false);
                 
@@ -1127,7 +1130,7 @@ void GameScene::playSupplyAnimation(CallFunc* callback){
         auto scale = ScaleTo::create(0.6f, 1.0f);
         callback->retain();
         CallFunc* cb = CallFunc::create(std::bind(&GameScene::playSupplyAnimation2, this, callback, player));
-        cb->retain();
+        cb->autorelease();
         _supplyShowLayer->runAction(Sequence::create(scale, cb, NULL));
 }
 

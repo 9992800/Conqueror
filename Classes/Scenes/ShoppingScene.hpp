@@ -35,6 +35,9 @@ private:
         void onProductRequestSuccess(const std::vector<Product>& products)override;
         void onProductRequestFailure(const std::string& msg)override;
         void onRestoreComplete(bool ok, const std::string &msg)override;
+        
+private:
+        void buyItems(Ref*, std::string);
 private:
         
         std::map<std::string, Product>    _productsMap;

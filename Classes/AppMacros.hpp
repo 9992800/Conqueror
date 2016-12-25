@@ -130,6 +130,11 @@ enum {
 #define LEVEL_6_PRODUCT_NAME_KEY        "open_level6"
 #define LEVEL_7_PRODUCT_NAME_KEY        "open_level7"
 #define REMOVE_ADS_PRODUCT_NAME_KEY     "remove_ads"
+#define SHOP_ITEM_10_COINS_KEY          "shop_item_10_coins"
+#define SHOP_ITEM_60_COINS_KEY          "shop_item_60_coins"
+#define SHOP_ITEM_200_COINS_KEY         "shop_item_200_coins"
+#define SHOP_ITEM_680_COINS_KEY         "shop_item_680_coins"
+#define SHOP_ITEM_1480_COINS_KEY        "shop_item_1480_coins"
 
 
 #define FACEBOOK_INFO_USER_AVATAR_KEY     "_key_facebook_avatar_id"

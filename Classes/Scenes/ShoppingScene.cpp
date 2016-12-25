@@ -29,14 +29,28 @@ bool Shopping::init(){
         this->addChild(back_ground);
         
         auto return_btn = cocos2d::ui::Button::create("DIALOG_CANCEL.png","DIALOG_CANCEL_SEL.png");
-        return_btn->::Shopping::setPosition(back_ground_size.width * 0.95, back_ground_size.height * 0.5);
+        return_btn->::Shopping::setPosition(back_ground_size.width * 0.92, back_ground_size.height * 0.08);
         return_btn->addClickEventListener([](Ref*){
                 Director::getInstance()->popScene();
         });
+        return_btn->setTitleText("返回");
+        return_btn->setTitleFontName("Arial");
+        return_btn->setTitleFontSize(28);
+        return_btn->setScale(1.4f);
         back_ground->addChild(return_btn);
+        
+        auto coins_item_10 = cocos2d::ui::Button::create("shopping/shop_item_10.png");
+        auto item_size = coins_item_10->getContentSize();
+        coins_item_10->setPosition(Vec2(item_size.width * 0.8, back_ground_size.height * 0.5 + item_size.height * 0.6));
+        coins_item_10->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_10_COINS_KEY));
+        back_ground->addChild(coins_item_10);
         return true;
 }
 
+#pragma mark - shop function
+void Shopping::buyItems(Ref*, std::string product_name){
+        IAP::purchase(product_name);
+}
 
 #pragma mark - payment callback
 void Shopping::onSuccess(const Product& p){

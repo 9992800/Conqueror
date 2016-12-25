@@ -197,6 +197,7 @@ void LevelSelect::initCharactorSel(Vec2 position_num, Size num_size) {
         pageView->setContentSize(size);
         pageView->setDirection(ui::PageView::Direction::VERTICAL);
         pageView->removeAllItems();
+        pageView->setIndicatorEnabled(true);
         _curChIdx = 0;
         for (int i = 0; i < MAX_PLAYER; i++){
                 std::string name = StringUtils::format("level/ch_player_%d.png", i);
@@ -249,6 +250,7 @@ void LevelSelect::initColorSel(Vec2 position_num, Size num_size){
         color_list->setCurrentPageIndex(0);
         
         color_list->setTag(2);
+        color_list->setIndicatorEnabled(true);
         color_list->addEventListener(CC_CALLBACK_2(LevelSelect::pageViewEvent, this));
         color_list->setPosition(Vec2((color_size - color_list->getContentSize()) / 2));
         chose_color_back->addChild(color_list);

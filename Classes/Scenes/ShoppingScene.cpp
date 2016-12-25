@@ -18,7 +18,6 @@ Scene* Shopping::createScene(){
 bool Shopping::init(){
         IAP::setDebug(true);
         IAP::setListener(this);
-        IAP::init();
         IAP::refresh();
         
         auto visible_size = Director::getInstance()->getVisibleSize();

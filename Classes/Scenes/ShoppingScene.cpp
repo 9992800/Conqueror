@@ -28,7 +28,7 @@ bool Shopping::init(){
         this->addChild(back_ground);
         
         auto return_btn = cocos2d::ui::Button::create("DIALOG_CANCEL.png","DIALOG_CANCEL_SEL.png");
-        return_btn->::Shopping::setPosition(back_ground_size.width * 0.92, back_ground_size.height * 0.08);
+        return_btn->setPosition(Vec2(back_ground_size.width * 0.92, back_ground_size.height * 0.08));
         return_btn->addClickEventListener([](Ref*){
                 Director::getInstance()->popScene();
         });

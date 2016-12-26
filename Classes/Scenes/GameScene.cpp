@@ -1062,6 +1062,7 @@ void GameScene::playSupplyAnimation2(GamePlayer* player){
         std::map<AreaData*, int> supply_data = _theGameLogic->starSupplyDice(player);
         if (supply_data.size() == 0){
                 _afterSupplyCallback->execute();
+                _afterSupplyCallback->release();
                 return;
         }
         

@@ -441,7 +441,7 @@ void GameScene::initDialog(){
         auto btn_size = replay_btn->getContentSize();
         game_win_back->addChild(replay_btn);
         replay_btn->setTitleText("Replay");
-        replay_btn->setTitleFontSize(28);
+        replay_btn->setTitleFontSize(26);
         replay_btn->setTitleFontName("fonts/arial.ttf");
         replay_btn->setTitleColor(Color3B::BLACK);
         replay_btn->addClickEventListener(CC_CALLBACK_1(GameScene::gameOver, this, 1));
@@ -450,7 +450,7 @@ void GameScene::initDialog(){
         share_btn->setPosition(Vec2(btn_pos.x - 2.5f * btn_size.width, btn_pos.y));
         game_win_back->addChild(share_btn);
         share_btn->setTitleText("Share");
-        share_btn->setTitleFontSize(28);
+        share_btn->setTitleFontSize(26);
         share_btn->setTitleFontName("fonts/arial.ttf");
         share_btn->setTitleColor(Color3B::BLACK);
         share_btn->addClickEventListener(CC_CALLBACK_1(GameScene::shareThisGame, this));
@@ -459,7 +459,7 @@ void GameScene::initDialog(){
         return_btn->setPosition(Vec2(btn_pos.x + 2.5f * btn_size.width, btn_pos.y));
         game_win_back->addChild(return_btn);
         return_btn->setTitleText("Back");
-        return_btn->setTitleFontSize(28);
+        return_btn->setTitleFontSize(26);
         return_btn->setTitleColor(Color3B::BLACK);
         return_btn->setTitleFontName("fonts/arial.ttf");
         return_btn->addClickEventListener(CC_CALLBACK_1(GameScene::gameOver, this, 0));
@@ -1128,10 +1128,14 @@ void GameScene::playSupplyAnimation(){
                 character->setPosition(pos);
                 _supplyShowLayer->addChild(character);
         }
+        if (total_stock > 0){
+                auto scale = ScaleTo::create(0.6f, 1.0f);
+                auto cb = CallFunc::create(std::bind(&GameScene::playSupplyAnimation2, this, player));
+                _supplyShowLayer->runAction(Sequence::create(scale, cb, NULL));
+        }else{
+                this->playSupplyAnimation2(player);
+        }
         
-        auto scale = ScaleTo::create(0.6f, 1.0f);
-        auto cb = CallFunc::create(std::bind(&GameScene::playSupplyAnimation2, this,player));
-        _supplyShowLayer->runAction(Sequence::create(scale, cb, NULL));
 }
 
 #pragma mark - menu callback actions

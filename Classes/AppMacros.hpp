@@ -120,8 +120,7 @@ enum {
 #define LEVEL_7_LOCK_STATE_KEY          "_key_level_7_lock_state"
 #define ADS_LOCK_STATE_KEY              "_key_ads_lock_state"
 
-#define USER_CURRENT_COINS              "_key_user_current_coins_v"
-#define USER_CURRENT_SUPPLY_NO          "_key_user_current_supply_no"
+
 
 #define SHOP_ITEM_10_COINS_KEY          "shop_item_10_coins"
 #define SHOP_ITEM_60_COINS_KEY          "shop_item_60_coins"
@@ -148,6 +147,12 @@ enum {
 #define SHOP_ITME_VALUE_200COINS        200
 #define SHOP_ITME_VALUE_680COINS        680
 #define SHOP_ITME_VALUE_1480COINS       1480
+
+#define USER_CURRENT_COINS              "_key_user_current_coins_v"
+#define USER_CURRENT_SUPPLY_NO          "_key_user_current_supply_no"
+#define USER_DEFAULT_COINS_ONFIRST      30
+#define USER_DEFAULT_SUPPLYNO_ONFIRST   3
+
 
 #define FACEBOOK_INFO_USER_AVATAR_KEY     "_key_facebook_avatar_id"
 #define FACEBOOK_INFO_USER_FB_BASIC       "_key_facebook_user_name"

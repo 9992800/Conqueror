@@ -334,7 +334,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         auto coins_back = Sprite::create("level/coind_back.png");
         Vec2 coins_back_pos = Vec2(coins_pos.x - 60, coins_pos.y);
         coins_back->setPosition(coins_back_pos);
-        _coinsNum = 100;//查询消费记录 apple
+        _coinsNum = UserDefault::getInstance() ->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
         auto coins_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/arial.ttf", 24);//
         coins_back->addChild(coins_label);
         coins_label->setPosition(coins_back->getContentSize() / 2);
@@ -358,7 +358,8 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         auto dices_back = Sprite::create("level/coind_back.png");
         Vec2 dices_back_pos = Vec2(dices_pos.x - 60, dices_pos.y);
         dices_back->setPosition(dices_back_pos);
-        _dicesNum = 100;//查询消费记录 apple
+        _dicesNum = UserDefault::getInstance() ->getIntegerForKey(USER_CURRENT_SUPPLY_NO,
+                                                                  USER_DEFAULT_SUPPLYNO_ONFIRST);
         auto dices_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/arial.ttf", 24);//
         dices_back->addChild(dices_label);
         dices_label->setPosition(dices_back->getContentSize() / 2);

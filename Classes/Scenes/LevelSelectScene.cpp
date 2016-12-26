@@ -620,5 +620,9 @@ void LevelSelect::onExit(){
         auto back_layer = this->getChildByTag(kMainMenuBackTag);
         auto the_wall = back_layer->getChildByTag(kMenuGreatWallTag);
         the_wall->removeAllChildren();
+        
+        UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_COINS, _coinsNum);
+        UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _dicesNum);
+        UserDefault::getInstance()->flush();
 }
 

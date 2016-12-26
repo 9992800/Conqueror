@@ -32,7 +32,8 @@ enum{
         key_roll_show_tag,
         key_operate_board_tag_l,
         key_operate_board_tag_m,
-        key_operate_board_tag_r
+        key_operate_board_tag_r,
+        key_supply_turn_counter_tag
 };
 
 
@@ -208,12 +209,19 @@ void GameScene::initOperateBoard(){
                                          operat_board_r->getContentSize().height * 0.6));
         operat_board->addChild(operat_board_r, 1);
         
-        _addtionalSupplyTimes = ADDTIONAL_SUPPLY_TIME_PER_GAME;
+        _addtionalSupplyCounter = 0;
         _addArmyBtn = cocos2d::ui::Button::create("maps/addtion_supply_arm.png",
                                                   "maps/addtion_supply_arm.png",
                                                   "maps/supply_finished.png");
         _addArmyBtn->setPosition(operat_board_r->getContentSize() / 2);
         _addArmyBtn->addClickEventListener(CC_CALLBACK_1(GameScene::menuAddArmy, this));
+        auto counter = Label::createWithSystemFont("0", "fonts/arial.ttf", 48);
+        counter->setIgnoreAnchorPointForPosition(false);
+        counter->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        counter->setPosition(_addArmyBtn->getContentSize() / 2);
+        counter->setColor(Color3B::ORANGE);
+        _addArmyBtn->addChild(counter, 1, key_supply_turn_counter_tag);
+        counter->setVisible(false);
         operat_board_r->addChild(_addArmyBtn);
        
         
@@ -641,9 +649,10 @@ void GameScene::tryAgain(){
         this->initAreaTcShow();
         
         _gameStatus = GAME_STATUS_AIRUNNING;
-        _addtionalSupplyTimes = ADDTIONAL_SUPPLY_TIME_PER_GAME;
+        _addtionalSupplyCounter = 0;
         _addArmyBtn->setEnabled(true);
         _addArmyBtn->setBright(true);
+        _addArmyBtn->getChildByTag(key_supply_turn_counter_tag)->setVisible(false);
         _diceResultLayer->setVisible(false);
         this->gameAction();
 }
@@ -1157,9 +1166,24 @@ void GameScene::menuEndTurn(Ref* pSender){
                 
                 _afterSupplyCallback = CallFunc::create(std::bind(&GameScene::afterSupply, this));
                 _afterSupplyCallback->retain();
+                
                 this->playSupplyAnimation();
                 
         });
+        
+        _addtionalSupplyCounter--;
+        Label* counter_lab = (Label*)_addArmyBtn->getChildByTag(key_supply_turn_counter_tag);
+        
+        if (_addtionalSupplyCounter == 0){
+                _addArmyBtn->setEnabled(true);
+                _addArmyBtn->setBright(true);
+                counter_lab->setVisible(false);
+        }else{
+                
+                counter_lab->setString(StringUtils::format("%d", _addtionalSupplyCounter));
+        }
+        
+        
         _mapLayer->runAction(Sequence::create(scale, callback_1, NULL));
 }
 
@@ -1252,7 +1276,7 @@ void GameScene::menuAnimSwitch(Ref* btn){
 
 void GameScene::menuAddArmy(Ref* btn){
         if (GAME_STATUS_INUSERTURN != _gameStatus
-            ||_addtionalSupplyTimes-- <= 0){
+            ||_addtionalSupplyCounter > 0){
                 return;
         }
         _isPalyingAnim = true;
@@ -1266,17 +1290,23 @@ void GameScene::menuAddArmy(Ref* btn){
         auto scale = ScaleTo::create(0.8, 0.6f);
         btn_anim->runAction(Sequence::create( Spawn::create(move, scale, NULL),
                                     CallFunc::create( [this, btn_anim](){
+                
                 btn_anim->removeFromParentAndCleanup(true);
-                if (_addtionalSupplyTimes <= 0){
-                        _addArmyBtn->setEnabled(false);
-                        _addArmyBtn->setBright(false);
-                }
+                _addArmyBtn->setEnabled(false);
+                _addArmyBtn->setBright(false);
+                Label* counter_lab = (Label*)_addArmyBtn->getChildByTag(key_supply_turn_counter_tag);
+                _addtionalSupplyCounter = TURN_INTERVAL_FOR_SUPPLEMENTS;
+                counter_lab->setString(StringUtils::format("%d", TURN_INTERVAL_FOR_SUPPLEMENTS));
+                counter_lab->setVisible(true);
 
                 this->refreshSupplyDiceNum();
                 _isPalyingAnim = false;
                 auto scale_s = ScaleTo::create(0.3, 1.4f);
                 auto scale_s_r = ScaleTo::create(0.3, 1.0f);
-                _curPlayerSupFlag->runAction(Sequence::create(scale_s, scale_s_r, NULL));
+                auto seq = Sequence::create(scale_s, scale_s_r, NULL);
+                _curPlayerSupFlag->runAction(seq);
+                _curInTurnBack->runAction(seq->clone());
+                
         }), NULL));
 }
 
@@ -1314,4 +1344,25 @@ void GameScene::onInviteFriendsResult(bool, const std::string&){
 }
 void GameScene::onGetUserInfo(const sdkbox::FBGraphUser&){
         
+}
+
+#pragma mark - on screen show and disapear
+
+void GameScene::onEnter(){
+        Layer::onEnter();
+        auto cache = UserDefault::getInstance();
+        _curCoinsNo     = cache->getIntegerForKey(USER_CURRENT_COINS, 0);
+        _curSupplyNo    = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO, 0);
+}
+
+void GameScene::update(float delta){
+}
+
+
+void GameScene::onExit(){
+        Layer::onExit();
+        auto cache = UserDefault::getInstance();
+        cache->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNo);
+        cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curSupplyNo);
+        cache->flush();
 }

@@ -235,13 +235,13 @@ enum {
 
 #define USER_DEVICE_UUID        "user_device_uuid"
 
-#define TC_VALUE_ONE_SUPPLY (8)
-#define ADDTIONAL_SUPPLY_TIME_PER_GAME (2)
-
-
 
 #define SUPER_LAYER_PRIVILIEGE 10000
 #define MODAL_DIALOG_NODETAG 10000
 #define COMMON_TIPS_NODETAG 10001
+
+
+#define TURN_INTERVAL_FOR_SUPPLEMENTS   (4)
+#define TC_VALUE_ONE_SUPPLY (8)
 
 #endif /* __APPMACROS_H__ */

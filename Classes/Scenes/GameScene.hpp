@@ -85,6 +85,10 @@ protected:
         void onInviteFriendsResult(bool, const std::string&)override;
         void onGetUserInfo(const sdkbox::FBGraphUser&)override;
         
+        void onEnter() override;
+        void update(float delta)override;
+        virtual void onExit()override;
+        
 private:
         static int      _playerNumber, _charactorIdx, _colorIdx;
         Layer*          _controlLayer;
@@ -105,11 +109,12 @@ private:
         LayerColor      *_mapLayer;
         Rect            _minFrameShow, _maxFrameShow;
         cocos2d::ui::Button*         _animCtlBtn, *_addArmyBtn;
-        int             _addtionalSupplyTimes;
+        int             _addtionalSupplyCounter;
         Sprite*         _curPlayerSupFlag, *_curInTurnBack;
         FightResultData* _attackResult;
         CallFunc*       _afterBattleCallback, *_afterSupplyCallback;
         Layer           *_winDialogLayer, *_lostDialogLayer;
+        int             _curCoinsNo, _curSupplyNo;
 };
 
 

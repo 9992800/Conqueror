@@ -11,6 +11,8 @@
 #include "AppMacros.hpp"
 #include "cocos2d.h"
 #include "ui/UIScale9Sprite.h"
+#include "ui/CocosGUI.h"
+
 USING_NS_CC;
 
 class CommonTipsDialog: public Layer{

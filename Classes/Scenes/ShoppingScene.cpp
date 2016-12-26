@@ -226,13 +226,25 @@ void Shopping::onProductRequestSuccess(const std::vector<Product>& products){
         _productsMap.clear();
         for (int i=0; i < products.size(); i++){
                 CCLOG("IAP: ========= IAP Item =========");
-                CCLOG("IAP: Name: %s", products[i].name.c_str());
-                CCLOG("IAP: ID: %s", products[i].id.c_str());
-                CCLOG("IAP: Title: %s", products[i].title.c_str());
-                CCLOG("IAP: Desc: %s", products[i].description.c_str());
-                CCLOG("IAP: Price: %s", products[i].price.c_str());
-                CCLOG("IAP: Price Value: %f", products[i].priceValue);
-                _productsMap.insert(std::pair<std::string, Product>(products[i].id, products[i]));
+                Product p = products[i];
+                std::string id =  p.id;
+                CCLOG("IAP: Name: %s", p.name.c_str());
+                CCLOG("IAP: ID: %s",  id.c_str());
+                CCLOG("IAP: Title: %s", p.title.c_str());
+                CCLOG("IAP: Desc: %s", p.description.c_str());
+                CCLOG("IAP: Price: %s", p.price.c_str());
+                CCLOG("IAP: Price Value: %f", p.priceValue);
+                _productsMap.insert(std::pair<std::string, Product>(id, p));
+                
+                std::map<std::string, Label*>::iterator it = _productTitleMap.find(id);
+                if (it != _productTitleMap.end()){
+                        auto title = it->second;
+                        auto price = _productPriceMap.find(id)->second;
+                        
+                        title->setString(p.title);
+                        price->setString(p.price);
+                }
+                
         }
 }
 

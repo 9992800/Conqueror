@@ -189,7 +189,32 @@ void Shopping::buyItems(Ref*, std::string product_id){
 #pragma mark - payment callback
 void Shopping::onSuccess(const Product& p){
         
+        auto cache = UserDefault::getInstance();
+        int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS);
+        
+        if (p.id == SHOP_ITEM_ID_10COINS_KEY){
+                cur_coins += SHOP_ITME_VALUE_10COINS;
+                
+        }else if(p.id == SHOP_ITEM_ID_60COINS_KEY){
+                cur_coins += SHOP_ITME_VALUE_60COINS;
+                
+        }else if(p.id == SHOP_ITEM_ID_200COINS_KEY){
+                cur_coins += SHOP_ITME_VALUE_200COINS;
+                
+        }else if(p.id == SHOP_ITEM_ID_680COINS_KEY){
+                cur_coins += SHOP_ITME_VALUE_680COINS;
+                
+        }else if(p.id == SHOP_ITEM_ID_1480COINS_KEY){
+                cur_coins += SHOP_ITME_VALUE_1480COINS;
+                
+        }else{
+                return;
+        }
+        
+        cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
+        cache->flush();
 }
+
 void Shopping::onFailure(const Product& p, const std::string& msg){
         CCLOG("Purchase Failed: %s", msg.c_str());
 }

@@ -143,6 +143,11 @@ enum {
 #define SHOP_ITEM_ID_680COINS_KEY       "com.bellflower.Conqueror.coins_680"
 #define SHOP_ITEM_ID_1480COINS_KEY      "com.bellflower.Conqueror.coins_1480"
 
+#define SHOP_ITME_VALUE_10COINS         10
+#define SHOP_ITME_VALUE_60COINS         60
+#define SHOP_ITME_VALUE_200COINS        200
+#define SHOP_ITME_VALUE_680COINS        680
+#define SHOP_ITME_VALUE_1480COINS       1480
 
 #define FACEBOOK_INFO_USER_AVATAR_KEY     "_key_facebook_avatar_id"
 #define FACEBOOK_INFO_USER_FB_BASIC       "_key_facebook_user_name"

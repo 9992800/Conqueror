@@ -32,35 +32,158 @@ bool Shopping::init(){
         return_btn->addClickEventListener([](Ref*){
                 Director::getInstance()->popScene();
         });
-        return_btn->setTitleText("返回");
+        return_btn->setTitleText("Return");
         return_btn->setTitleFontName("fonts/arial.ttf");
-        return_btn->setTitleFontSize(28);
+        return_btn->setTitleFontSize(16);
         return_btn->setScale(1.4f);
         back_ground->addChild(return_btn);
         
+        
+        //6yuan coins
         auto coins_item_10 = cocos2d::ui::Button::create("shopping/shop_item_10.png");
         auto item_size = coins_item_10->getContentSize();
-        coins_item_10->setPosition(Vec2(item_size.width * 0.6, back_ground_size.height * 0.5 + item_size.height * 0.6));
+        coins_item_10->setPosition(Vec2(item_size.width * 0.6, back_ground_size.height * 0.5 + item_size.height * 0.55));
         coins_item_10->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_10_COINS_KEY));
         back_ground->addChild(coins_item_10);
         
-        auto item_title = Label::createWithSystemFont("首充礼包", "fonts/arial.ttf", 24);
-        item_title->setPosition(item_size.width *.03, item_size.height * 0.5);
-        coins_item_10->addChild(item_title);
+        auto item_title_10 = Label::createWithSystemFont("首充礼包", "fonts/arial.ttf", 24);
+        item_title_10->setIgnoreAnchorPointForPosition(false);
+        item_title_10->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        item_title_10->setSystemFontSize(28);
+        item_title_10->setPosition(item_size.width * 0.3f, item_size.height * 0.4);
+        coins_item_10->addChild(item_title_10);
         _productTitleMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_10COINS_KEY,
-                                                               item_title));
+                                                               item_title_10));
         
-        auto item_price = Label::createWithSystemFont("6元", "fonts/arial.ttf", 24);
-        item_price->setPosition(item_size.width *.05, item_size.height * 0.1);
-        coins_item_10->addChild(item_price);
+        auto item_price_10 = Label::createWithSystemFont("6元", "fonts/arial.ttf", 24);
+        item_price_10->setPosition(item_size.width * 0.5f, item_size.height * 0.15);
+        item_price_10->setIgnoreAnchorPointForPosition(false);
+        item_price_10->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        item_price_10->setSystemFontSize(46);
+        item_price_10->setTextColor(Color4B::BLACK);
+        coins_item_10->addChild(item_price_10);
         _productPriceMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_10COINS_KEY,
-                                                               item_price));
+                                                               item_price_10));
+        
+        
+        
+        //90yuan coins
+        auto coins_item_200 = cocos2d::ui::Button::create("shopping/shop_item_200.png");
+        coins_item_200->setPosition(Vec2(coins_item_10->getPosition().x,
+                                        back_ground_size.height * 0.5 - item_size.height * 0.55));
+        
+        coins_item_200->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_ID_200COINS_KEY));
+        back_ground->addChild(coins_item_200);
+        
+        auto item_title_200 = Label::createWithSystemFont("送50金币", "fonts/arial.ttf", 24);
+        item_title_200->setIgnoreAnchorPointForPosition(false);
+        item_title_200->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        item_title_200->setSystemFontSize(28);
+        item_title_200->setPosition(item_size.width * 0.3f, item_size.height * 0.4);
+        coins_item_200->addChild(item_title_200);
+        _productTitleMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_200COINS_KEY,
+                                                               item_title_200));
+        
+        auto item_price_200 = Label::createWithSystemFont("90元", "fonts/arial.ttf", 24);
+        item_price_200->setPosition(item_size.width * 0.5f, item_size.height * 0.15);
+        item_price_200->setIgnoreAnchorPointForPosition(false);
+        item_price_200->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        item_price_200->setSystemFontSize(46);
+        item_price_200->setTextColor(Color4B::BLACK);
+        coins_item_200->addChild(item_price_200);
+        _productPriceMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_200COINS_KEY,
+                                                               item_price_200));
+        
+        
+        //30yuan coins
+        auto coins_item_60 = cocos2d::ui::Button::create("shopping/shop_item_60.png");
+        coins_item_60->setPosition(Vec2(item_size.width * 1.7, coins_item_10->getPosition().y));
+        
+        coins_item_60->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_ID_60COINS_KEY));
+        back_ground->addChild(coins_item_60);
+        
+        auto item_title_60 = Label::createWithSystemFont("送10金币", "fonts/arial.ttf", 24);
+        item_title_60->setIgnoreAnchorPointForPosition(false);
+        item_title_60->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        item_title_60->setSystemFontSize(28);
+        item_title_60->setPosition(item_size.width * 0.3f, item_size.height * 0.4);
+        coins_item_60->addChild(item_title_60);
+        _productTitleMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_60COINS_KEY,
+                                                               item_title_60));
+        
+        auto item_price_60 = Label::createWithSystemFont("30元", "fonts/arial.ttf", 24);
+        item_price_60->setPosition(item_size.width * 0.5f, item_size.height * 0.15);
+        item_price_60->setIgnoreAnchorPointForPosition(false);
+        item_price_60->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        item_price_60->setSystemFontSize(46);
+        item_price_60->setTextColor(Color4B::BLACK);
+        coins_item_60->addChild(item_price_60);
+        _productPriceMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_60COINS_KEY,
+                                                               item_price_60));
+        
+        
+        //300yuan coins
+        auto coins_item_680 = cocos2d::ui::Button::create("shopping/shop_item_680.png");
+        coins_item_680->setPosition(Vec2(coins_item_60->getPosition().x,
+                                         coins_item_200->getPosition().y));
+        
+        coins_item_680->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_ID_680COINS_KEY));
+        back_ground->addChild(coins_item_680);
+        
+        auto item_title_680 = Label::createWithSystemFont("送180金币", "fonts/arial.ttf", 24);
+        item_title_680->setIgnoreAnchorPointForPosition(false);
+        item_title_680->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        item_title_680->setSystemFontSize(28);
+        item_title_680->setPosition(item_size.width * 0.3f, item_size.height * 0.4);
+        coins_item_680->addChild(item_title_680);
+        _productTitleMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_680COINS_KEY,
+                                                               item_title_680));
+        
+        auto item_price_680 = Label::createWithSystemFont("300元", "fonts/arial.ttf", 24);
+        item_price_680->setPosition(item_size.width * 0.5f, item_size.height * 0.15);
+        item_price_680->setIgnoreAnchorPointForPosition(false);
+        item_price_680->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        item_price_680->setSystemFontSize(46);
+        item_price_680->setTextColor(Color4B::BLACK);
+        coins_item_680->addChild(item_price_680);
+        _productPriceMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_680COINS_KEY,
+                                                               item_price_680));
+        
+        
+        
+        //600yuan coins
+        auto coins_item_1480 = cocos2d::ui::Button::create("shopping/shop_item_1480.png");
+        coins_item_1480->setPosition(Vec2(item_size.width * 2.2 + coins_item_1480->getContentSize().width * 0.5f, back_ground_size.height * 0.5f));
+        
+        coins_item_1480->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_ID_1480COINS_KEY));
+        back_ground->addChild(coins_item_1480);
+        auto item_size_big = coins_item_1480->getContentSize();
+        auto item_title_1480 = Label::createWithSystemFont("送480金币", "fonts/arial.ttf", 24);
+        item_title_1480->setIgnoreAnchorPointForPosition(false);
+        item_title_1480->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        item_title_1480->setSystemFontSize(36);
+        item_title_1480->setPosition(item_size_big.width * 0.3f, item_size_big.height * 0.4);
+        coins_item_1480->addChild(item_title_1480);
+        _productTitleMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_1480COINS_KEY,
+                                                               item_title_1480));
+        
+        auto item_price_1480 = Label::createWithSystemFont("600元", "fonts/arial.ttf", 24);
+        item_price_1480->setPosition(item_size_big.width * 0.5f, item_size_big.height * 0.15);
+        item_price_1480->setIgnoreAnchorPointForPosition(false);
+        item_price_1480->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        item_price_1480->setSystemFontSize(56);
+        item_price_1480->setTextColor(Color4B::BLACK);
+        coins_item_1480->addChild(item_price_1480);
+        _productPriceMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_1480COINS_KEY,
+                                                               item_price_1480));
+        
         return true;
 }
 
 #pragma mark - shop function
-void Shopping::buyItems(Ref*, std::string product_name){
-        IAP::purchase(product_name);
+void Shopping::buyItems(Ref*, std::string product_id){
+        Product p = _productsMap.find(product_id)->second;
+        IAP::purchase(p.name);
 }
 
 #pragma mark - payment callback

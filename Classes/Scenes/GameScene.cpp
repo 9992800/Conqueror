@@ -612,9 +612,7 @@ void GameScene::onTouchesEnded(const std::vector<Touch*>& touches, Event *event)
                 return;
         }
         _attackResult = _theGameLogic->startPlayerAttack(cell_id);
-        if (nullptr != _attackResult){
-                
-                
+        if (nullptr != _attackResult){                 
                 _afterBattleCallback = CallFunc::create(std::bind(&GameScene::afterPlayerBattle, this));
                 _attackResult->retain();
                 _afterBattleCallback->retain();
@@ -1062,7 +1060,6 @@ void GameScene::playSupplyAnimation2(GamePlayer* player){
         std::map<AreaData*, int> supply_data = _theGameLogic->starSupplyDice(player);
         if (supply_data.size() == 0){
                 _afterSupplyCallback->execute();
-                _afterSupplyCallback->release();
                 return;
         }
         

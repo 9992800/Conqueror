@@ -1279,6 +1279,32 @@ void GameScene::menuAddArmy(Ref* btn){
             ||_addtionalSupplyCounter > 0){
                 return;
         }
+        if (_curSupplyNo <= 0){
+                if (_curCoinsNo < PRICE_PER_SUPPLEMENT){
+                        std::string tips = StringUtils::format("提示：很抱歉...您当前拥有的金币数(%d)不够兑换一次补兵令了(补兵需要金币:%d)。您可以通过：攻打更多人数关卡，活动礼包，分享或者从商店充值来获得更多量的金币。",  _curCoinsNo,
+                                                               PRICE_PER_SUPPLEMENT
+                                                               );
+                        CommonTipsDialog::showModalDialog((Node*)this, tips);
+                        return;
+                }else{
+                        std::string tips = StringUtils::format("提示：您的补兵数量已用完，需要再次兑换补兵令来补充兵力。%d金币可以兑换一次补兵令。您是否愿意用%d金币兑换补兵令1个。您当前金币数:%d",
+                                                               PRICE_PER_SUPPLEMENT,
+                                                               PRICE_PER_SUPPLEMENT,
+                                                               _curCoinsNo);
+                        
+                        CommonTipsDialog::showModalDialog((Node*)this, tips, [this](Ref* sender){
+                                CommonTipsDialog::dismissDialog(this);
+                                _curCoinsNo -= PRICE_PER_SUPPLEMENT;
+                                UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNo);
+                                UserDefault::getInstance()->flush();
+                        });
+                }
+        }else{
+                _curSupplyNo--;
+                UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curSupplyNo);
+                UserDefault::getInstance()->flush();
+        }
+        
         _isPalyingAnim = true;
         auto btn_anim = _addArmyBtn->clone();
         _curGameData->_player[_curGameData->_userId]->addMoreSupply();

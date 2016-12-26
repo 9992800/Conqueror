@@ -142,17 +142,20 @@ enum {
 #define SHOP_ITEM_ID_680COINS_KEY       "com.bellflower.Conqueror.coins_680"
 #define SHOP_ITEM_ID_1480COINS_KEY      "com.bellflower.Conqueror.coins_1480"
 
-#define SHOP_ITME_VALUE_10COINS         10
-#define SHOP_ITME_VALUE_60COINS         60
-#define SHOP_ITME_VALUE_200COINS        200
-#define SHOP_ITME_VALUE_680COINS        680
-#define SHOP_ITME_VALUE_1480COINS       1480
+#define SHOP_ITME_VALUE_10COINS         (10)
+#define SHOP_ITME_VALUE_60COINS         (60)
+#define SHOP_ITME_VALUE_200COINS        (200)
+#define SHOP_ITME_VALUE_680COINS        (680)
+#define SHOP_ITME_VALUE_1480COINS       (1480)
 
 #define USER_CURRENT_COINS              "_key_user_current_coins_v"
 #define USER_CURRENT_SUPPLY_NO          "_key_user_current_supply_no"
-#define USER_DEFAULT_COINS_ONFIRST      30
-#define USER_DEFAULT_SUPPLYNO_ONFIRST   3
 
+#define USER_DEFAULT_COINS_ONFIRST      (30)
+#define USER_DEFAULT_SUPPLYNO_ONFIRST   (3)
+#define TURN_INTERVAL_FOR_SUPPLEMENTS   (4)
+#define TC_VALUE_ONE_SUPPLY             (8)
+#define PRICE_PER_SUPPLEMENT            (10)
 
 #define FACEBOOK_INFO_USER_AVATAR_KEY     "_key_facebook_avatar_id"
 #define FACEBOOK_INFO_USER_FB_BASIC       "_key_facebook_user_name"
@@ -239,9 +242,5 @@ enum {
 #define SUPER_LAYER_PRIVILIEGE 10000
 #define MODAL_DIALOG_NODETAG 10000
 #define COMMON_TIPS_NODETAG 10001
-
-
-#define TURN_INTERVAL_FOR_SUPPLEMENTS   (4)
-#define TC_VALUE_ONE_SUPPLY (8)
 
 #endif /* __APPMACROS_H__ */

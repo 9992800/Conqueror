@@ -113,7 +113,7 @@ bool CommonTipsDialog::init(){
         content->setHorizontalAlignment(TextHAlignment::LEFT);
         content->setColor(Color3B::BLACK);
         content->setPosition(Vec2(content_back_size.width * 0.05,
-                                    content->getContentSize().height  * .5f));
+                                    content->getContentSize().height  * .95f));
         content_back->addChild(content);
         
         this->addChild(_tipsBack);

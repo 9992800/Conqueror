@@ -23,6 +23,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/Scenes/StartingScene.cpp \
                    ../../../Classes/Scenes/LevelSelectScene.cpp \
                    ../../../Classes/Scenes/ReplayLastScene.cpp \
+                   ../../../Classes/Scenes/ShoppingScene.cpp \
                    ../../../Classes/Scenes/GameScene.cpp \
                    ../../../Classes/RandomMap/RandomMap.cpp \
                    ../../../Classes/RandomMap/ScreenCoordinate.cpp \
@@ -42,6 +43,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/Common/PopUpOkDialog.cpp \
                    ../../../Classes/Common/WebSocktUtil.cpp \
                    ../../../Classes/Common/ModalDialog.cpp \
+                   ../../../Classes/Common/CommonTipsDialog.cpp \
                    ../../../Classes/Network/FindPlayerScene.cpp \
                    ../../../Classes/Network/BattleFieldScene.cpp \
                    ../../../Classes/Network/UserSessionBean.cpp \

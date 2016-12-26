@@ -1,19 +1,14 @@
 TODO：：
-1，新手指引
-2，主界面控制按钮：动画，速度，返回，下一轮，显示下一轮能获得的兵力
-3，显示补兵的动画，最多补兵64
-4,色子显示结果的图片，
-5，分享事宜，分享界面内容确定，分享按钮的确定。
-6，购买内容，金币数据，产品内容
-7，关卡选择界面的内容设定
-8，历史回放按钮位置和设计
-9,关卡胜利和失败的界面。
-10，其他人物的设计及动画制作
-11，各个界面上的控制按钮
-12，分享测试
-13，付费测试
-14，安卓界面视频，分享和支付适配。
-
-
----------------------------------------------------------
-1:
+1，test the shopping things 
+2，show the changes after buy coins.
+3，logo icon
+4, sounds ,share logic ,share pictures
+5，system settings.screen and logic
+6，achievements datas and value.
+7，screen to buy supplement using coins.
+8，supply logic
+9, other charactors and their animations.
+10, modify common tips dialog content position.
+bugs
+--------------------------------------------------------- 
+2:sounds bugs.:AQDefaultDevice (173): skipping input stream 0 0 0x0

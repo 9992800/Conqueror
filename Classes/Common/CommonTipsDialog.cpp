@@ -9,19 +9,26 @@
 #include "ui/CocosGUI.h"
 #include "CommonTipsDialog.hpp"
 
-void CommonTipsDialog::showModalDialog(cocos2d::Node *parent, std::string text, ui::AbstractCheckButton::ccWidgetClickCallback okCallBack){
+CommonTipsDialog* CommonTipsDialog::showModalDialog(cocos2d::Node *parent, std::string text, ui::AbstractCheckButton::ccWidgetClickCallback okCallBack){
         if (!parent)
-                return;
+                return nullptr;
         
         Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(parent, true);
         
         Director::getInstance()->pause();
         auto tips = CommonTipsDialog::create(text);
         tips->initWithCallback(okCallBack);
-        parent->addChild(tips, PRIVILIEGE, NODETAG);
+        parent->addChild(tips, SUPER_LAYER_PRIVILIEGE, COMMON_TIPS_NODETAG);
+        return tips;
 }
 
-void CommonTipsDialog::dismissDialog(){
+void CommonTipsDialog::dismissDialog(cocos2d::Node *parent){
+        auto tips = parent->getChildByTag(COMMON_TIPS_NODETAG);
+        if (!tips) return;
+        ((CommonTipsDialog*)tips)->dismiss();
+}
+
+void CommonTipsDialog::dismiss(){
         auto  parent = this->getParent();
         if (!parent) return;
         
@@ -40,7 +47,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
                 ok_button->setTitleFontSize(28);
                 ok_button->setTitleColor(Color3B::BLACK);
                 ok_button->setTitleFontName("fonts/arial.ttf");
-                ok_button->addClickEventListener(CC_CALLBACK_0(CommonTipsDialog::dismissDialog, this));
+                ok_button->addClickEventListener(CC_CALLBACK_0(CommonTipsDialog::dismiss, this));
                 
                 _tipsBack->addChild(ok_button);
         }else{
@@ -52,7 +59,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
                 cancel_button->setTitleFontSize(28);
                 cancel_button->setTitleColor(Color3B::BLACK);
                 cancel_button->setTitleFontName("fonts/arial.ttf");
-                cancel_button->addClickEventListener(CC_CALLBACK_0(CommonTipsDialog::dismissDialog, this));
+                cancel_button->addClickEventListener(CC_CALLBACK_0(CommonTipsDialog::dismiss, this));
                 
                 _tipsBack->addChild(cancel_button);
                 

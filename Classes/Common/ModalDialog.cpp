@@ -71,10 +71,10 @@ void ModalLayer::showModalDialog(Node* parent){
         
         Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(parent, true);
         auto tips = ModalLayer::create();
-        parent->addChild(tips, PRIVILIEGE, NODETAG);
+        parent->addChild(tips, SUPER_LAYER_PRIVILIEGE, MODAL_DIALOG_NODETAG);
 }
 void ModalLayer::dismissDialog(Node* parent){
-        auto tips = parent->getChildByTag(NODETAG);
+        auto tips = parent->getChildByTag(MODAL_DIALOG_NODETAG);
         if (!tips) return;
         
         tips->removeFromParent();

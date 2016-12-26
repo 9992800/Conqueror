@@ -15,8 +15,9 @@ USING_NS_CC;
 
 class CommonTipsDialog: public Layer{
 public:
-        static void showModalDialog(Node* parent, std::string, ui::AbstractCheckButton::ccWidgetClickCallback = nullptr);
-        void dismissDialog();
+        static CommonTipsDialog* showModalDialog(Node* parent, std::string, ui::AbstractCheckButton::ccWidgetClickCallback = nullptr);
+        static void dismissDialog(Node* parent);
+        void dismiss();
         CREATE_FUNC2(CommonTipsDialog, std::string, text);
         virtual bool init()override;
         bool initWithCallback(ui::AbstractCheckButton::ccWidgetClickCallback);

@@ -440,7 +440,7 @@ void GameScene::initDialog(){
         auto btn_pos = replay_btn->getPosition();
         auto btn_size = replay_btn->getContentSize();
         game_win_back->addChild(replay_btn);
-        replay_btn->setTitleText("重玩");
+        replay_btn->setTitleText("Replay");
         replay_btn->setTitleFontSize(28);
         replay_btn->setTitleFontName("fonts/arial.ttf");
         replay_btn->setTitleColor(Color3B::BLACK);
@@ -449,7 +449,7 @@ void GameScene::initDialog(){
         auto share_btn = (ui::Button*)replay_btn->clone();
         share_btn->setPosition(Vec2(btn_pos.x - 2.5f * btn_size.width, btn_pos.y));
         game_win_back->addChild(share_btn);
-        share_btn->setTitleText("分享");
+        share_btn->setTitleText("Share");
         share_btn->setTitleFontSize(28);
         share_btn->setTitleFontName("fonts/arial.ttf");
         share_btn->setTitleColor(Color3B::BLACK);
@@ -458,7 +458,7 @@ void GameScene::initDialog(){
         auto return_btn = (ui::Button*)replay_btn->clone();
         return_btn->setPosition(Vec2(btn_pos.x + 2.5f * btn_size.width, btn_pos.y));
         game_win_back->addChild(return_btn);
-        return_btn->setTitleText("返回");
+        return_btn->setTitleText("Back");
         return_btn->setTitleFontSize(28);
         return_btn->setTitleColor(Color3B::BLACK);
         return_btn->setTitleFontName("fonts/arial.ttf");
@@ -656,6 +656,7 @@ void GameScene::afterPlayerBattle(){
         if (survival.size() == 1){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_WIN);
                 Director::getInstance()->pause();
+                Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(this, true);
                 this->addChild(_winDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
                 return;
         }
@@ -681,6 +682,7 @@ void GameScene::afterRobootBattle(){
         if (0 == user_tc){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_LOSE);
                 Director::getInstance()->pause();
+                Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(this, true);
                 this->addChild(_lostDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
                 return;
         }
@@ -1192,6 +1194,7 @@ void GameScene::gameOver(Ref* btn, int result){
         }
         
         Director::getInstance()->resume();
+        Director::getInstance()->getEventDispatcher()->resumeEventListenersForTarget(this, true);
 }
 
 void GameScene::afterCaptureScreen(bool yes, const std::string &outputFilename)

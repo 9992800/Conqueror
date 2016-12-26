@@ -123,18 +123,25 @@ enum {
 #define USER_CURRENT_COINS              "_key_user_current_coins_v"
 #define USER_CURRENT_SUPPLY_NO          "_key_user_current_supply_no"
 
-#define LEVEL_2_PRODUCT_NAME_KEY        "open_level2"
-#define LEVEL_3_PRODUCT_NAME_KEY        "open_level3"
-#define LEVEL_4_PRODUCT_NAME_KEY        "open_level4"
-#define LEVEL_5_PRODUCT_NAME_KEY        "open_level5"
-#define LEVEL_6_PRODUCT_NAME_KEY        "open_level6"
-#define LEVEL_7_PRODUCT_NAME_KEY        "open_level7"
-#define REMOVE_ADS_PRODUCT_NAME_KEY     "remove_ads"
 #define SHOP_ITEM_10_COINS_KEY          "shop_item_10_coins"
 #define SHOP_ITEM_60_COINS_KEY          "shop_item_60_coins"
 #define SHOP_ITEM_200_COINS_KEY         "shop_item_200_coins"
 #define SHOP_ITEM_680_COINS_KEY         "shop_item_680_coins"
 #define SHOP_ITEM_1480_COINS_KEY        "shop_item_1480_coins"
+
+#define LEVEL_2_PRODUCT_ID_KEY          "com.bellflower.Conqueror.open_level2"
+#define LEVEL_3_PRODUCT_ID_KEY          "com.bellflower.Conqueror.open_level3"
+#define LEVEL_4_PRODUCT_ID_KEY          "com.bellflower.Conqueror.open_level4"
+#define LEVEL_5_PRODUCT_ID_KEY          "com.bellflower.Conqueror.open_level5"
+#define LEVEL_6_PRODUCT_ID_KEY          "com.bellflower.Conqueror.open_level6"
+#define LEVEL_7_PRODUCT_ID_KEY          "com.bellflower.Conqueror.open_level7"
+#define REMOVE_ADS_PRODUCT_ID_KEY       "com.bellflower.Conqueror.removeAds"
+
+#define SHOP_ITEM_ID_10COINS_KEY        "com.bellflower.Conqueror.coins_10"
+#define SHOP_ITEM_ID_60COINS_KEY        "com.bellflower.Conqueror.coins_60"
+#define SHOP_ITEM_ID_200COINS_KEY       "com.bellflower.Conqueror.coins_200"
+#define SHOP_ITEM_ID_680COINS_KEY       "com.bellflower.Conqueror.coins_680"
+#define SHOP_ITEM_ID_1480COINS_KEY      "com.bellflower.Conqueror.coins_1480"
 
 
 #define FACEBOOK_INFO_USER_AVATAR_KEY     "_key_facebook_avatar_id"

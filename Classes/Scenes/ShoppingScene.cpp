@@ -44,13 +44,17 @@ bool Shopping::init(){
         coins_item_10->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_10_COINS_KEY));
         back_ground->addChild(coins_item_10);
         
-        auto item_desc = Label::createWithSystemFont("送首充礼包!", "fonts/arial.ttf", 24);
-        item_desc->setPosition(item_size.width *.03, item_size.height * 0.5);
-        coins_item_10->addChild(item_desc);
+        auto item_title = Label::createWithSystemFont("首充礼包", "fonts/arial.ttf", 24);
+        item_title->setPosition(item_size.width *.03, item_size.height * 0.5);
+        coins_item_10->addChild(item_title);
+        _productTitleMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_10COINS_KEY,
+                                                               item_title));
         
         auto item_price = Label::createWithSystemFont("6元", "fonts/arial.ttf", 24);
         item_price->setPosition(item_size.width *.05, item_size.height * 0.1);
         coins_item_10->addChild(item_price);
+        _productPriceMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_10COINS_KEY,
+                                                               item_price));
         return true;
 }
 
@@ -80,7 +84,7 @@ void Shopping::onProductRequestSuccess(const std::vector<Product>& products){
                 CCLOG("IAP: Desc: %s", products[i].description.c_str());
                 CCLOG("IAP: Price: %s", products[i].price.c_str());
                 CCLOG("IAP: Price Value: %f", products[i].priceValue);
-                _productsMap.insert(std::pair<std::string, Product>(products[i].name, products[i]));
+                _productsMap.insert(std::pair<std::string, Product>(products[i].id, products[i]));
         }
 }
 

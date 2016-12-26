@@ -36,7 +36,27 @@
                 "open_level7": {
                     "type": "non_consumable", 
                     "id": "com.bellflower.Conqueror.open_level7"
-                }
+                },
+                    "coins_10": {
+                            "type": "consumable",
+                            "id": "com.bellflower.Conqueror.coins_10"
+                    },
+                    "coins_60": {
+                            "type": "consumable",
+                            "id": "com.bellflower.Conqueror.coins_60"
+                    },
+                    "coins_200": {
+                            "type": "consumable",
+                            "id": "com.bellflower.Conqueror.coins_200"
+                    },
+                    "coins_600": {
+                            "type": "consumable",
+                            "id": "com.bellflower.Conqueror.coins_600"
+                    },
+                    "coins_1480": {
+                            "type": "consumable",
+                            "id": "com.bellflower.Conqueror.coins_1480"
+                    }
             }
         }
     },
@@ -75,6 +95,26 @@
                 "open_level7": {
                         "type": "non_consumable", 
                         "id": "com.bellflower.Conqueror.open_level7"
+                },
+                "coins_10": {
+                        "type": "consumable",
+                        "id": "com.bellflower.Conqueror.coins_10"
+                },
+                "coins_60": {
+                        "type": "consumable",
+                        "id": "com.bellflower.Conqueror.coins_60"
+                },
+                "coins_200": {
+                        "type": "consumable",
+                        "id": "com.bellflower.Conqueror.coins_200"
+                },
+                "coins_600": {
+                        "type": "consumable",
+                        "id": "com.bellflower.Conqueror.coins_600"
+                },
+                "coins_1480": {
+                        "type": "consumable",
+                        "id": "com.bellflower.Conqueror.coins_1480"
                 }
             }
         }

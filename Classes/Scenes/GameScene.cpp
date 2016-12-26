@@ -1292,13 +1292,6 @@ void GameScene::menuAddArmy(Ref* btn){
                                     CallFunc::create( [this, btn_anim](){
                 
                 btn_anim->removeFromParentAndCleanup(true);
-                _addArmyBtn->setEnabled(false);
-                _addArmyBtn->setBright(false);
-                Label* counter_lab = (Label*)_addArmyBtn->getChildByTag(key_supply_turn_counter_tag);
-                _addtionalSupplyCounter = TURN_INTERVAL_FOR_SUPPLEMENTS;
-                counter_lab->setString(StringUtils::format("%d", TURN_INTERVAL_FOR_SUPPLEMENTS));
-                counter_lab->setVisible(true);
-
                 this->refreshSupplyDiceNum();
                 _isPalyingAnim = false;
                 auto scale_s = ScaleTo::create(0.3, 1.4f);
@@ -1308,6 +1301,13 @@ void GameScene::menuAddArmy(Ref* btn){
                 _curInTurnBack->runAction(seq->clone());
                 
         }), NULL));
+        
+        _addArmyBtn->setEnabled(false);
+        _addArmyBtn->setBright(false);
+        Label* counter_lab = (Label*)_addArmyBtn->getChildByTag(key_supply_turn_counter_tag);
+        _addtionalSupplyCounter = TURN_INTERVAL_FOR_SUPPLEMENTS;
+        counter_lab->setString(StringUtils::format("%d", TURN_INTERVAL_FOR_SUPPLEMENTS));
+        counter_lab->setVisible(true);
 }
 
 #pragma mark - facebook share delegate

@@ -64,7 +64,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
                 
                 
                 auto ok_button = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
-                ok_button->::CommonTipsDialog::setPosition(tips_back_size.width / 2 - ok_button->getContentSize().width, ok_button->getContentSize().height *1.5f);
+                ok_button->setPosition(Vec2(tips_back_size.width / 2 - ok_button->getContentSize().width, ok_button->getContentSize().height *1.5f));
                 ok_button->setTitleText("YES");
                 ok_button->setTitleFontSize(28);
                 ok_button->setTitleColor(Color3B::BLACK);

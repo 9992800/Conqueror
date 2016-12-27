@@ -18,7 +18,7 @@ bool Achievement::init() {
         auto visible_size = Director::getInstance()->getVisibleSize();
         
         
-        auto scene_back = Sprite::create("settings/system_setting_back.png");
+        auto scene_back = Sprite::create("shopping/shopping_back.png");
         scene_back->setPosition(visible_size / 2);
         auto scene_back_size = scene_back->getContentSize();
         this->addChild(scene_back);

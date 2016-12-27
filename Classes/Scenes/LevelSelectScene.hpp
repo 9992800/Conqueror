@@ -38,6 +38,7 @@ protected:
         void menuShowSettigns(Ref* btn);
         void menuGetMoreCoins(Ref* btn);
         void menuGetMoreDices(Ref* btn);
+        void menuShowAchievement(Ref*);
         void menuPlayHistory(Ref* btn);
         void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
         void btnChosePlayerNum(Ref*, int);

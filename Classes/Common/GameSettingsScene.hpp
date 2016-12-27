@@ -20,10 +20,8 @@ public:
         CREATE_FUNC(GameSettings);
         
 protected:
-        void menuOk(Ref* pSender);
+        void menuExit(Ref* pSender);
         
-private:
-        MenuItemImage* _okButton;
 };
 
 

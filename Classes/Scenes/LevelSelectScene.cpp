@@ -315,12 +315,6 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         auto start_game = MenuItemImage::create("level/start_game.png","level/start_game_sel.png", CC_CALLBACK_1(LevelSelect::menuStartGame, this));
         start_game->setPosition(Vec2(visibleSize.width / 2,
                                      start_game->getContentSize().height));
-        
-        auto online_game = MenuItemImage::create("online_battle.png", "online_battle_sel.png",
-                              CC_CALLBACK_1(LevelSelect::menuOnlineBattle, this));
-        online_game->setPosition(Vec2(online_game->getContentSize().width / 2,
-                                        online_game->getContentSize().height / 2 ));
-        
         /*
          /////////////////////////////////////////////////////////
                         coins buttons
@@ -335,7 +329,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         Vec2 coins_back_pos = Vec2(coins_pos.x - 60, coins_pos.y);
         coins_back->setPosition(coins_back_pos);
         _coinsNum = UserDefault::getInstance() ->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
-        auto coins_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/arial.ttf", 24);//
+        auto coins_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/arial.ttf", 32);//
         coins_back->addChild(coins_label);
         coins_label->setPosition(coins_back->getContentSize() / 2);
         this->addChild(coins_back, ZORDER_BACK_LAYERS);
@@ -360,7 +354,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         dices_back->setPosition(dices_back_pos);
         _dicesNum = UserDefault::getInstance() ->getIntegerForKey(USER_CURRENT_SUPPLY_NO,
                                                                   USER_DEFAULT_SUPPLYNO_ONFIRST);
-        auto dices_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/arial.ttf", 24);//
+        auto dices_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/arial.ttf", 32);//
         dices_back->addChild(dices_label);
         dices_label->setPosition(dices_back->getContentSize() / 2);
         this->addChild(dices_back, ZORDER_BACK_LAYERS);
@@ -369,8 +363,18 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         Vec2 add_dices_pos(dices_back_pos.x - 100, dices_pos.y);
         add_dices->setPosition(add_dices_pos);
         
+        auto achieve_btn = MenuItemImage::create("achievement.png", "achievement_sel.png", CC_CALLBACK_1(LevelSelect::menuShowAchievement, this));
+        achieve_btn->setPosition(Vec2(achieve_btn->getContentSize().width ,system_setting->getPosition().y));
+        
+        auto online_game = MenuItemImage::create("online_battle.png", "online_battle_sel.png",
+                                                 CC_CALLBACK_1(LevelSelect::menuOnlineBattle, this));
+        online_game->setPosition(Vec2(online_game->getContentSize().width / 2,
+                                      dices_pos.y));
+        
+        
         auto menu = Menu::create(_soundCtrl, system_setting, coins_show,
-                                 add_coins, dices_show, add_dices, start_game, online_game, NULL);
+                                 add_coins, dices_show, add_dices, start_game,
+                                 achieve_btn, online_game, NULL);
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, ZORDER_ITEM_CONTROL);
 }
@@ -434,6 +438,10 @@ void LevelSelect::menuGetMoreCoins(Ref* btn){
         Director::getInstance()->pushScene(shop);
 }
 void LevelSelect::menuGetMoreDices(Ref* btn){
+        
+}
+
+void LevelSelect::menuShowAchievement(Ref* btn){
         
 }
 

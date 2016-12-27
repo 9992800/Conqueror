@@ -106,6 +106,7 @@
 		BB8C6E921E0FB78800D091C3 /* ShoppingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB8C6E901E0FB78800D091C3 /* ShoppingScene.cpp */; };
 		BB9A4E241DCB7C6400E88C41 /* GameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E221DCB7C6400E88C41 /* GameData.cpp */; };
 		BB9A4E271DCB84A200E88C41 /* MapCreator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */; };
+		BB9AC9751E12047B00460A85 /* AchievementScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9AC9731E12047B00460A85 /* AchievementScene.cpp */; };
 		BBC12E4E1DCDFBA70035A571 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC12E4D1DCDFBA70035A571 /* StoreKit.framework */; };
 		BBC12E501DCDFC470035A571 /* sdkbox_config.json in Resources */ = {isa = PBXBuildFile; fileRef = BBC12E4F1DCDFC470035A571 /* sdkbox_config.json */; };
 		BBC12E561DCE26310035A571 /* PluginIAP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC12E541DCE26310035A571 /* PluginIAP.framework */; };
@@ -226,8 +227,8 @@
 		7C21A0E01DC9E9A80035ECC6 /* SplashScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SplashScene.hpp; sourceTree = "<group>"; };
 		7C21A0E21DC9ED930035ECC6 /* LevelSelectScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelSelectScene.cpp; sourceTree = "<group>"; };
 		7C21A0E31DC9ED930035ECC6 /* LevelSelectScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelSelectScene.hpp; sourceTree = "<group>"; };
-		7C21A0E61DCB2F450035ECC6 /* GameSettingsScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameSettingsScene.cpp; sourceTree = "<group>"; };
-		7C21A0E71DCB2F450035ECC6 /* GameSettingsScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameSettingsScene.hpp; sourceTree = "<group>"; };
+		7C21A0E61DCB2F450035ECC6 /* GameSettingsScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameSettingsScene.cpp; path = ../Common/GameSettingsScene.cpp; sourceTree = "<group>"; };
+		7C21A0E71DCB2F450035ECC6 /* GameSettingsScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = GameSettingsScene.hpp; path = ../Common/GameSettingsScene.hpp; sourceTree = "<group>"; };
 		7C21A0EA1DCB39050035ECC6 /* GameScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameScene.cpp; sourceTree = "<group>"; };
 		7C21A0EB1DCB39050035ECC6 /* GameScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameScene.hpp; sourceTree = "<group>"; };
 		7C21A0EE1DCB39FE0035ECC6 /* DiceGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiceGame.cpp; sourceTree = "<group>"; };
@@ -304,6 +305,8 @@
 		BB9A4E231DCB7C6400E88C41 /* GameData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameData.hpp; sourceTree = "<group>"; };
 		BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapCreator.cpp; sourceTree = "<group>"; };
 		BB9A4E261DCB84A200E88C41 /* MapCreator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MapCreator.hpp; sourceTree = "<group>"; };
+		BB9AC9731E12047B00460A85 /* AchievementScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AchievementScene.cpp; sourceTree = "<group>"; };
+		BB9AC9741E12047B00460A85 /* AchievementScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AchievementScene.hpp; sourceTree = "<group>"; };
 		BBC12E4D1DCDFBA70035A571 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.1.sdk/System/Library/Frameworks/StoreKit.framework; sourceTree = DEVELOPER_DIR; };
 		BBC12E4F1DCDFC470035A571 /* sdkbox_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sdkbox_config.json; sourceTree = "<group>"; };
 		BBC12E541DCE26310035A571 /* PluginIAP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PluginIAP.framework; sourceTree = "<group>"; };
@@ -578,6 +581,10 @@
 				7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */,
 				BB8C6E911E0FB78800D091C3 /* ShoppingScene.hpp */,
 				BB8C6E901E0FB78800D091C3 /* ShoppingScene.cpp */,
+				BB9AC9731E12047B00460A85 /* AchievementScene.cpp */,
+				BB9AC9741E12047B00460A85 /* AchievementScene.hpp */,
+				7C21A0E71DCB2F450035ECC6 /* GameSettingsScene.hpp */,
+				7C21A0E61DCB2F450035ECC6 /* GameSettingsScene.cpp */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -652,8 +659,6 @@
 				7C21A0F31DCB3A3C0035ECC6 /* PopUpOkCancelDialog.cpp */,
 				BBC812DD1DCA3CB000EC8874 /* GameHelpScene.hpp */,
 				BBC812DC1DCA3CB000EC8874 /* GameHelpScene.cpp */,
-				7C21A0E71DCB2F450035ECC6 /* GameSettingsScene.hpp */,
-				7C21A0E61DCB2F450035ECC6 /* GameSettingsScene.cpp */,
 				BBC12E5D1DCE2F830035A571 /* GamePayUtil.hpp */,
 				BBC12E5C1DCE2F830035A571 /* GamePayUtil.cpp */,
 				7C67A7B41DD1BE6B004B5151 /* WebSocktUtil.hpp */,
@@ -869,6 +874,7 @@
 				7CCB51DA1DD5AAC000810354 /* JsonUtil.cpp in Sources */,
 				7C82E4201DD572A70019C8CF /* FindPlayerScene.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
+				BB9AC9751E12047B00460A85 /* AchievementScene.cpp in Sources */,
 				BB8C6E921E0FB78800D091C3 /* ShoppingScene.cpp in Sources */,
 				7C4DA6A51DE2E973001CC255 /* BattleFieldBean.cpp in Sources */,
 				BBC12E5E1DCE2F830035A571 /* GamePayUtil.cpp in Sources */,

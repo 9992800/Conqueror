@@ -49,9 +49,9 @@
                             "type": "consumable",
                             "id": "com.bellflower.Conqueror.coins_200"
                     },
-                    "coins_600": {
+                    "coins_680": {
                             "type": "consumable",
-                            "id": "com.bellflower.Conqueror.coins_600"
+                            "id": "com.bellflower.Conqueror.coins_680"
                     },
                     "coins_1480": {
                             "type": "consumable",
@@ -108,9 +108,9 @@
                         "type": "consumable",
                         "id": "com.bellflower.Conqueror.coins_200"
                 },
-                "coins_600": {
+                "coins_680": {
                         "type": "consumable",
-                        "id": "com.bellflower.Conqueror.coins_600"
+                        "id": "com.bellflower.Conqueror.coins_680"
                 },
                 "coins_1480": {
                         "type": "consumable",

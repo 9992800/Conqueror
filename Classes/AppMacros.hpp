@@ -98,6 +98,9 @@ enum {
 #define EFFECT_FILE_FINISH_WIN          "sounds/finish_win.mp3"
 
 #define SOUND_EFFECT_SWITCH_KEY         "_key_sound_effect_switch"
+#define SOUND_EFFECT_VALUE_KEY          "_key_sound_effect_value"
+#define BACK_MUSIC_SWITCH_KEY           "_key_back_music_switch"
+#define BACK_MUSIC_VALUE_KEY            "_key_back_music_value"
 #define ANIMATION_SWITCH_KEY            "_key_animation_switch"
 #define GAME_SPEED_KEY                  "_key_game_speed_value"
 

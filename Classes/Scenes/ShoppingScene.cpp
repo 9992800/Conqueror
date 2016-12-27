@@ -46,14 +46,9 @@ bool Shopping::init(){
         coins_item_10->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_10_COINS_KEY));
         back_ground->addChild(coins_item_10);
         
-        auto item_title_10 = Label::createWithSystemFont("首充礼包", "fonts/arial.ttf", 24);
-        item_title_10->setIgnoreAnchorPointForPosition(false);
-        item_title_10->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-        item_title_10->setSystemFontSize(28);
+        auto item_title_10 = Sprite::create("shopping/shop_item_desc_10.png"); 
         item_title_10->setPosition(item_size.width * 0.3f, item_size.height * 0.4);
         coins_item_10->addChild(item_title_10);
-        _productTitleMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_10COINS_KEY,
-                                                               item_title_10));
         
         auto item_price_10 = Label::createWithSystemFont("6元", "fonts/arial.ttf", 24);
         item_price_10->setPosition(item_size.width * 0.5f, item_size.height * 0.15);
@@ -75,14 +70,9 @@ bool Shopping::init(){
         coins_item_200->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_ID_200COINS_KEY));
         back_ground->addChild(coins_item_200);
         
-        auto item_title_200 = Label::createWithSystemFont("送50金币", "fonts/arial.ttf", 24);
-        item_title_200->setIgnoreAnchorPointForPosition(false);
-        item_title_200->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-        item_title_200->setSystemFontSize(28);
+        auto item_title_200 = Sprite::create("shopping/shop_item_desc_200.png");
         item_title_200->setPosition(item_size.width * 0.3f, item_size.height * 0.4);
         coins_item_200->addChild(item_title_200);
-        _productTitleMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_200COINS_KEY,
-                                                               item_title_200));
         
         auto item_price_200 = Label::createWithSystemFont("90元", "fonts/arial.ttf", 24);
         item_price_200->setPosition(item_size.width * 0.5f, item_size.height * 0.15);
@@ -102,14 +92,9 @@ bool Shopping::init(){
         coins_item_60->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_ID_60COINS_KEY));
         back_ground->addChild(coins_item_60);
         
-        auto item_title_60 = Label::createWithSystemFont("送10金币", "fonts/arial.ttf", 24);
-        item_title_60->setIgnoreAnchorPointForPosition(false);
-        item_title_60->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-        item_title_60->setSystemFontSize(28);
+        auto item_title_60 = Sprite::create("shopping/shop_item_desc_60.png");
         item_title_60->setPosition(item_size.width * 0.3f, item_size.height * 0.4);
         coins_item_60->addChild(item_title_60);
-        _productTitleMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_60COINS_KEY,
-                                                               item_title_60));
         
         auto item_price_60 = Label::createWithSystemFont("30元", "fonts/arial.ttf", 24);
         item_price_60->setPosition(item_size.width * 0.5f, item_size.height * 0.15);
@@ -130,14 +115,9 @@ bool Shopping::init(){
         coins_item_680->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_ID_680COINS_KEY));
         back_ground->addChild(coins_item_680);
         
-        auto item_title_680 = Label::createWithSystemFont("送180金币", "fonts/arial.ttf", 24);
-        item_title_680->setIgnoreAnchorPointForPosition(false);
-        item_title_680->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-        item_title_680->setSystemFontSize(28);
+        auto item_title_680 = Sprite::create("shopping/shop_item_desc_680.png");
         item_title_680->setPosition(item_size.width * 0.3f, item_size.height * 0.4);
         coins_item_680->addChild(item_title_680);
-        _productTitleMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_680COINS_KEY,
-                                                               item_title_680));
         
         auto item_price_680 = Label::createWithSystemFont("300元", "fonts/arial.ttf", 24);
         item_price_680->setPosition(item_size.width * 0.5f, item_size.height * 0.15);
@@ -158,14 +138,11 @@ bool Shopping::init(){
         coins_item_1480->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_ID_1480COINS_KEY));
         back_ground->addChild(coins_item_1480);
         auto item_size_big = coins_item_1480->getContentSize();
-        auto item_title_1480 = Label::createWithSystemFont("送480金币", "fonts/arial.ttf", 24);
-        item_title_1480->setIgnoreAnchorPointForPosition(false);
-        item_title_1480->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-        item_title_1480->setSystemFontSize(36);
+        
+        
+        auto item_title_1480 =Sprite::create("shopping/shop_item_desc_1480.png");
         item_title_1480->setPosition(item_size_big.width * 0.3f, item_size_big.height * 0.4);
         coins_item_1480->addChild(item_title_1480);
-        _productTitleMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_1480COINS_KEY,
-                                                               item_title_1480));
         
         auto item_price_1480 = Label::createWithSystemFont("600元", "fonts/arial.ttf", 24);
         item_price_1480->setPosition(item_size_big.width * 0.5f, item_size_big.height * 0.15);
@@ -236,12 +213,9 @@ void Shopping::onProductRequestSuccess(const std::vector<Product>& products){
                 CCLOG("IAP: Price Value: %f", p.priceValue);
                 _productsMap.insert(std::pair<std::string, Product>(id, p));
                 
-                std::map<std::string, Label*>::iterator it = _productTitleMap.find(id);
-                if (it != _productTitleMap.end()){
-                        auto title = it->second;
-                        auto price = _productPriceMap.find(id)->second;
-                        
-                        title->setString(p.title);
+                std::map<std::string, Label*>::iterator it = _productPriceMap.find(id);
+                if (it != _productPriceMap.end()){
+                        auto price = it->second;
                         price->setString(p.price);
                 }
                 

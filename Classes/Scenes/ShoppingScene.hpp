@@ -42,7 +42,6 @@ private:
         
         std::map<std::string, Product>          _productsMap;
         std::map<std::string, Label*>           _productPriceMap;
-        std::map<std::string, Label*>           _productTitleMap;
 };
 
 #endif /* ShoppingScene_hpp */

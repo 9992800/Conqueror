@@ -16,6 +16,7 @@
 #include "FindPlayerScene.hpp"
 #include "ui/UIScale9Sprite.h"
 #include "ShoppingScene.hpp"
+#include "AchievementScene.hpp"
 
 enum{
         kLevelShowLevel1Tag = 2,
@@ -433,7 +434,8 @@ void LevelSelect::menuGetMoreDices(Ref* btn){
 }
 
 void LevelSelect::menuShowAchievement(Ref* btn){
-        
+        auto scene = Achievement::createScene();
+        Director::getInstance()->pushScene(scene);
 }
 
 void LevelSelect::loadResourceInBg(int* loader, HistoryReplayData* data){

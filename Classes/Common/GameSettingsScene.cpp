@@ -9,47 +9,51 @@
 #include "GameSettingsScene.hpp"
 
 #pragma makr - init scene
-Scene* GameSettings::createScene()
-{
-        auto scene = Scene::create();
-        auto layer = GameSettings::create();
-        scene->addChild(layer);
-        
-        return scene;
-}
-
 bool GameSettings::init()
 {
-        if (!Layer::init()){
+        if (!LayerColor::initWithColor(Color4B::BLACK)){
                 return false;
         }
-        
+        this->setOpacity(180);
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         
-        auto sprite = Sprite::create("system_setting_back.png");
-        sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
-        this->addChild(sprite, 0);
+        auto setting_back = Sprite::create("settings/system_setting_back.png");
+        setting_back->setPosition(visibleSize / 2);
+        this->addChild(setting_back);
+        auto setting_back_size = setting_back->getContentSize();
+
         
-        auto label = Label::createWithTTF("this is a game settings page.", "fonts/Marker Felt.ttf", 24);
-        label->setPosition(Vec2(origin.x + visibleSize.width / 2,
-                                origin.y + visibleSize.height / 2));
-        label->setColor(Color3B::RED);
-        this->addChild(label, 2);
+        auto exit_btn = ui::Button::create("DIALOG2_OK.png", "DIALOG2_OK_SEL.png");
+        exit_btn->setPosition(Vec2(setting_back_size.width * 0.5f,
+                                   exit_btn->getContentSize().height * 0.7f));
         
+        exit_btn->addClickEventListener([this](Ref*){
+                this->removeFromParentAndCleanup(true);
+        });
         
-        auto exit_btn = MenuItemImage::create("CloseNormal.png", "CloseSelected.png",
-                                          CC_CALLBACK_1(GameSettings::menuExit, this));
-        exit_btn->setPosition(Vec2(exit_btn->getContentSize().width,
-                                    visibleSize.height - exit_btn->getContentSize().height));
+        exit_btn->setTitleText("OK");
+        exit_btn->setTitleFontName("fonts/arial.ttf");
+        exit_btn->setTitleFontSize(44);
+        setting_back->addChild(exit_btn);
         
-        auto menu = Menu::create(exit_btn, NULL);
-        menu->setPosition(Vec2::ZERO);
-        this->addChild(menu, 1);
+        auto scene_title = ui::ImageView::create("settings/scene_title.png");
+        scene_title->setPosition(Vec2(setting_back_size.width * 0.5,
+                                 setting_back_size.height -
+                                      scene_title->getContentSize().height * 0.5f));
+        setting_back->addChild(scene_title);
+        auto title_pos = scene_title->getPosition();
+        
+        auto effect_size_back = Sprite::create("settings/size_back.png");
+        auto volumn_size = effect_size_back->getContentSize();
+        effect_size_back->setPosition(setting_back_size.width / 2 ,
+                                      title_pos.y - 2 * volumn_size.height);
+        setting_back->addChild(effect_size_back);
+        
+        auto effect_title = Label::createWithSystemFont("Sound Effect", "fonts/arial.ttf", 32);
+        effect_title->setPosition(Vec2(setting_back_size.width / 2,
+                                       title_pos.y - volumn_size.height));
+        setting_back->addChild(effect_title);
         
         return true;
-}
-
-void GameSettings::menuExit(Ref* pSender){
-        Director::getInstance()->popScene();
 }

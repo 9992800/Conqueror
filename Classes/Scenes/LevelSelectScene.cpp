@@ -17,16 +17,6 @@
 #include "ui/UIScale9Sprite.h"
 #include "ShoppingScene.hpp"
 
-enum {
-        GAME_LEVEL_INDEX_1 = 1,
-        GAME_LEVEL_INDEX_2,
-        GAME_LEVEL_INDEX_3,
-        GAME_LEVEL_INDEX_4,
-        GAME_LEVEL_INDEX_5,
-        GAME_LEVEL_INDEX_6,
-        GAME_LEVEL_INDEX_7,
-};
-
 enum{
         kLevelShowLevel1Tag = 2,
         kLevelShowLevel2Tag = 3,
@@ -50,7 +40,8 @@ enum{
         ZORDER_BACK_LAYERS,
         ZORDER_SEL_BACK_LAYER,
         ZORDER_ITEM_SHOW,
-        ZORDER_ITEM_CONTROL
+        ZORDER_ITEM_CONTROL,
+        ZORDER_TOP_LEVEL_SHOW
 };
 
 
@@ -428,8 +419,8 @@ void LevelSelect::menuStartGame(Ref* btn){
 }
 
 void LevelSelect::menuShowSettigns(Ref* btn){
-        auto scene = GameSettings::createScene();
-        Director::getInstance()->pushScene(scene);
+        auto settings = GameSettings::create();
+        this->addChild(settings, ZORDER_TOP_LEVEL_SHOW);
 }
 
 

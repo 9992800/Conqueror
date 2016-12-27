@@ -10,18 +10,17 @@
 #define GameSettings_hpp
 
 #include "cocos2d.h"
+#include "ui/CocosGUI.h"
 USING_NS_CC;
 
-class GameSettings : public cocos2d::Layer
+class GameSettings : public cocos2d::LayerColor
 {
 public:
-        static Scene* createScene();
         virtual bool init() override;
         CREATE_FUNC(GameSettings);
         
-protected:
-        void menuExit(Ref* pSender);
-        
+private:
+        ui::LoadingBar *_soundEffectV, *_backMusicV;
 };
 
 

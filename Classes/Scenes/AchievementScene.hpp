@@ -21,6 +21,12 @@ public:
         static Scene* createScene();
         virtual bool init() override;
         CREATE_FUNC(Achievement);
+        
+private:
+        ui::Layout* createListItem();
+private:
+        ui::ListView* _listView;
+        int _totalCount;
 };
 
 #endif /* AchievementScene_hpp */

@@ -345,3 +345,12 @@ void GolbalAnimations::initAnimation(){
         animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_hit2");
 }
+
+
+
+
+std::vector<AchievementData> SYSTEM_ACHIEVE_DATA = std::vector<AchievementData>();
+void INIT_ACHIEVE_DATA_BYDEFAULT(){
+        AchievementData data_1 = {
+        };
+}

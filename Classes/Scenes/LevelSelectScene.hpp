@@ -56,10 +56,9 @@ private:
         void afterParseArea(void*);
         
 private:
-        int             _count;
-        int             _levelPlayerNum;
-        int             _coinsNum;
-        int             _dicesNum;
+        int                     _count;
+        int                     _levelPlayerNum;
+        int                     _curCoinsNum, _curMercenariesNum;
         
         Vec2                    _mostRight, _mostLeft;
         LoadingBar*             _loadingBar;
@@ -69,6 +68,7 @@ private:
         HistoryReplayData       _historyData;
         int                     _curChIdx;
         int                     _curColorIdx;
+        Label                   *_mercenAriesNumLb, *_coinsNumLb;
 };
 
 

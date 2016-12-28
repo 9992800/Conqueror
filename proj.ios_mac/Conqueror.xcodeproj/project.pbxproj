@@ -71,6 +71,7 @@
 		7C21A10D1DCB4F010035ECC6 /* AreaData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A1041DCB4F010035ECC6 /* AreaData.cpp */; };
 		7C21A10F1DCB4F010035ECC6 /* GamePlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A1091DCB4F010035ECC6 /* GamePlayer.cpp */; };
 		7C21A1101DCB4F010035ECC6 /* JoinData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A10B1DCB4F010035ECC6 /* JoinData.cpp */; };
+		7C4193B01E13AB7E00FD029E /* BuySupplyScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C4193AE1E13AB7E00FD029E /* BuySupplyScene.cpp */; };
 		7C4973E71E0D137F007B5A1A /* CommonTipsDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C4973E51E0D137F007B5A1A /* CommonTipsDialog.cpp */; };
 		7C4BA1C81DDE9E8F004F9770 /* search_oppent.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4BA1C71DDE9E8F004F9770 /* search_oppent.png */; };
 		7C4BA1CB1DDEA0D2004F9770 /* search_oppent_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C4BA1CA1DDEA0D2004F9770 /* search_oppent_sel.png */; };
@@ -253,6 +254,8 @@
 		7C21A10A1DCB4F010035ECC6 /* GamePlayer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GamePlayer.hpp; sourceTree = "<group>"; };
 		7C21A10B1DCB4F010035ECC6 /* JoinData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JoinData.cpp; sourceTree = "<group>"; };
 		7C21A10C1DCB4F010035ECC6 /* JoinData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JoinData.hpp; sourceTree = "<group>"; };
+		7C4193AE1E13AB7E00FD029E /* BuySupplyScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BuySupplyScene.cpp; sourceTree = "<group>"; };
+		7C4193AF1E13AB7E00FD029E /* BuySupplyScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BuySupplyScene.hpp; sourceTree = "<group>"; };
 		7C4973E51E0D137F007B5A1A /* CommonTipsDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CommonTipsDialog.cpp; sourceTree = "<group>"; };
 		7C4973E61E0D137F007B5A1A /* CommonTipsDialog.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CommonTipsDialog.hpp; sourceTree = "<group>"; };
 		7C4BA1C71DDE9E8F004F9770 /* search_oppent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search_oppent.png; sourceTree = "<group>"; };
@@ -585,6 +588,8 @@
 				BB9AC9741E12047B00460A85 /* AchievementScene.hpp */,
 				7C21A0E71DCB2F450035ECC6 /* GameSettingsScene.hpp */,
 				7C21A0E61DCB2F450035ECC6 /* GameSettingsScene.cpp */,
+				7C4193AF1E13AB7E00FD029E /* BuySupplyScene.hpp */,
+				7C4193AE1E13AB7E00FD029E /* BuySupplyScene.cpp */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -863,6 +868,7 @@
 				7C6E7FFD1DD94F5300C5E374 /* ReplayLastScene.cpp in Sources */,
 				7C4BA1D41DDF0A90004F9770 /* UserSessionBean.cpp in Sources */,
 				7C4973E71E0D137F007B5A1A /* CommonTipsDialog.cpp in Sources */,
+				7C4193B01E13AB7E00FD029E /* BuySupplyScene.cpp in Sources */,
 				7C21A0E11DC9E9A80035ECC6 /* SplashScene.cpp in Sources */,
 				BBC812DE1DCA3CB000EC8874 /* GameHelpScene.cpp in Sources */,
 				7C21A1101DCB4F010035ECC6 /* JoinData.cpp in Sources */,

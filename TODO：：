@@ -1,14 +1,16 @@
 TODO：：
-1，test the shopping things 
-2，show the changes after buy coins.
-3，logo and icon
-4, sounds ,share logic ,share pictures
-5，system settings:back ground music logic test. animation btn picture. sound effect logic in whole game.
-6，achievements datas and value.
-7，screen to buy supplement using coins.
-8，supply logic
-9, other charactors and their animations.
+1， test the shopping things 
+2， show the changes after buy coins.
+3， logo and icon
+4,  sounds ,share logic ,share pictures
+5， system settings:back ground music logic test. animation btn picture. sound effect logic in whole game.
+6， achievements datas and value. btttons when haven't got it.
+7， screen to buy supplement using coins.
+8， supply logic
+9,  other charactors and their animations.
 10, modify common tips dialog content position.
+11，pictures used to share.
+
 bugs
 --------------------------------------------------------- 
 2:sounds bugs.:AQDefaultDevice (173): skipping input stream 0 0 0x0

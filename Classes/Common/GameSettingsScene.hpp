@@ -22,13 +22,15 @@ public:
         CREATE_FUNC(GameSettings);
 private:
         void menuExit(Ref*);
+        void menuAnimSwitch(Ref*);
         void menuSoundEffect(Ref*, int);
         void menuBackMusic(Ref*, int);
-        
+        void menuSpeedChange(Ref*, int);
 private:
         bool            _soundEffectB, _backMusicB;
         int             _soundEffectV, _backMusicV;
         ui::LoadingBar  *_soundEffect, *_backMusic;
+        ui::Button     *_speedBtn1, *_speedBtn2,*_speedBtn3;
 };
 
 

@@ -200,6 +200,8 @@ void GameScene::initOperateBoard(){
         else
                 _animCtlBtn->loadTextureNormal("maps/close_anim.png");
         
+        _animCtlBtn->loadTexturePressed("maps/open_anim_sel.png");
+        
         _animCtlBtn->addClickEventListener(CC_CALLBACK_1(GameScene::menuAnimSwitch, this));
         _animCtlBtn->setPosition(operat_board_l->getContentSize() / 2);
         operat_board_l->addChild(_animCtlBtn);

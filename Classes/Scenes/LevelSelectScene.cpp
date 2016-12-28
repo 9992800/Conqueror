@@ -17,6 +17,7 @@
 #include "ui/UIScale9Sprite.h"
 #include "ShoppingScene.hpp"
 #include "AchievementScene.hpp"
+#include "BuySupplyScene.hpp"
 
 enum{
         kLevelShowLevel1Tag = 2,
@@ -320,10 +321,10 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         auto coins_back = Sprite::create("level/coind_back.png");
         Vec2 coins_back_pos = Vec2(coins_pos.x - 60, coins_pos.y);
         coins_back->setPosition(coins_back_pos);
-        _coinsNum = UserDefault::getInstance() ->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
-        auto coins_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/arial.ttf", 32);//
-        coins_back->addChild(coins_label);
-        coins_label->setPosition(coins_back->getContentSize() / 2);
+        
+        _coinsNumLb = Label::createWithSystemFont("0", "fonts/arial.ttf", 32);//
+        coins_back->addChild(_coinsNumLb);
+        _coinsNumLb->setPosition(coins_back->getContentSize() / 2);
         this->addChild(coins_back, ZORDER_BACK_LAYERS);
         
         
@@ -344,11 +345,10 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         auto dices_back = Sprite::create("level/coind_back.png");
         Vec2 dices_back_pos = Vec2(dices_pos.x - 60, dices_pos.y);
         dices_back->setPosition(dices_back_pos);
-        _dicesNum = UserDefault::getInstance() ->getIntegerForKey(USER_CURRENT_SUPPLY_NO,
-                                                                  USER_DEFAULT_SUPPLYNO_ONFIRST);
-        auto dices_label = Label::createWithSystemFont(tostr(_coinsNum), "fonts/arial.ttf", 32);//
-        dices_back->addChild(dices_label);
-        dices_label->setPosition(dices_back->getContentSize() / 2);
+        
+        _mercenAriesNumLb = Label::createWithSystemFont("0", "fonts/arial.ttf", 32);//
+        dices_back->addChild(_mercenAriesNumLb);
+        _mercenAriesNumLb->setPosition(dices_back->getContentSize() / 2);
         this->addChild(dices_back, ZORDER_BACK_LAYERS);
         
         auto add_dices = MenuItemImage::create("level/add_icon.png", "", CC_CALLBACK_1(LevelSelect::menuGetMoreDices, this));
@@ -430,7 +430,8 @@ void LevelSelect::menuGetMoreCoins(Ref* btn){
         Director::getInstance()->pushScene(shop);
 }
 void LevelSelect::menuGetMoreDices(Ref* btn){
-        
+        auto buy_tips = BuySupply::create();
+        this->addChild(buy_tips, ZORDER_TOP_LEVEL_SHOW);
 }
 
 void LevelSelect::menuShowAchievement(Ref* btn){
@@ -603,6 +604,13 @@ void LevelSelect::onEnter(){
                         runner->setScale(1.4);
                 }
         }
+        
+        _curCoinsNum = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
+        _coinsNumLb->setString(tostr(_curCoinsNum));
+        
+        
+        _curMercenariesNum = UserDefault::getInstance() ->getIntegerForKey(USER_CURRENT_SUPPLY_NO, USER_DEFAULT_SUPPLYNO_ONFIRST);
+        _mercenAriesNumLb->setString(tostr(_curMercenariesNum));
 }
 
 void LevelSelect::update(float delta){
@@ -622,8 +630,8 @@ void LevelSelect::onExit(){
         auto the_wall = back_layer->getChildByTag(kMenuGreatWallTag);
         the_wall->removeAllChildren();
         
-        UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_COINS, _coinsNum);
-        UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _dicesNum);
+        UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNum);
+        UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curMercenariesNum);
         UserDefault::getInstance()->flush();
 }
 

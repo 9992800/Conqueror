@@ -127,24 +127,45 @@ bool GameSettings::init()
         anim_back->setPosition(Vec2(setting_back_size.width * 0.5f, music_back->getPosition().y - music_size.height - anim_back_size.height * 0.5f));
         setting_back->addChild(anim_back);
         
-        auto close_anim = ui::Button::create("maps/close_anim.png");
-        auto anim_btn_size = close_anim->getContentSize();
-        close_anim->setPosition(Vec2(anim_back_size.width * 0.5f - anim_btn_size.width,
+        auto anim_switch = ui::Button::create("maps/open_anim.png",
+                                             "maps/open_anim_sel.png");
+        auto anim_btn_size = anim_switch->getContentSize();
+        anim_switch->setPosition(Vec2(anim_btn_size.width * 0.8f,
                                      anim_back_size.height * 0.5f));
-        anim_back->addChild(close_anim);
-        close_anim->addClickEventListener([=](Ref*){
-                UserDefault::getInstance()->setBoolForKey(ANIMATION_SWITCH_KEY, false);
-        });
+        anim_back->addChild(anim_switch);
+        anim_switch->addClickEventListener(CC_CALLBACK_1(GameSettings::menuAnimSwitch, this));
         
-        auto open_anim = ui::Button::create("maps/open_anim.png");
-        open_anim->setPosition(Vec2(anim_back_size.width * 0.5f + anim_btn_size.width,
-                                    anim_back_size.height * 0.5f));
-        anim_back->addChild(open_anim);
-        open_anim->addClickEventListener([=](Ref*){
-                UserDefault::getInstance()->setBoolForKey(ANIMATION_SWITCH_KEY, true);
-        });
+        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
+        
+        _speedBtn2 = ui::Button::create("settings/game_speed_2d.png");
+        auto speed_btn_size = _speedBtn2->getContentSize();
+        auto middle_btn_pos = Vec2(0.5f * (anim_back_size.width + anim_btn_size.width), anim_switch->getPosition().y);
+        _speedBtn2->setPosition(middle_btn_pos);
+        anim_back->addChild(_speedBtn2);
+        _speedBtn2->addClickEventListener(CC_CALLBACK_1(GameSettings::menuSpeedChange, this, 2));
         
         
+        
+        _speedBtn1 = ui::Button::create("settings/game_speed_1d.png");
+        _speedBtn1->setPosition(Vec2(middle_btn_pos.x - speed_btn_size.width,
+                                middle_btn_pos.y));
+        anim_back->addChild(_speedBtn1);
+        _speedBtn1->addClickEventListener(CC_CALLBACK_1(GameSettings::menuSpeedChange, this, 1));
+        
+        _speedBtn3 = ui::Button::create("settings/game_speed_3d.png");
+        _speedBtn3->setPosition(Vec2(middle_btn_pos.x + speed_btn_size.width,
+                                     middle_btn_pos.y));
+        anim_back->addChild(_speedBtn3);
+        _speedBtn3->addClickEventListener(CC_CALLBACK_1(GameSettings::menuSpeedChange, this, 3));
+        
+        
+        if (game_speed == 1){
+                _speedBtn1->loadTextureNormal("settings/game_speed_1.png");
+        }else if (game_speed == 2){
+                _speedBtn2->loadTextureNormal("settings/game_speed_2.png");
+        }else if (game_speed == 3){
+                _speedBtn3->loadTextureNormal("settings/game_speed_3.png");
+        }
         
         return true;
 }
@@ -209,4 +230,38 @@ void GameSettings::menuBackMusic(Ref*, int action){
         _backMusic->setPercent(_backMusicV);
 }
 
+void GameSettings::menuAnimSwitch(Ref* btn){
+        auto cache =  UserDefault::getInstance();
+        ui::Button* anim_btn = (ui::Button*)btn;
+        bool anim_ison = cache->getBoolForKey(ANIMATION_SWITCH_KEY, true);
+        anim_ison = !anim_ison;
+        if (anim_ison){
+                cache->setBoolForKey(ANIMATION_SWITCH_KEY, true);
+                anim_btn->loadTextureNormal("maps/open_anim.png");
+        }else{
+                cache->setBoolForKey(ANIMATION_SWITCH_KEY, false);
+                anim_btn->loadTextureNormal("maps/close_anim.png");
+        }
+        cache->flush();
+}
+
+
+void GameSettings::menuSpeedChange(Ref* btn, int game_speed){
+        
+        _speedBtn1->loadTextureNormal("settings/game_speed_1d.png");
+        _speedBtn2->loadTextureNormal("settings/game_speed_2d.png");
+        _speedBtn3->loadTextureNormal("settings/game_speed_3d.png");
+        
+        if (game_speed == 1){
+                _speedBtn1->loadTextureNormal("settings/game_speed_1.png");
+        }else if (game_speed == 2){
+                _speedBtn2->loadTextureNormal("settings/game_speed_2.png");
+        }else if (game_speed == 3){
+                _speedBtn3->loadTextureNormal("settings/game_speed_3.png");
+        }
+        
+        auto cache =  UserDefault::getInstance();
+        cache->setIntegerForKey(GAME_SPEED_KEY, game_speed);
+        cache->flush();
+}
 

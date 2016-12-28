@@ -756,6 +756,7 @@ void GameScene::refreshAreaTcShow(std::map<int, int> survival){
 }
 
 void GameScene::afterSupply(){
+        _isPalyingAnim = false;
         _afterSupplyCallback->release();
         _supplyShowLayer->removeAllChildren();
         _supplyShowLayer->setVisible(false);
@@ -1158,6 +1159,20 @@ void GameScene::menuEndTurn(Ref* pSender){
         _theGameLogic->clearManulAction();
         CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);
         
+        
+        _addtionalSupplyCounter--;
+        Label* counter_lab = (Label*)_addArmyBtn->getChildByTag(key_supply_turn_counter_tag);
+        
+        if (_addtionalSupplyCounter == 0){
+                _addArmyBtn->setEnabled(true);
+                _addArmyBtn->setBright(true);
+                counter_lab->setVisible(false);
+        }else{
+                
+                counter_lab->setString(StringUtils::format("%d", _addtionalSupplyCounter));
+        }
+        
+        
         auto visible_size = Director::getInstance()->getVisibleSize();
         _mapLayer->setPosition(visible_size);
         
@@ -1173,19 +1188,7 @@ void GameScene::menuEndTurn(Ref* pSender){
                 
         });
         
-        _addtionalSupplyCounter--;
-        Label* counter_lab = (Label*)_addArmyBtn->getChildByTag(key_supply_turn_counter_tag);
-        
-        if (_addtionalSupplyCounter == 0){
-                _addArmyBtn->setEnabled(true);
-                _addArmyBtn->setBright(true);
-                counter_lab->setVisible(false);
-        }else{
-                
-                counter_lab->setString(StringUtils::format("%d", _addtionalSupplyCounter));
-        }
-        
-        
+        _isPalyingAnim = true;
         _mapLayer->runAction(Sequence::create(scale, callback_1, NULL));
 }
 

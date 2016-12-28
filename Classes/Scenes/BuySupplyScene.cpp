@@ -22,8 +22,6 @@ bool BuySupply::init(){
         this->addChild(buy_supply_back);
         auto buy_supply_back_size = buy_supply_back->getContentSize();
         
-        
-        
         //Exit button
         auto exit_btn = ui::Button::create("DIALOG2_OK.png", "DIALOG2_OK_SEL.png");
         exit_btn->setPosition(Vec2(buy_supply_back_size.width * 0.5f,

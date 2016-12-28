@@ -52,7 +52,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
         }else{
                 
                 auto tips_back_size = _tipsBack->getContentSize();
-                auto cancel_button = ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
+                auto cancel_button = ui::Button::create("DIALOG_CANCEL.png", "DIALOG_CANCEL_SEL.png");
                 cancel_button->setPosition(Vec2(tips_back_size.width / 2+ cancel_button->getContentSize().width , cancel_button->getContentSize().height *1.5f));
                 cancel_button->setTitleText("NO");
                 cancel_button->setTitleFontSize(28);

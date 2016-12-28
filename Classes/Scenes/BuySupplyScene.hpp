@@ -23,7 +23,7 @@ public:
         virtual bool init() override;
         CREATE_FUNC(BuySupply);
 private:
-        void menuExit(Ref*);
+        void menuSpendCoins(Ref*, int);
 };
 
 #endif /* BuySupplyScene_hpp */

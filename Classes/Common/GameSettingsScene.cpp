@@ -263,5 +263,6 @@ void GameSettings::menuSpeedChange(Ref* btn, int game_speed){
         auto cache =  UserDefault::getInstance();
         cache->setIntegerForKey(GAME_SPEED_KEY, game_speed);
         cache->flush();
+        Director::getInstance()->getScheduler()->setTimeScale(game_speed);
 }
 

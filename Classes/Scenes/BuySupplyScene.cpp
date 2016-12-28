@@ -23,17 +23,26 @@ bool BuySupply::init(){
         auto buy_supply_back_size = buy_supply_back->getContentSize();
         
         //Exit button
-        auto exit_btn = ui::Button::create("DIALOG2_OK.png", "DIALOG2_OK_SEL.png");
-        exit_btn->setPosition(Vec2(buy_supply_back_size.width * 0.5f,
-                                   exit_btn->getContentSize().height * 0.7f));
+        auto buy_btn = ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
+        auto buy_btn_size = buy_btn->getContentSize();
+        buy_btn->setPosition(Vec2(buy_supply_back_size.width * 0.5f - buy_btn_size.width, buy_btn->getContentSize().height));
         
-        exit_btn->addClickEventListener(CC_CALLBACK_1(BuySupply::menuExit, this));
+        buy_btn->addClickEventListener(CC_CALLBACK_1(BuySupply::menuSpendCoins, this, 1));
+        buy_btn->setTitleText("OK");
+        buy_btn->setTitleFontName("fonts/arial.ttf");
+        buy_btn->setTitleFontSize(34);
+        buy_supply_back->addChild(buy_btn);
         
-        exit_btn->setTitleText("OK");
-        exit_btn->setTitleFontName("fonts/arial.ttf");
-        exit_btn->setTitleFontSize(44);
-        buy_supply_back->addChild(exit_btn);
-        auto exit_btn_size = exit_btn->getContentSize();
+        
+        auto cancel_btn = ui::Button::create("DIALOG_CANCEL.png", "DIALOG_CANCEL_SEL.png");
+        cancel_btn->setPosition(Vec2(buy_supply_back_size.width * 0.5f + buy_btn_size.width, buy_btn->getContentSize().height));
+        cancel_btn->addClickEventListener(CC_CALLBACK_1(BuySupply::menuSpendCoins, this, 0));
+        cancel_btn->setTitleText("NO");
+        cancel_btn->setTitleFontName("fonts/arial.ttf");
+        cancel_btn->setTitleFontSize(34);
+        buy_supply_back->addChild(cancel_btn);
+        
+        
         
         auto tips_title = Sprite::create("common_dialog_title.png");
         tips_title->setPosition(Vec2(buy_supply_back_size.width * 0.5f,
@@ -62,7 +71,11 @@ bool BuySupply::init(){
 }
 
 
-void BuySupply::menuExit(Ref*){
+void BuySupply::menuSpendCoins(Ref*btn, int result){
+        if (0 == result){
+                this->removeFromParentAndCleanup(true);
+                return;
+        }
         
         auto cache = UserDefault::getInstance();
         int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, 0);

@@ -25,7 +25,7 @@ bool BuySupply::init(){
         //Exit button
         auto buy_btn = ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
         auto buy_btn_size = buy_btn->getContentSize();
-        buy_btn->setPosition(Vec2(buy_supply_back_size.width * 0.5f - buy_btn_size.width, buy_btn->getContentSize().height));
+        buy_btn->setPosition(Vec2(buy_supply_back_size.width * 0.5f - buy_btn_size.width, buy_btn->getContentSize().height * 2.f));
         
         buy_btn->addClickEventListener(CC_CALLBACK_1(BuySupply::menuSpendCoins, this, 1));
         buy_btn->setTitleText("OK");
@@ -35,7 +35,7 @@ bool BuySupply::init(){
         
         
         auto cancel_btn = ui::Button::create("DIALOG_CANCEL.png", "DIALOG_CANCEL_SEL.png");
-        cancel_btn->setPosition(Vec2(buy_supply_back_size.width * 0.5f + buy_btn_size.width, buy_btn->getContentSize().height));
+        cancel_btn->setPosition(Vec2(buy_supply_back_size.width * 0.5f + buy_btn_size.width, buy_btn->getContentSize().height * 2.f));
         cancel_btn->addClickEventListener(CC_CALLBACK_1(BuySupply::menuSpendCoins, this, 0));
         cancel_btn->setTitleText("NO");
         cancel_btn->setTitleFontName("fonts/arial.ttf");

@@ -611,6 +611,9 @@ void LevelSelect::onEnter(){
         
         _curMercenariesNum = UserDefault::getInstance() ->getIntegerForKey(USER_CURRENT_SUPPLY_NO, USER_DEFAULT_SUPPLYNO_ONFIRST);
         _mercenAriesNumLb->setString(tostr(_curMercenariesNum));
+        
+        auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
+        sound->playBackgroundMusic(BACK_MUSIC_LEVEL_SELECT);
 }
 
 void LevelSelect::update(float delta){
@@ -633,5 +636,8 @@ void LevelSelect::onExit(){
         UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNum);
         UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curMercenariesNum);
         UserDefault::getInstance()->flush();
+        
+        auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
+        sound->stopBackgroundMusic();
 }
 

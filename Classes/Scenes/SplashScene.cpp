@@ -15,6 +15,7 @@
 #include "LevelSelectScene.hpp"
 #include "APPConstants.hpp"
 
+using namespace CocosDenshion;
 #pragma makr - init scene
 Scene* Splash::createScene()
 {
@@ -74,38 +75,56 @@ void Splash::onEnter(){
         
         scheduleUpdate();
         
-        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_START_GAME);
+        auto sound = SimpleAudioEngine::getInstance();
+        
+        sound->preloadEffect(EFFECT_FILE_START_GAME);
         _count += 1;
         
-        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_WIN);
+        sound->preloadEffect(EFFECT_FILE_WIN);
         _count += 1;
         
-        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_DEFEAT);
+        sound->preloadEffect(EFFECT_FILE_DEFEAT);
         _count += 1;
         
-        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_SELECTED);
+        sound->preloadEffect(EFFECT_FILE_SELECTED);
         _count += 1;
 
-        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_DROP_DICE);
+        sound->preloadEffect(EFFECT_FILE_DROP_DICE);
         _count += 1;
         
-        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_SUPPLY);
+        sound->preloadEffect(EFFECT_FILE_SUPPLY);
         _count += 1;
         
-        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_FINISH_LOSE);
+        sound->preloadEffect(EFFECT_FILE_FINISH_LOSE);
         _count += 1;
         
-        CocosDenshion::SimpleAudioEngine::getInstance()->preloadEffect(EFFECT_FILE_FINISH_WIN);
+        sound->preloadEffect(EFFECT_FILE_FINISH_WIN);
         _count += 1;
         
-        bool is_effect_on = UserDefault::getInstance()->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
+        sound->preloadBackgroundMusic(BACK_MUSIC_LEVEL_SELECT);
+        _count += 1;
+        
+        sound->preloadBackgroundMusic(BACK_MUSIC_IN_BATTLE);
+        _count += 1;
+        
+        auto cache = UserDefault::getInstance();
+        bool is_effect_on = cache->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
         if (is_effect_on){
-                CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1.f);
+                float volume = 0.01f * cache->getIntegerForKey(SOUND_EFFECT_VALUE_KEY, 50);
+                sound->resumeAllEffects();
+                sound->setEffectsVolume(volume);
         }else{
-                CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0.f);
+               sound->pauseAllEffects();
         }
         
-        _count += 1;
+        bool is_bm_on = cache->getBoolForKey(BACK_MUSIC_SWITCH_KEY, true);
+        if (is_bm_on){
+                float volume = 0.01f * cache->getIntegerForKey(BACK_MUSIC_VALUE_KEY, 50);
+                sound->setBackgroundMusicVolume(volume);
+                sound->resumeBackgroundMusic();
+        }else{
+                sound->pauseBackgroundMusic();
+        }
 }
 
 void Splash::update(float delta){

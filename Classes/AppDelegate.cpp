@@ -2,8 +2,10 @@
 #include "SplashScene.hpp"
 #include "AppMacros.hpp"
 #include "MapBasicInfo.hpp"
-#include "PluginIAP/PluginIAP.h" 
+#include "PluginIAP/PluginIAP.h"
+#include "audio/include/SimpleAudioEngine.h"
 
+using namespace CocosDenshion;
 AppDelegate::AppDelegate()
 {
 }
@@ -64,14 +66,14 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 void AppDelegate::applicationDidEnterBackground() {
         
-        // if you use SimpleAudioEngine, it must be paused
-        // SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+        Director::getInstance()->stopAnimation();
+        SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+        SimpleAudioEngine::getInstance()->pauseAllEffects();
 }
 
 
 void AppDelegate::applicationWillEnterForeground() {
         Director::getInstance()->startAnimation();
-
-        // if you use SimpleAudioEngine, it must resume here
-        // SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+        SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+        SimpleAudioEngine::getInstance()->resumeAllEffects();
 }

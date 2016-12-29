@@ -303,11 +303,6 @@ void GameScene::initOperateBoard(){
 }
 
 void GameScene::initControlLayer(){
-        
-        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
-        
-        Director::getInstance()->getScheduler()->setTimeScale(game_speed);
-        
         auto visible_size = Director::getInstance()->getVisibleSize();
         _showAreaSize = visible_size;
         _controlLayer = Layer::create();
@@ -1384,6 +1379,12 @@ void GameScene::onEnter(){
         auto cache = UserDefault::getInstance();
         _curCoinsNo     = cache->getIntegerForKey(USER_CURRENT_COINS, 0);
         _curSupplyNo    = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO, 0);
+        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
+        
+        Director::getInstance()->getScheduler()->setTimeScale(game_speed);
+        
+        auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
+        sound->playBackgroundMusic(BACK_MUSIC_IN_BATTLE);
 }
 
 void GameScene::update(float delta){
@@ -1396,4 +1397,7 @@ void GameScene::onExit(){
         cache->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNo);
         cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curSupplyNo);
         cache->flush();
+        Director::getInstance()->getScheduler()->setTimeScale(1);
+        auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
+        sound->stopBackgroundMusic();
 }

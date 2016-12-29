@@ -1384,7 +1384,7 @@ void GameScene::onEnter(){
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         
         auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
-        sound->playBackgroundMusic(BACK_MUSIC_IN_BATTLE);
+        sound->playBackgroundMusic(BACK_MUSIC_IN_BATTLE, true);
 }
 
 void GameScene::update(float delta){

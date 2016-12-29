@@ -99,6 +99,7 @@ enum {
 #define BACK_MUSIC_LEVEL_SELECT         "sounds/level_select_bm.mp3"
 #define BACK_MUSIC_IN_BATTLE            "sounds/battle_scene_bm.mp3"
 
+#define SOUND_MUSIC_TOTAL_KEY           "_key_sound_music_total_switch"
 #define SOUND_EFFECT_SWITCH_KEY         "_key_sound_effect_switch"
 #define SOUND_EFFECT_VALUE_KEY          "_key_sound_effect_value"
 #define BACK_MUSIC_SWITCH_KEY           "_key_back_music_switch"

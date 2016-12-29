@@ -546,19 +546,39 @@ void LevelSelect::menuPlayHistory(Ref* pSender){
 
 
 void LevelSelect::menuSoundControl(Ref* btn){
-        bool is_effect_on = UserDefault::getInstance()->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
-        UserDefault::getInstance()->setBoolForKey(SOUND_EFFECT_SWITCH_KEY, !is_effect_on);
+        auto cache = UserDefault::getInstance();
+        auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
         
-        if (is_effect_on){
+        bool is_sound_on =cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
+        cache->setBoolForKey(SOUND_MUSIC_TOTAL_KEY, !is_sound_on);
+        
+        if (is_sound_on){
                 _soundCtrl->setNormalImage(Sprite::create("Sound_off.png"));
                 _soundCtrl->setSelectedImage(Sprite::create("Sound_off_sel.png"));
-                CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(0);
+                sound->pauseBackgroundMusic();
+                sound->pauseAllEffects();
+                cache->setBoolForKey(SOUND_EFFECT_SWITCH_KEY,   false);
+                cache->setBoolForKey(BACK_MUSIC_SWITCH_KEY,     false);
         }else{
                 _soundCtrl->setNormalImage(Sprite::create("Sound_on.png"));
                 _soundCtrl->setSelectedImage(Sprite::create("Sound_on_sel.png"));
-                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);
-                CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(1);
+                
+                float s_v = 0.01f * cache->getIntegerForKey(SOUND_EFFECT_VALUE_KEY);
+                sound->setEffectsVolume(s_v);
+                float m_v = 0.01f * cache->getIntegerForKey(BACK_MUSIC_VALUE_KEY);
+                sound->setBackgroundMusicVolume(m_v);
+                
+                sound->resumeBackgroundMusic();
+                sound->resumeAllEffects();
+                
+                cache->setBoolForKey(SOUND_EFFECT_SWITCH_KEY,   true);
+                cache->setBoolForKey(BACK_MUSIC_SWITCH_KEY,     true);
+                
+                
+                sound->playEffect(EFFECT_FILE_START_GAME);
         }
+        
+        cache->flush();
 }
 
 #pragma mark - loading bar
@@ -613,7 +633,7 @@ void LevelSelect::onEnter(){
         _mercenAriesNumLb->setString(tostr(_curMercenariesNum));
         
         auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
-        sound->playBackgroundMusic(BACK_MUSIC_LEVEL_SELECT);
+        sound->playBackgroundMusic(BACK_MUSIC_LEVEL_SELECT, true);
 }
 
 void LevelSelect::update(float delta){

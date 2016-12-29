@@ -122,6 +122,12 @@ enum {
 #define LEVEL_6_LOCK_STATE_KEY          "_key_level_6_lock_state"
 #define LEVEL_7_LOCK_STATE_KEY          "_key_level_7_lock_state"
 #define ADS_LOCK_STATE_KEY              "_key_ads_lock_state"
+#define CHARACTOR_2_LOCK_STATE_KEY      "_key_charactor_2_lock_state"
+#define CHARACTOR_3_LOCK_STATE_KEY      "_key_charactor_3_lock_state"
+#define CHARACTOR_4_LOCK_STATE_KEY      "_key_charactor_4_lock_state"
+#define CHARACTOR_5_LOCK_STATE_KEY      "_key_charactor_5_lock_state"
+#define CHARACTOR_6_LOCK_STATE_KEY      "_key_charactor_6_lock_state"
+#define CHARACTOR_7_LOCK_STATE_KEY      "_key_charactor_7_lock_state"
 
 
 

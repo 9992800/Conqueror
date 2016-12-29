@@ -351,6 +351,152 @@ void GolbalAnimations::initAnimation(){
 
 std::vector<AchievementData> SYSTEM_ACHIEVE_DATA = std::vector<AchievementData>();
 void INIT_ACHIEVE_DATA_BYDEFAULT(){
-        AchievementData data_1 = {
+        
+        auto cache = UserDefault::getInstance();
+        
+        bool has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_WIN_2, false);
+        AchievementData data_1 = {ACHIEVE_DATA_KEY_FIRST_WIN_2, has_got,ACHIEVE_BONUS_TYPE_COINS, 10,
+                ACHIEVE_BONUS_TYPE_BATTLEMAP, REWARDS_BATTLEMAP_3P,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                "Win 2 Players",
+                "Overcome enemy and occupy all islands."
         };
+        SYSTEM_ACHIEVE_DATA.push_back(data_1);
+        
+        
+        has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_WIN_3, false);
+        AchievementData data_2 = {ACHIEVE_DATA_KEY_FIRST_WIN_3, has_got,ACHIEVE_BONUS_TYPE_COINS, 12,
+                ACHIEVE_BONUS_TYPE_BATTLEMAP, REWARDS_BATTLEMAP_4P,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                "Win 3 Players",
+                "Overcome 2 enemies and occupy all islands."
+        };
+        SYSTEM_ACHIEVE_DATA.push_back(data_2);
+        
+        
+        has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_WIN_4, false);
+        AchievementData data_3 = {ACHIEVE_DATA_KEY_FIRST_WIN_4, has_got,ACHIEVE_BONUS_TYPE_COINS, 15,
+                ACHIEVE_BONUS_TYPE_BATTLEMAP, REWARDS_BATTLEMAP_5P,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                "Win 4 Players",
+                "Overcome 3 enemies and occupy all islands."
+        };
+        SYSTEM_ACHIEVE_DATA.push_back(data_3);
+        
+        
+        has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_WIN_5, false);
+        AchievementData data_4 = {ACHIEVE_DATA_KEY_FIRST_WIN_5, has_got,ACHIEVE_BONUS_TYPE_COINS, 18,
+                ACHIEVE_BONUS_TYPE_BATTLEMAP, REWARDS_BATTLEMAP_6P,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                "Win 5 Players",
+                "Overcome 3 enemies and occupy all islands."
+        };
+        SYSTEM_ACHIEVE_DATA.push_back(data_4);
+        
+        has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_WIN_6, false);
+        AchievementData data_5 = {ACHIEVE_DATA_KEY_FIRST_WIN_6, has_got,ACHIEVE_BONUS_TYPE_COINS, 21,
+                ACHIEVE_BONUS_TYPE_BATTLEMAP, REWARDS_BATTLEMAP_7P,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                "Win 6 Players",
+                "Overcome 5 enemies and occupy all islands."
+        };
+        SYSTEM_ACHIEVE_DATA.push_back(data_5);
+        
+        has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_WIN_7, false);
+        AchievementData data_6 = {ACHIEVE_DATA_KEY_FIRST_WIN_7, has_got,ACHIEVE_BONUS_TYPE_COINS, 26,
+                ACHIEVE_BONUS_TYPE_BATTLEMAP, REWARDS_BATTLEMAP_8P,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                "Win 7 Players",
+                "Overcome 6 enemies and occupy all islands."
+        };
+        SYSTEM_ACHIEVE_DATA.push_back(data_6);
+        
+        has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_WIN_8, false);
+        AchievementData data_7 = {ACHIEVE_DATA_KEY_FIRST_WIN_8, has_got,ACHIEVE_BONUS_TYPE_COINS, 32,
+                ACHIEVE_BONUS_TYPE_CHARACTER, 1,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                "Win 8 Players",
+                "Overcome 7 enemies and occupy all islands."
+        };
+        SYSTEM_ACHIEVE_DATA.push_back(data_7);
+        
+        has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_WIN_2TIMES, false);
+        AchievementData data_8 = {ACHIEVE_DATA_KEY_WIN_2TIMES, has_got,ACHIEVE_BONUS_TYPE_COINS, 20,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                "2 wins",
+                "Continuous win 2 times."
+        };
+        SYSTEM_ACHIEVE_DATA.push_back(data_8);
+        
+        has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_WIN_5TIMES, false);
+        AchievementData data_9 = {ACHIEVE_DATA_KEY_WIN_5TIMES, has_got,ACHIEVE_BONUS_TYPE_COINS, 60,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                "5 wins",
+                "Continuous win 5 times."
+        };
+        SYSTEM_ACHIEVE_DATA.push_back(data_9);
+        
+        
+        has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_WIN_10TIMES, false);
+        AchievementData data_10 = {ACHIEVE_DATA_KEY_WIN_10TIMES, has_got,ACHIEVE_BONUS_TYPE_COINS, 60,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                "10 wins",
+                "Continuous win 10 times."
+        };
+        SYSTEM_ACHIEVE_DATA.push_back(data_10);
+        
+        has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY, false);
+        AchievementData data_11 = {ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY, has_got,ACHIEVE_BONUS_TYPE_MERCENARY, 1,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                "First use mercenary",
+                "Use mercenary to make you stronger."
+        };
+        SYSTEM_ACHIEVE_DATA.push_back(data_11);
+        
+        
+        has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_BUY_COINS, false);
+        AchievementData data_12 = {ACHIEVE_DATA_KEY_FIRST_BUY_COINS, has_got,ACHIEVE_BONUS_TYPE_MERCENARY, 1,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                "First purchase",
+                "Buy coins in shopping screen."
+        };
+        SYSTEM_ACHIEVE_DATA.push_back(data_12);
+        
+        has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_ENGAGE, false);
+        AchievementData data_13 = {ACHIEVE_DATA_KEY_FIRST_ENGAGE, has_got,ACHIEVE_BONUS_TYPE_MERCENARY, 1,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                "First engage",
+                "Engage mercenary using coins."
+        };
+        SYSTEM_ACHIEVE_DATA.push_back(data_13);
+        
+        
+        has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_SHARE, false);
+        AchievementData data_14 = {ACHIEVE_DATA_KEY_FIRST_SHARE, has_got,ACHIEVE_BONUS_TYPE_COINS, 10,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                ACHIEVE_BONUS_TYPE_NONE, 0,
+                "First share",
+                "Share this game to your FB friends."
+        };
+        SYSTEM_ACHIEVE_DATA.push_back(data_14);
 }

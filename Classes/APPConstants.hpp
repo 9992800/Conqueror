@@ -38,14 +38,41 @@ enum {
         ACHIEVE_BONUS_TYPE_NONE = -1,
         ACHIEVE_BONUS_TYPE_COINS = 1,
         ACHIEVE_BONUS_TYPE_MERCENARY,
-        ACHIEVE_BONUS_TYPE_CHARACTER
+        ACHIEVE_BONUS_TYPE_CHARACTER,
+        ACHIEVE_BONUS_TYPE_BATTLEMAP
+};
+
+enum{
+        REWARDS_BATTLEMAP_3P = 1,
+        REWARDS_BATTLEMAP_4P,
+        REWARDS_BATTLEMAP_5P,
+        REWARDS_BATTLEMAP_6P,
+        REWARDS_BATTLEMAP_7P,
+        REWARDS_BATTLEMAP_8P
 };
 
 
-#define ACHIEVE_DATA_KEY_FIRST_WIN_ISLAND        "_key_achive_data_first_win_island"
+#define ACHIEVE_DATA_KEY_FIRST_WIN_2            "_key_achive_data_first_win_2"
+#define ACHIEVE_DATA_KEY_FIRST_WIN_3            "_key_achive_data_first_win_3"
+#define ACHIEVE_DATA_KEY_FIRST_WIN_4            "_key_achive_data_first_win_4"
+#define ACHIEVE_DATA_KEY_FIRST_WIN_5            "_key_achive_data_first_win_5"
+#define ACHIEVE_DATA_KEY_FIRST_WIN_6            "_key_achive_data_first_win_6"
+#define ACHIEVE_DATA_KEY_FIRST_WIN_7            "_key_achive_data_first_win_7"
+#define ACHIEVE_DATA_KEY_FIRST_WIN_8            "_key_achive_data_first_win_8"
+
+#define ACHIEVE_DATA_KEY_WIN_2TIMES             "_key_achive_data_win_2times"
+#define ACHIEVE_DATA_KEY_WIN_5TIMES             "_key_achive_data_win_5times"
+#define ACHIEVE_DATA_KEY_WIN_10TIMES            "_key_achive_data_win_10times"
+
+#define ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY    "_key_achive_data_first_use_mercenary"
+#define ACHIEVE_DATA_KEY_FIRST_BUY_COINS        "_key_achive_data_first_buy_coins"
+#define ACHIEVE_DATA_KEY_FIRST_ENGAGE           "_key_achive_data_first_engage"
+#define ACHIEVE_DATA_KEY_FIRST_SHARE            "_key_achive_data_first_share_game"
+
+
 struct AchievementData {
         std::string cache_key;
-        int bonus_status;
+        bool bonus_status;
         int bonus_type1;
         int bonus_value1;
         int bonus_type2;

@@ -25,6 +25,8 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/Scenes/ReplayLastScene.cpp \
                    ../../../Classes/Scenes/ShoppingScene.cpp \
                    ../../../Classes/Scenes/GameScene.cpp \
+                   ../../../Classes/Scenes/AchievementScene.cpp \
+                   ../../../Classes/Scenes/BuySupplyScene.cpp \
                    ../../../Classes/RandomMap/RandomMap.cpp \
                    ../../../Classes/RandomMap/ScreenCoordinate.cpp \
                    ../../../Classes/RandomMap/MapCreator.cpp \

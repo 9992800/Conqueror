@@ -75,6 +75,7 @@ struct AchievementData {
         int bonus_value4;
         std::string title;
         std::string desc;
+        std::string cup_name;
 };
 
 

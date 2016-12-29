@@ -29,6 +29,7 @@ private:
 private:
         ui::ListView* _listView;
         int _totalCount, _spawnCount;
+        float _itemTemplateWidth, _reuseItemOffset;
         std::vector<AchievementData> _achievementData;
 };
 

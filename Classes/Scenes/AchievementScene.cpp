@@ -50,7 +50,7 @@ bool Achievement::init() {
         _listView->setContentSize(Size(default_item->getContentSize().width,
                                        visible_size.height * 0.8f));
         _listView->setPosition(Vec2(visible_size.width * 0.02f, visible_size.height * 0.05f));
-        _listView->setScrollBarPositionFromCorner(Vec2(7, 7));
+        _listView->setScrollBarPositionFromCorner(Vec2(7, 7)); 
         scene_back->addChild(_listView);
         
         _listView->setItemModel(default_item);
@@ -67,7 +67,11 @@ bool Achievement::init() {
         }
         
         
-        _listView->setItemsMargin(8);
+        float spacing = 8;
+        _listView->setItemsMargin(spacing);
+        _itemTemplateWidth = default_item->getContentSize().width;
+        this->_reuseItemOffset = (_itemTemplateWidth + spacing) * _spawnCount;
+        
         this->scheduleUpdate();
         _listView->forceDoLayout();
         return true;
@@ -81,17 +85,17 @@ ui::Layout* Achievement::createListItem(){
         ui::Layout* default_item = ui::Layout::create();
         default_item->setBackGroundImage("achievement/achieve_item_back.png");
         auto default_item_size = default_back->getContentSize();
+        default_item_size.width *= 1.05f;
         default_item->setContentSize(default_item_size);
-        default_item_size.width += 50;
         
         auto achieve_title = ui::ImageView::create("achievement/achieve_title_back.png");
         auto title_size = achieve_title->getContentSize();
-        achieve_title->setPosition(Vec2(title_size.width * 0.45f,default_item_size.height - title_size.height * 0.5f));
+        achieve_title->setPosition(Vec2(title_size.width * 0.51f,default_item_size.height - title_size.height * 0.5f));
         default_item->addChild(achieve_title, 1, k_item_title_backgrd);
         
         
         auto item_tile_txt = ui::Text::create("Achievement Item", "fonts/arial.ttf", 28);
-        item_tile_txt->setPosition(Vec2(title_size.width *0.5f, title_size.height * 0.8f));
+        item_tile_txt->setPosition(Vec2(title_size.width *0.5f, title_size.height * 0.7f));
         achieve_title->addChild(item_tile_txt, 1, k_item_title_text);
         
         auto achieve_cup = ui::ImageView::create("achievement/achive_flag.png");
@@ -99,10 +103,15 @@ ui::Layout* Achievement::createListItem(){
         achieve_cup->setPosition(achieve_cup_size * 0.6f);
         default_item->addChild(achieve_cup, 2);
         
-        auto item_desc_txt = ui::Text::create("This is the description of the achievement.", "fonts/arial.ttf", 32);
+        auto item_desc_txt = ui::Text::create("    This is the description of the achievement.", "fonts/arial.ttf", 24);
         item_desc_txt->setPosition(Vec2(achieve_cup_size.width * 1.2f,
-                                        default_item_size.height * 0.8f));
+                                        default_item_size.height * 0.7f));
         item_desc_txt->setColor(Color3B::BLACK);
+        item_desc_txt->setAnchorPoint(Vec2(0.f, 1.0f));
+        item_desc_txt->ignoreContentAdaptWithSize(false);
+        item_desc_txt->setContentSize(default_item_size * 0.4);
+        
+        item_desc_txt->setTextHorizontalAlignment(TextHAlignment::LEFT);
         default_item->addChild(item_desc_txt, 3, k_item_desc_text);
         
         
@@ -112,7 +121,7 @@ ui::Layout* Achievement::createListItem(){
                                   default_item_size.height * 0.5f));
         butt_on->setTouchEnabled(true);
         butt_on->setTitleText("Get it");
-        butt_on->setTitleFontName("");
+        butt_on->setTitleFontName("fonts/arial.ttf");
         butt_on->setTitleFontSize(42);
         default_item->addChild(butt_on, 4, k_item_get_btn);
         

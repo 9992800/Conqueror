@@ -1211,7 +1211,7 @@ void GameScene::menuStartGame(Ref* pSender, Layer* parent){
 }
 
 void GameScene::menuExit(Ref* pSender){
-        CommonTipsDialog::showModalDialog((Node*)this, "您确定要退出吗？", [this](Ref* sender){
+        CommonTipsDialog::showModalDialog((Node*)this, "Are you sure to exit ?", [this](Ref* sender){
                 CommonTipsDialog::dismissDialog(this);
                 Director::getInstance()->popScene();
         });

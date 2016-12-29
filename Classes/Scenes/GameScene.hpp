@@ -115,6 +115,8 @@ private:
         CallFunc*       _afterBattleCallback, *_afterSupplyCallback;
         Layer           *_winDialogLayer, *_lostDialogLayer;
         int             _curCoinsNo, _curSupplyNo;
+        
+        bool            _soundSwitch, _musicSwitch;
 };
 
 

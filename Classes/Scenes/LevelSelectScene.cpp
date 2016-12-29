@@ -557,25 +557,23 @@ void LevelSelect::menuSoundControl(Ref* btn){
                 _soundCtrl->setSelectedImage(Sprite::create("Sound_off_sel.png"));
                 sound->pauseBackgroundMusic();
                 sound->pauseAllEffects();
-                cache->setBoolForKey(SOUND_EFFECT_SWITCH_KEY,   false);
-                cache->setBoolForKey(BACK_MUSIC_SWITCH_KEY,     false);
         }else{
                 _soundCtrl->setNormalImage(Sprite::create("Sound_on.png"));
                 _soundCtrl->setSelectedImage(Sprite::create("Sound_on_sel.png"));
                 
-                float s_v = 0.01f * cache->getIntegerForKey(SOUND_EFFECT_VALUE_KEY);
-                sound->setEffectsVolume(s_v);
-                float m_v = 0.01f * cache->getIntegerForKey(BACK_MUSIC_VALUE_KEY);
-                sound->setBackgroundMusicVolume(m_v);
-                
-                sound->resumeBackgroundMusic();
-                sound->resumeAllEffects();
-                
-                cache->setBoolForKey(SOUND_EFFECT_SWITCH_KEY,   true);
-                cache->setBoolForKey(BACK_MUSIC_SWITCH_KEY,     true);
-                
-                
                 sound->playEffect(EFFECT_FILE_START_GAME);
+                
+                if (_soundSwitch){
+                        float s_v = 0.01f * cache->getIntegerForKey(SOUND_EFFECT_VALUE_KEY);
+                        sound->setEffectsVolume(s_v);
+                        sound->resumeAllEffects();
+                }
+                
+                if (_musicSwitch){
+                        float m_v = 0.01f * cache->getIntegerForKey(BACK_MUSIC_VALUE_KEY);
+                        sound->setBackgroundMusicVolume(m_v);
+                        sound->resumeBackgroundMusic();
+                }
         }
         
         cache->flush();
@@ -634,10 +632,30 @@ void LevelSelect::onEnter(){
         
         auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
         sound->playBackgroundMusic(BACK_MUSIC_LEVEL_SELECT, true);
+        
         bool is_sound_on = data_cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
+        _soundSwitch = data_cache->getBoolForKey(SOUND_EFFECT_SWITCH_KEY);
+        _musicSwitch = data_cache->getBoolForKey(BACK_MUSIC_SWITCH_KEY);
+        
         if (!is_sound_on){
                 sound->pauseAllEffects();
                 sound->pauseBackgroundMusic();
+        }else {
+                if (_soundSwitch){
+                        float s_v = 0.01f * data_cache->getIntegerForKey(SOUND_EFFECT_VALUE_KEY);
+                        sound->setEffectsVolume(s_v);
+                }else{
+                        
+                        sound->pauseAllEffects();
+                }
+                
+                
+                if (_musicSwitch){
+                        float m_v = 0.01f * data_cache->getIntegerForKey(BACK_MUSIC_VALUE_KEY);
+                        sound->setBackgroundMusicVolume(m_v);
+                }else{
+                        sound->pauseBackgroundMusic();
+                }
         }
 }
 
@@ -664,5 +682,6 @@ void LevelSelect::onExit(){
         
         auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
         sound->stopBackgroundMusic();
+        sound->stopAllEffects();
 }
 

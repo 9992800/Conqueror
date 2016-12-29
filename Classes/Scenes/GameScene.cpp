@@ -1376,15 +1376,22 @@ void GameScene::onGetUserInfo(const sdkbox::FBGraphUser&){
 
 void GameScene::onEnter(){
         Layer::onEnter();
-        auto cache = UserDefault::getInstance();
+        
+        auto cache      = UserDefault::getInstance();
         _curCoinsNo     = cache->getIntegerForKey(USER_CURRENT_COINS, 0);
         _curSupplyNo    = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO, 0);
-        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
-        
+        int game_speed  = cache->getIntegerForKey(GAME_SPEED_KEY, 1);
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         
+        
+        bool is_sound_on = cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
+        _soundSwitch = cache->getBoolForKey(SOUND_EFFECT_SWITCH_KEY);
+        _musicSwitch = cache->getBoolForKey(BACK_MUSIC_SWITCH_KEY);
+        
         auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
-        sound->playBackgroundMusic(BACK_MUSIC_IN_BATTLE, true);
+        if (is_sound_on && _musicSwitch){
+                sound->playBackgroundMusic(BACK_MUSIC_IN_BATTLE, true);
+        }
 }
 
 void GameScene::update(float delta){
@@ -1393,6 +1400,7 @@ void GameScene::update(float delta){
 
 void GameScene::onExit(){
         Layer::onExit();
+        
         auto cache = UserDefault::getInstance();
         cache->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNo);
         cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curSupplyNo);
@@ -1400,4 +1408,5 @@ void GameScene::onExit(){
         Director::getInstance()->getScheduler()->setTimeScale(1);
         auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
         sound->stopBackgroundMusic();
+        sound->stopAllEffects();
 }

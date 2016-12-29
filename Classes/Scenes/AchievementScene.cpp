@@ -57,6 +57,8 @@ bool Achievement::init() {
         _listView->setGravity(ui::ListView::Gravity::CENTER_VERTICAL);
         this->_achievementData = GolbalConfig::getInstance()->getAchievementData();
         this->_totalCount = (int)_achievementData.size();
+        this->_bufferZone = default_item->getContentSize().height * 1.1f;
+        
         for (int i = 0; i < this->_totalCount; ++i) {
                 if (i < this->_spawnCount) {
                         ui::Widget* item = default_item->clone();
@@ -100,7 +102,7 @@ ui::Layout* Achievement::createListItem(){
         default_item->addChild(achieve_title, 1, k_item_title_backgrd);
         
         
-        auto item_tile_txt = ui::Text::create("Achievement Item", "fonts/arial.ttf", 28);
+        auto item_tile_txt = ui::Text::create("Achievement Item", "fonts/arial.ttf", 30);
         item_tile_txt->setPosition(Vec2(title_size.width *0.5f, title_size.height * 0.7f));
         achieve_title->addChild(item_tile_txt, 1, k_item_title_text);
         
@@ -109,10 +111,10 @@ ui::Layout* Achievement::createListItem(){
         achieve_cup->setPosition(achieve_cup_size * 0.6f);
         default_item->addChild(achieve_cup, 2);
         
-        auto item_desc_txt = ui::Text::create("    This is the description of the achievement.", "fonts/arial.ttf", 24);
+        auto item_desc_txt = ui::Text::create("    This is the description of the achievement.", "fonts/arial.ttf", 32);
         item_desc_txt->setPosition(Vec2(achieve_cup_size.width * 1.2f,
                                         default_item_size.height * 0.7f));
-        item_desc_txt->setColor(Color3B::BLACK);
+        item_desc_txt->setColor(Color3B::ORANGE);
         item_desc_txt->setAnchorPoint(Vec2(0.f, 1.0f));
         item_desc_txt->ignoreContentAdaptWithSize(false);
         item_desc_txt->setContentSize(default_item_size * 0.4);
@@ -127,7 +129,7 @@ ui::Layout* Achievement::createListItem(){
         butt_on->setTouchEnabled(true);
         butt_on->setTitleText("Get it");
         butt_on->setTitleFontName("fonts/arial.ttf");
-        butt_on->setTitleFontSize(42);
+        butt_on->setTitleFontSize(38);
         default_item->addChild(butt_on, 4, k_item_get_btn);
         
         return default_item;

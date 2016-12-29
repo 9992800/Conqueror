@@ -24,7 +24,7 @@ public:
         CREATE_FUNC(Achievement);
         virtual void update(float dt) override;
         Achievement() : _spawnCount(5),
-        _bufferZone(45), //bufferZone should be larger than List item width
+        _bufferZone(90), //bufferZone should be larger than List item width
         _updateTimer(0),
         _updateInterval(1.0f / 24), // you could tweak this value to adjust ListView data update rate
         _lastContentPosY(0), //use this value to detect if we are scrolling left or right

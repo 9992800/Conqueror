@@ -1195,6 +1195,8 @@ void GameScene::menuEndTurn(Ref* pSender){
 }
 
 void GameScene::createNewMap(Ref* pSender){
+        auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
+        sound->playEffect(EFFECT_FILE_CHANGE_MAP);
         _curGameData->release();
         _curGameData = _theGameLogic->initGameData(_playerNumber, _charactorIdx, _colorIdx);
         this->removeChildByTag(key_map_back_layer);
@@ -1204,6 +1206,8 @@ void GameScene::createNewMap(Ref* pSender){
 }
 
 void GameScene::menuStartGame(Ref* pSender, Layer* parent){
+        auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
+        sound->playEffect(EFFECT_FILE_START_GAME);
         this->initAreaTcShow();
         _theGameLogic->initHistoryRecord();
         parent->setVisible(false);

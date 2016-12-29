@@ -89,6 +89,7 @@ enum {
 #define AI_ATTACK_THINKING_SIZE (AREA_MAX * AREA_MAX) 
 
 #define EFFECT_FILE_START_GAME          "sounds/start.mp3"
+#define EFFECT_FILE_CHANGE_MAP          "sounds/new_map.mp3"
 #define EFFECT_FILE_WIN                 "sounds/win.mp3"
 #define EFFECT_FILE_DEFEAT              "sounds/defeat.mp3"
 #define EFFECT_FILE_SELECTED            "sounds/selected.mp3"

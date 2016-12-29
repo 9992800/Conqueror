@@ -55,11 +55,10 @@ bool Achievement::init() {
         
         _listView->setItemModel(default_item);
         _listView->setGravity(ui::ListView::Gravity::CENTER_VERTICAL);
-        _achievementData = GolbalConfig::getInstance()->getAchievementData();
-        _totalCount = (int)_achievementData.size();
-        _spawnCount = 3;
-        for (int i = 0; i < _totalCount; ++i) {
-                if (i < _spawnCount) {
+        this->_achievementData = GolbalConfig::getInstance()->getAchievementData();
+        this->_totalCount = (int)_achievementData.size();
+        for (int i = 0; i < this->_totalCount; ++i) {
+                if (i < this->_spawnCount) {
                         ui::Widget* item = default_item->clone();
                         this->initItemDetails(item, i);
                         _listView->pushBackCustomItem(item);
@@ -68,12 +67,19 @@ bool Achievement::init() {
         
         
         float spacing = 8;
-        _listView->setItemsMargin(spacing);
-        _itemTemplateWidth = default_item->getContentSize().width;
-        this->_reuseItemOffset = (_itemTemplateWidth + spacing) * _spawnCount;
+        _listView->setItemsMargin(spacing);        
+        _itemTemplateHeight = default_item->getContentSize().height;
+        this->_reuseItemOffset = (_itemTemplateHeight + spacing) * _spawnCount;
         
         this->scheduleUpdate();
         _listView->forceDoLayout();
+        
+        _listView->forceDoLayout();
+        float totalHeight = _itemTemplateHeight * _totalCount + (_totalCount - 1) * spacing;
+        _listView->setInnerContainerSize(Size(_listView->getInnerContainerSize().width, totalHeight));
+        _listView->jumpToTop();
+        
+        
         return true;
 }
 
@@ -110,7 +116,6 @@ ui::Layout* Achievement::createListItem(){
         item_desc_txt->setAnchorPoint(Vec2(0.f, 1.0f));
         item_desc_txt->ignoreContentAdaptWithSize(false);
         item_desc_txt->setContentSize(default_item_size * 0.4);
-        
         item_desc_txt->setTextHorizontalAlignment(TextHAlignment::LEFT);
         default_item->addChild(item_desc_txt, 3, k_item_desc_text);
         
@@ -130,4 +135,72 @@ ui::Layout* Achievement::createListItem(){
 
 void Achievement::initItemDetails(ui::Widget* achieve_item, int idx){
         achieve_item->setTag(idx);
+        
+        auto item_desc = (ui::Text*)achieve_item->getChildByTag(k_item_desc_text);;
+        AchievementData data = _achievementData.at(idx);
+        item_desc->setString(data.desc);
+        
+        auto tittle_back = achieve_item->getChildByTag(k_item_title_backgrd);
+        auto item_title = (ui::Text*)tittle_back->getChildByTag(k_item_title_text);
+        item_title->setString(data.title);
+}
+
+void Achievement::update(float dt){
+        this->_updateTimer += dt;
+        if (this->_updateTimer < this->_updateInterval) {
+                return;
+        }
+        
+        float totalHeight = _itemTemplateHeight * _totalCount + (_totalCount - 1) * 4;
+        
+        auto listViewHeight = _listView->getContentSize().height;
+        
+        this->_updateTimer = 0;
+        auto isDown = this->_listView->getInnerContainerPosition().y < this->_lastContentPosY;
+        auto items = _listView->getItems();
+        
+        for (int i = 0; i < _spawnCount && i < _totalCount; ++i) {
+                auto item = items.at(i);
+                auto itemPos = this->getItemPositionYInView(item);
+                if (isDown) {
+                        if (itemPos < -_bufferZone && item->getPosition().y + _reuseItemOffset < totalHeight) {
+                                int itemID = item->getTag() - (int)items.size();
+                                item->setPositionY(item->getPositionY() + _reuseItemOffset);
+                                CCLOG("itemPos = %f, itemID = %d, tempateID = %d", itemPos, itemID, i);
+                                this->updateItem(itemID, i);
+                        }
+                }
+                else {
+                        if (itemPos > _bufferZone + listViewHeight &&
+                            item->getPosition().y - _reuseItemOffset >= 0) {
+                                
+                                item->setPositionY(item->getPositionY() - _reuseItemOffset);
+                                int itemID = item->getTag() + (int)items.size();
+                                CCLOG("itemPos = %f, itemID = %d, templateID = %d", itemPos, itemID, i);
+                                this->updateItem(itemID, i);
+                        }
+                }
+        }
+        //update ListView Items
+        this->_lastContentPosY = this->_listView->getInnerContainer()->getPosition().y;
+}
+
+
+float Achievement::getItemPositionYInView(cocos2d::ui::Widget* item)const{
+        auto worldPos = item->getParent()->convertToWorldSpaceAR(item->getPosition());
+        auto viewPos = this->_listView->convertToNodeSpaceAR(worldPos);
+        return viewPos.y;
+}
+
+void Achievement::updateItem(int itemID, int templateID)
+{
+        auto itemTemplate = _listView->getItems().at(templateID);
+        auto item_desc = (ui::Text*)itemTemplate->getChildByTag(k_item_desc_text);
+        itemTemplate->setTag(itemID);
+        AchievementData data = _achievementData.at(itemID);
+        item_desc->setString(data.desc);
+        
+        auto tittle_back = itemTemplate->getChildByTag(k_item_title_backgrd);
+        auto item_title = (ui::Text*)tittle_back->getChildByTag(k_item_title_text);
+        item_title->setString(data.title);
 }

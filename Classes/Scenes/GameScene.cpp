@@ -800,8 +800,15 @@ void GameScene::gameAction(){
 }
 
 void GameScene::afterFightFinished(){
-        
-        int area_id = ATTACK_RES_DEFEATED == _attackResult->_result ? _attackResult->_fromArea : _attackResult->_toArea;
+        int area_id;
+        auto sound =  CocosDenshion::SimpleAudioEngine::getInstance();
+        if (ATTACK_RES_DEFEATED == _attackResult->_result){
+                area_id = _attackResult->_fromArea;
+                sound->playEffect(EFFECT_FILE_DEFEAT);
+        }else{
+                area_id = _attackResult->_toArea;
+                sound->playEffect(EFFECT_FILE_WIN);
+        }
         
         if (_animationIsOn && GAME_STATUS_INUSERTURN == _gameStatus){
                 
@@ -810,9 +817,9 @@ void GameScene::afterFightFinished(){
                 
                 auto hide = ScaleTo::create(0.4f, .1f);
                 _animationLayer->runAction(Sequence::create(hide,
-                                                            CallFunc::create( [&](){
-                        _animationLayer->setVisible(false);
-                }), occupay_cc, NULL));
+                        CallFunc::create( [&](){
+                                _animationLayer->setVisible(false);
+                        }), occupay_cc, NULL));
                 
         }else{
                 _theGameLogic->occupayAnimation(area_id, _afterBattleCallback);

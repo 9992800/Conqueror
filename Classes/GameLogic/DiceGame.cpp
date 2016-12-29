@@ -498,7 +498,7 @@ FightResultData* DiceGame::startBattle(){
 }
 
 FightResultData* DiceGame::startPlayerAttack(int cell_id){
-        
+        auto sound =  CocosDenshion::SimpleAudioEngine::getInstance();
         int area_id = _data->_cel[cell_id];
         
         AreaData* area = _data->_areaData[area_id];
@@ -515,7 +515,7 @@ FightResultData* DiceGame::startPlayerAttack(int cell_id){
                 if (owner_uid == _data->_userId){
                         _data->_areaFrom = area_id;
                         area->drawAsSelected();                        
-                        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_SELECTED);
+                       sound->playEffect(EFFECT_FILE_SELECTED);
                         return data;
                 }else{
                         return data;
@@ -535,6 +535,7 @@ FightResultData* DiceGame::startPlayerAttack(int cell_id){
                                         
                                         _data->_areaFrom = area_id;
                                         area->drawAsSelected();
+                                        sound->playEffect(EFFECT_FILE_SELECTED);
                                 }
                                 
                                 return data;

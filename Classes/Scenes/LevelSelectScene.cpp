@@ -288,9 +288,9 @@ void LevelSelect::initMainMenu(){
 }
 
 void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
-        
-        bool is_effect_on = UserDefault::getInstance()->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
-        if (is_effect_on){
+        auto cache = UserDefault::getInstance();
+        bool is_sound_on =cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
+        if (is_sound_on){
                 _soundCtrl = MenuItemImage::create("Sound_on.png", "Sound_on_sel.png",
                                                    CC_CALLBACK_1(LevelSelect::menuSoundControl, this));
         }else{
@@ -585,7 +585,7 @@ void LevelSelect::menuSoundControl(Ref* btn){
 
 void LevelSelect::onEnter(){
         Layer::onEnter();
-        
+        auto data_cache = UserDefault::getInstance();
         auto back_layer = this->getChildByTag(kMainMenuBackTag);
         auto chengqiang = back_layer->getChildByTag(kMenuGreatWallTag);
         auto great_wall_size = chengqiang->getContentSize();
@@ -634,6 +634,11 @@ void LevelSelect::onEnter(){
         
         auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
         sound->playBackgroundMusic(BACK_MUSIC_LEVEL_SELECT, true);
+        bool is_sound_on = data_cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
+        if (!is_sound_on){
+                sound->pauseAllEffects();
+                sound->pauseBackgroundMusic();
+        }
 }
 
 void LevelSelect::update(float delta){
@@ -652,10 +657,10 @@ void LevelSelect::onExit(){
         auto back_layer = this->getChildByTag(kMainMenuBackTag);
         auto the_wall = back_layer->getChildByTag(kMenuGreatWallTag);
         the_wall->removeAllChildren();
-        
-        UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNum);
-        UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curMercenariesNum);
-        UserDefault::getInstance()->flush();
+        auto cache = UserDefault::getInstance();
+        cache->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNum);
+        cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curMercenariesNum);
+        cache->flush();
         
         auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
         sound->stopBackgroundMusic();

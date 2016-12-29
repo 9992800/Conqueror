@@ -65,12 +65,12 @@ Color4F selected_color = Color4F(0.2, 0.0, 0.0, 0.7);
 
 
 
-static GolbalAnimations* s_SharedBean;
+static GolbalConfig* s_SharedBean;
 
-GolbalAnimations* GolbalAnimations::getInstance()
+GolbalConfig* GolbalConfig::getInstance()
 {
         if (!s_SharedBean){
-                s_SharedBean = new (std::nothrow) GolbalAnimations();
+                s_SharedBean = new (std::nothrow) GolbalConfig();
                 CCASSERT(s_SharedBean, "FATAL: Not enough memory");
                 s_SharedBean->init();
         }
@@ -78,11 +78,11 @@ GolbalAnimations* GolbalAnimations::getInstance()
         return s_SharedBean;
 }
 
-bool GolbalAnimations::init(){
+bool GolbalConfig::init(){
         return true;
 }
 
-GolbalAnimations::GolbalAnimations(){        
+GolbalConfig::GolbalConfig(){
         
         auto frameCache = SpriteFrameCache::getInstance();
         frameCache->addSpriteFramesWithFile("anim/hanshirun.plist", "anim/hanshirun.png");
@@ -99,7 +99,7 @@ GolbalAnimations::GolbalAnimations(){
         frameCache->addSpriteFramesWithFile("anim/dice_colors.plist", "anim/dice_colors.png");
 }
 
-GolbalAnimations::~GolbalAnimations(){
+GolbalConfig::~GolbalConfig(){
         
         
         auto frameCache = SpriteFrameCache::getInstance();
@@ -117,7 +117,7 @@ GolbalAnimations::~GolbalAnimations(){
         frameCache->removeSpriteFramesFromFile("anim/dice_colors.plist");
 }
 
-void GolbalAnimations::initAnimation(){
+void GolbalConfig::initAnimation(){
         auto frameCache = SpriteFrameCache::getInstance();
         float frame_delay = 1.f / 24;
         //战士
@@ -349,8 +349,9 @@ void GolbalAnimations::initAnimation(){
 
 
 
-std::vector<AchievementData> SYSTEM_ACHIEVE_DATA = std::vector<AchievementData>();
-void INIT_ACHIEVE_DATA_BYDEFAULT(){
+
+void GolbalConfig::initAchievementData(){
+        _systemAchievementData = std::vector<AchievementData>();
         
         auto cache = UserDefault::getInstance();
         
@@ -362,7 +363,7 @@ void INIT_ACHIEVE_DATA_BYDEFAULT(){
                 "Win 2 Players",
                 "Overcome enemy and occupy all islands."
         };
-        SYSTEM_ACHIEVE_DATA.push_back(data_1);
+        _systemAchievementData.push_back(data_1);
         
         
         has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_WIN_3, false);
@@ -373,7 +374,7 @@ void INIT_ACHIEVE_DATA_BYDEFAULT(){
                 "Win 3 Players",
                 "Overcome 2 enemies and occupy all islands."
         };
-        SYSTEM_ACHIEVE_DATA.push_back(data_2);
+        _systemAchievementData.push_back(data_2);
         
         
         has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_WIN_4, false);
@@ -384,7 +385,7 @@ void INIT_ACHIEVE_DATA_BYDEFAULT(){
                 "Win 4 Players",
                 "Overcome 3 enemies and occupy all islands."
         };
-        SYSTEM_ACHIEVE_DATA.push_back(data_3);
+        _systemAchievementData.push_back(data_3);
         
         
         has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_WIN_5, false);
@@ -395,7 +396,7 @@ void INIT_ACHIEVE_DATA_BYDEFAULT(){
                 "Win 5 Players",
                 "Overcome 3 enemies and occupy all islands."
         };
-        SYSTEM_ACHIEVE_DATA.push_back(data_4);
+        _systemAchievementData.push_back(data_4);
         
         has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_WIN_6, false);
         AchievementData data_5 = {ACHIEVE_DATA_KEY_FIRST_WIN_6, has_got,ACHIEVE_BONUS_TYPE_COINS, 21,
@@ -405,7 +406,7 @@ void INIT_ACHIEVE_DATA_BYDEFAULT(){
                 "Win 6 Players",
                 "Overcome 5 enemies and occupy all islands."
         };
-        SYSTEM_ACHIEVE_DATA.push_back(data_5);
+        _systemAchievementData.push_back(data_5);
         
         has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_WIN_7, false);
         AchievementData data_6 = {ACHIEVE_DATA_KEY_FIRST_WIN_7, has_got,ACHIEVE_BONUS_TYPE_COINS, 26,
@@ -415,7 +416,7 @@ void INIT_ACHIEVE_DATA_BYDEFAULT(){
                 "Win 7 Players",
                 "Overcome 6 enemies and occupy all islands."
         };
-        SYSTEM_ACHIEVE_DATA.push_back(data_6);
+        _systemAchievementData.push_back(data_6);
         
         has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_WIN_8, false);
         AchievementData data_7 = {ACHIEVE_DATA_KEY_FIRST_WIN_8, has_got,ACHIEVE_BONUS_TYPE_COINS, 32,
@@ -425,7 +426,7 @@ void INIT_ACHIEVE_DATA_BYDEFAULT(){
                 "Win 8 Players",
                 "Overcome 7 enemies and occupy all islands."
         };
-        SYSTEM_ACHIEVE_DATA.push_back(data_7);
+        _systemAchievementData.push_back(data_7);
         
         has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_WIN_2TIMES, false);
         AchievementData data_8 = {ACHIEVE_DATA_KEY_WIN_2TIMES, has_got,ACHIEVE_BONUS_TYPE_COINS, 20,
@@ -435,7 +436,7 @@ void INIT_ACHIEVE_DATA_BYDEFAULT(){
                 "2 wins",
                 "Continuous win 2 times."
         };
-        SYSTEM_ACHIEVE_DATA.push_back(data_8);
+        _systemAchievementData.push_back(data_8);
         
         has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_WIN_5TIMES, false);
         AchievementData data_9 = {ACHIEVE_DATA_KEY_WIN_5TIMES, has_got,ACHIEVE_BONUS_TYPE_COINS, 60,
@@ -445,7 +446,7 @@ void INIT_ACHIEVE_DATA_BYDEFAULT(){
                 "5 wins",
                 "Continuous win 5 times."
         };
-        SYSTEM_ACHIEVE_DATA.push_back(data_9);
+        _systemAchievementData.push_back(data_9);
         
         
         has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_WIN_10TIMES, false);
@@ -456,7 +457,7 @@ void INIT_ACHIEVE_DATA_BYDEFAULT(){
                 "10 wins",
                 "Continuous win 10 times."
         };
-        SYSTEM_ACHIEVE_DATA.push_back(data_10);
+        _systemAchievementData.push_back(data_10);
         
         has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY, false);
         AchievementData data_11 = {ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY, has_got,ACHIEVE_BONUS_TYPE_MERCENARY, 1,
@@ -466,7 +467,7 @@ void INIT_ACHIEVE_DATA_BYDEFAULT(){
                 "First use mercenary",
                 "Use mercenary to make you stronger."
         };
-        SYSTEM_ACHIEVE_DATA.push_back(data_11);
+        _systemAchievementData.push_back(data_11);
         
         
         has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_BUY_COINS, false);
@@ -477,7 +478,7 @@ void INIT_ACHIEVE_DATA_BYDEFAULT(){
                 "First purchase",
                 "Buy coins in shopping screen."
         };
-        SYSTEM_ACHIEVE_DATA.push_back(data_12);
+        _systemAchievementData.push_back(data_12);
         
         has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_ENGAGE, false);
         AchievementData data_13 = {ACHIEVE_DATA_KEY_FIRST_ENGAGE, has_got,ACHIEVE_BONUS_TYPE_MERCENARY, 1,
@@ -487,7 +488,7 @@ void INIT_ACHIEVE_DATA_BYDEFAULT(){
                 "First engage",
                 "Engage mercenary using coins."
         };
-        SYSTEM_ACHIEVE_DATA.push_back(data_13);
+        _systemAchievementData.push_back(data_13);
         
         
         has_got = cache->getBoolForKey(ACHIEVE_DATA_KEY_FIRST_SHARE, false);
@@ -498,5 +499,5 @@ void INIT_ACHIEVE_DATA_BYDEFAULT(){
                 "First share",
                 "Share this game to your FB friends."
         };
-        SYSTEM_ACHIEVE_DATA.push_back(data_14);
+        _systemAchievementData.push_back(data_14);
 }

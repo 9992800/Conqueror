@@ -12,6 +12,7 @@
 #include "AppMacros.hpp"
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
+#include "APPConstants.hpp"
 
 USING_NS_CC;
 #include <stdio.h>
@@ -24,9 +25,11 @@ public:
         
 private:
         ui::Layout* createListItem();
+        void initItemDetails(ui::Widget*, int);
 private:
         ui::ListView* _listView;
-        int _totalCount;
+        int _totalCount, _spawnCount;
+        std::vector<AchievementData> _achievementData;
 };
 
 #endif /* AchievementScene_hpp */

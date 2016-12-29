@@ -24,33 +24,6 @@ extern Color4F AreaBackGroundColors[];
 extern Color4F border_color;
 extern Color4F selected_color;
 
-class GolbalAnimations:public Ref{
-public:
-        static GolbalAnimations* getInstance();
-        void initAnimation();
-protected:
-        GolbalAnimations();
-        ~GolbalAnimations();
-        bool init();
-};
-
-enum {
-        ACHIEVE_BONUS_TYPE_NONE = -1,
-        ACHIEVE_BONUS_TYPE_COINS = 1,
-        ACHIEVE_BONUS_TYPE_MERCENARY,
-        ACHIEVE_BONUS_TYPE_CHARACTER,
-        ACHIEVE_BONUS_TYPE_BATTLEMAP
-};
-
-enum{
-        REWARDS_BATTLEMAP_3P = 1,
-        REWARDS_BATTLEMAP_4P,
-        REWARDS_BATTLEMAP_5P,
-        REWARDS_BATTLEMAP_6P,
-        REWARDS_BATTLEMAP_7P,
-        REWARDS_BATTLEMAP_8P
-};
-
 
 #define ACHIEVE_DATA_KEY_FIRST_WIN_2            "_key_achive_data_first_win_2"
 #define ACHIEVE_DATA_KEY_FIRST_WIN_3            "_key_achive_data_first_win_3"
@@ -70,6 +43,25 @@ enum{
 #define ACHIEVE_DATA_KEY_FIRST_SHARE            "_key_achive_data_first_share_game"
 
 
+
+enum {
+        ACHIEVE_BONUS_TYPE_NONE = -1,
+        ACHIEVE_BONUS_TYPE_COINS = 1,
+        ACHIEVE_BONUS_TYPE_MERCENARY,
+        ACHIEVE_BONUS_TYPE_CHARACTER,
+        ACHIEVE_BONUS_TYPE_BATTLEMAP
+};
+
+enum{
+        REWARDS_BATTLEMAP_3P = 1,
+        REWARDS_BATTLEMAP_4P,
+        REWARDS_BATTLEMAP_5P,
+        REWARDS_BATTLEMAP_6P,
+        REWARDS_BATTLEMAP_7P,
+        REWARDS_BATTLEMAP_8P
+};
+
+
 struct AchievementData {
         std::string cache_key;
         bool bonus_status;
@@ -85,7 +77,21 @@ struct AchievementData {
         std::string desc;
 };
 
-extern std::vector<AchievementData> SYSTEM_ACHIEVE_DATA;
-extern void INIT_ACHIEVE_DATA_BYDEFAULT();
 
+
+class GolbalConfig:public Ref{
+public:
+        static GolbalConfig* getInstance();
+        void initAnimation();
+        void initAchievementData();
+        inline std::vector<AchievementData>& getAchievementData(){
+                return this->_systemAchievementData;
+        }
+protected:
+        GolbalConfig();
+        ~GolbalConfig();
+        bool init();
+private:
+        std::vector<AchievementData> _systemAchievementData;
+};
 #endif /* APPConstants_hpp */

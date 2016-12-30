@@ -668,7 +668,6 @@ void LevelSelect::onEnter(){
                         float s_v = 0.01f * data_cache->getIntegerForKey(SOUND_EFFECT_VALUE_KEY, 50);
                         _soundEngine->setEffectsVolume(s_v);
                 }else{
-                        
                         _soundEngine->pauseAllEffects();
                 }
                 

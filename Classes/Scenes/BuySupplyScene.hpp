@@ -27,7 +27,7 @@ public:
         ,_curLisntener(nullptr){
         }
         
-        inline void addParchseListner(fbBuySupplyCallback cb){
+        inline void addParchseListner(const fbBuySupplyCallback& cb){
                 this->_curLisntener = cb;
         }
 

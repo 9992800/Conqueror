@@ -193,9 +193,14 @@ bool Shopping::init(){
 
 #pragma mark - menu function
 void Shopping::buyItems(Ref*, std::string product_id){
-        Product p = _productsMap.find(product_id)->second;
-        IAP::purchase(p.name);
         if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
+        std::map<std::string, Product>::iterator it =  _productsMap.find(product_id);
+        if (it == _productsMap.end()){
+                return;
+        }
+        
+        Product p = it->second;
+        IAP::purchase(p.name);
 }
 
 #pragma mark - payment callback

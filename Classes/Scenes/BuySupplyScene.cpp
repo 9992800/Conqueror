@@ -97,9 +97,9 @@ void BuySupply::menuSpendCoins(Ref*btn, int result){
                 cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
                 cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, cur_mercenaries);
                 cache->flush();
-                this->removeFromParentAndCleanup(true);
                 if (this->_curLisntener){
                         _curLisntener();
                 }
+                this->removeFromParentAndCleanup(true);
         }
 }

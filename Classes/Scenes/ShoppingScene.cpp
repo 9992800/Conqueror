@@ -164,6 +164,27 @@ bool Shopping::init(){
         coins_item_1480->addChild(item_price_1480);
         _productPriceMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_1480COINS_KEY,
                                                                item_price_1480));
+        
+        
+        auto coins_back = Sprite::create("level/coind_back.png");
+        auto coins_back_size = coins_back->getContentSize();
+        Vec2 coins_back_pos = Vec2(visible_size  - coins_back_size);
+        coins_back->setPosition(coins_back_pos);
+        
+        auto coins_show = Sprite::create("level/coins_show.png");
+        auto coins_show_size = coins_show->getContentSize();
+        Vec2 coins_pos = Vec2(coins_back_size.width,
+                              coins_back_size.height * 0.5f);
+        coins_show->setPosition(coins_pos);
+        coins_back->addChild(coins_show);
+        
+        _coinsNumLb = Label::createWithSystemFont("0", "fonts/arial.ttf", 32);
+        _coinsNumLb->setPosition(coins_back_size * 0.5f);
+        coins_back->addChild(_coinsNumLb);
+        
+        back_ground->addChild(coins_back);
+        
+        
         return true;
 }
 
@@ -201,7 +222,7 @@ void Shopping::onSuccess(const Product& p){
         
         cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
         cache->flush();
-        
+        _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
         //TODO::show coins adding animations....
 }
 

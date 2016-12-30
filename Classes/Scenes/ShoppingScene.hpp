@@ -47,6 +47,7 @@ private:
         
         bool                                    _soundTotalOn;
         CocosDenshion::SimpleAudioEngine*       _soundEngine;
+        Label*                                  _coinsNumLb;
 };
 
 #endif /* ShoppingScene_hpp */

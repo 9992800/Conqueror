@@ -344,13 +344,13 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
          */
         
         auto arm_back = Sprite::create("level/coind_back.png");
-        Vec2 arm_back_pos = Vec2(coins_back_pos.x - coins_back_size.width * 1.2f , coins_back_pos.y);
+        Vec2 arm_back_pos = Vec2(coins_back_pos.x - coins_back_size.width * 1.4f , coins_back_pos.y);
         auto arm_back_size = arm_back->getContentSize();
         arm_back->setPosition(arm_back_pos);
         
         auto arm_show = MenuItemImage::create("level/dice_show.png", "");
         auto arm_show_size = arm_show->getContentSize();
-        Vec2 arm_pos = Vec2(arm_back_size.width - arm_show_size.width,
+        Vec2 arm_pos = Vec2(arm_back_size.width,
                             arm_back_size.height * 0.5f);
         arm_show->setPosition(arm_pos);
         arm_back->addChild(arm_show);
@@ -375,7 +375,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         auto online_game = MenuItemImage::create("online_battle.png", "online_battle_sel.png",
                                                  CC_CALLBACK_1(LevelSelect::menuOnlineBattle, this));
         online_game->setPosition(Vec2(online_game->getContentSize().width / 2,
-                                      add_arm_pos.y));
+                                      coins_back_pos.y));
         
         
         auto menu = Menu::create(_soundCtrl, system_setting, start_game,

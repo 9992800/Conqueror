@@ -16,13 +16,16 @@
 
 USING_NS_CC;
 using namespace sdkbox;
-#include <stdio.h>
+
 class Shopping : public cocos2d::Layer, public sdkbox::IAPListener
 {
 public:
         static Scene* createScene();
         virtual bool init() override;
         CREATE_FUNC(Shopping);
+        ~Shopping(){
+                IAP::removeListener();
+        }
         
 private:
         void onInitialized(bool success)override;

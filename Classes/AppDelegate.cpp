@@ -1,8 +1,7 @@
 #include "AppDelegate.hpp"
 #include "SplashScene.hpp"
 #include "AppMacros.hpp"
-#include "MapBasicInfo.hpp"
-#include "PluginIAP/PluginIAP.h"
+#include "MapBasicInfo.hpp" 
 #include "audio/include/SimpleAudioEngine.h"
 
 using namespace CocosDenshion;
@@ -22,8 +21,6 @@ void AppDelegate::initGLContextAttrs()
 
 
 bool AppDelegate::applicationDidFinishLaunching() {
-        
-        sdkbox::IAP::init();
         
         auto director = Director::getInstance();
         auto glview = director->getOpenGLView();

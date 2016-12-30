@@ -23,6 +23,10 @@ bool Shopping::init(){
 //        IAP::refresh();
 //        IAP::restore();
         
+        _productPriceMap = std::map<std::string, Label*>();
+        _productsMap     = std::map<std::string, Product>();
+        
+        
         auto visible_size = Director::getInstance()->getVisibleSize();
         
         auto back_ground = Sprite::create("shopping/shopping_back.png");
@@ -156,10 +160,6 @@ bool Shopping::init(){
         coins_item_1480->addChild(item_price_1480);
         _productPriceMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_1480COINS_KEY,
                                                                item_price_1480));
-        
-        _productPriceMap = std::map<std::string, Label*>();
-        _productsMap     = std::map<std::string, Product> ();
-        
         return true;
 }
 
@@ -206,30 +206,26 @@ void Shopping::onCanceled(const Product& p){
 }
 
 void Shopping::onProductRequestSuccess(const std::vector<Product>& products){
-        
-        CCLOG("IAP: ========= IAP Item =========");
-        
-//        _productsMap.clear();
-//        _productPriceMap.clear();
-//        for (int i=0; i < products.size(); i++){
-//                CCLOG("IAP: ========= IAP Item =========");
-//                Product p = products[i];
-//                std::string id =  p.id;
-//                CCLOG("IAP: Name: %s", p.name.c_str());
-//                CCLOG("IAP: ID: %s",  id.c_str());
-//                CCLOG("IAP: Title: %s", p.title.c_str());
-//                CCLOG("IAP: Desc: %s", p.description.c_str());
-//                CCLOG("IAP: Price: %s", p.price.c_str());
-//                CCLOG("IAP: Price Value: %f", p.priceValue);
-//                _productsMap.insert(std::pair<std::string, Product>(id, p));
-//                
-//                std::map<std::string, Label*>::iterator it = _productPriceMap.find(id);
-//                if (it != _productPriceMap.end()){
-//                        auto price = it->second;
-//                        price->setString(p.price);
-//                }
-//                
-//        }
+        _productsMap.clear();
+        for (int i=0; i < products.size(); i++){
+                CCLOG("IAP: ========= IAP Item =========");
+                Product p = products[i];
+                std::string id =  p.id;
+                CCLOG("IAP: Name: %s", p.name.c_str());
+                CCLOG("IAP: ID: %s",  id.c_str());
+                CCLOG("IAP: Title: %s", p.title.c_str());
+                CCLOG("IAP: Desc: %s", p.description.c_str());
+                CCLOG("IAP: Price: %s", p.price.c_str());
+                CCLOG("IAP: Price Value: %f", p.priceValue);
+                _productsMap.insert(std::pair<std::string, Product>(id, p));
+                
+                std::map<std::string, Label*>::iterator it = _productPriceMap.find(id);
+                if (it != _productPriceMap.end()){
+                        auto price = it->second;
+                        price->setString(p.price);
+                }
+                
+        }
 }
 
 void Shopping::onProductRequestFailure(const std::string& msg){

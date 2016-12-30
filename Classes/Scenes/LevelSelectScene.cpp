@@ -561,7 +561,7 @@ void LevelSelect::menuSoundControl(Ref* btn){
                 _soundCtrl->setNormalImage(Sprite::create("Sound_on.png"));
                 _soundCtrl->setSelectedImage(Sprite::create("Sound_on_sel.png"));
                 
-                sound->playEffect(EFFECT_FILE_START_GAME);
+                sound->playEffect(EFFECT_FILE_SELECTED);
                 
                 if (_soundSwitch){
                         float s_v = 0.01f * cache->getIntegerForKey(SOUND_EFFECT_VALUE_KEY);

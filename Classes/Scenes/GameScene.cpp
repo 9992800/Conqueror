@@ -658,6 +658,12 @@ void GameScene::tryAgain(){
 
 void GameScene::afterPlayerBattle(){
         std::map<int, int> survival = _theGameLogic->cleanUpBattleField(_attackResult);
+        _attackResult->release();
+        _afterBattleCallback->release();
+        _attackResult = NULL;
+        _isPalyingAnim = false;
+        _diceResultLayer->setVisible(false);
+        _diceResultLayer->removeAllChildren();
         
         if (survival.size() == 1){
                 CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_WIN);
@@ -667,12 +673,7 @@ void GameScene::afterPlayerBattle(){
                 return;
         }
         this->refreshAreaTcShow(survival);
-        _attackResult->release();
-        _afterBattleCallback->release();
-        _attackResult = NULL;
-        _isPalyingAnim = false;
-        _diceResultLayer->setVisible(false);
-        _diceResultLayer->removeAllChildren();
+        
         _endTurnTipsLayer->setVisible(true);
 }
 

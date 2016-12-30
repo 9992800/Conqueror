@@ -3,64 +3,50 @@ TODO：：
 2， show the changes after buy coins.
 3， logo and icon
 4,  sounds ,share logic ,share pictures
-5， system settings:back ground music logic test. animation btn picture. sound effect logic in whole game.
+5， sound effect logic in whole game.
 6， achievements datas and value. btttons when haven't got it.
-7， screen to buy supplement using coins.
+7，  
 8， supply logic
 9,  other charactors and their animations.
 10, modify common tips dialog content position.
 11，pictures used to share.
-
+12， achievments tips
+13, unlock charactor and player . the logic.
 bugs
 --------------------------------------------------------- 
-2:sounds bugs.:AQDefaultDevice (173): skipping input stream 0 0 0x0
+2:coins and mercenary button can be touched.
+1:test all the sounds effects.
+3:sounds effect when play animation in battle scene.
+4.share logic test.
+5，need a notice flag for achievement cup
+6,how to buy more mercenary .
+7,ahievement logic
+8,how to bug level and charactors.
+
+settings
+shopping
+buy coins
+achievments.
 
 
+------日常数据------
+===第一次安装app，默认赠送3次补兵，30个金币。
+===	每局胜利赢取金币： 2人玩家一局1个金币， 3人玩家3个金币， 4人4个，5人5个， 6人7个，7人9个， 8人10个
+===	每天打开一次奖励1个金币
+===	每天分享一次得2个金币
 
-首次购买
-首次付费购买任意数额金币
+===	1号人物默认开启，2号人物在第一次赢得一局的情况下赠送。3号人物20金币，4号人物50个金币 5号人物90个金币 6号人物140个金币 7号人物200个金币 8号人物500个金币
 
-日常成就
+=== 2人关卡默认开启，3人关卡在第一次引得一局的情况下赠送，3人比赛胜利后送4人 。。。->6人胜利后送7人， 8人赛80金币才能购买。
 
-分享好礼
-将游戏分享到facebook（每天一次）
-
-每日首胜
-每天获得一场比赛的胜利
-
-每日连胜
-连续获得三局胜利
-
-
-成就体系：
-
-成为岛主
-首次占领全部岛屿
-
-攻城拔寨
-解锁三人对战模式
-
-大杀四方
-解锁四人对战模式
-
-战国时代
-解锁五人对战模式
-
-逐鹿群雄
-解锁六人对战模式
-
-七王争霸
-解锁七人对战模式
-
-帝王时代
-解锁八人对战模式
-
-以武会友
-连续获得两场比赛的胜利
-
-能征善战
-连续获得5场比赛的胜利
-
-荣耀之路
-
-连续获得10场比赛的胜利
+------成就奖励数据------
+===第一次胜利 			 10金币, 2号人物解锁,3人关卡开启
+===第一次3连胜			 20金币
+===第一次分享				 30金币
+===第一次补兵     		 10金币
+===第一次关闭动画	  		 10金币
+===第一次重玩				 10金币
+===第一次支付				 20金币
+===第一次变更颜色			 10金币
+===第一次变更角色			 10金币
+===第一次用金币购买补兵次数 10金币

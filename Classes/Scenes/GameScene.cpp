@@ -1395,13 +1395,12 @@ void GameScene::onEnter(){
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         
         
-        bool is_sound_on = cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
-        _soundSwitch = cache->getBoolForKey(SOUND_EFFECT_SWITCH_KEY);
+        _soundTotalOn = cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
         _musicSwitch = cache->getBoolForKey(BACK_MUSIC_SWITCH_KEY);
         _soundEngine = CocosDenshion::SimpleAudioEngine::getInstance();
         
         auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
-        if (is_sound_on && _musicSwitch){
+        if (_soundTotalOn && _musicSwitch){
                 sound->playBackgroundMusic(BACK_MUSIC_IN_BATTLE, true);
         }
 }

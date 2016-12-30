@@ -90,7 +90,7 @@ protected:
         
 private:
         inline void playSoundEffect(const char *sound = EFFECT_FILE_SELECTED){
-                if (_soundSwitch){
+                if (_soundTotalOn){
                         _soundEngine->playEffect(sound);
                 }
         }
@@ -122,7 +122,7 @@ private:
         Layer           *_winDialogLayer, *_lostDialogLayer;
         int             _curCoinsNo, _curSupplyNo;
         
-        bool            _soundSwitch, _musicSwitch;
+        bool            _soundTotalOn, _musicSwitch;
         CocosDenshion::SimpleAudioEngine* _soundEngine;
 };
 

@@ -16,7 +16,9 @@ Scene* Shopping::createScene(){
 }
 
 bool Shopping::init(){
+#if defined(COCOS2D_DEBUG)
         IAP::setDebug(true);
+#endif
         IAP::setListener(this);
         IAP::init();
         

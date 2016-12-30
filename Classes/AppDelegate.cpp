@@ -29,8 +29,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
                 director->setOpenGLView(glview);
         }
  
-        
+#if defined(COCOS2D_DEBUG)
         director->setDisplayStats(true);
+#endif
         director->setAnimationInterval(1.0f / 60);
      
         glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_HEIGHT);

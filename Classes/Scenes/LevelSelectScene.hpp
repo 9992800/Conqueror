@@ -69,7 +69,8 @@ private:
         int                     _curChIdx;
         int                     _curColorIdx;
         Label                   *_mercenAriesNumLb, *_coinsNumLb;
-        bool                    _soundSwitch, _musicSwitch;
+        bool                    _soundSwitch, _musicSwitch,_soundTotalOn; 
+        CocosDenshion::SimpleAudioEngine* _soundEngine;
 };
 
 

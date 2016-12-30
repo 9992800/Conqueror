@@ -27,8 +27,10 @@ private:
         void menuBackMusic(Ref*, int);
         void menuSpeedChange(Ref*, int);
 private:
-        bool            _soundEffectB, _backMusicB;
+        bool            _soundEffectB, _backMusicB, _isSoundOn;
         int             _soundEffectV, _backMusicV;
+        bool            _animSwitch;
+        int             _gameSpeed;
         ui::LoadingBar  *_soundEffect, *_backMusic;
         ui::Button     *_speedBtn1, *_speedBtn2,*_speedBtn3;
 };

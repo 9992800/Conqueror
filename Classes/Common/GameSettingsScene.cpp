@@ -135,7 +135,7 @@ bool GameSettings::init()
         anim_back->addChild(anim_switch);
         anim_switch->addClickEventListener(CC_CALLBACK_1(GameSettings::menuAnimSwitch, this));
         
-        int game_speed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
+        _gameSpeed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
         
         _speedBtn2 = ui::Button::create("settings/game_speed_2d.png");
         auto speed_btn_size = _speedBtn2->getContentSize();
@@ -159,14 +159,18 @@ bool GameSettings::init()
         _speedBtn3->addClickEventListener(CC_CALLBACK_1(GameSettings::menuSpeedChange, this, 3));
         
         
-        if (game_speed == 1){
+        if (_gameSpeed == 1){
                 _speedBtn1->loadTextureNormal("settings/game_speed_1.png");
-        }else if (game_speed == 2){
+        }else if (_gameSpeed == 2){
                 _speedBtn2->loadTextureNormal("settings/game_speed_2.png");
-        }else if (game_speed == 3){
+        }else if (_gameSpeed == 3){
                 _speedBtn3->loadTextureNormal("settings/game_speed_3.png");
         }
         
+        
+        
+        _animSwitch = cache->getBoolForKey(ANIMATION_SWITCH_KEY, true);
+        _isSoundOn  = cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
         return true;
 }
 
@@ -179,17 +183,25 @@ void GameSettings::menuExit(Ref*){
         
         cache->setBoolForKey(BACK_MUSIC_SWITCH_KEY, _backMusicB);
         cache->setIntegerForKey(BACK_MUSIC_VALUE_KEY, _backMusicV);
+        
+        
+        cache->setBoolForKey(ANIMATION_SWITCH_KEY, _animSwitch);
+        
+        
+        cache->setIntegerForKey(GAME_SPEED_KEY, _gameSpeed);
+        
         cache->flush();
 }
 
 
 void  GameSettings::menuSoundEffect(Ref* btn, int action){
+        auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
+        
         if (0 == action){
                 _soundEffectV -= sound_effect_interv;
                 if (_soundEffectV <= 0){
                         _soundEffectV = 0;
                         _soundEffectB = false;
-                        CocosDenshion::SimpleAudioEngine::getInstance()->pauseAllEffects();
                 }
         }else if (1 == action){
                 _soundEffectV += sound_effect_interv;
@@ -197,22 +209,24 @@ void  GameSettings::menuSoundEffect(Ref* btn, int action){
                         _soundEffectV = 100;
                 }
                 _soundEffectB = true;
-                CocosDenshion::SimpleAudioEngine::getInstance()->resumeAllEffects();
         }
         
-        CocosDenshion::SimpleAudioEngine::getInstance()->setEffectsVolume(_soundEffectV * 0.01f);
-        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);
         _soundEffect->setPercent(_soundEffectV);
+        sound->setEffectsVolume(_soundEffectV * 0.01f);
+        
+        if (_isSoundOn){
+                sound->playEffect(EFFECT_FILE_SELECTED);
+        }
 }
 
 
 void GameSettings::menuBackMusic(Ref*, int action){
+        auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
         if (0 == action){
                 _backMusicV -= sound_effect_interv;
                 if (_backMusicV <= 0){
                         _backMusicV = 0;
                         _backMusicB = false;
-                        CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
                 }
         }else if (1 == action){
                 _backMusicV += sound_effect_interv;
@@ -220,29 +234,27 @@ void GameSettings::menuBackMusic(Ref*, int action){
                         _backMusicV = 100;
                 }
                 _backMusicB = true;
-                bool is_playing = CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying();
-                if (!is_playing){
-                        CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
-                }
         }
         
-         CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(_backMusicV * 0.01f);
+        sound->setBackgroundMusicVolume(_backMusicV * 0.01f);
         _backMusic->setPercent(_backMusicV);
+        
+        if (_isSoundOn){
+                sound->playEffect(EFFECT_FILE_SELECTED);
+        }
 }
 
 void GameSettings::menuAnimSwitch(Ref* btn){
-        auto cache =  UserDefault::getInstance();
         ui::Button* anim_btn = (ui::Button*)btn;
-        bool anim_ison = cache->getBoolForKey(ANIMATION_SWITCH_KEY, true);
-        anim_ison = !anim_ison;
-        if (anim_ison){
-                cache->setBoolForKey(ANIMATION_SWITCH_KEY, true);
+        _animSwitch = !_animSwitch;
+        if (_animSwitch){
                 anim_btn->loadTextureNormal("maps/open_anim.png");
         }else{
-                cache->setBoolForKey(ANIMATION_SWITCH_KEY, false);
                 anim_btn->loadTextureNormal("maps/close_anim.png");
         }
-        cache->flush();
+        if (_isSoundOn){
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_SELECTED);
+        }
 }
 
 
@@ -260,8 +272,9 @@ void GameSettings::menuSpeedChange(Ref* btn, int game_speed){
                 _speedBtn3->loadTextureNormal("settings/game_speed_3.png");
         }
         
-        auto cache =  UserDefault::getInstance();
-        cache->setIntegerForKey(GAME_SPEED_KEY, game_speed);
-        cache->flush(); 
+        _gameSpeed = game_speed;
+        if (_isSoundOn){
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_SELECTED);
+        }
 }
 

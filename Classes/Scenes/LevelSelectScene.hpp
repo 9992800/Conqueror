@@ -14,6 +14,7 @@
 #include "GamePayUtil.hpp"
 #include "GameData.hpp"
 #include "ReplayLastScene.hpp"
+#include "SimpleAudioEngine.h"
 
 using namespace cocos2d::ui;
 USING_NS_CC;

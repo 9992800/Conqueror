@@ -18,7 +18,10 @@ Scene* Shopping::createScene(){
 bool Shopping::init(){
         IAP::setDebug(true);
         IAP::setListener(this);
-        IAP::refresh();
+        IAP::init();
+        
+//        IAP::refresh();
+//        IAP::restore();
         
         auto visible_size = Director::getInstance()->getVisibleSize();
         
@@ -154,6 +157,9 @@ bool Shopping::init(){
         _productPriceMap.insert(std::pair<std::string, Label*>(SHOP_ITEM_ID_1480COINS_KEY,
                                                                item_price_1480));
         
+        _productPriceMap = std::map<std::string, Label*>();
+        _productsMap     = std::map<std::string, Product> ();
+        
         return true;
 }
 
@@ -201,6 +207,7 @@ void Shopping::onCanceled(const Product& p){
 
 void Shopping::onProductRequestSuccess(const std::vector<Product>& products){
         _productsMap.clear();
+        _productPriceMap.clear();
         for (int i=0; i < products.size(); i++){
                 CCLOG("IAP: ========= IAP Item =========");
                 Product p = products[i];

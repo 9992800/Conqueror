@@ -448,6 +448,9 @@ void LevelSelect::menuGetMoreCoins(Ref* btn){
 void LevelSelect::refreshMercenary(){
         _curMercenariesNum = UserDefault::getInstance() ->getIntegerForKey(USER_CURRENT_SUPPLY_NO);
         _mercenAriesNumLb->setString(tostr(_curMercenariesNum));
+        
+        _curCoinsNum = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
+        _coinsNumLb->setString(tostr(_curCoinsNum));
 }
 void LevelSelect::menuGetMoreDices(Ref* btn){
         if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);

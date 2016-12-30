@@ -13,10 +13,9 @@
 #include "FightResultData.hpp"
 #include "ui/CocosGUI.h"
 #include "PluginFacebook/PluginFacebook.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
-
-
 class GameScene : public cocos2d::Layer, sdkbox::FacebookListener
 {
         
@@ -90,6 +89,13 @@ protected:
         virtual void onExit()override;
         
 private:
+        inline void playSoundEffect(const char *sound = EFFECT_FILE_SELECTED){
+                if (_soundSwitch){
+                        _soundEngine->playEffect(sound);
+                }
+        }
+        
+private:
         static int      _playerNumber, _charactorIdx, _colorIdx;
         Layer*          _controlLayer;
         Layer*          _diceResultLayer;
@@ -117,6 +123,7 @@ private:
         int             _curCoinsNo, _curSupplyNo;
         
         bool            _soundSwitch, _musicSwitch;
+        CocosDenshion::SimpleAudioEngine* _soundEngine;
 };
 
 

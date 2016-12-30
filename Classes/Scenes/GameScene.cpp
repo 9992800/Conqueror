@@ -9,7 +9,6 @@
 #include "MapCreator.hpp"
 #include "GameScene.hpp"
 #include "ScreenCoordinate.hpp"
-#include "SimpleAudioEngine.h"
 #include "PopUpOkCancelDialog.hpp"
 #include "PopUpOkDialog.hpp"
 #include "CommonTipsDialog.hpp"
@@ -57,7 +56,6 @@ Scene* GameScene::createScene(int gameLevel, int charactorIdx, int colorIdx)
 
 GameScene::~GameScene(){
         _theGameLogic->release();
-        //TODO::_allFightingCharacters->release
         for (int i = 0; i < FIGH_ANIM_MAX; i++){
                 for (int j = 0; j < MAX_DICE_PER_AREA; j++){
                         _allFightingCharacters[i][j]->release();
@@ -666,7 +664,7 @@ void GameScene::afterPlayerBattle(){
         _diceResultLayer->removeAllChildren();
         
         if (survival.size() == 1){
-                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_WIN);
+                this->playSoundEffect(EFFECT_FILE_FINISH_WIN);
                 Director::getInstance()->pause();
                 Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(this, true);
                 this->addChild(_winDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
@@ -686,7 +684,7 @@ void GameScene::afterRobootBattle(){
         _diceResultLayer->removeAllChildren();
         int user_tc = _theGameLogic->getUserTC();
         if (0 == user_tc){
-                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_FINISH_LOSE);
+                this->playSoundEffect(EFFECT_FILE_FINISH_LOSE);
                 Director::getInstance()->pause();
                 Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(this, true);
                 this->addChild(_lostDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
@@ -801,13 +799,12 @@ void GameScene::gameAction(){
 
 void GameScene::afterFightFinished(){
         int area_id;
-        auto sound =  CocosDenshion::SimpleAudioEngine::getInstance();
         if (ATTACK_RES_DEFEATED == _attackResult->_result){
                 area_id = _attackResult->_fromArea;
-                sound->playEffect(EFFECT_FILE_DEFEAT);
+                this->playSoundEffect(EFFECT_FILE_DEFEAT);
         }else{
                 area_id = _attackResult->_toArea;
-                sound->playEffect(EFFECT_FILE_WIN);
+                this->playSoundEffect(EFFECT_FILE_WIN);
         }
         
         if (_animationIsOn && GAME_STATUS_INUSERTURN == _gameStatus){
@@ -832,9 +829,9 @@ void GameScene::WinnerBack(){
         this->ShowResultData();
         
         if (ATTACK_RES_WIN == _attackResult->_result){
-                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_WIN);
+                this->playSoundEffect(EFFECT_FILE_WIN);
         }else if (ATTACK_RES_DEFEATED == _attackResult->_result){
-                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_DEFEAT);
+                this->playSoundEffect(EFFECT_FILE_DEFEAT);
         }
         
         
@@ -1117,7 +1114,7 @@ void GameScene::playSupplyAnimation2(GamePlayer* player){
 }
 
 void GameScene::playSupplyAnimation(){
-        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_SUPPLY);
+        this->playSoundEffect(EFFECT_FILE_SUPPLY);
         _supplyShowLayer->setVisible(true);
         int player_id = _curGameData->_jun[_curGameData->_ban];
         GamePlayer* player = _curGameData->_player[player_id];
@@ -1159,7 +1156,7 @@ void GameScene::menuEndTurn(Ref* pSender){
         }
         
         _theGameLogic->clearManulAction();
-        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);
+        this->playSoundEffect(EFFECT_FILE_START_GAME);
         
         
         _addtionalSupplyCounter--;
@@ -1195,8 +1192,7 @@ void GameScene::menuEndTurn(Ref* pSender){
 }
 
 void GameScene::createNewMap(Ref* pSender){
-        auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
-        sound->playEffect(EFFECT_FILE_CHANGE_MAP);
+        this->playSoundEffect(EFFECT_FILE_CHANGE_MAP);
         _curGameData->release();
         _curGameData = _theGameLogic->initGameData(_playerNumber, _charactorIdx, _colorIdx);
         this->removeChildByTag(key_map_back_layer);
@@ -1206,17 +1202,17 @@ void GameScene::createNewMap(Ref* pSender){
 }
 
 void GameScene::menuStartGame(Ref* pSender, Layer* parent){
-        auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
-        sound->playEffect(EFFECT_FILE_START_GAME);
+        this->playSoundEffect(EFFECT_FILE_START_GAME);
         this->initAreaTcShow();
         _theGameLogic->initHistoryRecord();
         parent->setVisible(false);
-        CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_START_GAME);
+        this->playSoundEffect(EFFECT_FILE_START_GAME);
         _gameStatus = GAME_STATUS_AIRUNNING;
         this->gameAction();
 }
 
 void GameScene::menuExit(Ref* pSender){
+        this->playSoundEffect();
         CommonTipsDialog::showModalDialog((Node*)this, "Are you sure to exit ?", [this](Ref* sender){
                 CommonTipsDialog::dismissDialog(this);
                 Director::getInstance()->popScene();
@@ -1224,6 +1220,7 @@ void GameScene::menuExit(Ref* pSender){
 }
 
 void GameScene::gameOver(Ref* btn, int result){
+        this->playSoundEffect();
         if (result == 0){
                 _theGameLogic->finishHistoryRecord();
                 Director::getInstance()->popScene();
@@ -1256,6 +1253,7 @@ void GameScene::afterCaptureScreen(bool yes, const std::string &outputFilename)
 }
 
 void GameScene::shareThisGame(Ref* btn){
+        this->playSoundEffect();
         if (sdkbox::PluginFacebook::isLoggedIn()){
                 utils::captureScreen(CC_CALLBACK_2(GameScene::afterCaptureScreen, this), "screen.png");
         }else{
@@ -1268,7 +1266,7 @@ void GameScene::shareThisGame(Ref* btn){
 }
 
 void GameScene::menuAnimSwitch(Ref* btn){
-        
+        this->playSoundEffect();
         if (_animationIsOn
             &&_attackResult != nullptr
             && _isPalyingAnim){
@@ -1286,10 +1284,12 @@ void GameScene::menuAnimSwitch(Ref* btn){
 }
 
 void GameScene::menuAddArmy(Ref* btn){
+        
         if (GAME_STATUS_INUSERTURN != _gameStatus
             ||_addtionalSupplyCounter > 0){
                 return;
         }
+        this->playSoundEffect();
         if (_curSupplyNo <= 0){
                 if (_curCoinsNo < PRICE_PER_SUPPLEMENT){
                         std::string tips = StringUtils::format("提示：很抱歉...您当前拥有的金币数(%d)不够兑换一次补兵令了(补兵需要金币:%d)。您可以通过：攻打更多人数关卡，活动礼包，分享或者从商店充值来获得更多量的金币。",  _curCoinsNo,
@@ -1398,6 +1398,7 @@ void GameScene::onEnter(){
         bool is_sound_on = cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
         _soundSwitch = cache->getBoolForKey(SOUND_EFFECT_SWITCH_KEY);
         _musicSwitch = cache->getBoolForKey(BACK_MUSIC_SWITCH_KEY);
+        _soundEngine = CocosDenshion::SimpleAudioEngine::getInstance();
         
         auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
         if (is_sound_on && _musicSwitch){

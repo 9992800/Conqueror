@@ -11,6 +11,7 @@
 
 #pragma mark - game init
 bool DiceGame::init(){
+        _isSoundOn = UserDefault::getInstance()->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
         return true;
 }
 
@@ -515,7 +516,7 @@ FightResultData* DiceGame::startPlayerAttack(int cell_id){
                 if (owner_uid == _data->_userId){
                         _data->_areaFrom = area_id;
                         area->drawAsSelected();                        
-                       sound->playEffect(EFFECT_FILE_SELECTED);
+                       if (_isSoundOn) sound->playEffect(EFFECT_FILE_SELECTED);
                         return data;
                 }else{
                         return data;
@@ -535,7 +536,7 @@ FightResultData* DiceGame::startPlayerAttack(int cell_id){
                                         
                                         _data->_areaFrom = area_id;
                                         area->drawAsSelected();
-                                        sound->playEffect(EFFECT_FILE_SELECTED);
+                                        if (_isSoundOn) sound->playEffect(EFFECT_FILE_SELECTED);
                                 }
                                 
                                 return data;

@@ -62,6 +62,7 @@ private:
         std::vector<int>        _historyTo;
         std::vector<int>        _historyRes;
         std::vector<Vec2>       _historySup;
+        bool                    _isSoundOn;
 };
 
 #endif /* DiceGame_hpp */

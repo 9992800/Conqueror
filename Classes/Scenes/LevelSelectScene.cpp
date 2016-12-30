@@ -372,7 +372,6 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
 }
 
 #pragma mark - button action callback
-
 void LevelSelect::btnChosePlayerNum(Ref* btn, int num){
         CCLOG("------------%d--------", num);
         Button* sel_btn = ((Button*)btn);

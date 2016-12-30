@@ -127,6 +127,9 @@ bool GameSettings::init()
         anim_back->setPosition(Vec2(setting_back_size.width * 0.5f, music_back->getPosition().y - music_size.height - anim_back_size.height * 0.5f));
         setting_back->addChild(anim_back);
         
+        
+        _animSwitch = cache->getBoolForKey(ANIMATION_SWITCH_KEY, true);
+        
         auto anim_switch = ui::Button::create("maps/open_anim.png",
                                              "maps/open_anim_sel.png");
         auto anim_btn_size = anim_switch->getContentSize();
@@ -134,6 +137,13 @@ bool GameSettings::init()
                                      anim_back_size.height * 0.5f));
         anim_back->addChild(anim_switch);
         anim_switch->addClickEventListener(CC_CALLBACK_1(GameSettings::menuAnimSwitch, this));
+        
+        if (_animSwitch){
+                anim_switch->loadTextureNormal("maps/open_anim.png");
+        }else{
+                anim_switch->loadTextureNormal("maps/close_anim.png");
+        }
+        
         
         _gameSpeed = UserDefault::getInstance()->getIntegerForKey(GAME_SPEED_KEY, 1);
         
@@ -166,10 +176,6 @@ bool GameSettings::init()
         }else if (_gameSpeed == 3){
                 _speedBtn3->loadTextureNormal("settings/game_speed_3.png");
         }
-        
-        
-        
-        _animSwitch = cache->getBoolForKey(ANIMATION_SWITCH_KEY, true);
         _isSoundOn  = cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
         return true;
 }
@@ -191,6 +197,10 @@ void GameSettings::menuExit(Ref*){
         cache->setIntegerForKey(GAME_SPEED_KEY, _gameSpeed);
         
         cache->flush();
+        
+        if (_isSoundOn){
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(EFFECT_FILE_SELECTED);
+        }
 }
 
 

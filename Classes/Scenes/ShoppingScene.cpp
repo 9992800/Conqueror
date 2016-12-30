@@ -52,7 +52,7 @@ bool Shopping::init(){
         auto coins_item_10 = cocos2d::ui::Button::create("shopping/shop_item_10.png");
         auto item_size = coins_item_10->getContentSize();
         coins_item_10->setPosition(Vec2(item_size.width * 0.6, back_ground_size.height * 0.5 + item_size.height * 0.55));
-        coins_item_10->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_10_COINS_KEY));
+        coins_item_10->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_ID_10COINS_KEY));
         back_ground->addChild(coins_item_10);
         
         auto item_title_10 = Sprite::create("shopping/shop_item_desc_10.png"); 

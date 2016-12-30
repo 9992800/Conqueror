@@ -134,13 +134,6 @@ enum {
 #define CHARACTOR_7_LOCK_STATE_KEY      "_key_charactor_7_lock_state"
 
 
-
-#define SHOP_ITEM_10_COINS_KEY          "shop_item_10_coins"
-#define SHOP_ITEM_60_COINS_KEY          "shop_item_60_coins"
-#define SHOP_ITEM_200_COINS_KEY         "shop_item_200_coins"
-#define SHOP_ITEM_680_COINS_KEY         "shop_item_680_coins"
-#define SHOP_ITEM_1480_COINS_KEY        "shop_item_1480_coins"
-
 #define LEVEL_2_PRODUCT_ID_KEY          "com.bellflower.Conqueror.open_level2"
 #define LEVEL_3_PRODUCT_ID_KEY          "com.bellflower.Conqueror.open_level3"
 #define LEVEL_4_PRODUCT_ID_KEY          "com.bellflower.Conqueror.open_level4"

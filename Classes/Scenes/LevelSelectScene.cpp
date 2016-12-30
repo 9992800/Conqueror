@@ -449,7 +449,7 @@ void LevelSelect::refreshMercenary(){
         _curMercenariesNum = UserDefault::getInstance() ->getIntegerForKey(USER_CURRENT_SUPPLY_NO);
         _mercenAriesNumLb->setString(tostr(_curMercenariesNum));
         
-        _curCoinsNum = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
+        _curCoinsNum = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS);
         _coinsNumLb->setString(tostr(_curCoinsNum));
 }
 void LevelSelect::menuGetMoreDices(Ref* btn){

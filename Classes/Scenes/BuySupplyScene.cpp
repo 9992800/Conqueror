@@ -55,7 +55,7 @@ bool BuySupply::init(){
                                buy_supply_back_size.height + tips_title->getContentSize().height * 0.3f));
         buy_supply_back->addChild(tips_title);
         
-        auto label_tips = Label::createWithSystemFont("Got 8 mercenaries by 10 gold coins.", "fonts/arial.ttf", 28);
+        auto label_tips = Label::createWithSystemFont("Buy 8 mercenaries using 10 gold coins.", "fonts/arial.ttf", 28);
         
         label_tips->setColor(Color3B::ORANGE);
         Vec2 label_tips_pos(buy_supply_back_size.width * 0.5f,
@@ -88,7 +88,7 @@ void BuySupply::menuSpendCoins(Ref*btn, int result){
         int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, 0);
         int cur_mercenaries = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO, 0);
         
-        if (cur_coins <= PRICE_PER_SUPPLEMENT){
+        if (cur_coins < PRICE_PER_SUPPLEMENT){
                 auto scene = Shopping::createScene();
                 Director::getInstance()->pushScene(scene);
         }else{
@@ -98,5 +98,8 @@ void BuySupply::menuSpendCoins(Ref*btn, int result){
                 cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, cur_mercenaries);
                 cache->flush();
                 this->removeFromParentAndCleanup(true);
+                if (this->_curLisntener){
+                        _curLisntener();
+                }
         }
 }

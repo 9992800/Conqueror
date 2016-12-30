@@ -27,7 +27,8 @@ bool Shopping::init(){
         
         _productPriceMap = std::map<std::string, Label*>();
         _productsMap     = std::map<std::string, Product>();
-        
+        _soundEngine     = CocosDenshion::SimpleAudioEngine::getInstance();
+        _soundTotalOn    = UserDefault::getInstance()->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
         
         auto visible_size = Director::getInstance()->getVisibleSize();
         
@@ -38,7 +39,8 @@ bool Shopping::init(){
         
         auto return_btn = cocos2d::ui::Button::create("DIALOG_CANCEL.png","DIALOG_CANCEL_SEL.png");
         return_btn->setPosition(Vec2(back_ground_size.width * 0.92, back_ground_size.height * 0.08));
-        return_btn->addClickEventListener([](Ref*){
+        return_btn->addClickEventListener([this](Ref*){
+                if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
                 Director::getInstance()->popScene();
         });
         return_btn->setTitleText("Return");
@@ -165,10 +167,11 @@ bool Shopping::init(){
         return true;
 }
 
-#pragma mark - shop function
+#pragma mark - menu function
 void Shopping::buyItems(Ref*, std::string product_id){
         Product p = _productsMap.find(product_id)->second;
         IAP::purchase(p.name);
+        if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
 }
 
 #pragma mark - payment callback

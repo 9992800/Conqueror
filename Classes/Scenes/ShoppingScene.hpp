@@ -13,6 +13,7 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "PluginIAP/PluginIAP.h"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 using namespace sdkbox;
@@ -43,6 +44,9 @@ private:
         
         std::map<std::string, Product>          _productsMap;
         std::map<std::string, Label*>           _productPriceMap;
+        
+        bool                                    _soundTotalOn;
+        CocosDenshion::SimpleAudioEngine*       _soundEngine;
 };
 
 #endif /* ShoppingScene_hpp */

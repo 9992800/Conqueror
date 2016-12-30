@@ -652,15 +652,15 @@ void LevelSelect::onEnter(){
         _soundEngine->playBackgroundMusic(BACK_MUSIC_LEVEL_SELECT, true);
         
         _soundTotalOn = data_cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
-        _soundSwitch = data_cache->getBoolForKey(SOUND_EFFECT_SWITCH_KEY);
-        _musicSwitch = data_cache->getBoolForKey(BACK_MUSIC_SWITCH_KEY);
+        _soundSwitch = data_cache->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
+        _musicSwitch = data_cache->getBoolForKey(BACK_MUSIC_SWITCH_KEY, true);
         
         if (!_soundTotalOn){
                 _soundEngine->pauseAllEffects();
                 _soundEngine->pauseBackgroundMusic();
         }else {
                 if (_soundSwitch){
-                        float s_v = 0.01f * data_cache->getIntegerForKey(SOUND_EFFECT_VALUE_KEY);
+                        float s_v = 0.01f * data_cache->getIntegerForKey(SOUND_EFFECT_VALUE_KEY, 50);
                         _soundEngine->setEffectsVolume(s_v);
                 }else{
                         
@@ -669,7 +669,7 @@ void LevelSelect::onEnter(){
                 
                 
                 if (_musicSwitch){
-                        float m_v = 0.01f * data_cache->getIntegerForKey(BACK_MUSIC_VALUE_KEY);
+                        float m_v = 0.01f * data_cache->getIntegerForKey(BACK_MUSIC_VALUE_KEY, 50);
                         _soundEngine->setBackgroundMusicVolume(m_v);
                 }else{
                         _soundEngine->pauseBackgroundMusic();

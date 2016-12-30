@@ -60,7 +60,7 @@ bool GameSettings::init()
         
         auto cache = UserDefault::getInstance();
         
-        _soundEffectV = cache->getIntegerForKey(SOUND_EFFECT_VALUE_KEY, sound_effect_interv * 2);
+        _soundEffectV = cache->getIntegerForKey(SOUND_EFFECT_VALUE_KEY, 50);
         _soundEffectB = cache->getBoolForKey(SOUND_EFFECT_SWITCH_KEY, true);
         _soundEffect = ui::LoadingBar::create("settings/size_bar.png");
         _soundEffect->setDirection(ui::LoadingBar::Direction::LEFT);
@@ -96,7 +96,7 @@ bool GameSettings::init()
         setting_back->addChild(music_title);
         music_title->setColor(Color3B::BLACK);
         
-        _backMusicV = cache->getIntegerForKey(BACK_MUSIC_VALUE_KEY, sound_effect_interv * 2);
+        _backMusicV = cache->getIntegerForKey(BACK_MUSIC_VALUE_KEY, 50);
         _backMusicB = cache->getBoolForKey(BACK_MUSIC_SWITCH_KEY, true);
         _backMusic  = ui::LoadingBar::create("settings/size_bar.png");
         _backMusic->setDirection(ui::LoadingBar::Direction::LEFT);

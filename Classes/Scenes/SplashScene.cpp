@@ -78,6 +78,10 @@ void Splash::onEnter(){
         auto sound = SimpleAudioEngine::getInstance();
         
         sound->preloadEffect(EFFECT_FILE_START_GAME);
+        
+        sound->preloadEffect(EFFECT_FILE_CHANGE_MAP);
+        _count += 1;
+
         _count += 1;
         
         sound->preloadEffect(EFFECT_FILE_WIN);

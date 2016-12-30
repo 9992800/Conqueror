@@ -24,6 +24,10 @@ public:
         CREATE_FUNC(BuySupply);
 private:
         void menuSpendCoins(Ref*, int);
+        
+private:
+        bool                                    _soundTotalOn;
+        CocosDenshion::SimpleAudioEngine*       _soundEngine;
 };
 
 #endif /* BuySupplyScene_hpp */

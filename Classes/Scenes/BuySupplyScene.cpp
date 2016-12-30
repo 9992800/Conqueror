@@ -17,6 +17,12 @@ bool BuySupply::init(){
         this->setOpacity(180);
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
+        
+        
+        _soundEngine     = CocosDenshion::SimpleAudioEngine::getInstance();
+        _soundTotalOn    = UserDefault::getInstance()->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
+        
+        
         auto buy_supply_back = Sprite::create("shopping/buy_supply_back.png");
         buy_supply_back->setPosition(visibleSize / 2);
         this->addChild(buy_supply_back);
@@ -72,6 +78,7 @@ bool BuySupply::init(){
 
 
 void BuySupply::menuSpendCoins(Ref*btn, int result){
+        if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
         if (0 == result){
                 this->removeFromParentAndCleanup(true);
                 return;

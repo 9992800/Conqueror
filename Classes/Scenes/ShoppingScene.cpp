@@ -201,6 +201,8 @@ void Shopping::onSuccess(const Product& p){
         
         cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
         cache->flush();
+        
+        //TODO::show coins adding animations....
 }
 
 void Shopping::onFailure(const Product& p, const std::string& msg){

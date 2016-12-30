@@ -312,24 +312,29 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
                         coins buttons
          /////////////////////////////////////////////////////////
          */
-        auto coins_show = MenuItemImage::create("level/coins_show.png", "");
-        Vec2 coins_pos = Vec2(origin.x + visibleSize.width - 2 * coins_show->getContentSize().width,
-                              origin.y + visibleSize.height - coins_show->getContentSize().height);
-        coins_show->setPosition(coins_pos);
         
         auto coins_back = Sprite::create("level/coind_back.png");
-        Vec2 coins_back_pos = Vec2(coins_pos.x - 60, coins_pos.y);
+        auto coins_back_size = coins_back->getContentSize();
+        Vec2 coins_back_pos = Vec2(visibleSize  - coins_back_size);
         coins_back->setPosition(coins_back_pos);
         
-        _coinsNumLb = Label::createWithSystemFont("0", "fonts/arial.ttf", 32);//
+        auto coins_show = Sprite::create("level/coins_show.png");
+        auto coins_show_size = coins_show->getContentSize();
+        Vec2 coins_pos = Vec2(coins_back_size.width,
+                              coins_back_size.height * 0.5f);
+        coins_show->setPosition(coins_pos);
+        coins_back->addChild(coins_show);
+        
+        auto add_coins = ui::Button::create("level/add_icon.png");
+        add_coins->addClickEventListener(CC_CALLBACK_1(LevelSelect::menuGetMoreCoins, this));
+        add_coins->setPosition(Vec2(0, coins_back_size.height * 0.5f));
+        coins_back->addChild(add_coins);
+        
+        _coinsNumLb = Label::createWithSystemFont("0", "fonts/arial.ttf", 32);
+        _coinsNumLb->setPosition(coins_back_size * 0.5f);
         coins_back->addChild(_coinsNumLb);
-        _coinsNumLb->setPosition(coins_back->getContentSize() / 2);
-        this->addChild(coins_back, ZORDER_BACK_LAYERS);
         
-        
-        auto add_coins = MenuItemImage::create("level/add_icon.png", "",CC_CALLBACK_1(LevelSelect::menuGetMoreCoins, this));
-        Vec2 add_coins_pos = Vec2(coins_back_pos.x - 100, coins_pos.y);
-        add_coins->setPosition(add_coins_pos);
+        this->addChild(coins_back, ZORDER_ITEM_CONTROL);
         
         
         /*
@@ -337,22 +342,32 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
                         dices buttons
          /////////////////////////////////////////////////////////
          */
-        auto dices_show = MenuItemImage::create("level/dice_show.png", "");
-        Vec2 dices_pos = Vec2(add_coins_pos.x - 100, coins_pos.y);
-        dices_show->setPosition(dices_pos);
         
-        auto dices_back = Sprite::create("level/coind_back.png");
-        Vec2 dices_back_pos = Vec2(dices_pos.x - 60, dices_pos.y);
-        dices_back->setPosition(dices_back_pos);
+        auto arm_back = Sprite::create("level/coind_back.png");
+        Vec2 arm_back_pos = Vec2(coins_back_pos.x - coins_back_size.width * 1.2f , coins_back_pos.y);
+        auto arm_back_size = arm_back->getContentSize();
+        arm_back->setPosition(arm_back_pos);
+        
+        auto arm_show = MenuItemImage::create("level/dice_show.png", "");
+        auto arm_show_size = arm_show->getContentSize();
+        Vec2 arm_pos = Vec2(arm_back_size.width - arm_show_size.width,
+                            arm_back_size.height * 0.5f);
+        arm_show->setPosition(arm_pos);
+        arm_back->addChild(arm_show);
         
         _mercenAriesNumLb = Label::createWithSystemFont("0", "fonts/arial.ttf", 32);//
-        dices_back->addChild(_mercenAriesNumLb);
-        _mercenAriesNumLb->setPosition(dices_back->getContentSize() / 2);
-        this->addChild(dices_back, ZORDER_BACK_LAYERS);
+        _mercenAriesNumLb->setPosition(arm_back_size * 0.5f);
+        arm_back->addChild(_mercenAriesNumLb);
         
-        auto add_dices = MenuItemImage::create("level/add_icon.png", "", CC_CALLBACK_1(LevelSelect::menuGetMoreDices, this));
-        Vec2 add_dices_pos(dices_back_pos.x - 100, dices_pos.y);
-        add_dices->setPosition(add_dices_pos);
+        auto add_arm = ui::Button::create("level/add_icon.png");
+        add_arm->addClickEventListener(CC_CALLBACK_1(LevelSelect::menuGetMoreDices, this));
+        Vec2 add_arm_pos(Vec2(0, arm_back_size.height * 0.5f));
+        add_arm->setPosition(add_arm_pos);
+        arm_back->addChild(add_arm);
+        
+        this->addChild(arm_back, ZORDER_ITEM_CONTROL);
+        
+        
         
         auto achieve_btn = MenuItemImage::create("achievement.png", "achievement_sel.png", CC_CALLBACK_1(LevelSelect::menuShowAchievement, this));
         achieve_btn->setPosition(Vec2(achieve_btn->getContentSize().width ,system_setting->getPosition().y));
@@ -360,11 +375,10 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         auto online_game = MenuItemImage::create("online_battle.png", "online_battle_sel.png",
                                                  CC_CALLBACK_1(LevelSelect::menuOnlineBattle, this));
         online_game->setPosition(Vec2(online_game->getContentSize().width / 2,
-                                      dices_pos.y));
+                                      add_arm_pos.y));
         
         
-        auto menu = Menu::create(_soundCtrl, system_setting, coins_show,
-                                 add_coins, dices_show, add_dices, start_game,
+        auto menu = Menu::create(_soundCtrl, system_setting, start_game,
                                  achieve_btn, online_game, NULL);
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, ZORDER_ITEM_CONTROL);

@@ -7,6 +7,7 @@
 //
 
 #include "ShoppingScene.hpp"
+#include "ModalDialog.hpp"
 
 Scene* Shopping::createScene(){
         auto scene = Scene::create();
@@ -199,13 +200,14 @@ void Shopping::buyItems(Ref*, std::string product_id){
                 return;
         }
         
+        ModalLayer::showModalDialog(this);
         Product p = it->second;
         IAP::purchase(p.name);
 }
 
 #pragma mark - payment callback
 void Shopping::onSuccess(const Product& p){
-        
+        ModalLayer::dismissDialog(this);
         auto cache = UserDefault::getInstance();
         int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS);
         
@@ -236,9 +238,11 @@ void Shopping::onSuccess(const Product& p){
 
 void Shopping::onFailure(const Product& p, const std::string& msg){
         CCLOG("Purchase Failed: %s", msg.c_str());
+        ModalLayer::dismissDialog(this);
 }
 void Shopping::onCanceled(const Product& p){
         CCLOG("Purchase Canceled: %s", p.id.c_str());
+        ModalLayer::dismissDialog(this);
 }
 
 void Shopping::onProductRequestSuccess(const std::vector<Product>& products){

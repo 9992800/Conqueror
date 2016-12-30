@@ -25,13 +25,11 @@ public:
         CREATE_FUNC(Shopping);
         
 private:
-        void onInitialized(bool success)override{
-        }
+        void onInitialized(bool success)override;
         void onSuccess(const Product& p)override;
         void onFailure(const Product& p, const std::string& msg)override;
         void onCanceled(const Product& p)override;
-        void onRestored(const Product& p)override{
-        };
+        void onRestored(const Product& p)override;
         void onProductRequestSuccess(const std::vector<Product>& products)override;
         void onProductRequestFailure(const std::string& msg)override;
         void onRestoreComplete(bool ok, const std::string &msg)override;

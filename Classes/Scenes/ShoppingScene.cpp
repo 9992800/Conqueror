@@ -206,27 +206,30 @@ void Shopping::onCanceled(const Product& p){
 }
 
 void Shopping::onProductRequestSuccess(const std::vector<Product>& products){
-        _productsMap.clear();
-        _productPriceMap.clear();
-        for (int i=0; i < products.size(); i++){
-                CCLOG("IAP: ========= IAP Item =========");
-                Product p = products[i];
-                std::string id =  p.id;
-                CCLOG("IAP: Name: %s", p.name.c_str());
-                CCLOG("IAP: ID: %s",  id.c_str());
-                CCLOG("IAP: Title: %s", p.title.c_str());
-                CCLOG("IAP: Desc: %s", p.description.c_str());
-                CCLOG("IAP: Price: %s", p.price.c_str());
-                CCLOG("IAP: Price Value: %f", p.priceValue);
-                _productsMap.insert(std::pair<std::string, Product>(id, p));
-                
-                std::map<std::string, Label*>::iterator it = _productPriceMap.find(id);
-                if (it != _productPriceMap.end()){
-                        auto price = it->second;
-                        price->setString(p.price);
-                }
-                
-        }
+        
+        CCLOG("IAP: ========= IAP Item =========");
+        
+//        _productsMap.clear();
+//        _productPriceMap.clear();
+//        for (int i=0; i < products.size(); i++){
+//                CCLOG("IAP: ========= IAP Item =========");
+//                Product p = products[i];
+//                std::string id =  p.id;
+//                CCLOG("IAP: Name: %s", p.name.c_str());
+//                CCLOG("IAP: ID: %s",  id.c_str());
+//                CCLOG("IAP: Title: %s", p.title.c_str());
+//                CCLOG("IAP: Desc: %s", p.description.c_str());
+//                CCLOG("IAP: Price: %s", p.price.c_str());
+//                CCLOG("IAP: Price Value: %f", p.priceValue);
+//                _productsMap.insert(std::pair<std::string, Product>(id, p));
+//                
+//                std::map<std::string, Label*>::iterator it = _productPriceMap.find(id);
+//                if (it != _productPriceMap.end()){
+//                        auto price = it->second;
+//                        price->setString(p.price);
+//                }
+//                
+//        }
 }
 
 void Shopping::onProductRequestFailure(const std::string& msg){
@@ -234,5 +237,15 @@ void Shopping::onProductRequestFailure(const std::string& msg){
 }
 void Shopping::onRestoreComplete(bool ok, const std::string &msg){
         CCLOG("%s:%d:%s", __func__, ok, msg.data());
+}
+
+void Shopping::onInitialized(bool ok)
+{
+        CCLOG("%s : %d", __func__, ok);
+}
+
+void Shopping::onRestored(const Product& p)
+{
+        CCLOG("Purchase Restored: %s", p.name.c_str());
 }
 

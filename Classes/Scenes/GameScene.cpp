@@ -1214,6 +1214,7 @@ void GameScene::menuStartGame(Ref* pSender, Layer* parent){
 void GameScene::menuExit(Ref* pSender){
         this->playSoundEffect();
         CommonTipsDialog::showModalDialog((Node*)this, "Are you sure to exit ?", [this](Ref* sender){
+                this->playSoundEffect();
                 CommonTipsDialog::dismissDialog(this);
                 Director::getInstance()->popScene();
         });

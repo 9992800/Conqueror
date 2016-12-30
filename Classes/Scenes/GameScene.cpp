@@ -673,7 +673,6 @@ void GameScene::afterPlayerBattle(){
                 return;
         }
         this->refreshAreaTcShow(survival);
-        
         _endTurnTipsLayer->setVisible(true);
 }
 

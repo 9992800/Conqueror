@@ -240,6 +240,8 @@ void Shopping::showBuySuccessAnim(int coins_num_to_shows){
                         auto seq = Sequence::create(scaleBy, scaleBy->reverse(), NULL);
                         _coinsShow->runAction(seq->clone());
                         _coinsNumLb->runAction(seq->clone());
+                        int cur_coins = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS);
+                        _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
                 });
 
                 
@@ -296,7 +298,6 @@ void Shopping::onSuccess(const Product& product){
         
         cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
         cache->flush();
-        _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
         this->showBuySuccessAnim(coins_num_to_show);
         
         

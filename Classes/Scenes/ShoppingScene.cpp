@@ -185,7 +185,7 @@ bool Shopping::init(){
         
         back_ground->addChild(coins_back);
         
-        
+        ModalLayer::showModalDialog(this);
         return true;
 }
 
@@ -313,6 +313,7 @@ void Shopping::onCanceled(const Product& p){
 }
 
 void Shopping::onProductRequestSuccess(const std::vector<Product>& products){
+        ModalLayer::dismissDialog(this);
         _productsMap.clear();
         for (int i=0; i < products.size(); i++){
                 CCLOG("IAP: ========= IAP Item =========");
@@ -336,6 +337,7 @@ void Shopping::onProductRequestSuccess(const std::vector<Product>& products){
 }
 
 void Shopping::onProductRequestFailure(const std::string& msg){
+        ModalLayer::dismissDialog(this);
         CCLOG("onProductRequestFailure Restored: %s", msg.c_str());
 }
 void Shopping::onRestoreComplete(bool ok, const std::string &msg){

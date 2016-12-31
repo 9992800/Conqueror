@@ -40,14 +40,17 @@ private:
         
 private:
         void buyItems(Ref*, std::string);
+        void showBuySuccessAnim(int);
 private:
         
         std::map<std::string, Product>          _productsMap;
-        std::map<std::string, Label*>           _productPriceMap;
+        std::map<std::string, ui::Text*>           _productPriceMap;
         
         bool                                    _soundTotalOn;
         CocosDenshion::SimpleAudioEngine*       _soundEngine;
         Label*                                  _coinsNumLb;
+        ui::Button*                             _curSelBtn;
+        Sprite                                  *_coinsShow;
 };
 
 #endif /* ShoppingScene_hpp */

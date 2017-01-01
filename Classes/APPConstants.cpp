@@ -360,10 +360,6 @@ void GolbalConfig::initAnimation(){
         AnimationCache::getInstance()->addAnimation(animation, "coins_changes");
 }
 
-
-
-
-
 void GolbalConfig::initAchievementData(){
         _systemAchievementData = std::vector<AchievementData>();
         

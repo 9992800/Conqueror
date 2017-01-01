@@ -11,7 +11,8 @@
 #include "APPConstants.hpp"
 
 enum{
-        k_item_mer_tips = 1,
+        k_back_ground = 1,
+        k_item_mer_tips,
         k_item_mer_no,
         k_item_coins_no,
         k_item_get_it
@@ -38,7 +39,7 @@ bool BuySupply::init() {
         auto scene_back = Sprite::create("shopping/shopping_back.png");
         scene_back->setPosition(visible_size / 2);
         auto scene_back_size = scene_back->getContentSize();
-        this->addChild(scene_back);
+        this->addChild(scene_back, 0, k_back_ground);
         
         this->initCurCoins(scene_back);
         
@@ -272,10 +273,8 @@ void BuySupply::updateItem(int itemID, int templateID)
 void BuySupply::actionGetItem(Ref*btn){
         if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
         
-        
         auto cache = UserDefault::getInstance();
         int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, 0);
-        int cur_mercenaries = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO, 0);
         
         int chose_item_id = ((Node*)btn)->getTag();
         MercenaryItem data = _mercenaryData.at(chose_item_id);
@@ -284,18 +283,29 @@ void BuySupply::actionGetItem(Ref*btn){
                 auto scene = Shopping::createScene();
                 Director::getInstance()->pushScene(scene);
         }else{
+                this->playCoinsSubAnim(data);
+        }
+}
+
+void BuySupply::playCoinsSubAnim(MercenaryItem data){
+        
+        auto call_back = CallFunc::create([this, data](){
+                auto cache = UserDefault::getInstance();
+                int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, 0);
+                int cur_mercenaries = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO, 0);
                 cur_coins -= data.itemPrice;
                 cur_mercenaries += data.itemValue;
                 cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
                 cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, cur_mercenaries);
                 cache->flush();
-                this->playCoinsSubAnim(data);
-        }
-}
-
-void BuySupply::playCoinsSubAnim(MercenaryItem){
-        auto coins_rotate = AnimationCache::getInstance()->getAnimation("coins_changes")->clone();
-        coins_rotate->setRestoreOriginalFrame(true);
-        auto move_to = MoveTo::create(0.4f, Vec2(0, 1000.f));
-        auto to_dest = Spawn::create(move_to, Animate::create(coins_rotate), NULL);
+                
+                _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
+        });
+        
+        auto scale_by = ScaleBy::create(0.4f, 2.f);
+        auto seq = Sequence::create(scale_by, call_back, scale_by->reverse(), NULL);
+        auto seq_2 = Sequence::create(scale_by, scale_by->reverse(), NULL);
+        
+        _coinsShow->runAction(seq);
+        _coinsNumLb->runAction(seq_2);
 }

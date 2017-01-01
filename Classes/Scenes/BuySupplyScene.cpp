@@ -135,22 +135,23 @@ ui::Layout* BuySupply::createListItem(){
         
         auto mernary_tips = ui::ImageView::create("shopping/mercenary_tips_1.png");
         auto tips_size = mernary_tips->getContentSize();
-        mernary_tips->setPosition(Vec2(tips_size.width * 0.8f, default_item_size.height - tips_size.height * 0.5f));
+        mernary_tips->setPosition(Vec2(tips_size.width * 0.6f, default_item_size.height - tips_size.height * 0.6f));
         default_item->addChild(mernary_tips, 1, k_item_mer_tips);
         
         auto mercenary_flag = ui::ImageView::create("level/dice_show.png");
         auto mercenary_flag_size = mercenary_flag->getContentSize();
-        Vec2 mercenary_flag_pos(mercenary_flag_size.width, default_item_size.height * 0.5f);
+        Vec2 mercenary_flag_pos(2.f * mercenary_flag_size.width,
+                                default_item_size.height * 0.5f);
         mercenary_flag->setPosition(mercenary_flag_pos);
         default_item->addChild(mercenary_flag, 2);
         
         auto mercenary_no = ui::ImageView::create("shopping/NO_100.png");
-        mercenary_no->setPosition(Vec2(mercenary_flag_pos.x + mercenary_flag_size.width,
+        mercenary_no->setPosition(Vec2(mercenary_flag_pos.x + 2.2f * mercenary_flag_size.width,
                                        mercenary_flag_pos.y));
         default_item->addChild(mercenary_no, 2, k_item_mer_no);
         
         auto equal_flag = ui::ImageView::create("shopping/equals_flag.png");
-        equal_flag->setPosition(Vec2(default_item_size.width * 0.25f, mercenary_flag_pos.y));
+        equal_flag->setPosition(Vec2(default_item_size.width * 0.35f, mercenary_flag_pos.y));
         default_item->addChild(equal_flag);
         
         auto coins_show = ui::ImageView::create("level/coins_show.png");
@@ -158,12 +159,12 @@ ui::Layout* BuySupply::createListItem(){
         default_item->addChild(coins_show);
         
         auto coins_no = ui::ImageView::create("shopping/NO_1000.png");
-        coins_no->setPosition(Vec2(coins_show->getPosition().x + coins_show->getContentSize().width, mercenary_flag_pos.y));
+        coins_no->setPosition(Vec2(coins_show->getPosition().x + 2.2f * coins_show->getContentSize().width, mercenary_flag_pos.y));
         default_item->addChild(coins_no, 2, k_item_coins_no);
         
         auto butt_on = ui::Button::create("DIALOG2_OK.png","DIALOG2_OK_SEL.png");
         auto butt_on_size = butt_on->getContentSize();
-        butt_on->setPosition(Vec2(default_item_size.width - butt_on_size.width,
+        butt_on->setPosition(Vec2(default_item_size.width - butt_on_size.width * 0.8f,
                                   default_item_size.height * 0.5f));
         butt_on->setTouchEnabled(true);
         butt_on->setTitleText("Get it");

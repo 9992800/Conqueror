@@ -127,14 +127,13 @@ void BuySupply::initCurCoins(Node* scene_back){
         scene_back->addChild(coins_back);
         
         
-        
         auto mercanery_back = Sprite::create("level/coind_back.png");
         auto mercanery_back_size = mercanery_back->getContentSize();
         Vec2 mercanery_back_pos = Vec2(exit_btn->getPosition().x - mercanery_back_size.width
                                    ,exit_btn->getPosition().y);
         mercanery_back->setPosition(mercanery_back_pos);
         
-        _mercenaryShow = Sprite::create("level/coins_show.png");
+        _mercenaryShow = Sprite::create("level/dice_show.png");
         auto mercenary_show_size = _mercenaryShow->getContentSize();
         Vec2 mercenary_pos = Vec2(mercanery_back_size.width,
                               mercanery_back_size.height * 0.5f);
@@ -327,13 +326,12 @@ void BuySupply::playCoinsSubAnim(MercenaryItem data){
                 _mercenAriesNumLb->setString(StringUtils::format("%d", cur_mercenaries));
         });
         
-        auto scale_by = ScaleBy::create(0.2f, 2.f);
+        auto scale_by = ScaleBy::create(0.2f, 1.4f);
         auto seq = Sequence::create(scale_by, scale_by->reverse(),  NULL);
         auto seq_2 = Sequence::create(scale_by->clone(), call_back,scale_by->clone()->reverse(), NULL);
         
         _coinsShow->runAction(seq);
-        _coinsNumLb->runAction(seq_2);
-        
         _mercenaryShow->runAction(seq->clone());
-        _mercenAriesNumLb->runAction(seq_2->clone());
+        _mercenAriesNumLb->runAction(seq->clone());
+        _coinsNumLb->runAction(seq_2);
 }

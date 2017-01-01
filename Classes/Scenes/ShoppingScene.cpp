@@ -208,7 +208,7 @@ void Shopping::buyItems(Ref* btn, std::string product_id){
         IAP::purchase(p.name);
 }
 
-void Shopping::showBuySuccessAnim(int coins_num_to_shows){
+void Shopping::showBuySuccessAnim(int bought_no){
         auto visible_size = Director::getInstance()->getVisibleSize();
         
         auto showBtn = _curSelBtn->clone();
@@ -220,38 +220,58 @@ void Shopping::showBuySuccessAnim(int coins_num_to_shows){
         auto move  = MoveTo::create(0.5f, visible_size / 2);
         auto to_center = Spawn::create(scale, move, NULL);
         
-        auto call_back = CallFunc::create([this, coins_num_to_shows, showBtn](){
+        auto call_back = CallFunc::create([this, showBtn, bought_no](){
                 
                 auto parent_size = showBtn->getContentSize();
                 auto coin_pos = Vec2(parent_size.width * 0.4f, parent_size.height * 0.6f);
+                int cur_coins = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS);
                 
-                auto coins_show = ui::ImageView::create("level/coins_show.png");
-                coins_show->setPosition(coin_pos);
-                showBtn->addChild(coins_show);
+                int coins_num_to_show = bought_no / 10;
                 
                 auto dest_pos = _coinsShow->getParent()->convertToWorldSpace(_coinsShow->getPosition());
                 auto local_pos = showBtn->convertToNodeSpace(dest_pos);
-                auto move_to = MoveTo::create(0.4f, local_pos);
+                auto move_to = MoveTo::create(1.f, local_pos);
                 
                 
-                auto coins_rotate = AnimationCache::getInstance()->getAnimation("coins_changes")->clone();
+                auto coins_change = AnimationCache::getInstance()->getAnimation("coins_changes");
+                auto coins_rotate = coins_change->clone();
                 coins_rotate->setRestoreOriginalFrame(true);
+                coins_rotate->setDelayPerUnit(1.f / 48.f);
+                coins_rotate->setLoops(random(4, 6));
+                auto to_dest = Spawn::create(move_to, Animate::create(coins_rotate), NULL);                 
                 
-                auto to_dest = Spawn::create(move_to, Animate::create(coins_rotate), NULL);
-                
-                auto call_back2 = CallFunc::create([this, showBtn](){
-                        showBtn->removeFromParentAndCleanup(true);
+                for (int i = 0; i < coins_num_to_show; i++){
+                        cur_coins += 10;
+                        bool last_one = i == coins_num_to_show - 1;
                         
-                        auto scaleBy = ScaleBy::create(0.2f, 1.4f);
-                        auto seq = Sequence::create(scaleBy, scaleBy->reverse(), NULL);
-                        _coinsShow->runAction(seq->clone());
-                        _coinsNumLb->runAction(seq->clone());
-                        int cur_coins = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS);
-                        _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
-                });
-                
-                auto show_seq_2 = Sequence::create(to_dest, call_back2, NULL);
-                coins_show-> runAction(show_seq_2);
+                        
+                        auto call_back2 = CallFunc::create([this, cur_coins, last_one, showBtn, bought_no](){
+                                
+                                auto scaleBy = ScaleBy::create(0.2f, 1.4f);
+                                auto seq = Sequence::create(scaleBy, scaleBy->reverse(), NULL);
+                                _coinsShow->runAction(seq->clone());
+                                _coinsNumLb->runAction(seq->clone());
+                                _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
+                                
+                                if (last_one){
+                                        showBtn->removeFromParentAndCleanup(true);
+                                        auto cache = UserDefault::getInstance();
+                                        int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS);
+                                        cur_coins += bought_no;
+                                        cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
+                                        _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
+                                        cache->flush();
+                                }
+                        });
+                        
+                        auto show_seq = Sequence::create(to_dest, call_back2, NULL);
+                        
+                        auto item_s = Sprite::create("level/coins_show.png");;
+                        Size r_p(random(-100, 100), random(-100, 100));
+                        item_s->setPosition(coin_pos +r_p);
+                        showBtn->addChild(item_s);
+                        item_s->runAction(show_seq);
+                }
         });
         
         auto seq = Sequence::create(to_center, call_back, nullptr);
@@ -263,36 +283,26 @@ void Shopping::showBuySuccessAnim(int coins_num_to_shows){
 void Shopping::onSuccess(const Product& product){
         ModalLayer::dismissDialog(this);
         
-        auto cache = UserDefault::getInstance();
-        int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS);
-        int coins_num_to_show = 1;
+        
+        int bought_no = 1;
         if (product.id == SHOP_ITEM_ID_10COINS_KEY){
-                cur_coins += SHOP_ITME_VALUE_10COINS;
-                coins_num_to_show = 1;
+                bought_no = SHOP_ITME_VALUE_10COINS;
                 
         }else if(product.id == SHOP_ITEM_ID_60COINS_KEY){
-                cur_coins += SHOP_ITME_VALUE_60COINS;
-                coins_num_to_show = 6;
+                bought_no = SHOP_ITME_VALUE_60COINS;
                 
         }else if(product.id == SHOP_ITEM_ID_200COINS_KEY){
-                cur_coins += SHOP_ITME_VALUE_200COINS;
-                coins_num_to_show = 20;
+                bought_no = SHOP_ITME_VALUE_200COINS;
                 
         }else if(product.id == SHOP_ITEM_ID_680COINS_KEY){
-                cur_coins += SHOP_ITME_VALUE_680COINS;
-                coins_num_to_show = 68;
+                bought_no = SHOP_ITME_VALUE_680COINS;
                 
         }else if(product.id == SHOP_ITEM_ID_1480COINS_KEY){
-                cur_coins += SHOP_ITME_VALUE_1480COINS;
-                coins_num_to_show = 148;
-                
+                bought_no = SHOP_ITME_VALUE_1480COINS;
         }else{
                 return;
         }
-        
-        cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
-        cache->flush();
-        this->showBuySuccessAnim(coins_num_to_show);
+        this->showBuySuccessAnim(bought_no);
 }
 
 void Shopping::onFailure(const Product& p, const std::string& msg){

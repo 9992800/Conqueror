@@ -99,6 +99,9 @@ enum {
 #define EFFECT_FILE_FINISH_WIN          "sounds/finish_win.mp3"
 #define BACK_MUSIC_LEVEL_SELECT         "sounds/level_select_bm.mp3"
 #define BACK_MUSIC_IN_BATTLE            "sounds/battle_scene_bm.mp3"
+#define EFFECT_BATTLE_IN_ANIM           "sounds/fingt_inAnim.mp3"
+#define EFFECT_MARCH_IN_ANIM            "sounds/march.mp3"
+
 
 #define SOUND_MUSIC_TOTAL_KEY           "_key_sound_music_total_switch"
 #define SOUND_EFFECT_SWITCH_KEY         "_key_sound_effect_switch"

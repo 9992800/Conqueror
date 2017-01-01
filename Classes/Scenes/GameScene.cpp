@@ -851,7 +851,7 @@ void GameScene::WinnerBack(){
         auto back_wait = cache->getAnimation(ANIM_NAME_FIGHT_STAND[player_uid]);
         back_wait->setRestoreOriginalFrame(true);
         
-        
+        this->playSoundEffect(EFFECT_MARCH_IN_ANIM);
         if (ATTACK_RES_WIN == _attackResult->_result){
                 
                 int keeper_uid = _attackResult->_toPlayer;
@@ -971,6 +971,7 @@ void GameScene::Fighting(){
         anim_cloud->setRestoreOriginalFrame(true);
         auto anim_action = Animate::create(anim_cloud);
         
+        this->playSoundEffect(EFFECT_BATTLE_IN_ANIM);
         fight_cloud->runAction(Sequence::create(anim_action, winner_back, NULL));
 }
 
@@ -979,6 +980,7 @@ void GameScene::afterShowFightBg(){
         auto cache = AnimationCache::getInstance();
         
         //FIGHTER------------------------
+        this->playSoundEffect(EFFECT_MARCH_IN_ANIM);
 {
         int player_uid = _attackResult->_fromPlayer;
 
@@ -1000,7 +1002,6 @@ void GameScene::afterShowFightBg(){
         run_anim2->setLoops(2);
         auto run_to_fight = Spawn::create(Animate::create(run_anim2), moveby, NULL);
         
-
         Sequence* invade_seq = Sequence::create(get_ready, fight_wait,  run_to_fight, NULL);
         
         for (int i = 0; i < _attackResult->_from.size(); i++){

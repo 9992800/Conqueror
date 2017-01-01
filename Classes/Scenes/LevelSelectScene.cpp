@@ -700,15 +700,14 @@ void LevelSelect::onExit(){
         _count = 0;
         unscheduleUpdate();
         AsyncTaskPool::getInstance()->stopTasks(AsyncTaskPool::TaskType::TASK_IO);
+        
         auto back_layer = this->getChildByTag(kMainMenuBackTag);
         auto the_wall = back_layer->getChildByTag(kMenuGreatWallTag);
         the_wall->removeAllChildren();
+        
         auto cache = UserDefault::getInstance();
         cache->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNum);
         cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curMercenariesNum);
         cache->flush();
-        
-        _soundEngine->stopBackgroundMusic();
-        _soundEngine->stopAllEffects();
 }
 

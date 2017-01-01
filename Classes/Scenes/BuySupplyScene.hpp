@@ -37,11 +37,11 @@ public:
 
         
 private:
-        void menuSpendCoins(Ref*, int);
+        void actionGetItem(Ref*);
         
         void initItemData();
         void initCurCoins(Node*);
-        
+        void playCoinsSubAnim(MercenaryItem);
         
         ui::Layout* createListItem();
         void initItemDetails(ui::Widget*, int);

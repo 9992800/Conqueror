@@ -237,7 +237,7 @@ void Shopping::showBuySuccessAnim(int coins_num_to_shows){
                 auto coins_rotate = AnimationCache::getInstance()->getAnimation("coins_changes")->clone();
                 coins_rotate->setRestoreOriginalFrame(true);
                 
-                auto to_dest = Spawn::create(move_to, coins_rotate, NULL);
+                auto to_dest = Spawn::create(move_to, Animate::create(coins_rotate), NULL);
                 
                 auto call_back2 = CallFunc::create([this, showBtn](){
                         showBtn->removeFromParentAndCleanup(true);
@@ -293,8 +293,6 @@ void Shopping::onSuccess(const Product& product){
         cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
         cache->flush();
         this->showBuySuccessAnim(coins_num_to_show);
-        
-        
 }
 
 void Shopping::onFailure(const Product& p, const std::string& msg){

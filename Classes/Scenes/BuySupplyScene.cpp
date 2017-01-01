@@ -14,8 +14,7 @@ enum{
         k_item_mer_tips = 1,
         k_item_mer_no,
         k_item_coins_no,
-        k_item_get_btn,
-        
+        k_item_get_it
 };
 
 
@@ -33,6 +32,8 @@ bool BuySupply::init() {
         _mercenaryData = GolbalConfig::getInstance()->getMercenaryPriceData();
         this->_totalCount = (int)_mercenaryData.size();
         
+        
+        
         auto visible_size = Director::getInstance()->getVisibleSize();
         auto scene_back = Sprite::create("shopping/shopping_back.png");
         scene_back->setPosition(visible_size / 2);
@@ -40,7 +41,6 @@ bool BuySupply::init() {
         this->addChild(scene_back);
         
         this->initCurCoins(scene_back);
-        
         
         
         auto default_item = this->createListItem();
@@ -114,13 +114,18 @@ void BuySupply::initCurCoins(Node* scene_back){
         _coinsShow->setPosition(coins_pos);
         coins_back->addChild(_coinsShow);
         
-        int cur_coins = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS);
+        
+        auto cache = UserDefault::getInstance();
+        int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS);
         
         _coinsNumLb = Label::createWithSystemFont(StringUtils::format("%d", cur_coins), "fonts/arial.ttf", 32);
         _coinsNumLb->setPosition(coins_back_size * 0.5f);
         coins_back->addChild(_coinsNumLb);
         
         scene_back->addChild(coins_back);
+        
+        _soundTotalOn = cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
+        _soundEngine = CocosDenshion::SimpleAudioEngine::getInstance();
 }
 
 #pragma mark -page list action.
@@ -155,7 +160,7 @@ ui::Layout* BuySupply::createListItem(){
         default_item->addChild(equal_flag);
         
         auto coins_show = ui::ImageView::create("level/coins_show.png");
-        coins_show->setPosition(Vec2(default_item_size.width * 0.4f, mercenary_flag_pos.y));
+        coins_show->setPosition(Vec2(default_item_size.width * 0.45f, mercenary_flag_pos.y));
         default_item->addChild(coins_show);
         
         auto coins_no = ui::ImageView::create("shopping/NO_1000.png");
@@ -170,7 +175,9 @@ ui::Layout* BuySupply::createListItem(){
         butt_on->setTitleText("Get it");
         butt_on->setTitleFontName("fonts/arial.ttf");
         butt_on->setTitleFontSize(38);
-        default_item->addChild(butt_on, 4, k_item_get_btn);
+        butt_on->addClickEventListener(CC_CALLBACK_1(BuySupply::actionGetItem, this));
+        butt_on->setName("ssss_ssss");
+        default_item->addChild(butt_on, 2, k_item_get_it);
         
         return default_item;
 }
@@ -187,6 +194,9 @@ void BuySupply::initItemDetails(ui::Widget* mercenary_item, int idx){
         
         auto item_price = (ui::ImageView*)mercenary_item->getChildByTag(k_item_coins_no);
         item_price->loadTexture(data.priceNoImg);
+        
+        
+        mercenary_item->getChildByTag(k_item_get_it)->setTag(idx);
 }
 
 void BuySupply::update(float dt){
@@ -251,31 +261,41 @@ void BuySupply::updateItem(int itemID, int templateID)
         
         auto item_price = (ui::ImageView*)mercenary_item->getChildByTag(k_item_coins_no);
         item_price->loadTexture(data.priceNoImg);
+        
+        auto button = (ui::Button*)mercenary_item->getChildByName("ssss_ssss");//mercenary_item->getChildByTag(k_item_get_it);
+        button->setTag(itemID);
 }
 
 
 #pragma mark - menu action.
 
-void BuySupply::menuSpendCoins(Ref*btn, int result){
+void BuySupply::actionGetItem(Ref*btn){
         if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
-        if (0 == result){
-                this->removeFromParentAndCleanup(true);
-                return;
-        }
+        
         
         auto cache = UserDefault::getInstance();
         int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, 0);
         int cur_mercenaries = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO, 0);
         
-        if (cur_coins < PRICE_PER_SUPPLEMENT){
+        int chose_item_id = ((Node*)btn)->getTag();
+        MercenaryItem data = _mercenaryData.at(chose_item_id);
+        
+        if (cur_coins < data.itemPrice){
                 auto scene = Shopping::createScene();
                 Director::getInstance()->pushScene(scene);
         }else{
-                cur_coins -= PRICE_PER_SUPPLEMENT;
-                cur_mercenaries += 1;
+                cur_coins -= data.itemPrice;
+                cur_mercenaries += data.itemValue;
                 cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
                 cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, cur_mercenaries);
                 cache->flush();
-                this->removeFromParentAndCleanup(true);
+                this->playCoinsSubAnim(data);
         }
+}
+
+void BuySupply::playCoinsSubAnim(MercenaryItem){
+        auto coins_rotate = AnimationCache::getInstance()->getAnimation("coins_changes")->clone();
+        coins_rotate->setRestoreOriginalFrame(true);
+        auto move_to = MoveTo::create(0.4f, Vec2(0, 1000.f));
+        auto to_dest = Spawn::create(move_to, Animate::create(coins_rotate), NULL);
 }

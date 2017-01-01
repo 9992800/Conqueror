@@ -59,8 +59,8 @@ private:
         float _updateTimer, _updateInterval;
         float _bufferZone, _lastContentPosY;
         
-        Sprite  *_coinsShow;
-        Label   *_coinsNumLb;
+        Sprite  *_coinsShow,  *_mercenaryShow;
+        Label   *_coinsNumLb, *_mercenAriesNumLb;
         std::vector<MercenaryItem>      _mercenaryData;
 };
 

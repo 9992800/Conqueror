@@ -97,6 +97,7 @@ void BuySupply::initCurCoins(Node* scene_back){
         exit_btn->addClickEventListener([=](Ref*){
                 Director::getInstance()->popScene();
         });
+        
         scene_back->addChild(exit_btn);
         auto title = Sprite::create("shopping/buy_supply_title.png");
         title->setPosition(Vec2(visible_size.width / 2, visible_size.height - title->getContentSize().height * 0.5f));
@@ -124,6 +125,29 @@ void BuySupply::initCurCoins(Node* scene_back){
         coins_back->addChild(_coinsNumLb);
         
         scene_back->addChild(coins_back);
+        
+        
+        
+        auto mercanery_back = Sprite::create("level/coind_back.png");
+        auto mercanery_back_size = mercanery_back->getContentSize();
+        Vec2 mercanery_back_pos = Vec2(exit_btn->getPosition().x - mercanery_back_size.width
+                                   ,exit_btn->getPosition().y);
+        mercanery_back->setPosition(mercanery_back_pos);
+        
+        _mercenaryShow = Sprite::create("level/coins_show.png");
+        auto mercenary_show_size = _mercenaryShow->getContentSize();
+        Vec2 mercenary_pos = Vec2(mercanery_back_size.width,
+                              mercanery_back_size.height * 0.5f);
+        _mercenaryShow->setPosition(mercenary_pos);
+        mercanery_back->addChild(_mercenaryShow);
+         
+        int mercenary_no = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO);
+        
+        _mercenAriesNumLb = Label::createWithSystemFont(StringUtils::format("%d", mercenary_no), "fonts/arial.ttf", 32);
+        _mercenAriesNumLb->setPosition(mercanery_back_size * 0.5f);
+        mercanery_back->addChild(_mercenAriesNumLb);
+        
+        scene_back->addChild(mercanery_back);
         
         _soundTotalOn = cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
         _soundEngine = CocosDenshion::SimpleAudioEngine::getInstance();
@@ -300,12 +324,16 @@ void BuySupply::playCoinsSubAnim(MercenaryItem data){
                 cache->flush();
                 
                 _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
+                _mercenAriesNumLb->setString(StringUtils::format("%d", cur_mercenaries));
         });
         
-        auto scale_by = ScaleBy::create(0.4f, 2.f);
-        auto seq = Sequence::create(scale_by, call_back, scale_by->reverse(), NULL);
-        auto seq_2 = Sequence::create(scale_by, scale_by->reverse(), NULL);
+        auto scale_by = ScaleBy::create(0.2f, 2.f);
+        auto seq = Sequence::create(scale_by, scale_by->reverse(),  NULL);
+        auto seq_2 = Sequence::create(scale_by->clone(), call_back,scale_by->clone()->reverse(), NULL);
         
         _coinsShow->runAction(seq);
         _coinsNumLb->runAction(seq_2);
+        
+        _mercenaryShow->runAction(seq->clone());
+        _mercenAriesNumLb->runAction(seq_2->clone());
 }

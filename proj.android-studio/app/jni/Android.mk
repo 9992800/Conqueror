@@ -37,6 +37,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/GameLogic/GameData.cpp \
                    ../../../Classes/GameLogic/GamePlayer.cpp \
                    ../../../Classes/GameLogic/JoinData.cpp \
+                   ../../../Classes/GameLogic/AchievementEngine.cpp \
                    ../../../Classes/Common/GameHelpScene.cpp \
                    ../../../Classes/Common/GamePayUtil.cpp \
                    ../../../Classes/Common/GameSettingsScene.cpp \

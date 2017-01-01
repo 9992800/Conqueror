@@ -41,6 +41,7 @@ int AchievementEngine::dailyReward(){
         int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
         cur_coins += REWARDS_FOR_DAILY_OPEN;
         cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
+        cache->setIntegerForKey(ACHIEV_DAILY_REWARD_KEY, today);
         cache->flush();
         
         return REWARDS_FOR_DAILY_OPEN;

@@ -645,6 +645,11 @@ void LevelSelect::onEnter(){
                         
                         runner->setScale(1.4);
                 }
+        } 
+        
+        int daily_rewards = AchievementEngine::getInstance()->dailyReward();
+        if (daily_rewards > 0){
+                this->playDailyRewardsAnim(daily_rewards);
         }
         
         _curCoinsNum = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
@@ -679,11 +684,6 @@ void LevelSelect::onEnter(){
                 }else{
                         _soundEngine->pauseBackgroundMusic();
                 }
-        }
-        
-        int daily_rewards = AchievementEngine::getInstance()->dailyReward();
-        if (daily_rewards > 0){
-                this->playDailyRewardsAnim(daily_rewards);
         }
 }
 

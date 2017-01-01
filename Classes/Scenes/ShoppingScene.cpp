@@ -182,7 +182,7 @@ bool Shopping::init(){
         coins_back->addChild(_coinsShow);
         
         auto cache = UserDefault::getInstance();
-        int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS);
+        int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, 0);
         
         _coinsNumLb = Label::createWithSystemFont(StringUtils::format("%d", cur_coins), "fonts/arial.ttf", 32);
         _coinsNumLb->setPosition(coins_back_size * 0.5f);

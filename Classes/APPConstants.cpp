@@ -79,6 +79,9 @@ GolbalConfig* GolbalConfig::getInstance()
 }
 
 bool GolbalConfig::init(){
+        this->initAnimation();
+        this->initAchievementData();
+        this->initMercenaryItemData();
         return true;
 }
 
@@ -511,4 +514,37 @@ void GolbalConfig::initAchievementData(){
                 "Share this game to your FB friends."
         };
         _systemAchievementData.push_back(data_14);
+}
+
+void GolbalConfig::initMercenaryItemData(){
+        _mercenaryItemPriceData = std::vector<MercenaryItem>();
+        
+        MercenaryItem item_1 = {1, 10, "shopping/mercenary_tips_1.png",
+                "shopping/NO_1.png", "shopping/NO_10.png"};
+        _mercenaryItemPriceData.push_back(item_1);
+        
+        MercenaryItem item_5 = {5, 50, "shopping/mercenary_tips_5.png",
+                "shopping/NO_5.png", "shopping/NO_50.png"};
+        _mercenaryItemPriceData.push_back(item_5);
+        
+        MercenaryItem item_10 = {10, 100, "shopping/mercenary_tips_10.png",
+                "shopping/NO_10.png", "shopping/NO_100.png"};
+        _mercenaryItemPriceData.push_back(item_10);
+        
+        MercenaryItem item_30 = {30, 300, "shopping/mercenary_tips_30.png",
+                "shopping/NO_30.png", "shopping/NO_300.png"};
+        _mercenaryItemPriceData.push_back(item_30);
+        
+        MercenaryItem item_60 = {60, 600, "shopping/mercenary_tips_60.png",
+                "shopping/NO_60.png", "shopping/NO_600.png"};
+        _mercenaryItemPriceData.push_back(item_60);
+        
+        MercenaryItem item_90 = {90, 900, "shopping/mercenary_tips_90.png",
+                "shopping/NO_90.png", "shopping/NO_900.png"};
+        _mercenaryItemPriceData.push_back(item_90);
+        
+        MercenaryItem item_100 = {100, 1000, "shopping/mercenary_tips_100.png",
+                "shopping/NO_100.png", "shopping/NO_1000.png"};
+        _mercenaryItemPriceData.push_back(item_100);
+        
 }

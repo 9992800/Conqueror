@@ -446,18 +446,11 @@ void LevelSelect::menuGetMoreCoins(Ref* btn){
         auto shop = Shopping::createScene();
         Director::getInstance()->pushScene(shop);
 }
-void LevelSelect::refreshMercenary(){
-        _curMercenariesNum = UserDefault::getInstance() ->getIntegerForKey(USER_CURRENT_SUPPLY_NO);
-        _mercenAriesNumLb->setString(tostr(_curMercenariesNum));
-        
-        _curCoinsNum = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS);
-        _coinsNumLb->setString(tostr(_curCoinsNum));
-}
+
 void LevelSelect::menuGetMoreDices(Ref* btn){
         if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
-        auto buy_tips = BuySupply::create();
-        this->addChild(buy_tips, ZORDER_TOP_LEVEL_SHOW);
-        buy_tips->addParchseListner(CC_CALLBACK_0(LevelSelect::refreshMercenary, this));
+        auto buy_tips = BuySupply::createScene();
+        Director::getInstance()->pushScene(buy_tips);
 }
 
 void LevelSelect::menuShowAchievement(Ref* btn){

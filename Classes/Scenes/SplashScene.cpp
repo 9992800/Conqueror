@@ -57,8 +57,7 @@ bool Splash::init()
         label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
         this->addChild(label, 3);
         
-        GolbalConfig::getInstance()->initAnimation();
-        GolbalConfig::getInstance()->initAchievementData();
+        GolbalConfig::getInstance();
         
         return true;
 }

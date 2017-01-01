@@ -14,9 +14,8 @@
 #include "ui/CocosGUI.h"
 #include "SimpleAudioEngine.h"
 
-
 USING_NS_CC;
-typedef std::function<void(void)> fbBuySupplyCallback;
+
 
 class BuySupply : public cocos2d::Layer
 {
@@ -24,20 +23,45 @@ public:
         static Scene* createScene();
         virtual bool init() override;
         CREATE_FUNC(BuySupply);
+        
         BuySupply():_soundTotalOn(true)
-        ,_curLisntener(nullptr){
+        ,_spawnCount(5),
+        _bufferZone(90),
+        _updateTimer(0),
+        _updateInterval(1.0f / 24),
+        _lastContentPosY(0),
+        _itemTemplateHeight(0){
         }
         
-        inline void addParchseListner(const fbBuySupplyCallback& cb){
-                this->_curLisntener = cb;
-        }
+        virtual void update(float dt) override;
 
         
 private:
-        void menuSpendCoins(Ref*, int);private:
+        void menuSpendCoins(Ref*, int);
+        
+        void initItemData();
+        void initCurCoins(Node*);
+        
+        
+        ui::Layout* createListItem();
+        void initItemDetails(ui::Widget*, int);
+        void updateItem(int itemID, int templateID);
+        float getItemPositionYInView(cocos2d::ui::Widget* item) const;
+
+private:
         bool                                    _soundTotalOn;
         CocosDenshion::SimpleAudioEngine*       _soundEngine;
-        fbBuySupplyCallback                     _curLisntener;
+        
+        
+        ui::ListView* _listView;
+        int _totalCount, _spawnCount;
+        float _itemTemplateHeight, _reuseItemOffset;
+        float _updateTimer, _updateInterval;
+        float _bufferZone, _lastContentPosY;
+        
+        Sprite  *_coinsShow;
+        Label   *_coinsNumLb;
+        std::vector<MercenaryItem>      _mercenaryData;
 };
 
 #endif /* BuySupplyScene_hpp */

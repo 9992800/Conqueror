@@ -78,21 +78,32 @@ struct AchievementData {
         std::string cup_name;
 };
 
-
+typedef struct MercenaryItem_tag{
+        int             itemValue;
+        int             itemPrice;
+        std::string     itemTips;
+        std::string     valueNoImg;
+        std::string     priceNoImg;
+}MercenaryItem;
 
 class GolbalConfig:public Ref{
 public:
         static GolbalConfig* getInstance();
-        void initAnimation();
-        void initAchievementData();
         inline std::vector<AchievementData>& getAchievementData(){
                 return this->_systemAchievementData;
+        }
+        inline  const std::vector<MercenaryItem>& getMercenaryPriceData(){
+                return this->_mercenaryItemPriceData;
         }
 protected:
         GolbalConfig();
         ~GolbalConfig();
         bool init();
+        void initAnimation();
+        void initAchievementData();
+        void initMercenaryItemData();
 private:
-        std::vector<AchievementData> _systemAchievementData;
+        std::vector<AchievementData>    _systemAchievementData;
+        std::vector<MercenaryItem>      _mercenaryItemPriceData;
 };
 #endif /* APPConstants_hpp */

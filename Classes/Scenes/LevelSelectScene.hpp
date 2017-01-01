@@ -28,6 +28,7 @@ public:
         CREATE_FUNC(LevelSelect);
         ~LevelSelect();
         
+        void playDailyRewardsAnim(int);
         void onEnter() override;
         void update(float delta)override;
         virtual void onExit()override;

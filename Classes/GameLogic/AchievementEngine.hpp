@@ -17,5 +17,7 @@ class AchievementEngine: public Ref{
 public:
         static AchievementEngine* getInstance();
         bool init();
+        
+        int dailyReward();
 };
 #endif /* AchievementEngine_hpp */

@@ -17,6 +17,7 @@
 #include "ShoppingScene.hpp"
 #include "AchievementScene.hpp"
 #include "BuySupplyScene.hpp"
+#include "AchievementEngine.hpp"
 
 enum{
         kLevelShowLevel1Tag = 2,
@@ -607,6 +608,10 @@ void LevelSelect::menuSoundControl(Ref* btn){
 
 #pragma mark - loading bar
 
+void LevelSelect::playDailyRewardsAnim(int r_no){
+        
+}
+
 void LevelSelect::onEnter(){
         Layer::onEnter();
         auto data_cache = UserDefault::getInstance();
@@ -681,6 +686,11 @@ void LevelSelect::onEnter(){
                 }else{
                         _soundEngine->pauseBackgroundMusic();
                 }
+        }
+        
+        int daily_rewards = AchievementEngine::getInstance()->dailyReward();
+        if (daily_rewards > 0){
+                this->playDailyRewardsAnim(daily_rewards);
         }
 }
 

@@ -99,6 +99,7 @@
 		7C99A1451DE2033E005A489B /* OnlineGameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C99A1431DE2033E005A489B /* OnlineGameData.cpp */; };
 		7C99A1481DE20350005A489B /* OnlineGameEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C99A1461DE20350005A489B /* OnlineGameEngine.cpp */; };
 		7CCB51DA1DD5AAC000810354 /* JsonUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CCB51D81DD5AAC000810354 /* JsonUtil.cpp */; };
+		7CEC13BC1E18B590005A5664 /* AchievementEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CEC13BA1E18B590005A5664 /* AchievementEngine.cpp */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		BB34FAAA1DD35B7A0070B4E4 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = BB34FAA91DD35B7A0070B4E4 /* sounds */; };
 		BB51F1091DCF66D50031296E /* share_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = BB51F1071DCF66D50031296E /* share_sel.png */; };
@@ -297,6 +298,8 @@
 		7C99A1471DE20350005A489B /* OnlineGameEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OnlineGameEngine.hpp; sourceTree = "<group>"; };
 		7CCB51D81DD5AAC000810354 /* JsonUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JsonUtil.cpp; sourceTree = "<group>"; };
 		7CCB51D91DD5AAC000810354 /* JsonUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JsonUtil.hpp; sourceTree = "<group>"; };
+		7CEC13BA1E18B590005A5664 /* AchievementEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AchievementEngine.cpp; sourceTree = "<group>"; };
+		7CEC13BB1E18B590005A5664 /* AchievementEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AchievementEngine.hpp; sourceTree = "<group>"; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		BB34FAA91DD35B7A0070B4E4 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		BB51F1071DCF66D50031296E /* share_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_sel.png; sourceTree = "<group>"; };
@@ -611,6 +614,8 @@
 				7C21A10C1DCB4F010035ECC6 /* JoinData.hpp */,
 				7C558EE01DEE784A007722D7 /* FightResultData.cpp */,
 				7C558EE11DEE784A007722D7 /* FightResultData.hpp */,
+				7CEC13BA1E18B590005A5664 /* AchievementEngine.cpp */,
+				7CEC13BB1E18B590005A5664 /* AchievementEngine.hpp */,
 			);
 			path = GameLogic;
 			sourceTree = "<group>";
@@ -860,6 +865,7 @@
 				7C21A0F01DCB39FE0035ECC6 /* DiceGame.cpp in Sources */,
 				46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */,
 				7C4BA1CE1DDEEEF9004F9770 /* ModalDialog.cpp in Sources */,
+				7CEC13BC1E18B590005A5664 /* AchievementEngine.cpp in Sources */,
 				7C21A1011DCB3B0F0035ECC6 /* MapBasicInfo.cpp in Sources */,
 				7C21A0E81DCB2F450035ECC6 /* GameSettingsScene.cpp in Sources */,
 				7C82E4261DD5768A0019C8CF /* BattleFieldScene.cpp in Sources */,

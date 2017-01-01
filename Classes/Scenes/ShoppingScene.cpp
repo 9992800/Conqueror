@@ -237,40 +237,42 @@ void Shopping::showBuySuccessAnim(int bought_no){
                 auto coins_rotate = coins_change->clone();
                 coins_rotate->setRestoreOriginalFrame(true);
                 coins_rotate->setDelayPerUnit(1.f / 48.f);
-                coins_rotate->setLoops(random(4, 6));
-                auto to_dest = Spawn::create(move_to, Animate::create(coins_rotate), NULL);                 
+                coins_rotate->setLoops(random(2, 4));
+                auto to_dest = Spawn::create(move_to, Animate::create(coins_rotate), NULL);
                 
                 for (int i = 0; i < coins_num_to_show; i++){
                         cur_coins += 10;
                         bool last_one = i == coins_num_to_show - 1;
                         
                         
-                        auto call_back2 = CallFunc::create([this, cur_coins, last_one, showBtn, bought_no](){
+                        auto call_back2 = CallFunc::create([this, showBtn, bought_no](){
                                 
                                 auto scaleBy = ScaleBy::create(0.2f, 1.4f);
                                 auto seq = Sequence::create(scaleBy, scaleBy->reverse(), NULL);
                                 _coinsShow->runAction(seq->clone());
                                 _coinsNumLb->runAction(seq->clone());
-                                _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
                                 
-                                if (last_one){
-                                        showBtn->removeFromParentAndCleanup(true);
-                                        auto cache = UserDefault::getInstance();
-                                        int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS);
-                                        cur_coins += bought_no;
-                                        cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
-                                        _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
-                                        cache->flush();
-                                }
+                                showBtn->removeFromParentAndCleanup(true);
+                                auto cache = UserDefault::getInstance();
+                                int rel_coins = cache->getIntegerForKey(USER_CURRENT_COINS);
+                                rel_coins += bought_no;
+                                cache->setIntegerForKey(USER_CURRENT_COINS, rel_coins);
+                                _coinsNumLb->setString(StringUtils::format("%d", rel_coins));
+                                cache->flush();
+                                
                         });
                         
-                        auto show_seq = Sequence::create(to_dest, call_back2, NULL);
+                        auto show_seq = Sequence::create(to_dest->clone(), call_back2, NULL);
                         
                         auto item_s = Sprite::create("level/coins_show.png");;
                         Size r_p(random(-100, 100), random(-100, 100));
                         item_s->setPosition(coin_pos +r_p);
                         showBtn->addChild(item_s);
-                        item_s->runAction(show_seq);
+                        if (last_one)
+                                item_s->runAction(show_seq);
+                        else{
+                                item_s->runAction(to_dest->clone());
+                        }
                 }
         });
         

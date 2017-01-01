@@ -22,6 +22,10 @@ Scene* Achievement::createScene(){
 }
 
 bool Achievement::init() {
+        if (!Layer::init()){
+                return false;
+        }
+        
         auto visible_size = Director::getInstance()->getVisibleSize();
         auto scene_back = Sprite::create("shopping/shopping_back.png");
         scene_back->setPosition(visible_size / 2);

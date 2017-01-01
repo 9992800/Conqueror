@@ -18,9 +18,10 @@
 USING_NS_CC;
 typedef std::function<void(void)> fbBuySupplyCallback;
 
-class BuySupply : public cocos2d::LayerColor
+class BuySupply : public cocos2d::Layer
 {
 public:
+        static Scene* createScene();
         virtual bool init() override;
         CREATE_FUNC(BuySupply);
         BuySupply():_soundTotalOn(true)

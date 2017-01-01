@@ -97,6 +97,7 @@ GolbalConfig::GolbalConfig(){
         frameCache->addSpriteFramesWithFile("anim/zhanshiHIT1.plist", "anim/zhanshiHIT1.png");
         frameCache->addSpriteFramesWithFile("anim/zhanshiHIT2.plist", "anim/zhanshiHIT2.png");
         frameCache->addSpriteFramesWithFile("anim/dice_colors.plist", "anim/dice_colors.png");
+        frameCache->addSpriteFramesWithFile("anim/coins_change.plist", "anim/coins_change.png");
 }
 
 GolbalConfig::~GolbalConfig(){
@@ -115,6 +116,7 @@ GolbalConfig::~GolbalConfig(){
         frameCache->removeSpriteFramesFromFile("anim/zhanshiHIT1.plist");
         frameCache->removeSpriteFramesFromFile("anim/zhanshiHIT2.plist");
         frameCache->removeSpriteFramesFromFile("anim/dice_colors.plist");
+        frameCache->removeSpriteFramesFromFile("anim/coins_change.plist");
 }
 
 void GolbalConfig::initAnimation(){
@@ -344,6 +346,15 @@ void GolbalConfig::initAnimation(){
         }
         animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_hit2");
+        
+        animFrames.clear();
+        for (int i = 1; i <= 14; i++){
+                sprintf(str, "jb%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
+        AnimationCache::getInstance()->addAnimation(animation, "coins_changes");
 }
 
 

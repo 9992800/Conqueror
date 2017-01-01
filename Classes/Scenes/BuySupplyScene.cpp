@@ -9,69 +9,39 @@
 #include "BuySupplyScene.hpp"
 #include "ShoppingScene.hpp"
 
+Scene* BuySupply::createScene(){
+        auto scene = Scene::create();
+        auto layer = BuySupply::create();
+        scene->addChild(layer);
+        return scene;
+}
+
 bool BuySupply::init(){
         
-        if (!LayerColor::initWithColor(Color4B::BLACK)){
+        if (!Layer::init()){
                 return false;
         }
-        this->setOpacity(180);
-        auto visibleSize = Director::getInstance()->getVisibleSize();
-        Vec2 origin = Director::getInstance()->getVisibleOrigin();
-        
-        
         _soundEngine     = CocosDenshion::SimpleAudioEngine::getInstance();
         _soundTotalOn    = UserDefault::getInstance()->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
         
+        auto visible_size = Director::getInstance()->getVisibleSize();
         
-        auto buy_supply_back = Sprite::create("shopping/buy_supply_back.png");
-        buy_supply_back->setPosition(visibleSize / 2);
-        this->addChild(buy_supply_back);
-        auto buy_supply_back_size = buy_supply_back->getContentSize();
+        auto back_ground = Sprite::create("shopping/shopping_back.png");
+        auto back_ground_size = back_ground->getContentSize();
+        back_ground->setPosition(visible_size / 2);
+        this->addChild(back_ground);
         
-        //Exit button
-        auto buy_btn = ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
-        auto buy_btn_size = buy_btn->getContentSize();
-        buy_btn->setPosition(Vec2(buy_supply_back_size.width * 0.5f - buy_btn_size.width, buy_btn->getContentSize().height * 2.f));
-        
-        buy_btn->addClickEventListener(CC_CALLBACK_1(BuySupply::menuSpendCoins, this, 1));
-        buy_btn->setTitleText("OK");
-        buy_btn->setTitleFontName("fonts/arial.ttf");
-        buy_btn->setTitleFontSize(34);
-        buy_supply_back->addChild(buy_btn);
-        
-        
-        auto cancel_btn = ui::Button::create("DIALOG_CANCEL.png", "DIALOG_CANCEL_SEL.png");
-        cancel_btn->setPosition(Vec2(buy_supply_back_size.width * 0.5f + buy_btn_size.width, buy_btn->getContentSize().height * 2.f));
-        cancel_btn->addClickEventListener(CC_CALLBACK_1(BuySupply::menuSpendCoins, this, 0));
-        cancel_btn->setTitleText("NO");
-        cancel_btn->setTitleFontName("fonts/arial.ttf");
-        cancel_btn->setTitleFontSize(34);
-        buy_supply_back->addChild(cancel_btn);
-        
-        
-        
-        auto tips_title = Sprite::create("common_dialog_title.png");
-        tips_title->setPosition(Vec2(buy_supply_back_size.width * 0.5f,
-                               buy_supply_back_size.height + tips_title->getContentSize().height * 0.3f));
-        buy_supply_back->addChild(tips_title);
-        
-        auto label_tips = Label::createWithSystemFont("Buy 8 mercenaries using 10 gold coins.", "fonts/arial.ttf", 28);
-        
-        label_tips->setColor(Color3B::ORANGE);
-        Vec2 label_tips_pos(buy_supply_back_size.width * 0.5f,
-                            buy_supply_back_size.height - label_tips->getContentSize().height * 1.2f);
-        label_tips->setPosition(label_tips_pos);
-        buy_supply_back->addChild(label_tips);
-        
-        auto content_back = Sprite::create("shopping/buy_supply_back_c.png");
-        content_back->setPosition(Vec2(label_tips_pos.x,
-                                       label_tips_pos.y - content_back->getContentSize().height * 0.75f
-                                       ));
-        buy_supply_back->addChild(content_back);
-        
-        auto content = Sprite::create("shopping/buy_supply_tips.png");
-        content->setPosition(content_back->getContentSize() / 2);
-        content_back->addChild(content);
+        auto return_btn = cocos2d::ui::Button::create("DIALOG_CANCEL.png","DIALOG_CANCEL_SEL.png");
+        return_btn->setPosition(Vec2(back_ground_size.width * 0.92, back_ground_size.height * 0.08));
+        return_btn->addClickEventListener([this](Ref*){
+                if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
+                Director::getInstance()->popScene();
+        });
+        return_btn->setTitleText("Return");
+        return_btn->setTitleFontName("fonts/arial.ttf");
+        return_btn->setTitleFontSize(16);
+        return_btn->setScale(1.4f);
+        back_ground->addChild(return_btn);
         
         return true;
 }

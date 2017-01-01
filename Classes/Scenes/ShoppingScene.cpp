@@ -19,6 +19,11 @@ Scene* Shopping::createScene(){
 }
 
 bool Shopping::init(){
+        
+        if (!Layer::init()){
+                return false;
+        }
+        
 #if defined(COCOS2D_DEBUG)
         IAP::setDebug(true);
 #endif
@@ -220,18 +225,19 @@ void Shopping::showBuySuccessAnim(int coins_num_to_shows){
                 auto parent_size = showBtn->getContentSize();
                 auto coin_pos = Vec2(parent_size.width * 0.4f, parent_size.height * 0.6f);
                 
-                auto scale = ScaleBy::create(0.4f, 2.f);
-                auto rotate = RotateBy::create(0.4f, Vec3(0, 720, 0));
+                auto coins_show = ui::ImageView::create("level/coins_show.png");
+                coins_show->setPosition(coin_pos);
+                showBtn->addChild(coins_show);
                 
                 auto dest_pos = _coinsShow->getParent()->convertToWorldSpace(_coinsShow->getPosition());
                 auto local_pos = showBtn->convertToNodeSpace(dest_pos);
                 auto move_to = MoveTo::create(0.4f, local_pos);
                 
-                auto to_dest    = Spawn::create(rotate, scale, NULL);
-                auto to_dest_2  = Spawn::create(rotate, move_to, scale->reverse(), NULL);
                 
-                auto show_seq = Sequence::create(to_dest, to_dest_2, NULL);
-                auto coins_show = ui::ImageView::create("level/coins_show.png");
+                auto coins_rotate = AnimationCache::getInstance()->getAnimation("coins_changes")->clone();
+                coins_rotate->setRestoreOriginalFrame(true);
+                
+                auto to_dest = Spawn::create(move_to, coins_rotate, NULL);
                 
                 auto call_back2 = CallFunc::create([this, showBtn](){
                         showBtn->removeFromParentAndCleanup(true);
@@ -243,21 +249,9 @@ void Shopping::showBuySuccessAnim(int coins_num_to_shows){
                         int cur_coins = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS);
                         _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
                 });
-
                 
-                auto show_seq_2 = Sequence::create(to_dest, to_dest_2, call_back2, NULL);
-                
-                for (int i = 0; i < coins_num_to_shows; i++){
-                        auto item_to_show = coins_show->clone();
-                        Size r(random(-100, 100), random(-100, 100));
-                        item_to_show->setPosition(coin_pos + r);
-                        showBtn->addChild(item_to_show);
-                        if (i == coins_num_to_shows - 1){
-                                item_to_show->runAction(show_seq_2);
-                        }else{
-                                item_to_show->runAction(show_seq->clone());
-                        }
-                }
+                auto show_seq_2 = Sequence::create(to_dest, call_back2, NULL);
+                coins_show-> runAction(show_seq_2);
         });
         
         auto seq = Sequence::create(to_center, call_back, nullptr);

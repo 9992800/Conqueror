@@ -12,6 +12,7 @@
 #include "PopUpOkCancelDialog.hpp"
 #include "PopUpOkDialog.hpp"
 #include "CommonTipsDialog.hpp"
+#include "AchievementEngine.hpp"
 
 enum{
         ZORDER_BACK_GROUND = 0,
@@ -1214,6 +1215,8 @@ void GameScene::menuStartGame(Ref* pSender, Layer* parent){
 
 void GameScene::menuExit(Ref* pSender){
         this->playSoundEffect();
+        
+        this->onSharedSuccess("");
         CommonTipsDialog::showModalDialog((Node*)this, "Are you sure to exit ?", [this](Ref* sender){
                 this->playSoundEffect();
                 CommonTipsDialog::dismissDialog(this);
@@ -1353,9 +1356,42 @@ void GameScene::menuAddArmy(Ref* btn){
 void GameScene::onLogin(bool, const std::string&){
         
 }
-void GameScene::onSharedSuccess(const std::string&){
-        _theGameLogic->finishHistoryRecord();
-        Director::getInstance()->popScene();
+void GameScene::onSharedSuccess(const std::string& infos){
+        CCLOG("===onSharedSuccess=%s", infos.c_str());
+        int rewards = AchievementEngine::getInstance()->dailyShareReward();
+        if (rewards == 0){
+                _theGameLogic->finishHistoryRecord();
+                Director::getInstance()->popScene();
+                return;
+        }
+        
+        auto visible_size = Director::getInstance()->getVisibleSize();
+        auto coin_pos = visible_size * 0.5f;
+        
+        auto move_by = MoveBy::create(1.f, Vec2(visible_size * -0.5f));
+        auto coins_change = AnimationCache::getInstance()->getAnimation("coins_changes");
+        auto coins_rotate = coins_change->clone();
+        coins_rotate->setRestoreOriginalFrame(true);
+        coins_rotate->setDelayPerUnit(1.f / 48.f);
+        coins_rotate->setLoops(4);
+        auto to_dest = Spawn::create(move_by, Animate::create(coins_rotate), NULL);
+        auto call_back = CallFunc::create([this](){
+                _theGameLogic->finishHistoryRecord();
+                Director::getInstance()->popScene();
+        });
+        
+        for (int i = 0; i < 10; i++){
+                auto item_s = Sprite::create("level/coins_show.png");;
+                Size r_p(random(-100, 100), random(-100, 100));
+                item_s->setPosition(coin_pos + r_p);
+                _controlLayer->addChild(item_s);
+                if (i == 9){
+                        item_s->runAction(Sequence::create(to_dest->clone(), call_back, NULL));
+                }else{
+                        item_s->runAction(to_dest->clone());
+                }
+        }
+        
 }
 void GameScene::onSharedFailed(const std::string&){
         

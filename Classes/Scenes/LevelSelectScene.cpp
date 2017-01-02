@@ -647,7 +647,7 @@ void LevelSelect::onEnter(){
                 }
         } 
         
-        int daily_rewards = AchievementEngine::getInstance()->dailyReward();
+        int daily_rewards = AchievementEngine::getInstance()->dailyOpenReward();
         if (daily_rewards > 0){
                 this->playDailyRewardsAnim(daily_rewards);
         }

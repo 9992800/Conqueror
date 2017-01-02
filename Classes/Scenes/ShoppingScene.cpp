@@ -231,13 +231,11 @@ void Shopping::showBuySuccessAnim(int bought_no){
                 auto dest_pos = _coinsShow->getParent()->convertToWorldSpace(_coinsShow->getPosition());
                 auto local_pos = showBtn->convertToNodeSpace(dest_pos);
                 auto move_to = MoveTo::create(1.f, local_pos);
-                
-                
                 auto coins_change = AnimationCache::getInstance()->getAnimation("coins_changes");
                 auto coins_rotate = coins_change->clone();
                 coins_rotate->setRestoreOriginalFrame(true);
                 coins_rotate->setDelayPerUnit(1.f / 48.f);
-                coins_rotate->setLoops(random(2, 4));
+                coins_rotate->setLoops(4);
                 auto to_dest = Spawn::create(move_to, Animate::create(coins_rotate), NULL);
                 
                 for (int i = 0; i < coins_num_to_show; i++){

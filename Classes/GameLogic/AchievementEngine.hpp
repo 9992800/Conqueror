@@ -18,6 +18,7 @@ public:
         static AchievementEngine* getInstance();
         bool init();
         
-        int dailyReward();
+        int dailyOpenReward();
+        int dailyShareReward();
 };
 #endif /* AchievementEngine_hpp */

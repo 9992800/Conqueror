@@ -1215,8 +1215,6 @@ void GameScene::menuStartGame(Ref* pSender, Layer* parent){
 
 void GameScene::menuExit(Ref* pSender){
         this->playSoundEffect();
-        
-        this->onSharedSuccess("");
         CommonTipsDialog::showModalDialog((Node*)this, "Are you sure to exit ?", [this](Ref* sender){
                 this->playSoundEffect();
                 CommonTipsDialog::dismissDialog(this);
@@ -1368,13 +1366,13 @@ void GameScene::onSharedSuccess(const std::string& infos){
         auto visible_size = Director::getInstance()->getVisibleSize();
         auto coin_pos = visible_size * 0.5f;
         
-        auto move_by = MoveBy::create(1.f, Vec2(visible_size * -0.5f));
+        auto move_to = MoveTo::create(0.8f, Vec2(0, visible_size.height));
         auto coins_change = AnimationCache::getInstance()->getAnimation("coins_changes");
         auto coins_rotate = coins_change->clone();
         coins_rotate->setRestoreOriginalFrame(true);
         coins_rotate->setDelayPerUnit(1.f / 48.f);
         coins_rotate->setLoops(4);
-        auto to_dest = Spawn::create(move_by, Animate::create(coins_rotate), NULL);
+        auto to_dest = Spawn::create(move_to, Animate::create(coins_rotate), NULL);
         auto call_back = CallFunc::create([this](){
                 _theGameLogic->finishHistoryRecord();
                 Director::getInstance()->popScene();

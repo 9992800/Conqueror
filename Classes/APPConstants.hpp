@@ -43,36 +43,44 @@ extern Color4F selected_color;
 #define ACHIEVE_DATA_KEY_FIRST_SHARE            "_key_achive_data_first_share_game"
 
 
+#define ACHIEVE_DATA_KEY_NEW_ACH_NO             "_key_achive_data_new_achievement_no"
 
 enum {
-        ACHIEVE_BONUS_TYPE_NONE = -1,
-        ACHIEVE_BONUS_TYPE_COINS = 1,
+        ACHIEVE_BONUS_TYPE_NONE = -2,
+        ACHIEVE_BONUS_TYPE_COINS = 0,
         ACHIEVE_BONUS_TYPE_MERCENARY,
         ACHIEVE_BONUS_TYPE_CHARACTER,
-        ACHIEVE_BONUS_TYPE_BATTLEMAP
+        ACHIEVE_BONUS_TYPE_BATTLEMAP,
+        ACHIEVE_BONUS_TYPE_MAX
 };
-
+ 
 enum{
-        REWARDS_BATTLEMAP_3P = 1,
-        REWARDS_BATTLEMAP_4P,
-        REWARDS_BATTLEMAP_5P,
-        REWARDS_BATTLEMAP_6P,
-        REWARDS_BATTLEMAP_7P,
-        REWARDS_BATTLEMAP_8P
+        REWARDS_STATUS_CLOSED = 1,
+        REWARDS_STATUS_OPEN,
+        REWARDS_STATUS_FINISHED,
 };
 
 
 struct AchievementData {
+        bool isNUll(){
+                return bonus_status == ACHIEVE_BONUS_TYPE_NONE;
+        }
+        AchievementData emptyInstance(int num){
+                bonus_coins = num;
+                bonus_status = ACHIEVE_BONUS_TYPE_NONE;
+                return *this;
+        }
+        
         std::string cache_key;
-        bool bonus_status;
-        int bonus_type1;
-        int bonus_value1;
-        int bonus_type2;
-        int bonus_value2;
-        int bonus_type3;
-        int bonus_value3;
-        int bonus_type4;
-        int bonus_value4;
+        int bonus_status;
+        int bonus_coins;
+        int bonus_coinsNum;
+        int bonus_mercenary;
+        int bonus_mercenaryNum;
+        int bonus_charactor;
+        std::string charactor_key;
+        int bonus_map;
+        std::string map_key;
         std::string title;
         std::string desc;
         std::string cup_name;
@@ -89,11 +97,14 @@ typedef struct MercenaryItem_tag{
 class GolbalConfig:public Ref{
 public:
         static GolbalConfig* getInstance();
-        inline std::vector<AchievementData>& getAchievementData(){
-                return this->_systemAchievementData;
-        }
+        
+        std::vector<AchievementData> getAchievementData();
+        
         inline  const std::vector<MercenaryItem>& getMercenaryPriceData(){
                 return this->_mercenaryItemPriceData;
+        }
+        AchievementData getSingleAchievement(std::string key){
+                return this->_systemAchievementData.at(key);
         }
 protected:
         GolbalConfig();
@@ -103,7 +114,7 @@ protected:
         void initAchievementData();
         void initMercenaryItemData();
 private:
-        std::vector<AchievementData>    _systemAchievementData;
-        std::vector<MercenaryItem>      _mercenaryItemPriceData;
+        std::map<std::string, AchievementData>  _systemAchievementData;
+        std::vector<MercenaryItem>              _mercenaryItemPriceData;
 };
 #endif /* APPConstants_hpp */

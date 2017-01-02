@@ -20,13 +20,6 @@
 #include "AchievementEngine.hpp"
 
 enum{
-        kLevelShowLevel1Tag = 2,
-        kLevelShowLevel2Tag = 3,
-        kLevelShowLevel3Tag = 4,
-        kLevelShowLevel4Tag = 5,
-        kLevelShowLevel5Tag = 6,
-        kLevelShowLevel6Tag = 7,
-        kLevelShowLevel7Tag = 8,
         key_loading_bar1,
         key_loading_bar2,
         key_loading_bar3,
@@ -602,7 +595,11 @@ void LevelSelect::menuSoundControl(Ref* btn){
 #pragma mark - loading bar
 
 void LevelSelect::playDailyRewardsAnim(int r_no){
-        
+        auto show_layer = this->getChildByTag(kMainMenuBackTag);
+        auto visible_size = Director::getInstance()->getVisibleSize();
+        auto world_p = _coinsNumLb->getParent()->convertToWorldSpace(_coinsNumLb->getPosition());
+        auto dest = show_layer->convertToNodeSpace(world_p);
+        AchievementEngine::getInstance()->coinsAnimShow(show_layer, visible_size * 0.5, dest);
 }
 
 void LevelSelect::onEnter(){

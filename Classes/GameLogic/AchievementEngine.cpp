@@ -14,6 +14,7 @@
 
 #define REWARDS_FOR_DAILY_OPEN          (1)
 #define REWARDS_FOR_DAILY_SHARE         (2)
+#define REWARDS_FOR_FIRST_SHARE         (15)
 
 static AchievementEngine* s_SharedEngine;
 AchievementEngine* AchievementEngine::getInstance(){
@@ -28,6 +29,40 @@ AchievementEngine* AchievementEngine::getInstance(){
 
 bool AchievementEngine::init(){
         return true;
+}
+
+#define COINS_ANIM_SHOW_NUM (10)
+void AchievementEngine::coinsAnimShow(Node* parent, Vec2 from, Vec2 dest, CallFunc* call_back){
+        
+        auto move_to = MoveTo::create(0.8f, dest);
+        auto coins_change = AnimationCache::getInstance()->getAnimation("coins_changes");
+        auto coins_rotate = coins_change->clone();
+        coins_rotate->setRestoreOriginalFrame(true);
+        coins_rotate->setDelayPerUnit(1.f / 48.f);
+        coins_rotate->setLoops(4);
+        auto to_dest = Spawn::create(move_to, Animate::create(coins_rotate), NULL);
+        
+        auto clean_call = CallFunc::create([parent](){
+                for (int i = 0 ; i < COINS_ANIM_SHOW_NUM; i++){
+                        parent->removeChildByTag(MODAL_DIALOG_NODETAG + i);
+                }
+        });
+        
+        auto seq_last = Sequence::create(to_dest->clone(), clean_call, call_back, NULL);
+        auto seq_normal = Sequence::create(to_dest->clone(), clean_call, NULL);
+        
+        for (int i = 0; i < COINS_ANIM_SHOW_NUM; i++){
+                auto item_s = Sprite::create("level/coins_show.png");;
+                Size r_p(random(-100, 100), random(-100, 100));
+                item_s->setPosition(from + r_p);
+                parent->addChild(item_s, SUPER_LAYER_PRIVILIEGE, MODAL_DIALOG_NODETAG + i);
+                if (i == (COINS_ANIM_SHOW_NUM - 1)
+                    && nullptr != call_back){
+                        item_s->runAction(seq_last->clone());
+                }else{
+                        item_s->runAction(seq_normal->clone());
+                }
+        }
 }
 
 int AchievementEngine::dailyOpenReward(){
@@ -63,9 +98,87 @@ int AchievementEngine::dailyShareReward(){
         
         int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
         cur_coins += REWARDS_FOR_DAILY_SHARE;
-        cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
         cache->setIntegerForKey(SHARE_DAILY_REWARD_KEY, today);
+        
+        int first_share = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_SHARE, REWARDS_STATUS_CLOSED);
+        if (REWARDS_STATUS_CLOSED == first_share){
+                cache->setIntegerForKey(ACHIEVE_DATA_KEY_FIRST_SHARE, REWARDS_STATUS_OPEN);
+                int new_ach_no = cache->getIntegerForKey(ACHIEVE_DATA_KEY_NEW_ACH_NO, 0);
+                cache->setIntegerForKey(ACHIEVE_DATA_KEY_NEW_ACH_NO, ++new_ach_no);
+        }
+        cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
         cache->flush();
         
         return REWARDS_FOR_DAILY_SHARE;
+}
+
+AchievementData AchievementEngine::winnerRewards(int playerNum){
+        int coins_num = 1, first_get = REWARDS_STATUS_CLOSED;
+        std::string achieve_key = "";
+        auto cache = UserDefault::getInstance();
+        AchievementData result_obj;
+        switch (playerNum) {
+                case 2:{
+                        coins_num = 1;
+                        first_get = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_2, REWARDS_STATUS_CLOSED);
+                        achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_2;
+                }
+                        break;
+                case 3:{
+                        coins_num = 3;
+                        first_get = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_3, REWARDS_STATUS_CLOSED);
+                        achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_3;
+                }
+                        break;
+                case 4:{
+                        coins_num = 4;
+                        first_get = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_4, REWARDS_STATUS_CLOSED);
+                        achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_4;
+                }
+                        break;
+                case 5:{
+                        coins_num = 5;
+                        first_get = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_5, REWARDS_STATUS_CLOSED);
+                        achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_5;
+                }
+                        break;
+                case 6:{
+                        coins_num = 7;
+                        first_get = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_6, REWARDS_STATUS_CLOSED);
+                        achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_6;
+                }
+                        break;
+                case 7:{
+                        coins_num = 9;
+                        first_get = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_7, REWARDS_STATUS_CLOSED);
+                        achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_7;
+                }
+                        break;
+                case 8:{
+                        coins_num = 10;
+                        first_get = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_8, REWARDS_STATUS_CLOSED);
+                        achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_8;
+                }
+                        break;
+                default:
+                        break;
+        }
+        
+        int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
+        
+        if (REWARDS_STATUS_CLOSED == first_get){
+                cache->setIntegerForKey(achieve_key.c_str(), REWARDS_STATUS_OPEN);
+                result_obj = GolbalConfig::getInstance()->getSingleAchievement(achieve_key);
+        }else{
+                cur_coins += coins_num;
+                result_obj.emptyInstance(coins_num);
+        }
+        cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
+        cache->flush();
+        
+        return result_obj;
+}
+
+void AchievementEngine::openRewards(AchievementData data){
+        
 }

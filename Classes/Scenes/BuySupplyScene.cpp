@@ -266,7 +266,7 @@ void BuySupply::update(float dt){
 
 float BuySupply::getItemPositionYInView(cocos2d::ui::Widget* item)const{
         auto worldPos = item->getParent()->convertToWorldSpaceAR(item->getPosition());
-        auto viewPos = this->_listView->convertToNodeSpaceAR(worldPos);
+        auto viewPos = this->_listView->convertToNodeSpace(worldPos);
         return viewPos.y;
 }
 

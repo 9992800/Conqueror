@@ -33,14 +33,15 @@ extern Color4F selected_color;
 #define ACHIEVE_DATA_KEY_FIRST_WIN_7            "_key_achive_data_first_win_7"
 #define ACHIEVE_DATA_KEY_FIRST_WIN_8            "_key_achive_data_first_win_8"
 
-#define ACHIEVE_DATA_KEY_WIN_2TIMES             "_key_achive_data_win_2times"
-#define ACHIEVE_DATA_KEY_WIN_5TIMES             "_key_achive_data_win_5times"
-#define ACHIEVE_DATA_KEY_WIN_10TIMES            "_key_achive_data_win_10times"
-
+#define ACHIEVE_DATA_KEY_WIN_3TIMES             "_key_achive_data_win_3times" 
 #define ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY    "_key_achive_data_first_use_mercenary"
 #define ACHIEVE_DATA_KEY_FIRST_BUY_COINS        "_key_achive_data_first_buy_coins"
-#define ACHIEVE_DATA_KEY_FIRST_ENGAGE           "_key_achive_data_first_engage"
 #define ACHIEVE_DATA_KEY_FIRST_SHARE            "_key_achive_data_first_share_game"
+#define ACHIEVE_DATA_KEY_FIRST_CLOSE_ANIM       "_key_achive_data_first_close_anim"
+#define ACHIEVE_DATA_KEY_FIRST_RETRY            "_key_achive_data_first_replay_game"
+#define ACHIEVE_DATA_KEY_FIRST_CHANGE_COLOR     "_key_achive_data_first_change_color"
+#define ACHIEVE_DATA_KEY_FIRST_CHANGE_PLAYER    "_key_achive_data_first_change_PLAYER"
+#define ACHIEVE_DATA_KEY_FIRST_ENGAGE           "_key_achive_data_first_engage"
 
 
 #define ACHIEVE_DATA_KEY_NEW_ACH_NO             "_key_achive_data_new_achievement_no"
@@ -66,21 +67,17 @@ struct AchievementData {
                 return bonus_status == ACHIEVE_BONUS_TYPE_NONE;
         }
         AchievementData emptyInstance(int num){
-                bonus_coins = num;
+                bonus_coinsNum = num;
                 bonus_status = ACHIEVE_BONUS_TYPE_NONE;
                 return *this;
         }
         
         std::string cache_key;
         int bonus_status;
-        int bonus_coins;
         int bonus_coinsNum;
-        int bonus_mercenary;
         int bonus_mercenaryNum;
-        int bonus_charactor;
-        std::string charactor_key;
-        int bonus_map;
-        std::string map_key;
+        std::string bonus_charactor_key;
+        std::string bonus_map_key;
         std::string title;
         std::string desc;
         std::string cup_name;

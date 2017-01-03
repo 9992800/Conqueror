@@ -34,11 +34,11 @@ bool AchievementEngine::init(){
 #define COINS_ANIM_SHOW_NUM (10)
 void AchievementEngine::coinsAnimShow(Node* parent, Vec2 from, Vec2 dest, CallFunc* call_back){
         
-        auto move_to = MoveTo::create(0.8f, dest);
+        auto move_to = MoveTo::create(1.0f, dest);
         auto coins_change = AnimationCache::getInstance()->getAnimation("coins_changes");
         auto coins_rotate = coins_change->clone();
         coins_rotate->setRestoreOriginalFrame(true);
-        coins_rotate->setDelayPerUnit(1.f / 48.f);
+        coins_rotate->setDelayPerUnit(1.f / 60.f);
         coins_rotate->setLoops(4);
         auto to_dest = Spawn::create(move_to, Animate::create(coins_rotate), NULL);
         

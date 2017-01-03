@@ -9,6 +9,7 @@
 #include "BuySupplyScene.hpp"
 #include "ShoppingScene.hpp"
 #include "APPConstants.hpp"
+#include "AchievementEngine.hpp"
 
 enum{
         k_back_ground = 1,
@@ -307,6 +308,7 @@ void BuySupply::actionGetItem(Ref*btn){
                 Director::getInstance()->pushScene(scene);
         }else{
                 this->playCoinsSubAnim(data);
+                AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_ENGAGE);
         }
 }
 

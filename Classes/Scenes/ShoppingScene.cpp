@@ -8,6 +8,8 @@
 
 #include "ShoppingScene.hpp"
 #include "ModalDialog.hpp"
+#include "AchievementEngine.hpp"
+
 enum{
         key_back_ground = 1
 };
@@ -277,6 +279,8 @@ void Shopping::showBuySuccessAnim(int bought_no){
         auto seq = Sequence::create(to_center, call_back, nullptr);
         
         showBtn->runAction(seq);
+        
+        AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_BUY_COINS);
 }
 
 #pragma mark - payment callback

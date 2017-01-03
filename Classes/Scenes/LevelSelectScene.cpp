@@ -402,7 +402,6 @@ void LevelSelect::btnChosePlayerNum(Ref* btn, int num){
                 soldier_back->addChild(empty_chara);
         }
 }
-
 void LevelSelect::pageViewEvent(Ref *pSender, PageView::EventType type)
 {
         if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
@@ -411,8 +410,10 @@ void LevelSelect::pageViewEvent(Ref *pSender, PageView::EventType type)
         CCLOGWARN("log:%zd tag(%d)", pageView->getCurrentPageIndex(), pageView->getTag());
         if ( 1 == pageView->getTag()){
                 _curChIdx = (int)pageView->getCurrentPageIndex();
+                AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_CHANGE_PLAYER);
         }else if (2 == pageView->getTag()){
                 _curColorIdx = (int)pageView->getCurrentPageIndex();
+                AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_CHANGE_COLOR);
         }
 }
 

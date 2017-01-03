@@ -22,6 +22,8 @@ public:
         int dailyOpenReward();
         int dailyShareReward();
         AchievementData winnerRewards(int playerNum);
-        void openRewards(AchievementData);
+        int winCounter();
+        void resetWinCounter();
+        void openReward(std::string);
 };
 #endif /* AchievementEngine_hpp */

@@ -45,6 +45,7 @@ extern Color4F selected_color;
 
 
 #define ACHIEVE_DATA_KEY_NEW_ACH_NO             "_key_achive_data_new_achievement_no"
+#define ACHIEVE_WIN_3TIME_COUNTER               "_key_achieve_win_3time_conter"
 
 enum {
         ACHIEVE_BONUS_TYPE_NONE = -2,

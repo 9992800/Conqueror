@@ -631,6 +631,9 @@ void GameScene::refreshSupplyDiceNum(){
 }
 
 void GameScene::tryAgain(){
+        
+        AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_RETRY);
+        
         _theGameLogic->initHistoryRecord();
         this->removeChildByTag(key_map_back_layer);
         
@@ -662,6 +665,7 @@ void GameScene::showWinDialog(){
         
         
         AchievementData data = AchievementEngine::getInstance()->winnerRewards(_playerNumber);
+        AchievementEngine::getInstance()->winCounter();
         
         auto back_size = content_back->getContentSize();
         auto win_tips = Label::createWithSystemFont("Rewards:", "fonts/arial.ttf", 28);
@@ -706,9 +710,6 @@ void GameScene::showWinDialog(){
 
         }
 }
-void GameScene::showLostDialog(){
-        
-}
 
 #pragma mark - animation
 
@@ -743,6 +744,7 @@ void GameScene::afterRobootBattle(){
                 Director::getInstance()->pause();
                 Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(this, true);
                 this->addChild(_lostDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
+                AchievementEngine::getInstance()->resetWinCounter();
                 return;
         }
         
@@ -1338,6 +1340,7 @@ void GameScene::menuAnimSwitch(Ref* btn){
         
         UserDefault::getInstance()->setBoolForKey(ANIMATION_SWITCH_KEY, _animationIsOn);
         UserDefault::getInstance()->flush();
+        AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY);
 }
 
 void GameScene::menuAddArmy(Ref* btn){
@@ -1372,6 +1375,8 @@ void GameScene::menuAddArmy(Ref* btn){
                 UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curSupplyNo);
                 UserDefault::getInstance()->flush();
         }
+        
+        AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY);
         
         _isPalyingAnim = true;
         auto btn_anim = _addArmyBtn->clone();

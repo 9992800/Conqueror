@@ -309,7 +309,7 @@ void GolbalConfig::initHuoQianShou(){
                 animFrames.pushBack(frame);
         }
         auto animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
-        AnimationCache::getInstance()->addAnimation(animation, "huoqianshou_run");
+        AnimationCache::getInstance()->addAnimation(animation, "huoqiangshou_run");
         
         
         animFrames.clear();
@@ -319,7 +319,26 @@ void GolbalConfig::initHuoQianShou(){
                 animFrames.pushBack(frame);
         }
         animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
-        AnimationCache::getInstance()->addAnimation(animation, "huoqianshou_sd");
+        AnimationCache::getInstance()->addAnimation(animation, "huoqiangshou_sd");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i <= 14; i++){
+                sprintf(str, "hqsHIT1%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
+        AnimationCache::getInstance()->addAnimation(animation, "huoqiangshou_hit1");
+        
+        animFrames.clear();
+        for (int i = 1; i <= 14; i++){
+                sprintf(str, "hqsHIT2s%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
+        AnimationCache::getInstance()->addAnimation(animation, "huoqiangshou_hit2");
 }
 
 void GolbalConfig::initAnimation(){

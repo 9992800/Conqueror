@@ -116,6 +116,7 @@ private:
         void initZhanShi();
         void initXunShouShi();
         void initGongJianShou();
+        void initHuoQianShou();
 private:
         std::map<std::string, AchievementData>  _systemAchievementData;
         std::vector<MercenaryItem>              _mercenaryItemPriceData;

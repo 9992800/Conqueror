@@ -28,27 +28,27 @@ std::string DICE_PIC_NAME_STR[8][6] = {
 
 
 
-std::string ANIM_NAME_FIGHT_RUN[]        = {"zhanshi_run", "xunshoushi_run", "gongjianshou_run", "xunshoushi_run",
+std::string ANIM_NAME_FIGHT_RUN[]        = {"zhanshi_run", "xunshoushi_run", "gongjianshou_run", "huoqiangshou_run",
         "xunshoushi_run", "xunshoushi_run", "xunshoushi_run", "xunshoushi_run"};
 
-std::string ANIM_NAME_FIGHT_STAND[]      = {"zhanshi_sd", "xunshoushi_sd", "gongjianshou_sd", "xunshoushi_sd",
+std::string ANIM_NAME_FIGHT_STAND[]      = {"zhanshi_sd", "xunshoushi_sd", "gongjianshou_sd", "huoqiangshou_sd",
         "xunshoushi_sd", "xunshoushi_sd", "xunshoushi_sd", "xunshoushi_sd"};
 
 
 
-std::string CHARACTER_NAME[] = {"zhanshi_pos.png", "xunshoushi_pos.png", "gongjianshou_pos.png", "xunshoushi_pos.png",
+std::string CHARACTER_NAME[] = {"zhanshi_pos.png", "xunshoushi_pos.png", "gongjianshou_pos.png", "huoqiangshou_pos.png",
         "xunshoushi_pos.png", "xunshoushi_pos.png","xunshoushi_pos.png", "xunshoushi_pos.png"};
 
-std::string CHARACTER_NAME_2[] = {"zhanshi_pos2.png", "xunshoushi_pos2.png", "gongjianshou_pos2.png", "xunshoushi_pos2.png",
+std::string CHARACTER_NAME_2[] = {"zhanshi_pos2.png", "xunshoushi_pos2.png", "gongjianshou_pos2.png", "huoqiangshou_pos2.png",
         "xunshoushi_pos2.png", "xunshoushi_pos2.png","xunshoushi_pos2.png", "xunshoushi_pos2.png"};
 
 std::string ANIM_NAME_DEFEATED_SHOW[2][8] = {
         {"zhangshi_hit1", "xunshoushi_hit1","gongjianshou_hit1",
-                "xunshoushi_hit1","xunshoushi_hit1", "xunshoushi_hit1",
+                "huoqiangshou_hit1","xunshoushi_hit1", "xunshoushi_hit1",
                 "xunshoushi_hit1", "xunshoushi_hit1"},
         
         {"zhangshi_hit2", "xunshoushi_hit2", "gongjianshou_hit2",
-                "xunshoushi_hit2", "xunshoushi_hit2", "xunshoushi_hit2",
+                "huoqiangshou_hit2", "xunshoushi_hit2", "xunshoushi_hit2",
                 "xunshoushi_hit2", "xunshoushi_hit2"}
 };
 
@@ -91,10 +91,15 @@ GolbalConfig::GolbalConfig(){
         auto frameCache = SpriteFrameCache::getInstance();
         frameCache->addSpriteFramesWithFile("anim/hanshirun.plist", "anim/hanshirun.png");
         frameCache->addSpriteFramesWithFile("anim/hanshisd.plist", "anim/hanshisd.png");
+        
         frameCache->addSpriteFramesWithFile("anim/xunshoushirun.plist", "anim/xunshoushirun.png");
         frameCache->addSpriteFramesWithFile("anim/xunshoushisd.plist", "anim/xunshoushisd.png");
+        
         frameCache->addSpriteFramesWithFile("anim/gongjianshou_run.plist", "anim/gongjianshou_run.png");
         frameCache->addSpriteFramesWithFile("anim/gongjianshou_sd.plist", "anim/gongjianshou_sd.png");
+        
+        frameCache->addSpriteFramesWithFile("anim/huoqiangshou_run.plist", "anim/huoqiangshou_run.png");
+        frameCache->addSpriteFramesWithFile("anim/huoqiangshou_sd.plist", "anim/huoqiangshou_sd.png");
         
         frameCache->addSpriteFramesWithFile("anim/yanwu.plist", "anim/yanwu.png");
         frameCache->addSpriteFramesWithFile("anim/zssl.plist", "anim/zssl.png");
@@ -103,10 +108,15 @@ GolbalConfig::GolbalConfig(){
         
         frameCache->addSpriteFramesWithFile("anim/xssHIT1.plist", "anim/xssHIT1.png");
         frameCache->addSpriteFramesWithFile("anim/xssHIT2.plist", "anim/xssHIT2.png");
+        
         frameCache->addSpriteFramesWithFile("anim/zhanshiHIT1.plist", "anim/zhanshiHIT1.png");
         frameCache->addSpriteFramesWithFile("anim/zhanshiHIT2.plist", "anim/zhanshiHIT2.png");
+        
         frameCache->addSpriteFramesWithFile("anim/gongjianshouHIT1.plist", "anim/gongjianshouHIT1.png");
         frameCache->addSpriteFramesWithFile("anim/gongjianshouHIT2.plist", "anim/gongjianshouHIT2.png");
+        
+        frameCache->addSpriteFramesWithFile("anim/huoqiangshouHIT1.plist", "anim/huoqiangshouHIT1.png");
+        frameCache->addSpriteFramesWithFile("anim/huoqiangshouHIT2.plist", "anim/huoqiangshouHIT2.png");
         
         
         frameCache->addSpriteFramesWithFile("anim/dice_colors.plist", "anim/dice_colors.png");
@@ -119,19 +129,35 @@ GolbalConfig::~GolbalConfig(){
         auto frameCache = SpriteFrameCache::getInstance();
         frameCache->removeSpriteFramesFromFile("anim/hanshirun.plist");
         frameCache->removeSpriteFramesFromFile("anim/hanshisd.plist");
+        
         frameCache->removeSpriteFramesFromFile("anim/xunshoushirun.plist");
         frameCache->removeSpriteFramesFromFile("anim/xunshoushisd.plist");
+        
         frameCache->removeSpriteFramesFromFile("anim/gongjianshou_run.plist");
         frameCache->removeSpriteFramesFromFile("anim/gongjianshou_sd.plist");
+        
+        frameCache->removeSpriteFramesFromFile("anim/huoqiangshou_run.plist");
+        frameCache->removeSpriteFramesFromFile("anim/huoqiangshou_sd.plist");
         
         
         frameCache->removeSpriteFramesFromFile("anim/yanwu.plist");
         frameCache->removeSpriteFramesFromFile("anim/zssl.plist");
         frameCache->removeSpriteFramesFromFile("anim/XX.plist");
+        
+        
         frameCache->removeSpriteFramesFromFile("anim/xssHIT1.plist");
         frameCache->removeSpriteFramesFromFile("anim/xssHIT2.plist");
+        
         frameCache->removeSpriteFramesFromFile("anim/zhanshiHIT1.plist");
         frameCache->removeSpriteFramesFromFile("anim/zhanshiHIT2.plist");
+        
+        frameCache->removeSpriteFramesFromFile("anim/gongjianshouHIT1.plist");
+        frameCache->removeSpriteFramesFromFile("anim/gongjianshouHIT2.plist");
+        
+        frameCache->removeSpriteFramesFromFile("anim/huoqiangshouHIT1.plist");
+        frameCache->removeSpriteFramesFromFile("anim/huoqiangshouHIT2.plist");
+        
+        
         frameCache->removeSpriteFramesFromFile("anim/dice_colors.plist");
         frameCache->removeSpriteFramesFromFile("anim/coins_change.plist");
 }
@@ -269,6 +295,33 @@ void GolbalConfig::initGongJianShou(){
         AnimationCache::getInstance()->addAnimation(animation, "gongjianshou_hit2");
 }
 
+
+void GolbalConfig::initHuoQianShou(){
+        //-------------------------火枪手--------------------------------------
+        auto frameCache = SpriteFrameCache::getInstance();
+        float frame_delay = 1.f / 24;
+        
+        Vector<SpriteFrame*> animFrames(12);
+        char str[100] = {0};
+        for (int i = 1; i<= 12; i++){
+                sprintf(str, "hqsrun01%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        auto animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
+        AnimationCache::getInstance()->addAnimation(animation, "huoqianshou_run");
+        
+        
+        animFrames.clear();
+        for (int i = 1; i<= 20; i++){
+                sprintf(str, "hqssd01%04d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
+        AnimationCache::getInstance()->addAnimation(animation, "huoqianshou_sd");
+}
+
 void GolbalConfig::initAnimation(){
         
         this->initZhanShi();
@@ -277,32 +330,13 @@ void GolbalConfig::initAnimation(){
         
         this->initGongJianShou();
         
+        this->initHuoQianShou();
+        
         auto frameCache = SpriteFrameCache::getInstance();
         float frame_delay = 1.f / 24;
         
         Vector<SpriteFrame*> animFrames(12);
-        char str[100] = {0};
-        //炮手
-        animFrames.clear();
-        for (int i = 1; i<= 12; i++){
-                sprintf(str, "xssrun%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        auto animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
-        
-        
-        animFrames.clear();
-        for (int i = 1; i<= 20; i++){
-                sprintf(str, "xsssd%04d.png", i);
-                auto frame = frameCache->getSpriteFrameByName(str);
-                animFrames.pushBack(frame);
-        }
-        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
-        AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_sd");
-        
-        
+        char str[100] = {0};         
         //兽人
         animFrames.clear();
         for (int i = 1; i<= 12; i++){
@@ -310,7 +344,7 @@ void GolbalConfig::initAnimation(){
                 auto frame = frameCache->getSpriteFrameByName(str);
                 animFrames.pushBack(frame);
         }
-        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
+        auto animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "xunshoushi_run");
         
         

@@ -40,7 +40,10 @@ private:
         void onTouchesMoved(const std::vector<Touch*>& touches, Event* event)override;
         void onTouchesEnded(const std::vector<Touch*>& touches, Event *event)override;
         void tryAgain();
-
+        void showWinDialog();
+        void showLostDialog();
+        
+        
         void afterPlayerBattle();
         void afterRobootBattle();
         void playBattleAnimation(bool);

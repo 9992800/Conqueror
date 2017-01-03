@@ -33,7 +33,9 @@ enum{
         key_operate_board_tag_l,
         key_operate_board_tag_m,
         key_operate_board_tag_r,
-        key_supply_turn_counter_tag
+        key_supply_turn_counter_tag,
+        key_winer_back,
+        key_winer_content_back,
 };
 
 
@@ -399,7 +401,7 @@ void GameScene::initDialog(){
         auto win_back_size = game_win_back->getContentSize();
         game_win_back->setPosition(win_back_size / 2);
         _winDialogLayer->setContentSize(win_back_size);
-        _winDialogLayer->addChild(game_win_back, 1);
+        _winDialogLayer->addChild(game_win_back, 1, key_winer_back);
         
         auto game_win_title = Sprite::create("game_win_title.png");
         game_win_title->setPosition(Vec2(win_back_size.width / 2, win_back_size.height + game_win_title->getContentSize().height * 0.2));
@@ -427,13 +429,7 @@ void GameScene::initDialog(){
         
         game_win_c_back->setPosition(Vec2(win_back_size.width / 2,
                                           game_win_t_back_pos.y - game_win_c_back->getContentSize().height * 0.63f));
-        game_win_back->addChild(game_win_c_back);
-        auto game_win_c_back_size = game_win_c_back->getContentSize();
-        auto win_tips = Label::createWithSystemFont("您获得了:", "fonts/arial.ttf", 28);
-        win_tips->setColor(Color3B::BLACK);
-        win_tips->setPosition(Vec2(win_tips->getContentSize().width * 0.55,
-                                   game_win_c_back_size.height - win_tips->getContentSize().height * 0.6));
-        game_win_c_back->addChild(win_tips);
+        game_win_back->addChild(game_win_c_back, 1, key_winer_content_back);
         
         
         auto replay_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
@@ -653,7 +649,68 @@ void GameScene::tryAgain(){
         this->gameAction();
 }
 
-#pragma mark - animation 
+
+void GameScene::showWinDialog(){
+        
+        this->playSoundEffect(EFFECT_FILE_FINISH_WIN);
+        Director::getInstance()->pause();
+        Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(this, true);
+        this->addChild(_winDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
+        auto back_ground = _winDialogLayer->getChildByTag(key_winer_back);
+        auto content_back = back_ground->getChildByTag(key_winer_content_back);
+        content_back->removeAllChildren();
+        
+        
+        AchievementData data = AchievementEngine::getInstance()->winnerRewards(_playerNumber);
+        
+        auto back_size = content_back->getContentSize();
+        auto win_tips = Label::createWithSystemFont("Rewards:", "fonts/arial.ttf", 28);
+        win_tips->setColor(Color3B::BLACK);
+        win_tips->setPosition(Vec2(win_tips->getContentSize().width * 0.55,
+                                   back_size.height - win_tips->getContentSize().height * 0.6));
+        content_back->addChild(win_tips);
+        
+        if (data.isNUll()){
+                auto coins = Sprite::create("level/coins_show.png");
+                coins->setPosition(back_size * .5f);
+                content_back->addChild(coins);
+                
+                std::string coins_num = StringUtils::format("X%d", data.bonus_coinsNum);
+                auto num_label = Label::createWithSystemFont(coins_num, "fonts/arial.ttf", 32);
+                num_label->setPosition(Vec2(coins->getContentSize().width,
+                                            coins->getContentSize().height * 0.5f));
+                coins->addChild(num_label);
+        }else{
+                auto achieve_show = Sprite::create("achievement.png");
+                auto achieve_size = achieve_show->getContentSize();
+                achieve_show->setPosition(Vec2(back_size.width * .5f + 2 * achieve_size.width,
+                                            back_size.height * .5f));
+                content_back->addChild(achieve_show);
+                
+                auto achieve_tittle = Label::createWithSystemFont(data.title, "fonts/arial.ttf", 32);
+                achieve_tittle->setPosition(Vec2(back_size.width,
+                                            back_size.height * 0.5f));
+                achieve_show->addChild(achieve_tittle);
+                
+                
+                std::string coins_num = StringUtils::format("%d", data.bonus_coinsNum);
+                auto coins = Sprite::create("level/coins_show.png");
+                coins->setPosition(Vec2(back_size.width * .5f - 2 * achieve_size.width,
+                                        back_size.height * .5f));
+                content_back->addChild(coins);
+                
+                auto ci_no = Label::createWithSystemFont(coins_num, "fonts/arial.ttf", 32);
+                ci_no->setPosition(Vec2(achieve_size.width,
+                                        achieve_size.height * 0.5f));
+                coins->addChild(ci_no);
+
+        }
+}
+void GameScene::showLostDialog(){
+        
+}
+
+#pragma mark - animation
 
 void GameScene::afterPlayerBattle(){
         std::map<int, int> survival = _theGameLogic->cleanUpBattleField(_attackResult);
@@ -665,10 +722,7 @@ void GameScene::afterPlayerBattle(){
         _diceResultLayer->removeAllChildren();
         
         if (survival.size() == 1){
-                this->playSoundEffect(EFFECT_FILE_FINISH_WIN);
-                Director::getInstance()->pause();
-                Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(this, true);
-                this->addChild(_winDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
+                this->showWinDialog();
                 return;
         }
         this->refreshAreaTcShow(survival);

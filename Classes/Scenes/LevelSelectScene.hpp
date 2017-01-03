@@ -27,8 +27,6 @@ public:
         virtual bool init() override;
         CREATE_FUNC(LevelSelect);
         ~LevelSelect();
-        
-        void playDailyRewardsAnim(int);
         void onEnter() override;
         void update(float delta)override;
         virtual void onExit()override;
@@ -56,6 +54,7 @@ private:
         
         void loadResourceInBg(int* loader, HistoryReplayData* data);
         void afterParseArea(void*);
+        void playDailyRewardsAnim();
         
 private:
         int                     _count;

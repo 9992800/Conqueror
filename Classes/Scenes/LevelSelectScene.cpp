@@ -595,7 +595,7 @@ void LevelSelect::menuSoundControl(Ref* btn){
 
 #pragma mark - loading bar
 
-void LevelSelect::playDailyRewardsAnim(int r_no){
+void LevelSelect::playDailyRewardsAnim(){
         auto show_layer = this->getChildByTag(kMainMenuBackTag);
         auto visible_size = Director::getInstance()->getVisibleSize();
         auto world_p = _coinsNumLb->getParent()->convertToWorldSpace(_coinsNumLb->getPosition());
@@ -647,7 +647,7 @@ void LevelSelect::onEnter(){
         
         int daily_rewards = AchievementEngine::getInstance()->dailyOpenReward();
         if (daily_rewards > 0){
-                this->playDailyRewardsAnim(daily_rewards);
+                scheduleUpdate();
         }
         
         _curCoinsNum = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
@@ -687,8 +687,11 @@ void LevelSelect::onEnter(){
 
 void LevelSelect::update(float delta){
         
-        if (_count < 100)
-                _loadingBar->setPercent(_count);
+        if (++_count >= 100){
+                this->playDailyRewardsAnim();
+                unscheduleUpdate();
+                _count = 0;
+        }
 }
 
 void LevelSelect::onExit(){

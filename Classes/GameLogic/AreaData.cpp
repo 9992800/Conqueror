@@ -346,8 +346,8 @@ void AreaData::playOccupaiedAnimation(CallFunc* cb, Node* back){
         auto cache = AnimationCache::getInstance();
         
         Sprite* sprite = (Sprite*)back->getChildByTag(AREA_TAG_ID_INMAP(_areaId));
-        
-        auto character_hit = cache->getAnimation(ANIM_NAME_DEFEATED_SHOW[_dice > 4 ? 1 : 0][_arm]);
+        int characor_indx = _parentPtr->_player[_arm]->getPosCharactorIdx();
+        auto character_hit = cache->getAnimation(ANIM_NAME_DEFEATED_SHOW[_dice > 4 ? 1 : 0][characor_indx]);
         character_hit->setRestoreOriginalFrame(true);
         
         auto fire = cache->getAnimation("finght_occupay");

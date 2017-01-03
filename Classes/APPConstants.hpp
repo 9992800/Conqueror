@@ -57,8 +57,8 @@ enum {
 };
  
 enum{
-        REWARDS_STATUS_CLOSED = 1,
-        REWARDS_STATUS_OPEN,
+        REWARDS_STATUS_OPEN = 1,
+        REWARDS_STATUS_CLOSED,
         REWARDS_STATUS_FINISHED,
 };
 

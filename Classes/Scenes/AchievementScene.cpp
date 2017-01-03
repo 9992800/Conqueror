@@ -131,7 +131,7 @@ ui::Layout* Achievement::createListItem(){
         butt_on->setPosition(Vec2(default_item_size.width - butt_on_size.width,
                                   default_item_size.height * 0.5f));
         butt_on->setTouchEnabled(true);
-        butt_on->setTitleText("GET THIS");
+        butt_on->setTitleText("GET IT");
         butt_on->setTitleFontName("fonts/arial.ttf");
         butt_on->setTitleFontSize(32);
         butt_on->setName("ssss_ssss");
@@ -162,6 +162,17 @@ void Achievement::initItemDetails(ui::Widget* achieve_item, int idx){
         auto tittle_back = achieve_item->getChildByTag(k_item_title_backgrd);
         auto item_title = (ui::Text*)tittle_back->getChildByTag(k_item_title_text);
         item_title->setString(data.title);
+        
+        auto button = (ui::Button*)achieve_item->getChildByName("ssss_ssss");
+        button->setTag(data.bonus_status);
+        
+        if (REWARDS_STATUS_CLOSED == data.bonus_status){
+                button->setTitleText("GET THIS");
+        }else if (REWARDS_STATUS_OPEN == data.bonus_status){
+                button->setTitleText("COLLECT REWARD");
+        }else{
+                button->setTitleText("FINISHED");
+        }
 }
 
 void Achievement::update(float dt){
@@ -225,6 +236,7 @@ void Achievement::updateItem(int itemID, int templateID)
         
         auto button = (ui::Button*)itemTemplate->getChildByName("ssss_ssss");
         button->setTag(data.bonus_status);
+        
         if (REWARDS_STATUS_CLOSED == data.bonus_status){
                 button->setTitleText("GET THIS");
         }else if (REWARDS_STATUS_OPEN == data.bonus_status){

@@ -520,11 +520,20 @@ void GolbalConfig::initMercenaryItemData(){
 
 std::vector<AchievementData> GolbalConfig::getAchievementData(){
         
+        struct {
+                bool operator()(AchievementData a, AchievementData b)
+                {
+                        return a.bonus_status < b.bonus_status;
+                }
+        }customLess;
+        
         std::vector<AchievementData> v;
         for (std::map<std::string, AchievementData>::iterator it = this->_systemAchievementData.begin();
              it != this->_systemAchievementData.end(); ++it){
                 v.push_back(it->second);
         }
+        
+        std::sort(v.begin(), v.end(), customLess);
         
         return v;
 }

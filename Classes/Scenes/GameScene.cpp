@@ -372,11 +372,11 @@ void GameScene::initAnimationLayer(){
         
         this->loadCharact(PLAYER_ROLE_TYPE_HUOQIANSHOU, "hqsrun010001.png");
         
+        this->loadCharact(PLAYER_ROLE_TYPE_MAONV, "mvrun010001.png");
+        
         this->loadCharact(PLAYER_ROLE_TYPE_PAOSHOU, "xssrun0001.png");
         
         this->loadCharact(PLAYER_ROLE_TYPE_SHOUREN, "xssrun0001.png");
-        
-        this->loadCharact(PLAYER_ROLE_TYPE_MONV, "xssrun0001.png");
         
         this->loadCharact(PLAYER_ROLE_TYPE_DAOZEI, "xssrun0001.png");
         

@@ -111,6 +111,11 @@ protected:
         void initAnimation();
         void initAchievementData();
         void initMercenaryItemData();
+        
+private:
+        void initZhanShi();
+        void initXunShouShi();
+        void initGongJianShou();
 private:
         std::map<std::string, AchievementData>  _systemAchievementData;
         std::vector<MercenaryItem>              _mercenaryItemPriceData;

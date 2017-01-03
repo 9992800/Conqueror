@@ -1,15 +1,15 @@
 TODO：：
 1，   charactor show on main scene.
-2， 
+2， helping hands to show how to play this game.
 3， logo and icon
 4,  share logic ,share pictures
 5， sound effect logic in whole game.
 6， achievements datas and value. btttons when haven't got it.
-7，  
-8， 
+7，  locks to show charactor and level state
+8， tips in achievements to indicate where to get this item.
 9,  other charactors and their animations.
 10, modify common tips dialog content position.
-11，
+11，icons to show things when win the game, mercenary, coins ,map , characot.
 12， achievments tips
 13, unlock charactor and player . the logic.
 bugs
@@ -22,10 +22,7 @@ bugs
 6,how to buy more mercenary .
 7,ahievement logic
 8,how to bug level and charactors.
-
-shopping
-buy coins
-achievments.
+ 
 all fonts in the system.
 
 
@@ -37,7 +34,7 @@ all fonts in the system.
 
 ===1号人物默认开启，2号人物在第一次赢得一局的情况下赠送。3号人物20金币，4号人物50个金币 5号人物90个金币 6号人物140个金币 7号人物200个金币 8号人物500个金币
 
-=== 2人关卡默认开启，3人关卡在第一次引得一局的情况下赠送，3人比赛胜利后送4人 。。。->6人胜利后送7人， 8人赛80金币才能购买。
+=== 2人关卡默认开启，3人关卡在第一次赢得一局的情况下赠送，3人比赛胜利后送4人 。。。->6人胜利后送7人， 8人赛80金币才能购买。
 
 ------成就奖励数据------
 ===第一次胜利                5金币, 2号人物解锁,3人关卡开启

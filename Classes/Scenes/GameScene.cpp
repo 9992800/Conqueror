@@ -368,9 +368,9 @@ void GameScene::initAnimationLayer(){
         
         this->loadCharact(PLAYER_ROLE_TYPE_XUNSHOUSHI, "xssrun0001.png");
         
-        this->loadCharact(PLAYER_ROLE_TYPE_QISHI, "xssrun0001.png");
-        
         this->loadCharact(PLAYER_ROLE_TYPE_GONGJIANSHOU, "xssrun0001.png");
+        
+        this->loadCharact(PLAYER_ROLE_TYPE_QISHI, "xssrun0001.png");
         
         this->loadCharact(PLAYER_ROLE_TYPE_PAOSHOU, "xssrun0001.png");
         

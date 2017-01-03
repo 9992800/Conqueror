@@ -595,14 +595,6 @@ void LevelSelect::menuSoundControl(Ref* btn){
 
 #pragma mark - loading bar
 
-void LevelSelect::playDailyRewardsAnim(){
-        auto show_layer = this->getChildByTag(kMainMenuBackTag);
-        auto visible_size = Director::getInstance()->getVisibleSize();
-        auto world_p = _coinsNumLb->getParent()->convertToWorldSpace(_coinsNumLb->getPosition());
-        auto dest = show_layer->convertToNodeSpace(world_p);
-        AchievementEngine::getInstance()->coinsAnimShow(show_layer, visible_size * 0.5, dest);
-}
-
 void LevelSelect::onEnter(){
         Layer::onEnter();
         auto data_cache = UserDefault::getInstance();
@@ -643,11 +635,6 @@ void LevelSelect::onEnter(){
                         
                         runner->setScale(1.4);
                 }
-        } 
-        
-        int daily_rewards = AchievementEngine::getInstance()->dailyOpenReward();
-        if (daily_rewards > 0){
-                scheduleUpdate();
         }
         
         _curCoinsNum = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
@@ -683,14 +670,30 @@ void LevelSelect::onEnter(){
                         _soundEngine->pauseBackgroundMusic();
                 }
         }
+        
+        scheduleUpdate();
 }
 
 void LevelSelect::update(float delta){
         
-        if (++_count >= 100){
-                this->playDailyRewardsAnim();
+        if (++_count >= 120){
+                auto show_layer = this->getChildByTag(kChoseNumBackTag);
+                auto visible_size = Director::getInstance()->getVisibleSize();
+                auto world_p = _coinsNumLb->getParent()->convertToWorldSpace(_coinsNumLb->getPosition());
+                
+                auto call_back = CallFunc::create([this](){
+                        auto scale_by = ScaleBy::create(0.4f, 1.4f);
+                        _coinsNumLb->getParent()->runAction(Sequence::create(scale_by, scale_by->reverse(), NULL));
+                        int cur_coins = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS);
+                        _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
+                });
+                call_back->retain();
+                auto dest = show_layer->convertToNodeSpace(world_p);                AchievementEngine::getInstance()->dailyOpenReward(show_layer, visible_size * 0.5f, dest, call_back);
+                
+                
                 unscheduleUpdate();
                 _count = 0;
+
         }
 }
 

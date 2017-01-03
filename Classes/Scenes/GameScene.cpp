@@ -1415,13 +1415,6 @@ void GameScene::onLogin(bool, const std::string&){
 }
 void GameScene::onSharedSuccess(const std::string& infos){
         CCLOG("===onSharedSuccess=%s", infos.c_str());
-        int rewards = AchievementEngine::getInstance()->dailyShareReward();
-        if (rewards == 0){
-                _theGameLogic->finishHistoryRecord();
-                Director::getInstance()->popScene();
-                return;
-        }
-        
         auto visible_size = Director::getInstance()->getVisibleSize();
         auto from = visible_size * 0.5f;
         Vec2 dest(0, visible_size.height);
@@ -1429,9 +1422,14 @@ void GameScene::onSharedSuccess(const std::string& infos){
                 _theGameLogic->finishHistoryRecord();
                 Director::getInstance()->popScene();
         });
-
-        AchievementEngine::getInstance()->coinsAnimShow(_controlLayer, from, dest, call_back);
-                
+        
+        int rewards = AchievementEngine::getInstance()->dailyShareReward(_controlLayer, from, dest, call_back);
+        
+        if (rewards == 0){
+                _theGameLogic->finishHistoryRecord();
+                Director::getInstance()->popScene();
+                return;
+        }
 }
 void GameScene::onSharedFailed(const std::string&){
         

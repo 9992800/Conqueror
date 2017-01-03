@@ -32,7 +32,8 @@ bool AchievementEngine::init(){
 }
 
 #define COINS_ANIM_SHOW_NUM (10)
-void AchievementEngine::coinsAnimShow(Node* parent, Vec2 from, Vec2 dest, CallFunc* call_back){
+void AchievementEngine::coinsAnimShow(Node* parent, Vec2 from, Vec2 dest,
+                                      CallFunc* clean_call,  CallFunc* call_back){
         
         auto move_to = MoveTo::create(1.0f, dest);
         auto coins_change = AnimationCache::getInstance()->getAnimation("coins_changes");
@@ -42,14 +43,14 @@ void AchievementEngine::coinsAnimShow(Node* parent, Vec2 from, Vec2 dest, CallFu
         coins_rotate->setLoops(4);
         auto to_dest = Spawn::create(move_to, Animate::create(coins_rotate), NULL);
         
-        auto clean_call = CallFunc::create([parent](){
+        auto clean_call_self = CallFunc::create([parent](){
                 for (int i = 0 ; i < COINS_ANIM_SHOW_NUM; i++){
                         parent->removeChildByTag(MODAL_DIALOG_NODETAG + i);
                 }
         });
         
-        auto seq_last = Sequence::create(to_dest->clone(), clean_call, call_back, NULL);
-        auto seq_normal = Sequence::create(to_dest->clone(), clean_call, NULL);
+        auto seq_last = Sequence::create(to_dest->clone(), clean_call_self,
+                                         clean_call, call_back, NULL);
         
         for (int i = 0; i < COINS_ANIM_SHOW_NUM; i++){
                 auto item_s = Sprite::create("level/coins_show.png");;
@@ -60,12 +61,12 @@ void AchievementEngine::coinsAnimShow(Node* parent, Vec2 from, Vec2 dest, CallFu
                     && nullptr != call_back){
                         item_s->runAction(seq_last->clone());
                 }else{
-                        item_s->runAction(seq_normal->clone());
+                        item_s->runAction(to_dest->clone());
                 }
         }
 }
 
-int AchievementEngine::dailyOpenReward(){
+int AchievementEngine::dailyOpenReward(cocos2d::Node *parent, cocos2d::Vec2 from, cocos2d::Vec2 dest, CallFunc* call_back){
         auto cache = UserDefault::getInstance();
         time_t t;
         time (&t);
@@ -76,16 +77,20 @@ int AchievementEngine::dailyOpenReward(){
                 return 0;
         }
         
-        int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
-        cur_coins += REWARDS_FOR_DAILY_OPEN;
-        cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
-        cache->setIntegerForKey(OPEN_DAILY_REWARD_KEY, today);
-        cache->flush();
+        auto clean_call = CallFunc::create([parent, cache, today](){
+                int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
+                cur_coins += REWARDS_FOR_DAILY_OPEN;
+                cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
+                cache->setIntegerForKey(OPEN_DAILY_REWARD_KEY, today);
+                cache->flush();
+        });
         
+        this->coinsAnimShow(parent, from, dest, clean_call, call_back);
         return REWARDS_FOR_DAILY_OPEN;
 }
 
-int AchievementEngine::dailyShareReward(){
+int AchievementEngine::dailyShareReward(Node* parent, Vec2 from, Vec2 dest,
+                                        CallFunc* call_bakc){
         auto cache = UserDefault::getInstance();
         time_t t;
         time (&t);
@@ -96,19 +101,22 @@ int AchievementEngine::dailyShareReward(){
                 return 0;
         }
         
-        int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
-        cur_coins += REWARDS_FOR_DAILY_SHARE;
-        cache->setIntegerForKey(SHARE_DAILY_REWARD_KEY, today);
+        auto clean_call = CallFunc::create([parent, cache, today](){
+                int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
+                cur_coins += REWARDS_FOR_DAILY_SHARE;
+                cache->setIntegerForKey(SHARE_DAILY_REWARD_KEY, today);
+                
+                int first_share = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_SHARE, REWARDS_STATUS_CLOSED);
+                if (REWARDS_STATUS_CLOSED == first_share){
+                        cache->setIntegerForKey(ACHIEVE_DATA_KEY_FIRST_SHARE, REWARDS_STATUS_OPEN);
+                        int new_ach_no = cache->getIntegerForKey(ACHIEVE_DATA_KEY_NEW_ACH_NO, 0);
+                        cache->setIntegerForKey(ACHIEVE_DATA_KEY_NEW_ACH_NO, ++new_ach_no);
+                }
+                cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
+                cache->flush();
+        });
         
-        int first_share = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_SHARE, REWARDS_STATUS_CLOSED);
-        if (REWARDS_STATUS_CLOSED == first_share){
-                cache->setIntegerForKey(ACHIEVE_DATA_KEY_FIRST_SHARE, REWARDS_STATUS_OPEN);
-                int new_ach_no = cache->getIntegerForKey(ACHIEVE_DATA_KEY_NEW_ACH_NO, 0);
-                cache->setIntegerForKey(ACHIEVE_DATA_KEY_NEW_ACH_NO, ++new_ach_no);
-        }
-        cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
-        cache->flush();
-        
+        this->coinsAnimShow(parent, from, dest, clean_call, call_bakc);
         return REWARDS_FOR_DAILY_SHARE;
 }
 

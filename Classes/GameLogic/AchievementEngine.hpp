@@ -16,14 +16,15 @@ USING_NS_CC;
 class AchievementEngine: public Ref{
 public:
         static AchievementEngine* getInstance();
-        static void coinsAnimShow(Node*, Vec2, Vec2, CallFunc* call_bakc = NULL);
         bool init();
         
-        int dailyOpenReward();
-        int dailyShareReward();
+        int dailyOpenReward(Node*, Vec2, Vec2,CallFunc* call_bakc = NULL);
+        int dailyShareReward(Node*, Vec2, Vec2,CallFunc* call_bakc = NULL);
         AchievementData winnerRewards(int playerNum);
         int winCounter();
         void resetWinCounter();
         void openReward(std::string);
+private:
+        void coinsAnimShow(Node*, Vec2, Vec2, CallFunc*,CallFunc* call_bakc = NULL);
 };
 #endif /* AchievementEngine_hpp */

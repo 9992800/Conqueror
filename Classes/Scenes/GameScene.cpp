@@ -374,7 +374,7 @@ void GameScene::initAnimationLayer(){
         
         this->loadCharact(PLAYER_ROLE_TYPE_MAONV, "mvrun010001.png");
         
-        this->loadCharact(PLAYER_ROLE_TYPE_PAOSHOU, "xssrun0001.png");
+        this->loadCharact(PLAYER_ROLE_TYPE_CHANGQIANGSHOU, "casrun010001.png");
         
         this->loadCharact(PLAYER_ROLE_TYPE_SHOUREN, "xssrun0001.png");
         

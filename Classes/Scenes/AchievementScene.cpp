@@ -115,7 +115,7 @@ ui::Layout* Achievement::createListItem(){
         achieve_cup->setPosition(achieve_cup_size * 0.6f);
         default_item->addChild(achieve_cup, 2);
         
-        auto item_desc_txt = ui::Text::create("    This is the description of the achievement.", "fonts/arial.ttf", 32);
+        auto item_desc_txt = ui::Text::create("This is the description of the achievement.", "fonts/arial.ttf", 32);
         item_desc_txt->setPosition(Vec2(achieve_cup_size.width * 1.2f,
                                         default_item_size.height * 0.7f));
         item_desc_txt->setColor(Color3B::ORANGE);
@@ -131,15 +131,27 @@ ui::Layout* Achievement::createListItem(){
         butt_on->setPosition(Vec2(default_item_size.width - butt_on_size.width,
                                   default_item_size.height * 0.5f));
         butt_on->setTouchEnabled(true);
-        butt_on->setTitleText("Get it");
+        butt_on->setTitleText("GET THIS");
         butt_on->setTitleFontName("fonts/arial.ttf");
-        butt_on->setTitleFontSize(38);
+        butt_on->setTitleFontSize(32);
         butt_on->setName("ssss_ssss");
+        butt_on->addClickEventListener(CC_CALLBACK_1(Achievement::actionButton, this));
         default_item->addChild(butt_on, 4, k_item_get_btn);
         
         return default_item;
 }
 
+void Achievement::actionButton(Ref* btn){
+        ui::Button* action_orig = (ui::Button*)btn;
+        int status = action_orig->getTag();
+        if (REWARDS_STATUS_CLOSED == status){
+                
+        }else if (REWARDS_STATUS_OPEN == status){
+                
+        }else{
+                return;
+        }
+}
 void Achievement::initItemDetails(ui::Widget* achieve_item, int idx){
         achieve_item->setTag(idx);
         

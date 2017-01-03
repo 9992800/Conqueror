@@ -36,7 +36,9 @@ private:
         ui::Layout* createListItem();
         void initItemDetails(ui::Widget*, int);
         void updateItem(int itemID, int templateID);
-        float getItemPositionYInView(cocos2d::ui::Widget* item) const; 
+        float getItemPositionYInView(cocos2d::ui::Widget* item) const;
+        
+        void actionButton(Ref*);
 private:
         ui::ListView* _listView;
         int _totalCount, _spawnCount;

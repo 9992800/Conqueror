@@ -287,7 +287,7 @@ void BuySupply::updateItem(int itemID, int templateID)
         auto item_price = (ui::ImageView*)mercenary_item->getChildByTag(k_item_coins_no);
         item_price->loadTexture(data.priceNoImg);
         
-        auto button = (ui::Button*)mercenary_item->getChildByName("ssss_ssss");//mercenary_item->getChildByTag(k_item_get_it);
+        auto button = (ui::Button*)mercenary_item->getChildByName("ssss_ssss");
         button->setTag(itemID);
 }
 

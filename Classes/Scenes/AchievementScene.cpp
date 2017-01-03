@@ -134,6 +134,7 @@ ui::Layout* Achievement::createListItem(){
         butt_on->setTitleText("Get it");
         butt_on->setTitleFontName("fonts/arial.ttf");
         butt_on->setTitleFontSize(38);
+        butt_on->setName("ssss_ssss");
         default_item->addChild(butt_on, 4, k_item_get_btn);
         
         return default_item;
@@ -209,4 +210,14 @@ void Achievement::updateItem(int itemID, int templateID)
         auto tittle_back = itemTemplate->getChildByTag(k_item_title_backgrd);
         auto item_title = (ui::Text*)tittle_back->getChildByTag(k_item_title_text);
         item_title->setString(data.title);
+        
+        auto button = (ui::Button*)itemTemplate->getChildByName("ssss_ssss");
+        button->setTag(data.bonus_status);
+        if (REWARDS_STATUS_CLOSED == data.bonus_status){
+                button->setTitleText("GET THIS");
+        }else if (REWARDS_STATUS_OPEN == data.bonus_status){
+                button->setTitleText("COLLECT REWARD");
+        }else{
+                button->setTitleText("FINISHED");
+        }
 }

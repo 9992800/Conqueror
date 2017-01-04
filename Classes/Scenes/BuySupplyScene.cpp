@@ -33,7 +33,7 @@ bool BuySupply::init() {
         
         _mercenaryData = GolbalConfig::getInstance()->getMercenaryPriceData();
         this->_totalCount = (int)_mercenaryData.size();
-        
+        this->_spawnCount = this->_totalCount;//TODO::
         
         
         auto visible_size = Director::getInstance()->getVisibleSize();

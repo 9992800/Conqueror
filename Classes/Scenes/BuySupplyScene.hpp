@@ -25,7 +25,7 @@ public:
         CREATE_FUNC(BuySupply);
         
         BuySupply():_soundTotalOn(true)
-        ,_spawnCount(5),
+        ,_spawnCount(8),
         _bufferZone(90),
         _updateTimer(0),
         _updateInterval(1.0f / 24),

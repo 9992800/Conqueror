@@ -694,7 +694,7 @@ void GameScene::showWinDialog(){
         }else{
                 auto achieve_show = Sprite::create("achievement.png");
                 auto achieve_size = achieve_show->getContentSize();
-                achieve_show->setPosition(Vec2(back_size.width * .5f + achieve_size.width,
+                achieve_show->setPosition(Vec2(back_size.width * .5f + 1.5 * achieve_size.width,
                                             back_size.height * .5f));
                 content_back->addChild(achieve_show);
                 
@@ -706,7 +706,7 @@ void GameScene::showWinDialog(){
                 
                 std::string coins_num = StringUtils::format("X%d", data.bonus_coinsNum);
                 auto coins = Sprite::create("level/coins_show.png");
-                coins->setPosition(Vec2(back_size.width * .5f - achieve_size.width,
+                coins->setPosition(Vec2(back_size.width * .5f - 1.5 * achieve_size.width,
                                         back_size.height * .5f));
                 content_back->addChild(coins);
                 

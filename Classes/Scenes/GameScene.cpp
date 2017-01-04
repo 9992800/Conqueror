@@ -93,7 +93,7 @@ bool GameScene::init()
         sdkbox::PluginFacebook::setListener(this);
         sdkbox::PluginFacebook::init();
         
-//        this->showWinDialog();
+        this->showWinDialog();
         
         return true;
 }
@@ -698,9 +698,9 @@ void GameScene::showWinDialog(){
                                             back_size.height * .5f));
                 content_back->addChild(achieve_show);
                 
-                auto achieve_tittle = Label::createWithSystemFont(data.title, "fonts/arial.ttf", 42);
-                achieve_tittle->setPosition(Vec2(achieve_size.width * 1.6f,
-                                            achieve_size.height * 0.5f));
+                auto achieve_tittle = Label::createWithSystemFont(data.title, "fonts/arial.ttf", 28);
+                achieve_tittle->setPosition(Vec2(achieve_size.width * 2.f,
+                                            achieve_size.height * 0.3f));
                 achieve_show->addChild(achieve_tittle);
                 
                 
@@ -710,7 +710,7 @@ void GameScene::showWinDialog(){
                                         back_size.height * .5f));
                 content_back->addChild(coins);
                 
-                auto ci_no = Label::createWithSystemFont(coins_num, "fonts/arial.ttf", 28);
+                auto ci_no = Label::createWithSystemFont(coins_num, "fonts/arial.ttf", 42);
                 ci_no->setPosition(Vec2(coins->getContentSize().width * 1.6f,
                                         coins->getContentSize().height * 0.5f));
                 coins->addChild(ci_no);

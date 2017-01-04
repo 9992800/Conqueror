@@ -34,7 +34,8 @@ public:
         }
         
         virtual void update(float dt) override;
-
+        virtual void onEnter() override;
+        virtual void onExit()override;
         
 private:
         void actionGetItem(Ref*);

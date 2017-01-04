@@ -73,9 +73,7 @@ bool BuySupply::init() {
         float spacing = 8;
         _listView->setItemsMargin(spacing);
         _itemTemplateHeight = default_item->getContentSize().height;
-        this->_reuseItemOffset = (_itemTemplateHeight + spacing) * _spawnCount;
-        
-        this->scheduleUpdate();
+        this->_reuseItemOffset = (_itemTemplateHeight + spacing) * _spawnCount;         
         _listView->forceDoLayout();
         
         _listView->forceDoLayout();
@@ -224,6 +222,16 @@ void BuySupply::initItemDetails(ui::Widget* mercenary_item, int idx){
         mercenary_item->getChildByTag(k_item_get_it)->setTag(idx);
 }
 
+void BuySupply::onEnter(){
+        Layer::onEnter();
+        this->scheduleUpdate();
+}
+
+void BuySupply::onExit(){
+        Layer::onExit(); 
+        this->unscheduleUpdate();
+}
+
 void BuySupply::update(float dt){
         this->_updateTimer += dt;
         if (this->_updateTimer < this->_updateInterval) {
@@ -268,7 +276,7 @@ void BuySupply::update(float dt){
 float BuySupply::getItemPositionYInView(cocos2d::ui::Widget* item)const{
         auto worldPos = item->getParent()->convertToWorldSpaceAR(item->getPosition());
         auto viewPos = this->_listView->convertToNodeSpace(worldPos);
-        return viewPos.y;
+        return viewPos.y; 
 }
 
 void BuySupply::updateItem(int itemID, int templateID)

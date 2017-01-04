@@ -73,7 +73,13 @@ bool GameScene::init()
         if (!Layer::init()){
                 return false;
         }
+        auto cache = UserDefault::getInstance();
         _gameStatus = GAME_STATUS_INIT;
+        _soundTotalOn = cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
+        _musicSwitch = cache->getBoolForKey(BACK_MUSIC_SWITCH_KEY);
+        _soundEngine = CocosDenshion::SimpleAudioEngine::getInstance();
+        
+        
         _theGameLogic = DiceGame::create();
         _theGameLogic->retain();
         
@@ -86,6 +92,9 @@ bool GameScene::init()
         
         sdkbox::PluginFacebook::setListener(this);
         sdkbox::PluginFacebook::init();
+        
+        this->showWinDialog();
+        
         return true;
 }
 
@@ -656,8 +665,6 @@ void GameScene::tryAgain(){
 void GameScene::showWinDialog(){
         
         this->playSoundEffect(EFFECT_FILE_FINISH_WIN);
-        Director::getInstance()->pause();
-        Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(this, true);
         this->addChild(_winDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
         auto back_ground = _winDialogLayer->getChildByTag(key_winer_back);
         auto content_back = back_ground->getChildByTag(key_winer_content_back);
@@ -680,8 +687,8 @@ void GameScene::showWinDialog(){
                 content_back->addChild(coins);
                 
                 std::string coins_num = StringUtils::format("X%d", data.bonus_coinsNum);
-                auto num_label = Label::createWithSystemFont(coins_num, "fonts/arial.ttf", 32);
-                num_label->setPosition(Vec2(coins->getContentSize().width,
+                auto num_label = Label::createWithSystemFont(coins_num, "fonts/arial.ttf", 42);
+                num_label->setPosition(Vec2(coins->getContentSize().width * 1.6,
                                             coins->getContentSize().height * 0.5f));
                 coins->addChild(num_label);
         }else{
@@ -691,8 +698,8 @@ void GameScene::showWinDialog(){
                                             back_size.height * .5f));
                 content_back->addChild(achieve_show);
                 
-                auto achieve_tittle = Label::createWithSystemFont(data.title, "fonts/arial.ttf", 32);
-                achieve_tittle->setPosition(Vec2(back_size.width,
+                auto achieve_tittle = Label::createWithSystemFont(data.title, "fonts/arial.ttf", 42);
+                achieve_tittle->setPosition(Vec2(back_size.width * 1.6f,
                                             back_size.height * 0.5f));
                 achieve_show->addChild(achieve_tittle);
                 
@@ -703,8 +710,8 @@ void GameScene::showWinDialog(){
                                         back_size.height * .5f));
                 content_back->addChild(coins);
                 
-                auto ci_no = Label::createWithSystemFont(coins_num, "fonts/arial.ttf", 32);
-                ci_no->setPosition(Vec2(achieve_size.width,
+                auto ci_no = Label::createWithSystemFont(coins_num, "fonts/arial.ttf", 42);
+                ci_no->setPosition(Vec2(achieve_size.width * 1.6,
                                         achieve_size.height * 0.5f));
                 coins->addChild(ci_no);
 
@@ -741,8 +748,6 @@ void GameScene::afterRobootBattle(){
         int user_tc = _theGameLogic->getUserTC();
         if (0 == user_tc){
                 this->playSoundEffect(EFFECT_FILE_FINISH_LOSE);
-                Director::getInstance()->pause();
-                Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(this, true);
                 this->addChild(_lostDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
                 AchievementEngine::getInstance()->resetWinCounter();
                 return;
@@ -1290,9 +1295,6 @@ void GameScene::gameOver(Ref* btn, int result){
                 this->removeChildByTag(key_dialog_layer_tag);
                 this->tryAgain();
         }
-        
-        Director::getInstance()->resume();
-        Director::getInstance()->getEventDispatcher()->resumeEventListenersForTarget(this, true);
 }
 
 void GameScene::afterCaptureScreen(bool yes, const std::string &outputFilename)

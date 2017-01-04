@@ -61,6 +61,8 @@ bool Achievement::init() {
         _listView->setGravity(ui::ListView::Gravity::CENTER_VERTICAL);
         this->_achievementData = GolbalConfig::getInstance()->getAchievementData();
         this->_totalCount = (int)_achievementData.size();
+        this->_spawnCount = this->_totalCount;
+        
         this->_bufferZone = default_item->getContentSize().height * 1.1f;
         
         for (int i = 0; i < this->_totalCount; ++i) {
@@ -169,7 +171,7 @@ void Achievement::initItemDetails(ui::Widget* achieve_item, int idx){
         if (REWARDS_STATUS_CLOSED == data.bonus_status){
                 button->setTitleText("GET THIS");
         }else if (REWARDS_STATUS_OPEN == data.bonus_status){
-                button->setTitleText("COLLECT REWARD");
+                button->setTitleText("COLLECT");
         }else{
                 button->setTitleText("FINISHED");
         }

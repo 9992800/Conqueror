@@ -223,3 +223,9 @@ void AchievementEngine::openReward(std::string key){
                 cache->flush();
         }
 }
+
+
+
+void AchievementEngine::collectCoinsRewards(Node*, AchievementData, CallFunc* call_bakc){
+        
+}

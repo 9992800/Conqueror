@@ -6,6 +6,7 @@
 //
 //
 #include "AchievementScene.hpp"
+#include "AchievementEngine.hpp"
 enum{
         k_item_title_backgrd = 1,
         k_item_title_text,
@@ -92,6 +93,7 @@ bool Achievement::init() {
 }
 
 
+#pragma mark - list view functions.
 ui::Layout* Achievement::createListItem(){
         
         auto default_back =  Sprite::create("achievement/achieve_item_back.png");
@@ -142,18 +144,6 @@ ui::Layout* Achievement::createListItem(){
         
         return default_item;
 }
-
-void Achievement::actionButton(Ref* btn){
-        ui::Button* action_orig = (ui::Button*)btn;
-        int status = action_orig->getTag();
-        if (REWARDS_STATUS_CLOSED == status){
-                
-        }else if (REWARDS_STATUS_OPEN == status){
-                
-        }else{
-                return;
-        }
-}
 void Achievement::initItemDetails(ui::Widget* achieve_item, int idx){
         achieve_item->setTag(idx);
         
@@ -166,7 +156,7 @@ void Achievement::initItemDetails(ui::Widget* achieve_item, int idx){
         item_title->setString(data.title);
         
         auto button = (ui::Button*)achieve_item->getChildByName("ssss_ssss");
-        button->setTag(data.bonus_status);
+        button->setTag(idx);
         
         if (REWARDS_STATUS_CLOSED == data.bonus_status){
                 button->setTitleText("GET THIS");
@@ -237,7 +227,7 @@ void Achievement::updateItem(int itemID, int templateID)
         item_title->setString(data.title);
         
         auto button = (ui::Button*)itemTemplate->getChildByName("ssss_ssss");
-        button->setTag(data.bonus_status);
+        button->setTag(itemID);
         
         if (REWARDS_STATUS_CLOSED == data.bonus_status){
                 button->setTitleText("GET THIS");
@@ -245,5 +235,32 @@ void Achievement::updateItem(int itemID, int templateID)
                 button->setTitleText("COLLECT REWARD");
         }else{
                 button->setTitleText("FINISHED");
+        }
+}
+
+
+#pragma mark - menu action
+void Achievement::jumpToGuidScene(AchievementData data){
+        
+}
+
+void Achievement::collectAchievement(AchievementData data){
+        auto v_size = Director::getInstance()->getVisibleSize();
+        if (data.bonus_coinsNum > 0){
+                AchievementEngine::getInstance()->collectCoinsRewards(_listView, data);
+        }
+}
+void Achievement::actionButton(Ref* btn){
+        
+        ui::Button* action_orig = (ui::Button*)btn;
+        int itemID = action_orig->getTag();
+        
+        AchievementData data = _achievementData.at(itemID);
+        if (REWARDS_STATUS_CLOSED == data.bonus_status){
+                this->jumpToGuidScene(data);
+        }else if (REWARDS_STATUS_OPEN == data.bonus_status){
+                this->collectAchievement(data);
+        }else{
+                return;
         }
 }

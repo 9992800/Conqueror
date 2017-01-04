@@ -160,7 +160,13 @@ enum {
 #define USER_CURRENT_COINS              "_key_user_current_coins_v"
 #define USER_CURRENT_SUPPLY_NO          "_key_user_current_supply_no"
 
-#define USER_DEFAULT_COINS_ONFIRST      (30)
+#if defined(COCOS2D_DEBUG)
+        #define USER_DEFAULT_COINS_ONFIRST      (30000)
+#else
+        #define USER_DEFAULT_COINS_ONFIRST      (30)
+#endif
+
+
 #define USER_DEFAULT_SUPPLYNO_ONFIRST   (3)
 #define TURN_INTERVAL_FOR_SUPPLEMENTS   (4)
 #define TC_VALUE_ONE_SUPPLY             (8)

@@ -226,6 +226,18 @@ void AchievementEngine::openReward(std::string key){
 
 
 
-void AchievementEngine::collectCoinsRewards(Node*, AchievementData, CallFunc* call_bakc){
+void AchievementEngine::collectCoinsRewards(Node* parent, AchievementData data, CallFunc* call_back){
         
+        auto parent_size = parent->getContentSize();
+        if (data.bonus_coinsNum > 0){
+                this->coinsAnimShow(parent, parent_size * 0.5f, parent_size, call_back);
+        }else if (data.bonus_mercenaryNum > 0){
+                Vec2 position(parent_size * 0.5f);
+                for (int i = 0; i < data.bonus_mercenaryNum; i++){
+                        Vec2 offset(random(-0.05f * parent_size.width, 0.05f * parent_size.width),
+                                    random(-0.05f * parent_size.height, 0.05f * parent_size.height));
+                        auto mercenary =  Sprite::create("level/dice_show.png");
+                        mercenary->setPosition(position + offset);
+                }
+        }
 }

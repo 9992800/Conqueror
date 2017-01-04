@@ -694,25 +694,25 @@ void GameScene::showWinDialog(){
         }else{
                 auto achieve_show = Sprite::create("achievement.png");
                 auto achieve_size = achieve_show->getContentSize();
-                achieve_show->setPosition(Vec2(back_size.width * .5f + 2 * achieve_size.width,
+                achieve_show->setPosition(Vec2(back_size.width * .5f + achieve_size.width,
                                             back_size.height * .5f));
                 content_back->addChild(achieve_show);
                 
                 auto achieve_tittle = Label::createWithSystemFont(data.title, "fonts/arial.ttf", 42);
-                achieve_tittle->setPosition(Vec2(back_size.width * 1.6f,
-                                            back_size.height * 0.5f));
+                achieve_tittle->setPosition(Vec2(achieve_size.width * 1.6f,
+                                            achieve_size.height * 0.5f));
                 achieve_show->addChild(achieve_tittle);
                 
                 
-                std::string coins_num = StringUtils::format("%d", data.bonus_coinsNum);
+                std::string coins_num = StringUtils::format("X%d", data.bonus_coinsNum);
                 auto coins = Sprite::create("level/coins_show.png");
-                coins->setPosition(Vec2(back_size.width * .5f - 2 * achieve_size.width,
+                coins->setPosition(Vec2(back_size.width * .5f - achieve_size.width,
                                         back_size.height * .5f));
                 content_back->addChild(coins);
                 
-                auto ci_no = Label::createWithSystemFont(coins_num, "fonts/arial.ttf", 42);
-                ci_no->setPosition(Vec2(achieve_size.width * 1.6,
-                                        achieve_size.height * 0.5f));
+                auto ci_no = Label::createWithSystemFont(coins_num, "fonts/arial.ttf", 28);
+                ci_no->setPosition(Vec2(coins->getContentSize().width * 1.6f,
+                                        coins->getContentSize().height * 0.5f));
                 coins->addChild(ci_no);
 
         }

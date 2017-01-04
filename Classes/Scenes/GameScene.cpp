@@ -93,7 +93,7 @@ bool GameScene::init()
         sdkbox::PluginFacebook::setListener(this);
         sdkbox::PluginFacebook::init();
         
-        this->showWinDialog();
+//        this->showWinDialog();
         
         return true;
 }

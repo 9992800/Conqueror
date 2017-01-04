@@ -686,9 +686,11 @@ void LevelSelect::update(float delta){
                         _coinsNumLb->getParent()->runAction(Sequence::create(scale_by, scale_by->reverse(), NULL));
                         int cur_coins = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS);
                         _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
+                        _curCoinsNum = cur_coins;
                 });
                 call_back->retain();
-                auto dest = show_layer->convertToNodeSpace(world_p);                AchievementEngine::getInstance()->dailyOpenReward(show_layer, visible_size * 0.5f, dest, call_back);
+                auto dest = show_layer->convertToNodeSpace(world_p);
+                AchievementEngine::getInstance()->dailyOpenReward(show_layer, visible_size * 0.5f, dest, call_back);
                 
                 
                 unscheduleUpdate();

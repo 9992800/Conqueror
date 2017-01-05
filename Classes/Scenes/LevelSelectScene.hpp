@@ -64,7 +64,7 @@ private:
         LoadingBar*             _loadingBar;
         Sprite*                 _loadingBarBack;
         Sprite*                 _num_sel_back_grd;
-        MenuItemImage*          _soundCtrl;
+        MenuItemImage*          _soundCtrl, *_achievementCtrl;
         HistoryReplayData       _historyData;
         int                     _curChIdx;
         int                     _curColorIdx;

@@ -28,6 +28,7 @@ enum{
         kMainMenuBackTag,
         kSoldierBackTag,
         kChoseNumBackTag,
+        key_cup_tips,
 };
 
 enum{
@@ -110,6 +111,11 @@ bool LevelSelect::init()
         _loadingBarBack->setPosition(pos);
         this->addChild(_loadingBarBack, 2, key_loading_bar3);
         _loadingBarBack->setVisible(false);
+        
+        
+        this->runAction(Sequence::create(DelayTime::create(2.0f),
+                                         CallFunc::create(CC_CALLBACK_0(LevelSelect::showDailyRewards, this)),
+                                         nullptr));
         
         return true;
 }
@@ -363,8 +369,14 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         
         
         
-        auto achieve_btn = MenuItemImage::create("achievement.png", "achievement_sel.png", CC_CALLBACK_1(LevelSelect::menuShowAchievement, this));
-        achieve_btn->setPosition(Vec2(achieve_btn->getContentSize().width ,system_setting->getPosition().y));
+        _achievementCtrl = MenuItemImage::create("achievement.png", "achievement_sel.png", CC_CALLBACK_1(LevelSelect::menuShowAchievement, this));
+        _achievementCtrl->setPosition(Vec2(_achievementCtrl->getContentSize().width ,system_setting->getPosition().y));
+        
+        auto cup_tips = Sprite::create("game_win_shine.png");
+        cup_tips->setPosition(_achievementCtrl->getContentSize() * 0.75);
+        cup_tips->setScale(0.2f);
+        cup_tips->runAction(RepeatForever::create(RotateBy::create(2, 360)));
+        _achievementCtrl->addChild(cup_tips, 1, key_cup_tips);
         
         auto online_game = MenuItemImage::create("online_battle.png", "online_battle_sel.png",
                                                  CC_CALLBACK_1(LevelSelect::menuOnlineBattle, this));
@@ -373,7 +385,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         
         
         auto menu = Menu::create(_soundCtrl, system_setting, start_game,
-                                 achieve_btn, online_game, NULL);
+                                 _achievementCtrl, NULL);
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, ZORDER_ITEM_CONTROL);
 }
@@ -672,10 +684,14 @@ void LevelSelect::onEnter(){
         }
         
         
-        
-        this->runAction(Sequence::create(DelayTime::create(2.0f),
-                                         CallFunc::create(CC_CALLBACK_0(LevelSelect::showDailyRewards, this)),
-                                         nullptr));
+        auto cup_tips = (Sprite*)_achievementCtrl->getChildByTag(key_cup_tips);
+        int new_cup_num = data_cache->getIntegerForKey(ACHIEVE_DATA_KEY_NEW_ACH_NO, 0);
+        if (new_cup_num > 0){
+                cup_tips->setVisible(true);
+//                cup_tips->setString(StringUtils::format("%d", new_cup_num));
+        }else{
+                cup_tips->setVisible(false);
+        }
 }
 
 void LevelSelect::update(float delta){

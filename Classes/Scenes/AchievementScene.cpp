@@ -183,6 +183,8 @@ void Achievement::initItemDetails(ui::Widget* achieve_item, int idx){
                 new_shine->setVisible(true);
         }else{
                 button->setTitleText("FINISHED");
+                new_tag->setVisible(false);
+                new_shine->setVisible(false);
         }
 }
 
@@ -259,16 +261,18 @@ void Achievement::updateItem(int itemID, int templateID)
                 new_shine->setVisible(true);
         }else{
                 button->setTitleText("FINISHED");
+                new_tag->setVisible(false);
+                new_shine->setVisible(false);
         }
 }
 
 
 #pragma mark - menu action
-void Achievement::jumpToGuidScene(AchievementData data){
+void Achievement::jumpToGuidScene(AchievementData& data){
         
 }
 
-void Achievement::collectAchievement(AchievementData data){
+void Achievement::collectAchievement(AchievementData& data){
         auto v_size = Director::getInstance()->getVisibleSize();
         
         Vector<FiniteTimeAction*> actions;
@@ -287,7 +291,6 @@ void Achievement::collectAchievement(AchievementData data){
                                                                 v_size * 0.5f,
                                                                 v_size, call_back);
                 });
-                
                 actions.pushBack(call_back_todo);
         }
         if (data.bonus_mercenaryNum > 0){
@@ -308,7 +311,7 @@ void Achievement::collectAchievement(AchievementData data){
                         });
 
                         auto to_dest = MoveTo::create(1.0f, v_size);
-                        auto seq_last = Sequence::create(to_dest->clone(), clean_call_self, call_back, NULL);
+                        auto seq_last = Sequence::create(to_dest->clone(), clean_call_self->clone(), call_back->clone(), NULL);
                         auto seq = Sequence::create(to_dest->clone(), clean_call_self, call_back, NULL);
                         
                         for (int i = 0; i < data.bonus_mercenaryNum; i++){
@@ -318,75 +321,81 @@ void Achievement::collectAchievement(AchievementData data){
                                 mercenary->setPosition(position + offset);
                                 this->addChild(mercenary, SUPER_LAYER_PRIVILIEGE, MODAL_DIALOG_NODETAG  + i);
                                 if (i == data.bonus_mercenaryNum - 1){
-                                        mercenary->runAction(seq->clone());
-                                }else{
                                         mercenary->runAction(seq_last->clone());
+                                }else{
+                                        mercenary->runAction(seq->clone());
                                 }
                         }
                 });
+                if (actions.size() > 0) actions.pushBack(DelayTime::create(1.f));
                 actions.pushBack(call_back_todo);
         }
-//        if (data.bonus_charactor_key.length() > 0){
-//                auto call_back_todo = CallFunc::create([this, v_size, data](){
-//                
-//                        std::string img_path = AchievementEngine::getInstance()->getCharactorImg(data.bonus_charactor_key);
-//                        auto character = Sprite::create(img_path);
-//                        auto ch_size = character->getContentSize();
-//                        character->setPosition(ch_size * 0.5f);
-//                        
-//                        auto cha_layer = Layer::create();
-//                        cha_layer->setContentSize(ch_size);
-//                        cha_layer->addChild(character, 2);
-//                        
-//                        auto shining_back = Sprite::create("game_win_shine.png");
-//                        shining_back->setPosition(ch_size * 0.5f);
-//                        shining_back->runAction(RepeatForever::create(RotateBy::create(2.0f, 360)));
-//                        cha_layer->addChild(shining_back, 1);
-//                        
-//                        auto cale_by = ScaleBy::create(1.f, 3.f);
-//                        auto call_back = CallFunc::create([this, cha_layer, data](){
-//                                cha_layer->removeFromParentAndCleanup(true);
-//                                
-//                                auto cache = UserDefault::getInstance();
-//                                cache->setBoolForKey(data.bonus_charactor_key.c_str(), true);
-//                                cache->flush();
-//                        });
-//                        cha_layer->runAction(Sequence::create(cale_by, DelayTime::create(0.3f),
-//                                                              call_back, NULL));
-//                        
-//                        this->addChild(cha_layer, SUPER_LAYER_PRIVILIEGE);
-//                        
-//                });
-////                actions.pushBack(call_back_todo);
-//        }
-//        if (data.bonus_map_key.length() > 0){
-//                auto call_back_todo = CallFunc::create([this, v_size, data](){
-//
-//                        std::string tips = AchievementEngine::getInstance()->getMapName(data.bonus_map_key);
-//                        
-//                        auto label = Label::createWithSystemFont(tips, "fonts/arial.ttf", 32);
-//                        
-//                        auto cale_by = ScaleBy::create(1.f, 3.f);
-//                        auto call_back = CallFunc::create([this, label, data](){
-//                                label->removeFromParentAndCleanup(true);
-//                                
-//                                auto cache = UserDefault::getInstance();
-//                                cache->setBoolForKey(data.bonus_charactor_key.c_str(), true);
-//                                cache->flush();
-//                        });
-//                        label->runAction(Sequence::create(cale_by, DelayTime::create(0.3f),
-//                                                          call_back, NULL));
-//                        
-//                        this->addChild(label, SUPER_LAYER_PRIVILIEGE);
-//                });
-////                actions.pushBack(call_back_todo);
-//        }
+        if (data.bonus_charactor_key.length() > 0){
+                auto call_back_todo = CallFunc::create([this, v_size, data](){
+                
+                        std::string img_path = AchievementEngine::getInstance()->getCharactorImg(data.bonus_charactor_key);
+                        auto character = Sprite::create(img_path);
+                        auto ch_size = character->getContentSize();
+                        character->setPosition(ch_size * 0.5f);
+                        
+                        auto cha_layer = Layer::create();
+                        cha_layer->setContentSize(ch_size);
+                        cha_layer->addChild(character, 2);
+                        
+                        auto shining_back = Sprite::create("game_win_shine.png");
+                        shining_back->setPosition(ch_size * 0.5f);
+                        shining_back->runAction(RepeatForever::create(RotateBy::create(2.0f, 360)));
+                        cha_layer->addChild(shining_back, 1);
+                        
+                        auto cale_by = ScaleBy::create(1.5f, 3.f);
+                        auto call_back = CallFunc::create([this, cha_layer, data](){
+                                cha_layer->removeFromParentAndCleanup(true);
+                                
+                                auto cache = UserDefault::getInstance();
+                                cache->setBoolForKey(data.bonus_charactor_key.c_str(), true);
+                                cache->flush();
+                        });
+                        cha_layer->runAction(Sequence::create(cale_by,
+                                                              DelayTime::create(0.3f),
+                                                              call_back, NULL));
+                        
+                        cha_layer->setPosition((v_size - cha_layer->getContentSize()) * 0.5f);
+                        this->addChild(cha_layer, SUPER_LAYER_PRIVILIEGE);
+                        
+                });
+                
+                if (actions.size() > 0) actions.pushBack(DelayTime::create(1.f));
+                actions.pushBack(call_back_todo);
+        }
+        if (data.bonus_map_key.length() > 0){
+                auto call_back_todo = CallFunc::create([this, v_size, data](){
+
+                        std::string tips = AchievementEngine::getInstance()->getMapName(data.bonus_map_key);
+                        
+                        auto label = Label::createWithSystemFont(tips, "fonts/arial.ttf", 32);
+                        
+                        auto cale_by = ScaleBy::create(1.f, 2.f);
+                        auto call_back = CallFunc::create([this, label, data](){
+                                label->removeFromParentAndCleanup(true);
+                                
+                                auto cache = UserDefault::getInstance();
+                                cache->setBoolForKey(data.bonus_charactor_key.c_str(), true);
+                                cache->flush();
+                        });
+                        label->runAction(Sequence::create(cale_by, DelayTime::create(0.5f),
+                                                          call_back, NULL));
+                        label->setPosition(v_size * 0.5f);
+                        
+                        this->addChild(label, SUPER_LAYER_PRIVILIEGE);
+                });
+                if (actions.size() > 0) actions.pushBack(DelayTime::create(2.f));
+                actions.pushBack(call_back_todo);
+        }
         
         auto call_back_todo = CallFunc::create([this, v_size, data](){
                 AchievementEngine::getInstance()->finishReward(data.cache_key);
          });
-//        actions.pushBack(call_back_todo);
-        
+        actions.pushBack(call_back_todo);        
         this->runAction(Sequence::create(actions));
 }
 
@@ -395,11 +404,14 @@ void Achievement::actionButton(Ref* btn){
         ui::Button* action_orig = (ui::Button*)btn;
         int itemID = action_orig->getTag();
         
-        AchievementData data = _achievementData.at(itemID);
+        AchievementData& data = _achievementData.at(itemID);
         if (REWARDS_STATUS_CLOSED == data.bonus_status){
                 this->jumpToGuidScene(data);
         }else if (REWARDS_STATUS_OPEN == data.bonus_status){
                 this->collectAchievement(data);
+                
+                data.bonus_status = REWARDS_STATUS_FINISHED;
+                this->updateItem(itemID, itemID);
         }else{
                 return;
         }

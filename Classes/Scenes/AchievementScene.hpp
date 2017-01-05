@@ -39,8 +39,8 @@ private:
         float getItemPositionYInView(cocos2d::ui::Widget* item) const;
         
         void actionButton(Ref*);
-        void collectAchievement(AchievementData);
-        void jumpToGuidScene(AchievementData);
+        void collectAchievement(AchievementData&);
+        void jumpToGuidScene(AchievementData&);
 private:
         ui::ListView* _listView;
         int _totalCount, _spawnCount;

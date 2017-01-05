@@ -263,4 +263,7 @@ enum {
 #define MODAL_DIALOG_NODETAG 10000
 #define COMMON_TIPS_NODETAG 10001
 
+
+#define COINS_ANIM_SHOW_NUM (10)
+
 #endif /* __APPMACROS_H__ */

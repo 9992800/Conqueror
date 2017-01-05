@@ -27,7 +27,8 @@ public:
         void openReward(std::string);
         void finishReward(std::string);
         
-        void coinsAnimShow(Node*, Vec2, Vec2, CallFunc*,CallFunc* call_bakc = NULL);
+        void coinsAnimShow(Node*, Vec2, Vec2, CallFunc*,
+                           int coin_num = COINS_ANIM_SHOW_NUM, CallFunc* call_bakc = NULL);
         std::string getCharactorImg(std::string key);
         std::string getMapName(std::string key);
 };

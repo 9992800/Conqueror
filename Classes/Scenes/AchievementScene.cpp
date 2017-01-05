@@ -292,7 +292,8 @@ void Achievement::collectAchievement(AchievementData& data){
                 AchievementEngine::getInstance()->coinsAnimShow(this,
                                                                 v_size * 0.5f,
                                                                 v_size, call_back);
-                });
+                }); 
+                
                 actions.pushBack(call_back_todo);
         }
         if (data.bonus_mercenaryNum > 0){
@@ -376,8 +377,8 @@ void Achievement::collectAchievement(AchievementData& data){
                         back_flag->setPosition(v_size * 0.5f);
                         std::string tips = AchievementEngine::getInstance()->getMapName(data.bonus_map_key);
                         
-                        auto label = Label::createWithSystemFont(tips, "fonts/arial.ttf", 32);
-                        label->setPosition(back_flag->getContentSize() * 0.5f);
+//                        auto label = Label::createWithSystemFont(tips, "fonts/arial.ttf", 32);
+//                        label->setPosition(back_flag->getContentSize() * 0.5f);
 //                        back_flag->addChild(label);
                         
                         auto cale_by = ScaleBy::create(1.f, 2.f);

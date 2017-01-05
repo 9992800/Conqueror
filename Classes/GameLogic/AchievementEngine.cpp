@@ -31,9 +31,9 @@ bool AchievementEngine::init(){
         return true;
 }
 
-#define COINS_ANIM_SHOW_NUM (10)
+
 void AchievementEngine::coinsAnimShow(Node* parent, Vec2 from, Vec2 dest,
-                                      CallFunc* clean_call,  CallFunc* call_back){
+                                      CallFunc* clean_call,  int coins_num, CallFunc* call_back){
         
         auto move_to = MoveTo::create(1.0f, dest);
         auto coins_change = AnimationCache::getInstance()->getAnimation("coins_changes");
@@ -43,8 +43,8 @@ void AchievementEngine::coinsAnimShow(Node* parent, Vec2 from, Vec2 dest,
         coins_rotate->setLoops(4);
         auto to_dest = Spawn::create(move_to, Animate::create(coins_rotate), NULL);
         
-        auto clean_call_self = CallFunc::create([parent](){
-                for (int i = 0 ; i < COINS_ANIM_SHOW_NUM; i++){
+        auto clean_call_self = CallFunc::create([parent, coins_num](){
+                for (int i = 0 ; i <= coins_num; i++){
                         parent->removeChildByTag(MODAL_DIALOG_NODETAG + i);
                 }
         });
@@ -54,13 +54,13 @@ void AchievementEngine::coinsAnimShow(Node* parent, Vec2 from, Vec2 dest,
         auto seq_last_2 = Sequence::create(to_dest->clone(), clean_call_self,
                                          clean_call, NULL);
         
-        for (int i = 0; i < COINS_ANIM_SHOW_NUM; i++){
+        for (int i = 0; i < coins_num; i++){
                 auto item_s = Sprite::create("level/coins_show.png");;
                 Size r_p(random(-100, 100), random(-100, 100));
                 item_s->setPosition(from + r_p);
                 parent->addChild(item_s, SUPER_LAYER_PRIVILIEGE, MODAL_DIALOG_NODETAG + i);
                 
-                if (i == (COINS_ANIM_SHOW_NUM - 1)){
+                if (i == (coins_num - 1)){
                     
                     if(nullptr != call_back){
                             item_s->runAction(seq_last->clone());
@@ -72,6 +72,12 @@ void AchievementEngine::coinsAnimShow(Node* parent, Vec2 from, Vec2 dest,
                         item_s->runAction(to_dest->clone());
                 }
         }
+        
+        std::string num_str = StringUtils::format("+%d", coins_num);
+        auto num_tips = Label::createWithSystemFont("", "fonts/arial.ttf", 40);
+        num_tips->setPosition(from);
+        parent->addChild(num_tips, SUPER_LAYER_PRIVILIEGE, MODAL_DIALOG_NODETAG + coins_num);
+        num_tips->runAction(to_dest->clone());
 }
 
 int AchievementEngine::dailyOpenReward(cocos2d::Node *parent, cocos2d::Vec2 from, cocos2d::Vec2 dest, CallFunc* call_back){
@@ -93,7 +99,7 @@ int AchievementEngine::dailyOpenReward(cocos2d::Node *parent, cocos2d::Vec2 from
                 cache->flush();
         });
         
-        this->coinsAnimShow(parent, from, dest, clean_call, call_back);
+        this->coinsAnimShow(parent, from, dest, clean_call, REWARDS_FOR_DAILY_OPEN, call_back);
         return REWARDS_FOR_DAILY_OPEN;
 }
 
@@ -124,7 +130,7 @@ int AchievementEngine::dailyShareReward(Node* parent, Vec2 from, Vec2 dest,
                 cache->flush();
         });
         
-        this->coinsAnimShow(parent, from, dest, clean_call, call_bakc);
+        this->coinsAnimShow(parent, from, dest, clean_call, REWARDS_FOR_DAILY_SHARE, call_bakc);
         return REWARDS_FOR_DAILY_SHARE;
 }
 

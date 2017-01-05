@@ -550,7 +550,7 @@ void GolbalConfig::initAchievementData(){
         auto cache = UserDefault::getInstance();
         
         int has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_2, REWARDS_STATUS_CLOSED);
-        AchievementData data_1 = {ACHIEVE_DATA_KEY_FIRST_WIN_2, has_got, 5, 1,
+        AchievementData data_1 = {1, ACHIEVE_DATA_KEY_FIRST_WIN_2, has_got, 5, 1,
                 CHARACTOR_2_LOCK_STATE_KEY, LEVEL_2_LOCK_STATE_KEY,
                 "Win 2 Players",
                 "Overcome enemy and occupy all islands."
@@ -559,7 +559,7 @@ void GolbalConfig::initAchievementData(){
         
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_3, REWARDS_STATUS_CLOSED);
-        AchievementData data_2 = {ACHIEVE_DATA_KEY_FIRST_WIN_3,
+        AchievementData data_2 = {2, ACHIEVE_DATA_KEY_FIRST_WIN_3,
                 has_got, 6, 0, "", LEVEL_3_LOCK_STATE_KEY,
                 "Win 3 Players", "Overcome 2 enemies and occupy all islands."
         };
@@ -567,7 +567,7 @@ void GolbalConfig::initAchievementData(){
         
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_4, REWARDS_STATUS_CLOSED);
-        AchievementData data_3 = {ACHIEVE_DATA_KEY_FIRST_WIN_4,
+        AchievementData data_3 = {3, ACHIEVE_DATA_KEY_FIRST_WIN_4,
                 has_got, 8, 0, "", LEVEL_4_LOCK_STATE_KEY,
                 "Win 4 Players", "Overcome 3 enemies and occupy all islands."
         };
@@ -575,56 +575,56 @@ void GolbalConfig::initAchievementData(){
         
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_5, REWARDS_STATUS_CLOSED);
-        AchievementData data_4 = {ACHIEVE_DATA_KEY_FIRST_WIN_5,
+        AchievementData data_4 = {4, ACHIEVE_DATA_KEY_FIRST_WIN_5,
                 has_got, 9, 0, "", LEVEL_5_LOCK_STATE_KEY,
-                "Win 5 Players", "Overcome 3 enemies and occupy all islands."
+                "Win 5 Players", "Overcome 4 enemies and occupy all islands."
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_WIN_5, data_4));;
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_6, REWARDS_STATUS_CLOSED);
-        AchievementData data_5 = {ACHIEVE_DATA_KEY_FIRST_WIN_6,
+        AchievementData data_5 = {5, ACHIEVE_DATA_KEY_FIRST_WIN_6,
                 has_got, 10, 0, "", LEVEL_6_LOCK_STATE_KEY,
                 "Win 6 Players", "Overcome 5 enemies and occupy all islands."
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_WIN_6, data_5));
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_7, REWARDS_STATUS_CLOSED);
-        AchievementData data_6 = {ACHIEVE_DATA_KEY_FIRST_WIN_7,
-                has_got, 12, 0, LEVEL_7_LOCK_STATE_KEY,
+        AchievementData data_6 = {6, ACHIEVE_DATA_KEY_FIRST_WIN_7,
+                has_got, 12, 0, "", LEVEL_7_LOCK_STATE_KEY,
                 "Win 7 Players", "Overcome 6 enemies and occupy all islands."
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_WIN_7, data_6));
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_8, REWARDS_STATUS_CLOSED);
-        AchievementData data_7 = {ACHIEVE_DATA_KEY_FIRST_WIN_8,
+        AchievementData data_7 = {7, ACHIEVE_DATA_KEY_FIRST_WIN_8,
                 has_got, 16, 0, CHARACTOR_3_LOCK_STATE_KEY, LEVEL_7_LOCK_STATE_KEY,
                 "Win 8 Players", "Overcome 7 enemies and occupy all islands."
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_WIN_8, data_7));
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_WIN_3TIMES, REWARDS_STATUS_CLOSED);
-        AchievementData data_8 = {ACHIEVE_DATA_KEY_WIN_3TIMES,
+        AchievementData data_8 = {8, ACHIEVE_DATA_KEY_WIN_3TIMES,
                 has_got, 10, 0, "", "",
                 "3 wins", "Continuous win 3 times."
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_WIN_3TIMES, data_8));
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_SHARE, REWARDS_STATUS_CLOSED);
-        AchievementData data_9 = {ACHIEVE_DATA_KEY_FIRST_SHARE,
+        AchievementData data_9 = {9, ACHIEVE_DATA_KEY_FIRST_SHARE,
                 has_got, 15,  0, "", "",
                 "Share Game", "Share this game to your FB friends."
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_SHARE, data_9));
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY, REWARDS_STATUS_CLOSED);
-        AchievementData data_10 = {ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY,
+        AchievementData data_10 = {10, ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY,
                 has_got, 5, 0, "", "",
                 "Use Mercenary", "Use mercenary to make you stronger."
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY, data_10));
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_CLOSE_ANIM, REWARDS_STATUS_CLOSED);
-        AchievementData data_11 = {ACHIEVE_DATA_KEY_FIRST_CLOSE_ANIM,
+        AchievementData data_11 = {11, ACHIEVE_DATA_KEY_FIRST_CLOSE_ANIM,
                 has_got, 5, 0, "", "",
                 "Close Animation", "Close the fighting animation when you're familar with the game."
         };
@@ -632,14 +632,14 @@ void GolbalConfig::initAchievementData(){
         
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_RETRY, REWARDS_STATUS_CLOSED);
-        AchievementData data_12 = {ACHIEVE_DATA_KEY_FIRST_RETRY,
+        AchievementData data_12 = {12, ACHIEVE_DATA_KEY_FIRST_RETRY,
                 has_got, 5, 0, "", "",
                 "Replay", "Replay the same battle map when you lose the game."
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY, data_12));
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_BUY_COINS, REWARDS_STATUS_CLOSED);
-        AchievementData data_13 = {ACHIEVE_DATA_KEY_FIRST_BUY_COINS,
+        AchievementData data_13 = {13, ACHIEVE_DATA_KEY_FIRST_BUY_COINS,
                 has_got, 10, 0, "", "",
                 "Purchase",
                 "Buy coins in the shop."
@@ -647,7 +647,7 @@ void GolbalConfig::initAchievementData(){
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_BUY_COINS, data_13));
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_CHANGE_COLOR, REWARDS_STATUS_CLOSED);
-        AchievementData data_14 = {ACHIEVE_DATA_KEY_FIRST_CHANGE_COLOR,
+        AchievementData data_14 = {14, ACHIEVE_DATA_KEY_FIRST_CHANGE_COLOR,
                 has_got, 5, 0, "", "",
                 "Change Color", "Change your charactor in the battle."
         };
@@ -655,14 +655,14 @@ void GolbalConfig::initAchievementData(){
         
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_CHANGE_PLAYER, REWARDS_STATUS_CLOSED);
-        AchievementData data_15 = {ACHIEVE_DATA_KEY_FIRST_CHANGE_PLAYER,
+        AchievementData data_15 = {15, ACHIEVE_DATA_KEY_FIRST_CHANGE_PLAYER,
                 has_got, 5, 0, "", "",
                 "Change Charactor", "Change your charactor in the battle."
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_ENGAGE, data_15));
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_ENGAGE, REWARDS_STATUS_CLOSED);
-        AchievementData data_16 = {ACHIEVE_DATA_KEY_FIRST_ENGAGE,
+        AchievementData data_16 = {16, ACHIEVE_DATA_KEY_FIRST_ENGAGE,
                 has_got, 5, 0, "", "",
                 "Engage", "Engage mercenary using coins."
         };
@@ -706,7 +706,7 @@ std::vector<AchievementData> GolbalConfig::getAchievementData(){
         struct {
                 bool operator()(AchievementData a, AchievementData b)
                 {
-                        return a.bonus_status < b.bonus_status;
+                        return a._index < b._index && a.bonus_status < b.bonus_status;
                 }
         }customLess;
         

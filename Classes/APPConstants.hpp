@@ -72,7 +72,7 @@ struct AchievementData {
                 bonus_status = ACHIEVE_BONUS_TYPE_NONE;
                 return *this;
         }
-        
+        int     _index;
         std::string cache_key;
         int bonus_status;
         int bonus_coinsNum;

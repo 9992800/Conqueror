@@ -172,10 +172,15 @@ void Achievement::initItemDetails(ui::Widget* achieve_item, int idx){
         auto button = (ui::Button*)achieve_item->getChildByName("ssss_ssss");
         button->setTag(idx);
         
+        auto new_shine  = (ui::ImageView*)tittle_back->getChildByTag(k_item_status_back);
+        auto new_tag    = (ui::ImageView*)tittle_back->getChildByTag(k_item_status);
+        
         if (REWARDS_STATUS_CLOSED == data.bonus_status){
                 button->setTitleText("GET THIS");
         }else if (REWARDS_STATUS_OPEN == data.bonus_status){
                 button->setTitleText("COLLECT");
+                new_tag->setVisible(true);
+                new_shine->setVisible(true);
         }else{
                 button->setTitleText("FINISHED");
         }

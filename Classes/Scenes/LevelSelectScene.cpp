@@ -671,7 +671,11 @@ void LevelSelect::onEnter(){
                 }
         }
         
-        scheduleUpdate();
+        
+        
+        this->runAction(Sequence::create(DelayTime::create(2.0f),
+                                         CallFunc::create(CC_CALLBACK_0(LevelSelect::showDailyRewards, this)),
+                                         nullptr));
 }
 
 void LevelSelect::update(float delta){
@@ -708,9 +712,6 @@ void LevelSelect::onExit(){
         auto cache = UserDefault::getInstance();
         cache->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNum);
         cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curMercenariesNum);
-        cache->flush();
-        
-        this->runAction(Sequence::create(DelayTime::create(2.0f), CC_CALLBACK_0(LevelSelect::showDailyRewards, this), nullptr));
-        
+        cache->flush();        
 }
 

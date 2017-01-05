@@ -706,8 +706,7 @@ std::vector<AchievementData> GolbalConfig::getAchievementData(){
         struct {
                 bool operator()(AchievementData a, AchievementData b)
                 {
-                        return a.bonus_status < b.bonus_status
-                                        && a._index < b._index;
+                        return a._index < b._index;
                 }
         }customLess;
         

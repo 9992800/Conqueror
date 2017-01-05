@@ -713,12 +713,17 @@ std::vector<AchievementData> GolbalConfig::getAchievementData(){
         this->initAchievementData();
         
         std::vector<AchievementData> v;
+        int counter = 0;
         for (std::map<std::string, AchievementData>::iterator it = this->_systemAchievementData.begin();
              it != this->_systemAchievementData.end(); ++it){
                 v.push_back(it->second);
+                if (it->second.bonus_status == REWARDS_STATUS_OPEN){
+                        counter++;
+                }
         }
         
         std::sort(v.begin(), v.end(), customLess);
         
+        UserDefault::getInstance()->setIntegerForKey(ACHIEVE_DATA_KEY_NEW_ACH_NO, counter);
         return v;
 }

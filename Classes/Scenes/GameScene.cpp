@@ -1344,6 +1344,40 @@ void GameScene::menuAnimSwitch(Ref* btn){
         AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY);
 }
 
+void GameScene::playAddMercenary(){
+        AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY);
+        
+        _isPalyingAnim = true;
+        auto btn_anim = _addArmyBtn->clone();
+        _curGameData->_player[_curGameData->_userId]->addMoreSupply();
+        auto parent = _addArmyBtn->getParent();
+        btn_anim->setPosition(_addArmyBtn->getPosition());
+        parent->addChild(btn_anim);
+        Vec2 pos = parent->convertToNodeSpace(_curPlayerSupFlag->getParent()->convertToWorldSpace(_curPlayerSupFlag->getPosition()));
+        auto move = MoveTo::create(0.8,  pos);
+        auto scale = ScaleTo::create(0.8, 0.6f);
+        btn_anim->runAction(Sequence::create( Spawn::create(move, scale, NULL),
+                                             CallFunc::create( [this, btn_anim](){
+                
+                btn_anim->removeFromParentAndCleanup(true);
+                this->refreshSupplyDiceNum();
+                _isPalyingAnim = false;
+                auto scale_s = ScaleTo::create(0.3, 1.4f);
+                auto scale_s_r = ScaleTo::create(0.3, 1.0f);
+                auto seq = Sequence::create(scale_s, scale_s_r, NULL);
+                _curPlayerSupFlag->runAction(seq);
+                _curInTurnBack->runAction(seq->clone());
+                
+        }), NULL));
+        
+        _addArmyBtn->setEnabled(false);
+        _addArmyBtn->setBright(false);
+        Label* counter_lab = (Label*)_addArmyBtn->getChildByTag(key_supply_turn_counter_tag);
+        _addtionalSupplyCounter = TURN_INTERVAL_FOR_SUPPLEMENTS;
+        counter_lab->setString(StringUtils::format("%d", TURN_INTERVAL_FOR_SUPPLEMENTS));
+        counter_lab->setVisible(true);
+}
+
 void GameScene::menuAddArmy(Ref* btn){
         
         if (GAME_STATUS_INUSERTURN != _gameStatus
@@ -1370,43 +1404,14 @@ void GameScene::menuAddArmy(Ref* btn){
                                 UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNo);
                                 UserDefault::getInstance()->flush();
                                 
-                                AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY);
-                                
-                                _isPalyingAnim = true;
-                                auto btn_anim = _addArmyBtn->clone();
-                                _curGameData->_player[_curGameData->_userId]->addMoreSupply();
-                                auto parent = _addArmyBtn->getParent();
-                                btn_anim->setPosition(_addArmyBtn->getPosition());
-                                parent->addChild(btn_anim);
-                                Vec2 pos = parent->convertToNodeSpace(_curPlayerSupFlag->getParent()->convertToWorldSpace(_curPlayerSupFlag->getPosition()));
-                                auto move = MoveTo::create(0.8,  pos);
-                                auto scale = ScaleTo::create(0.8, 0.6f);
-                                btn_anim->runAction(Sequence::create( Spawn::create(move, scale, NULL),
-                                                                     CallFunc::create( [this, btn_anim](){
-                                        
-                                        btn_anim->removeFromParentAndCleanup(true);
-                                        this->refreshSupplyDiceNum();
-                                        _isPalyingAnim = false;
-                                        auto scale_s = ScaleTo::create(0.3, 1.4f);
-                                        auto scale_s_r = ScaleTo::create(0.3, 1.0f);
-                                        auto seq = Sequence::create(scale_s, scale_s_r, NULL);
-                                        _curPlayerSupFlag->runAction(seq);
-                                        _curInTurnBack->runAction(seq->clone());
-                                        
-                                }), NULL));
-                                
-                                _addArmyBtn->setEnabled(false);
-                                _addArmyBtn->setBright(false);
-                                Label* counter_lab = (Label*)_addArmyBtn->getChildByTag(key_supply_turn_counter_tag);
-                                _addtionalSupplyCounter = TURN_INTERVAL_FOR_SUPPLEMENTS;
-                                counter_lab->setString(StringUtils::format("%d", TURN_INTERVAL_FOR_SUPPLEMENTS));
-                                counter_lab->setVisible(true);
+                                this->playAddMercenary();
                         });
                 }
         }else{
                 _curSupplyNo--;
                 UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curSupplyNo);
                 UserDefault::getInstance()->flush();
+                this->playAddMercenary();
         }
 }
 

@@ -61,6 +61,7 @@ private:
         void shareThisGame(Ref*);
         void afterCaptureScreen(bool yes, const std::string &outputFilename);
         void menuAnimSwitch(Ref* btn);
+        void playAddMercenary();
         void menuAddArmy(Ref*);
         
         void loadCharact(int, std::string);

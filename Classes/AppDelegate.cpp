@@ -62,13 +62,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
 void AppDelegate::applicationDidEnterBackground() {
         
         Director::getInstance()->stopAnimation();
-        SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-        SimpleAudioEngine::getInstance()->pauseAllEffects();
+        SimpleAudioEngine::getInstance()->pauseBackgroundMusic(); 
 }
 
 
 void AppDelegate::applicationWillEnterForeground() {
         Director::getInstance()->startAnimation();
-        SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
-        SimpleAudioEngine::getInstance()->resumeAllEffects();
+        bool switch_sound = UserDefault::getInstance()->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
+        if (switch_sound)
+                SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
 }

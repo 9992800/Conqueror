@@ -560,7 +560,7 @@ void GolbalConfig::initAchievementData(){
         
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_3, REWARDS_STATUS_CLOSED);
         AchievementData data_2 = {2, ACHIEVE_DATA_KEY_FIRST_WIN_3,
-                has_got, 6, 2, CHARACTOR_4_LOCK_STATE_KEY, LEVEL_3_LOCK_STATE_KEY,
+                has_got, 6, 0, "", LEVEL_3_LOCK_STATE_KEY,
                 "Win 3 Players", "Overcome 2 enemies and occupy all islands."
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_WIN_3, data_2));

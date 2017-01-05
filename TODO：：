@@ -1,29 +1,41 @@
 TODO：：
-1，   charactor show on main scene.
+1，charactor show on main scene.
 2， helping hands to show how to play this game.
 3， logo and icon
 4,  share logic ,share pictures
-5， sound effect logic in whole game.
-6， achievements datas and value. btttons when haven't got it.
-7，  locks to show charactor and level state
-8， tips in achievements to indicate where to get this item.
+5， sound effect logic in whole game.-----new sound for different effect
+6， part of achievementslogic.
+7，  locks to show charactor and level state 
 9,  other charactors and their animations.
 10, modify common tips dialog content position.
 11，icons to show things when win the game, mercenary, coins ,map , characot.
-12， achievments tips
+12， achievments tips text string.
 13, unlock charactor and player . the logic.
 bugs
 --------------------------------------------------------- 
-2:coins and mercenary button can be touched.
+2:
 1:test all the sounds effects.
 3:sounds effect when play animation in battle scene.
-4.share logic test.
-5，need a notice flag for achievement cup
-6,how to buy more mercenary .
-7,ahievement logic
-8,how to bug level and charactors.
- 
-all fonts in the system.
+4.the button is  a little small in some dialogs. 
+6, all buttons disable when block things.
+8, how to bug level and charactors.
+9,all fonts in the system. 
+11, test every achievement.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ------日常数据------

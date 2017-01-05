@@ -119,13 +119,14 @@ ui::Layout* Achievement::createListItem(){
         auto achieve_status_size = achieve_status->getContentSize();
         achieve_status->setPosition(Vec2(title_size.width *0.7f, title_size.height * 0.7f));
         achieve_title->addChild(achieve_status, 2, k_item_status);
+        achieve_status->setVisible(false);
         
         auto new_shine = ui::ImageView::create("game_win_shine.png");
         new_shine->setPosition(Vec2(title_size.width *0.7f, title_size.height * 0.7f));
         new_shine->setScale(0.6f);
-        auto anim_rotate = RotateBy::create(2.f, 360);
-        new_shine->runAction(RepeatForever::create(anim_rotate));
         achieve_title->addChild(new_shine, 1, k_item_status_back);
+        new_shine->runAction(RepeatForever::create(RotateBy::create(2.f, 360)));
+        new_shine->setVisible(false);
         
         auto achieve_cup = ui::ImageView::create("achievement/achive_flag.png");
         auto achieve_cup_size = achieve_cup->getContentSize();
@@ -239,13 +240,18 @@ void Achievement::updateItem(int itemID, int templateID)
         auto item_title = (ui::Text*)tittle_back->getChildByTag(k_item_title_text);
         item_title->setString(data.title);
         
+        auto new_shine  = (ui::ImageView*)tittle_back->getChildByTag(k_item_status_back);
+        auto new_tag    = (ui::ImageView*)tittle_back->getChildByTag(k_item_status);
+        
         auto button = (ui::Button*)itemTemplate->getChildByName("ssss_ssss");
         button->setTag(itemID);
         
         if (REWARDS_STATUS_CLOSED == data.bonus_status){
                 button->setTitleText("GET THIS");
         }else if (REWARDS_STATUS_OPEN == data.bonus_status){
-                button->setTitleText("COLLECT REWARD");
+                button->setTitleText("COLLECT");
+                new_tag->setVisible(true);
+                new_shine->setVisible(true);
         }else{
                 button->setTitleText("FINISHED");
         }

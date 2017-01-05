@@ -19,16 +19,16 @@ public:
         bool init();
         
         int dailyOpenReward(Node*, Vec2, Vec2,CallFunc* call_bakc = NULL);
-        int dailyShareReward(Node*, Vec2, Vec2,CallFunc* call_bakc = NULL);
-        void collectCoinsRewards(Node*, AchievementData, CallFunc* call_bakc = NULL);
+        int dailyShareReward(Node*, Vec2, Vec2,CallFunc* call_bakc = NULL); 
         
         AchievementData winnerRewards(int playerNum);
         int winCounter();
         void resetWinCounter();
         void openReward(std::string);
+        void finishReward(std::string);
         
-        
-private:
         void coinsAnimShow(Node*, Vec2, Vec2, CallFunc*,CallFunc* call_bakc = NULL);
+        std::string getCharactorImg(std::string key);
+        std::string getMapName(std::string key);
 };
 #endif /* AchievementEngine_hpp */

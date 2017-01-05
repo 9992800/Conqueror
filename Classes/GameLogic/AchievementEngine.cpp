@@ -224,20 +224,63 @@ void AchievementEngine::openReward(std::string key){
         }
 }
 
-
-
-void AchievementEngine::collectCoinsRewards(Node* parent, AchievementData data, CallFunc* call_back){
+void AchievementEngine::finishReward(std::string key){
+        auto cache = UserDefault::getInstance();
+        int status = cache->getIntegerForKey(key.c_str(), REWARDS_STATUS_CLOSED);
         
-        auto parent_size = parent->getContentSize();
-        if (data.bonus_coinsNum > 0){
-                this->coinsAnimShow(parent, parent_size * 0.5f, parent_size, call_back);
-        }else if (data.bonus_mercenaryNum > 0){
-                Vec2 position(parent_size * 0.5f);
-                for (int i = 0; i < data.bonus_mercenaryNum; i++){
-                        Vec2 offset(random(-0.05f * parent_size.width, 0.05f * parent_size.width),
-                                    random(-0.05f * parent_size.height, 0.05f * parent_size.height));
-                        auto mercenary =  Sprite::create("level/dice_show.png");
-                        mercenary->setPosition(position + offset);
+        if (REWARDS_STATUS_OPEN == status){
+                cache->setIntegerForKey(key.c_str(), REWARDS_STATUS_FINISHED);
+                int new_ach_no = cache->getIntegerForKey(ACHIEVE_DATA_KEY_NEW_ACH_NO, 0);
+                --new_ach_no;
+                if (new_ach_no < 0){
+                        new_ach_no = 0;
                 }
+                cache->setIntegerForKey(ACHIEVE_DATA_KEY_NEW_ACH_NO, new_ach_no);
+                cache->flush();
         }
 }
+
+
+std::string AchievementEngine::getCharactorImg(std::string key){
+        
+        if (CHARACTOR_1_LOCK_STATE_KEY == key){
+                return "level/ch_player_0.png";
+        }else if (CHARACTOR_2_LOCK_STATE_KEY == key){
+                return "level/ch_player_1.png";
+        }else if (CHARACTOR_3_LOCK_STATE_KEY == key){
+                return "level/ch_player_2.png";
+        }else if (CHARACTOR_4_LOCK_STATE_KEY == key){
+                return "level/ch_player_3.png";
+        }else if (CHARACTOR_5_LOCK_STATE_KEY == key){
+                return "level/ch_player_4.png";
+        }else if (CHARACTOR_6_LOCK_STATE_KEY == key){
+                return "level/ch_player_5.png";
+        }else if (CHARACTOR_7_LOCK_STATE_KEY == key){
+                return "level/ch_player_6.png";
+        }else if (CHARACTOR_8_LOCK_STATE_KEY == key){
+                return "level/ch_player_7.png";
+        }else{
+                return "";
+        }
+}
+std::string AchievementEngine::getMapName(std::string key){
+        
+        if (LEVEL_1_LOCK_STATE_KEY == key){
+                return "2 Players Map Opened";
+        }else if (LEVEL_2_LOCK_STATE_KEY == key){
+                return "3 Players Map Opened";
+        }else if (LEVEL_3_LOCK_STATE_KEY == key){
+                return "4 Players Map Opened";
+        }else if (LEVEL_4_LOCK_STATE_KEY == key){
+                return "5 Players Map Opened";
+        }else if (LEVEL_5_LOCK_STATE_KEY == key){
+                return "6 Players Map Opened";
+        }else if (LEVEL_6_LOCK_STATE_KEY == key){
+                return "7 Players Map Opened";
+        }else if (LEVEL_7_LOCK_STATE_KEY == key){
+                return "8 Players Map Opened";
+        }else{
+                return "";
+        }
+}
+ 

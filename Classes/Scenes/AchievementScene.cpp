@@ -378,7 +378,8 @@ void Achievement::collectAchievement(AchievementData& data){
                         
                         auto label = Label::createWithSystemFont(tips, "fonts/arial.ttf", 32);
                         label->setPosition(back_flag->getContentSize() * 0.5f);
-                        back_flag->addChild(label);
+//                        back_flag->addChild(label);
+                        
                         auto cale_by = ScaleBy::create(1.f, 2.f);
                         auto call_back = CallFunc::create([this, back_flag, data](){
                                 back_flag->removeFromParentAndCleanup(true);

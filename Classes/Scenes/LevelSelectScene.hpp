@@ -53,9 +53,8 @@ private:
 
         
         void loadResourceInBg(int* loader, HistoryReplayData* data);
-        void afterParseArea(void*);
-        void playDailyRewardsAnim();
-        
+        void afterParseArea(void*); 
+        void showDailyRewards();
 private:
         int                     _count;
         int                     _levelPlayerNum;

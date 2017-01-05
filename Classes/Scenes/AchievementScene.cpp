@@ -12,7 +12,8 @@ enum{
         k_item_title_text,
         k_item_desc_text,
         k_item_get_btn,
-
+        k_item_status,
+        k_item_status_back
 };
 
 Scene* Achievement::createScene(){
@@ -106,13 +107,25 @@ ui::Layout* Achievement::createListItem(){
         
         auto achieve_title = ui::ImageView::create("achievement/achieve_title_back.png");
         auto title_size = achieve_title->getContentSize();
-        achieve_title->setPosition(Vec2(title_size.width * 0.51f,default_item_size.height - title_size.height * 0.5f));
+        achieve_title->setPosition(Vec2(title_size.width * 0.51f,
+                                        default_item_size.height - title_size.height * 0.5f));
         default_item->addChild(achieve_title, 1, k_item_title_backgrd);
         
-        
         auto item_tile_txt = ui::Text::create("Achievement Item", "fonts/arial.ttf", 30);
-        item_tile_txt->setPosition(Vec2(title_size.width *0.5f, title_size.height * 0.7f));
-        achieve_title->addChild(item_tile_txt, 1, k_item_title_text);
+        item_tile_txt->setPosition(Vec2(title_size.width *0.3f, title_size.height * 0.7f));
+        achieve_title->addChild(item_tile_txt, 2, k_item_title_text);
+        
+        auto achieve_status = ui::ImageView::create("achievement/achieve_status_new.png");
+        auto achieve_status_size = achieve_status->getContentSize();
+        achieve_status->setPosition(Vec2(title_size.width *0.7f, title_size.height * 0.7f));
+        achieve_title->addChild(achieve_status, 2, k_item_status);
+        
+        auto new_shine = ui::ImageView::create("game_win_shine.png");
+        new_shine->setPosition(Vec2(title_size.width *0.7f, title_size.height * 0.7f));
+        new_shine->setScale(0.6f);
+        auto anim_rotate = RotateBy::create(2.f, 360);
+        new_shine->runAction(RepeatForever::create(anim_rotate));
+        achieve_title->addChild(new_shine, 1, k_item_status_back);
         
         auto achieve_cup = ui::ImageView::create("achievement/achive_flag.png");
         auto achieve_cup_size = achieve_cup->getContentSize();

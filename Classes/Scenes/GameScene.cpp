@@ -1202,10 +1202,9 @@ void GameScene::playSupplyAnimation(){
                 character->setPosition(pos);
                 _supplyShowLayer->addChild(character);
         }
-        if (total_stock > 0){
-                auto scale = ScaleTo::create(0.6f, 1.0f);
+        if (total_stock > 0){ 
                 auto cb = CallFunc::create(std::bind(&GameScene::playSupplyAnimation2, this, player));
-                _supplyShowLayer->runAction(Sequence::create(scale, cb, NULL));
+                _supplyShowLayer->runAction(Sequence::create(DelayTime::create(0.6f), cb, NULL));
         }else{
                 this->playSupplyAnimation2(player);
         }
@@ -1370,6 +1369,38 @@ void GameScene::menuAddArmy(Ref* btn){
                                 _curCoinsNo -= PRICE_PER_SUPPLEMENT;
                                 UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNo);
                                 UserDefault::getInstance()->flush();
+                                
+                                AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY);
+                                
+                                _isPalyingAnim = true;
+                                auto btn_anim = _addArmyBtn->clone();
+                                _curGameData->_player[_curGameData->_userId]->addMoreSupply();
+                                auto parent = _addArmyBtn->getParent();
+                                btn_anim->setPosition(_addArmyBtn->getPosition());
+                                parent->addChild(btn_anim);
+                                Vec2 pos = parent->convertToNodeSpace(_curPlayerSupFlag->getParent()->convertToWorldSpace(_curPlayerSupFlag->getPosition()));
+                                auto move = MoveTo::create(0.8,  pos);
+                                auto scale = ScaleTo::create(0.8, 0.6f);
+                                btn_anim->runAction(Sequence::create( Spawn::create(move, scale, NULL),
+                                                                     CallFunc::create( [this, btn_anim](){
+                                        
+                                        btn_anim->removeFromParentAndCleanup(true);
+                                        this->refreshSupplyDiceNum();
+                                        _isPalyingAnim = false;
+                                        auto scale_s = ScaleTo::create(0.3, 1.4f);
+                                        auto scale_s_r = ScaleTo::create(0.3, 1.0f);
+                                        auto seq = Sequence::create(scale_s, scale_s_r, NULL);
+                                        _curPlayerSupFlag->runAction(seq);
+                                        _curInTurnBack->runAction(seq->clone());
+                                        
+                                }), NULL));
+                                
+                                _addArmyBtn->setEnabled(false);
+                                _addArmyBtn->setBright(false);
+                                Label* counter_lab = (Label*)_addArmyBtn->getChildByTag(key_supply_turn_counter_tag);
+                                _addtionalSupplyCounter = TURN_INTERVAL_FOR_SUPPLEMENTS;
+                                counter_lab->setString(StringUtils::format("%d", TURN_INTERVAL_FOR_SUPPLEMENTS));
+                                counter_lab->setVisible(true);
                         });
                 }
         }else{
@@ -1377,38 +1408,6 @@ void GameScene::menuAddArmy(Ref* btn){
                 UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curSupplyNo);
                 UserDefault::getInstance()->flush();
         }
-        
-        AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY);
-        
-        _isPalyingAnim = true;
-        auto btn_anim = _addArmyBtn->clone();
-        _curGameData->_player[_curGameData->_userId]->addMoreSupply();
-        auto parent = _addArmyBtn->getParent();
-        btn_anim->setPosition(_addArmyBtn->getPosition());
-        parent->addChild(btn_anim);
-        Vec2 pos = parent->convertToNodeSpace(_curPlayerSupFlag->getParent()->convertToWorldSpace(_curPlayerSupFlag->getPosition()));
-        auto move = MoveTo::create(0.8,  pos);
-        auto scale = ScaleTo::create(0.8, 0.6f);
-        btn_anim->runAction(Sequence::create( Spawn::create(move, scale, NULL),
-                                    CallFunc::create( [this, btn_anim](){
-                
-                btn_anim->removeFromParentAndCleanup(true);
-                this->refreshSupplyDiceNum();
-                _isPalyingAnim = false;
-                auto scale_s = ScaleTo::create(0.3, 1.4f);
-                auto scale_s_r = ScaleTo::create(0.3, 1.0f);
-                auto seq = Sequence::create(scale_s, scale_s_r, NULL);
-                _curPlayerSupFlag->runAction(seq);
-                _curInTurnBack->runAction(seq->clone());
-                
-        }), NULL));
-        
-        _addArmyBtn->setEnabled(false);
-        _addArmyBtn->setBright(false);
-        Label* counter_lab = (Label*)_addArmyBtn->getChildByTag(key_supply_turn_counter_tag);
-        _addtionalSupplyCounter = TURN_INTERVAL_FOR_SUPPLEMENTS;
-        counter_lab->setString(StringUtils::format("%d", TURN_INTERVAL_FOR_SUPPLEMENTS));
-        counter_lab->setVisible(true);
 }
 
 #pragma mark - facebook share delegate

@@ -675,30 +675,24 @@ void LevelSelect::onEnter(){
 }
 
 void LevelSelect::update(float delta){
-        
-        if (++_count >= 120){
-                auto show_layer = this->getChildByTag(kChoseNumBackTag);
-                auto visible_size = Director::getInstance()->getVisibleSize();
-                auto world_p = _coinsNumLb->getParent()->convertToWorldSpace(_coinsNumLb->getPosition());
-                
-                auto call_back = CallFunc::create([this](){
-                        auto scale_by = ScaleBy::create(0.4f, 1.4f);
-                        _coinsNumLb->getParent()->runAction(Sequence::create(scale_by, scale_by->reverse(), NULL));
-                        int cur_coins = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS);
-                        _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
-                        _curCoinsNum = cur_coins;
-                });
-                call_back->retain();
-                auto dest = show_layer->convertToNodeSpace(world_p);
-                AchievementEngine::getInstance()->dailyOpenReward(show_layer, visible_size * 0.5f, dest, call_back);
-                
-                
-                unscheduleUpdate();
-                _count = 0;
-
-        }
 }
 
+void LevelSelect::showDailyRewards(){
+        auto show_layer = this->getChildByTag(kChoseNumBackTag);
+        auto visible_size = Director::getInstance()->getVisibleSize();
+        auto world_p = _coinsNumLb->getParent()->convertToWorldSpace(_coinsNumLb->getPosition());
+        
+        auto call_back = CallFunc::create([this](){
+                auto scale_by = ScaleBy::create(0.4f, 1.4f);
+                _coinsNumLb->getParent()->runAction(Sequence::create(scale_by, scale_by->reverse(), NULL));
+                int cur_coins = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS);
+                _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
+                _curCoinsNum = cur_coins;
+        });
+        call_back->retain();
+        auto dest = show_layer->convertToNodeSpace(world_p);
+        AchievementEngine::getInstance()->dailyOpenReward(show_layer, visible_size * 0.5f, dest, call_back);
+}
 void LevelSelect::onExit(){
         Layer::onExit();
         _loadingBar->setVisible(false);
@@ -715,5 +709,8 @@ void LevelSelect::onExit(){
         cache->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNum);
         cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curMercenariesNum);
         cache->flush();
+        
+        this->runAction(Sequence::create(DelayTime::create(2.0f), CC_CALLBACK_0(LevelSelect::showDailyRewards, this), nullptr));
+        
 }
 

@@ -51,15 +51,23 @@ void AchievementEngine::coinsAnimShow(Node* parent, Vec2 from, Vec2 dest,
         
         auto seq_last = Sequence::create(to_dest->clone(), clean_call_self,
                                          clean_call, call_back, NULL);
+        auto seq_last_2 = Sequence::create(to_dest->clone(), clean_call_self,
+                                         clean_call, NULL);
         
         for (int i = 0; i < COINS_ANIM_SHOW_NUM; i++){
                 auto item_s = Sprite::create("level/coins_show.png");;
                 Size r_p(random(-100, 100), random(-100, 100));
                 item_s->setPosition(from + r_p);
                 parent->addChild(item_s, SUPER_LAYER_PRIVILIEGE, MODAL_DIALOG_NODETAG + i);
-                if (i == (COINS_ANIM_SHOW_NUM - 1)
-                    && nullptr != call_back){
-                        item_s->runAction(seq_last->clone());
+                
+                if (i == (COINS_ANIM_SHOW_NUM - 1)){
+                    
+                    if(nullptr != call_back){
+                            item_s->runAction(seq_last->clone());
+                    }else{
+                            item_s->runAction(seq_last_2->clone());
+                    }
+                        
                 }else{
                         item_s->runAction(to_dest->clone());
                 }
@@ -128,43 +136,36 @@ AchievementData AchievementEngine::winnerRewards(int playerNum){
         switch (playerNum) {
                 case 2:{
                         coins_num = 1;
-                        first_get = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_2, REWARDS_STATUS_CLOSED);
                         achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_2;
                 }
                         break;
                 case 3:{
                         coins_num = 3;
-                        first_get = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_3, REWARDS_STATUS_CLOSED);
                         achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_3;
                 }
                         break;
                 case 4:{
                         coins_num = 4;
-                        first_get = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_4, REWARDS_STATUS_CLOSED);
                         achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_4;
                 }
                         break;
                 case 5:{
                         coins_num = 5;
-                        first_get = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_5, REWARDS_STATUS_CLOSED);
                         achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_5;
                 }
                         break;
                 case 6:{
                         coins_num = 7;
-                        first_get = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_6, REWARDS_STATUS_CLOSED);
                         achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_6;
                 }
                         break;
                 case 7:{
                         coins_num = 9;
-                        first_get = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_7, REWARDS_STATUS_CLOSED);
                         achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_7;
                 }
                         break;
                 case 8:{
                         coins_num = 10;
-                        first_get = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_8, REWARDS_STATUS_CLOSED);
                         achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_8;
                 }
                         break;
@@ -174,6 +175,7 @@ AchievementData AchievementEngine::winnerRewards(int playerNum){
         
         int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
         
+        first_get = cache->getIntegerForKey(achieve_key.c_str(), REWARDS_STATUS_CLOSED);
         if (REWARDS_STATUS_CLOSED == first_get){
                 cache->setIntegerForKey(achieve_key.c_str(), REWARDS_STATUS_OPEN);
                 result_obj = GolbalConfig::getInstance()->getSingleAchievement(achieve_key);

@@ -316,76 +316,76 @@ void Achievement::collectAchievement(AchievementData data){
                                             random(-0.05f * v_size.height, 0.05f * v_size.height));
                                 auto mercenary =  Sprite::create("level/dice_show.png");
                                 mercenary->setPosition(position + offset);
-                                this->addChild(mercenary, SUPER_LAYER_PRIVILIEGE, MODAL_DIALOG_NODETAG + i);
+                                this->addChild(mercenary, SUPER_LAYER_PRIVILIEGE, MODAL_DIALOG_NODETAG  + i);
                                 if (i == data.bonus_mercenaryNum - 1){
-                                        this->runAction(seq->clone());
+                                        mercenary->runAction(seq->clone());
                                 }else{
-                                        this->runAction(seq_last->clone());
+                                        mercenary->runAction(seq_last->clone());
                                 }
                         }
                 });
                 actions.pushBack(call_back_todo);
         }
-        if (data.bonus_charactor_key.length() > 0){
-                auto call_back_todo = CallFunc::create([this, v_size, data](){
-                
-                        std::string img_path = AchievementEngine::getInstance()->getCharactorImg(data.bonus_charactor_key);
-                        auto character = Sprite::create(img_path);
-                        auto ch_size = character->getContentSize();
-                        character->setPosition(ch_size * 0.5f);
-                        
-                        auto cha_layer = Layer::create();
-                        cha_layer->setContentSize(ch_size);
-                        cha_layer->addChild(character, 2);
-                        
-                        auto shining_back = Sprite::create("game_win_shine.png");
-                        shining_back->setPosition(ch_size * 0.5f);
-                        shining_back->runAction(RepeatForever::create(RotateBy::create(2.0f, 360)));
-                        cha_layer->addChild(shining_back, 1);
-                        
-                        auto cale_by = ScaleBy::create(1.f, 3.f);
-                        auto call_back = CallFunc::create([this, cha_layer, data](){
-                                cha_layer->removeFromParentAndCleanup(true);
-                                
-                                auto cache = UserDefault::getInstance();
-                                cache->setBoolForKey(data.bonus_charactor_key.c_str(), true);
-                                cache->flush();
-                        });
-                        cha_layer->runAction(Sequence::create(cale_by, DelayTime::create(0.3f),
-                                                              call_back, NULL));
-                        
-                        this->addChild(cha_layer, SUPER_LAYER_PRIVILIEGE);
-                        
-                });
-                actions.pushBack(call_back_todo);
-        }
-        if (data.bonus_map_key.length() > 0){
-                auto call_back_todo = CallFunc::create([this, v_size, data](){
-
-                        std::string tips = AchievementEngine::getInstance()->getMapName(data.bonus_map_key);
-                        
-                        auto label = Label::createWithSystemFont(tips, "fonts/arial.ttf", 32);
-                        
-                        auto cale_by = ScaleBy::create(1.f, 3.f);
-                        auto call_back = CallFunc::create([this, label, data](){
-                                label->removeFromParentAndCleanup(true);
-                                
-                                auto cache = UserDefault::getInstance();
-                                cache->setBoolForKey(data.bonus_charactor_key.c_str(), true);
-                                cache->flush();
-                        });
-                        label->runAction(Sequence::create(cale_by, DelayTime::create(0.3f),
-                                                          call_back, NULL));
-                        
-                        this->addChild(label, SUPER_LAYER_PRIVILIEGE);
-                });
-                actions.pushBack(call_back_todo);
-        }
+//        if (data.bonus_charactor_key.length() > 0){
+//                auto call_back_todo = CallFunc::create([this, v_size, data](){
+//                
+//                        std::string img_path = AchievementEngine::getInstance()->getCharactorImg(data.bonus_charactor_key);
+//                        auto character = Sprite::create(img_path);
+//                        auto ch_size = character->getContentSize();
+//                        character->setPosition(ch_size * 0.5f);
+//                        
+//                        auto cha_layer = Layer::create();
+//                        cha_layer->setContentSize(ch_size);
+//                        cha_layer->addChild(character, 2);
+//                        
+//                        auto shining_back = Sprite::create("game_win_shine.png");
+//                        shining_back->setPosition(ch_size * 0.5f);
+//                        shining_back->runAction(RepeatForever::create(RotateBy::create(2.0f, 360)));
+//                        cha_layer->addChild(shining_back, 1);
+//                        
+//                        auto cale_by = ScaleBy::create(1.f, 3.f);
+//                        auto call_back = CallFunc::create([this, cha_layer, data](){
+//                                cha_layer->removeFromParentAndCleanup(true);
+//                                
+//                                auto cache = UserDefault::getInstance();
+//                                cache->setBoolForKey(data.bonus_charactor_key.c_str(), true);
+//                                cache->flush();
+//                        });
+//                        cha_layer->runAction(Sequence::create(cale_by, DelayTime::create(0.3f),
+//                                                              call_back, NULL));
+//                        
+//                        this->addChild(cha_layer, SUPER_LAYER_PRIVILIEGE);
+//                        
+//                });
+////                actions.pushBack(call_back_todo);
+//        }
+//        if (data.bonus_map_key.length() > 0){
+//                auto call_back_todo = CallFunc::create([this, v_size, data](){
+//
+//                        std::string tips = AchievementEngine::getInstance()->getMapName(data.bonus_map_key);
+//                        
+//                        auto label = Label::createWithSystemFont(tips, "fonts/arial.ttf", 32);
+//                        
+//                        auto cale_by = ScaleBy::create(1.f, 3.f);
+//                        auto call_back = CallFunc::create([this, label, data](){
+//                                label->removeFromParentAndCleanup(true);
+//                                
+//                                auto cache = UserDefault::getInstance();
+//                                cache->setBoolForKey(data.bonus_charactor_key.c_str(), true);
+//                                cache->flush();
+//                        });
+//                        label->runAction(Sequence::create(cale_by, DelayTime::create(0.3f),
+//                                                          call_back, NULL));
+//                        
+//                        this->addChild(label, SUPER_LAYER_PRIVILIEGE);
+//                });
+////                actions.pushBack(call_back_todo);
+//        }
         
         auto call_back_todo = CallFunc::create([this, v_size, data](){
                 AchievementEngine::getInstance()->finishReward(data.cache_key);
          });
-        actions.pushBack(call_back_todo);
+//        actions.pushBack(call_back_todo);
         
         this->runAction(Sequence::create(actions));
 }

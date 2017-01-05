@@ -35,7 +35,7 @@ bool AchievementEngine::init(){
 void AchievementEngine::coinsAnimShow(Node* parent, Vec2 from, Vec2 dest,
                                       CallFunc* clean_call,  int coins_num, CallFunc* call_back){
         
-        auto move_to = MoveTo::create(1.0f, dest);
+        auto move_to = MoveTo::create(1.4f, dest);
         auto coins_change = AnimationCache::getInstance()->getAnimation("coins_changes");
         auto coins_rotate = coins_change->clone();
         coins_rotate->setRestoreOriginalFrame(true);

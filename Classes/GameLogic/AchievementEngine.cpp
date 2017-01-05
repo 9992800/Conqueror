@@ -74,10 +74,11 @@ void AchievementEngine::coinsAnimShow(Node* parent, Vec2 from, Vec2 dest,
         }
         
         std::string num_str = StringUtils::format("+%d", coins_num);
-        auto num_tips = Label::createWithSystemFont("", "fonts/arial.ttf", 40);
+        auto num_tips = Label::createWithSystemFont(num_str, "fonts/arial.ttf", 68);
+        num_tips->setTextColor(Color4B::RED);
         num_tips->setPosition(from);
         parent->addChild(num_tips, SUPER_LAYER_PRIVILIEGE, MODAL_DIALOG_NODETAG + coins_num);
-        num_tips->runAction(to_dest->clone());
+        num_tips->runAction(move_to->clone());
 }
 
 int AchievementEngine::dailyOpenReward(cocos2d::Node *parent, cocos2d::Vec2 from, cocos2d::Vec2 dest, CallFunc* call_back){

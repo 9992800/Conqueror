@@ -371,24 +371,26 @@ void Achievement::collectAchievement(AchievementData& data){
         }
         if (data.bonus_map_key.length() > 0){
                 auto call_back_todo = CallFunc::create([this, v_size, data](){
-
+                        
+                        auto back_flag = Sprite::create("achievement/maplyer_add.png");
+                        back_flag->setPosition(v_size * 0.5f);
                         std::string tips = AchievementEngine::getInstance()->getMapName(data.bonus_map_key);
                         
                         auto label = Label::createWithSystemFont(tips, "fonts/arial.ttf", 32);
-                        
+                        label->setPosition(back_flag->getContentSize() * 0.5f);
+                        back_flag->addChild(label);
                         auto cale_by = ScaleBy::create(1.f, 2.f);
-                        auto call_back = CallFunc::create([this, label, data](){
-                                label->removeFromParentAndCleanup(true);
+                        auto call_back = CallFunc::create([this, back_flag, data](){
+                                back_flag->removeFromParentAndCleanup(true);
                                 
                                 auto cache = UserDefault::getInstance();
                                 cache->setBoolForKey(data.bonus_charactor_key.c_str(), true);
                                 cache->flush();
                         });
-                        label->runAction(Sequence::create(cale_by, DelayTime::create(0.5f),
-                                                          call_back, NULL));
-                        label->setPosition(v_size * 0.5f);
+                        back_flag->runAction(Sequence::create(cale_by, DelayTime::create(0.5f),
+                                                          call_back, NULL));                         
                         
-                        this->addChild(label, SUPER_LAYER_PRIVILIEGE);
+                        this->addChild(back_flag, SUPER_LAYER_PRIVILIEGE);
                 });
                 if (actions.size() > 0) actions.pushBack(DelayTime::create(2.f));
                 actions.pushBack(call_back_todo);

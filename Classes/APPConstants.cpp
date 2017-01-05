@@ -711,6 +711,8 @@ std::vector<AchievementData> GolbalConfig::getAchievementData(){
                 }
         }customLess;
         
+        this->initAchievementData();
+        
         std::vector<AchievementData> v;
         for (std::map<std::string, AchievementData>::iterator it = this->_systemAchievementData.begin();
              it != this->_systemAchievementData.end(); ++it){

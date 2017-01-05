@@ -61,6 +61,8 @@ bool Achievement::init() {
         
         _listView->setItemModel(default_item);
         _listView->setGravity(ui::ListView::Gravity::CENTER_VERTICAL);
+        
+        
         this->_achievementData = GolbalConfig::getInstance()->getAchievementData();
         this->_totalCount = (int)_achievementData.size();
         this->_spawnCount = this->_totalCount;
@@ -395,7 +397,7 @@ void Achievement::collectAchievement(AchievementData& data){
         auto call_back_todo = CallFunc::create([this, v_size, data](){
                 AchievementEngine::getInstance()->finishReward(data.cache_key);
          });
-        actions.pushBack(call_back_todo);        
+        actions.pushBack(call_back_todo);
         this->runAction(Sequence::create(actions));
 }
 

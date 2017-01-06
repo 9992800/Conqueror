@@ -142,8 +142,7 @@ Size LevelSelect::initCenterMainFrame(Vec2 position_num){
         auto pos_1 = Vec2(btn_size / 2 + gap);
         
         for (int i = 2; i <= MAX_PLAYER; i++){
-                auto sel_num_2 = Button::create("level/sel_num_btn_back_em.png"
-                                                "", "target_lock.png");
+                auto sel_num_2 = Button::create("target_lock.png");
                 sel_num_2->setPosition(Vec2(pos_1.x + (i - 2) * btn_size.width, pos_1.y));
                 std::string str = StringUtils::format("%d", i);
                 sel_num_2->setTitleText(str);

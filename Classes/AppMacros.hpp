@@ -121,14 +121,13 @@ enum {
 #define GAME_HISTORY_RES_KEY            "_key_history_res_value"
 #define GAME_HISTORY_SUPPLY_KEY         "_key_history_supply_value"
 
-
-#define LEVEL_1_LOCK_STATE_KEY          "_key_level_1_lock_state"
 #define LEVEL_2_LOCK_STATE_KEY          "_key_level_2_lock_state"
 #define LEVEL_3_LOCK_STATE_KEY          "_key_level_3_lock_state"
 #define LEVEL_4_LOCK_STATE_KEY          "_key_level_4_lock_state"
 #define LEVEL_5_LOCK_STATE_KEY          "_key_level_5_lock_state"
 #define LEVEL_6_LOCK_STATE_KEY          "_key_level_6_lock_state"
 #define LEVEL_7_LOCK_STATE_KEY          "_key_level_7_lock_state"
+#define LEVEL_8_LOCK_STATE_KEY          "_key_level_8_lock_state"
 #define ADS_LOCK_STATE_KEY              "_key_ads_lock_state"
 
 

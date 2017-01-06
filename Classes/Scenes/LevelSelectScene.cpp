@@ -141,13 +141,21 @@ Size LevelSelect::initCenterMainFrame(Vec2 position_num){
         auto pos_1 = Vec2(btn_size / 2 + gap);
         
         for (int i = 2; i <= MAX_PLAYER; i++){
-                auto sel_num_2 = Button::create("level/sel_num_btn_back_em.png");
+                auto sel_num_2 = Button::create("level/sel_num_btn_back_em.png"
+                                                "", "target_lock.png");
                 sel_num_2->setPosition(Vec2(pos_1.x + (i - 2) * btn_size.width, pos_1.y));
                 std::string str = StringUtils::format("%d", i);
                 sel_num_2->setTitleText(str);
                 sel_num_2->setTitleFontSize(42);
                 sel_num_2->addClickEventListener(CC_CALLBACK_1(LevelSelect::btnChosePlayerNum, this, i));
                 chose_num_back->addChild(sel_num_2);
+                
+                bool lock_status =  AchievementEngine::getInstance()->getLevelLockStatus(i);
+                if (false == lock_status){
+                        sel_num_2->setEnabled(false);
+                        sel_num_2->setBright(false);
+                        sel_num_2->loadTextureNormal("target_lock.png");
+                }
         }
         
         auto back_size = soldier_back->getContentSize();
@@ -206,16 +214,16 @@ void LevelSelect::initCharactorSel(Vec2 position_num, Size num_size) {
                                                lock_size.height * 0.5f));
                         ch->addChild(lock);
                         
-                        Vec2 tips_pos(lock_size.width * 1.2f, lock_size.height * 0.25f);
+                        Vec2 tips_pos(lock_size.width * 1.2f, lock_size.height * 0.35f);
                         if (price > 0){
                                 auto coin = Sprite::create("level/coins_show.png");
                                 coin->setPosition(tips_pos);
-                                coin->setScale(0.5f);
+                                coin->setScale(0.8f);
                                 lock->addChild(coin);
                                 
                                 auto price_lb = Label::createWithSystemFont(StringUtils::format("X%d", price), "fonts/arial.ttf", 24);
-                                price_lb->setPosition(Vec2(lock_size.width * 2.0f,
-                                                           lock_size.height * 0.25f));
+                                price_lb->setPosition(Vec2(lock_size.width * 1.9f,
+                                                           lock_size.height * 0.35f));
                                 lock->addChild(price_lb);
                         }else{
                                 auto tips_lb = Sprite::create("not_for_sale.png");

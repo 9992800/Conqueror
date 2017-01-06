@@ -42,5 +42,6 @@ public:
         
         bool getCharLockStatus(int);
         int getCharUnlockPrice(int);
+        bool getLevelLockStatus(int);
 };
 #endif /* AchievementEngine_hpp */

@@ -276,19 +276,17 @@ std::string AchievementEngine::getCharactorImg(std::string key){
 }
 std::string AchievementEngine::getMapName(std::string key){
         
-        if (LEVEL_1_LOCK_STATE_KEY == key){
-                return "2 Players Map Opened";
-        }else if (LEVEL_2_LOCK_STATE_KEY == key){
+        if (LEVEL_3_LOCK_STATE_KEY == key){
                 return "3 Players Map Opened";
-        }else if (LEVEL_3_LOCK_STATE_KEY == key){
-                return "4 Players Map Opened";
         }else if (LEVEL_4_LOCK_STATE_KEY == key){
-                return "5 Players Map Opened";
+                return "4 Players Map Opened";
         }else if (LEVEL_5_LOCK_STATE_KEY == key){
-                return "6 Players Map Opened";
+                return "5 Players Map Opened";
         }else if (LEVEL_6_LOCK_STATE_KEY == key){
-                return "7 Players Map Opened";
+                return "6 Players Map Opened";
         }else if (LEVEL_7_LOCK_STATE_KEY == key){
+                return "7 Players Map Opened";
+        }else if (LEVEL_8_LOCK_STATE_KEY == key){
                 return "8 Players Map Opened";
         }else{
                 return "";
@@ -324,5 +322,13 @@ int AchievementEngine::getCharUnlockPrice(int ch_idx){
                 default:
                         return 0;
         }
+}
+
+
+bool AchievementEngine::getLevelLockStatus(int level_idx){
+        std::string ch_lock_key = this->getLockName(level_idx, 1);  
+        auto cache = UserDefault::getInstance();
+        bool status = cache->getBoolForKey(ch_lock_key.c_str(), false);
+        return status;
 }
 

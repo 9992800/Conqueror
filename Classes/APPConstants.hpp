@@ -108,6 +108,7 @@ protected:
         GolbalConfig();
         ~GolbalConfig();
         bool init();
+        void initBasic();
         void initAnimation();
         void initAchievementData();
         void initMercenaryItemData();

@@ -18,6 +18,7 @@
 #include "AchievementScene.hpp"
 #include "BuySupplyScene.hpp"
 #include "AchievementEngine.hpp"
+#include "CommonTipsDialog.hpp"
 
 enum{
         key_loading_bar1,
@@ -203,7 +204,7 @@ void LevelSelect::initCharactorSel(Vec2 position_num, Size num_size) {
                 auto ch = ImageView::create(name);
                 ch->setPosition(Vec2(size / 2));
                 pageView->insertCustomItem(ch, i);
-                bool char_lock_stat =  AchievementEngine::getInstance()->getCharLockStatus(i);
+                bool char_lock_stat =  AchievementEngine::getInstance()->getCharLockStatus(i+1);
                 
                 auto ch_size = ch->getContentSize();
                 int  price =  AchievementEngine::getInstance()->getCharUnlockPrice(i);
@@ -646,7 +647,7 @@ void LevelSelect::actionBuyCharacter(Ref*btn, int ch_idx, int price){
         auto cache = UserDefault::getInstance();
         
         if (price < 0){
-                //TODO::tips.
+                CommonTipsDialog::showModalDialog(this,"This role is not for sale , you need to win it from battle.");
                 return;
         }
         

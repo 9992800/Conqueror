@@ -658,7 +658,7 @@ void LevelSelect::actionBuyCharacter(Ref*btn, int ch_idx, int price){
                 
                 auto v_size = Director::getInstance()->getVisibleSize();
                 
-                std::string lock_name = AchievementEngine::getInstance()->getLockName(ch_idx, 0);
+                std::string lock_name = AchievementEngine::getInstance()->getLockName(ch_idx + 1, 0);
                 std::string img_path = AchievementEngine::getInstance()->getCharactorImg(lock_name);
                 auto character = Sprite::create(img_path);
                 auto ch_size = character->getContentSize();

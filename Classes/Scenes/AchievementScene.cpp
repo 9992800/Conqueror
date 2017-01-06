@@ -386,7 +386,7 @@ void Achievement::collectAchievement(AchievementData& data){
                                 back_flag->removeFromParentAndCleanup(true);
                                 
                                 auto cache = UserDefault::getInstance();
-                                cache->setBoolForKey(data.bonus_charactor_key.c_str(), true);
+                                cache->setBoolForKey(data.bonus_map_key.c_str(), true);
                                 cache->flush();
                         });
                         back_flag->runAction(Sequence::create(cale_by, DelayTime::create(0.5f),

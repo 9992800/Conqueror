@@ -149,14 +149,7 @@ Size LevelSelect::initCenterMainFrame(Vec2 position_num){
                 sel_num_2->setTitleText(str);
                 sel_num_2->setTitleFontSize(42);
                 sel_num_2->addClickEventListener(CC_CALLBACK_1(LevelSelect::btnChosePlayerNum, this, i));
-                chose_num_back->addChild(sel_num_2);
-                
-                bool lock_status =  AchievementEngine::getInstance()->getLevelLockStatus(i);
-                if (false == lock_status){
-                        sel_num_2->setEnabled(false);
-                        sel_num_2->setBright(false);
-                        sel_num_2->loadTextureNormal("target_lock.png");
-                }
+                chose_num_back->addChild(sel_num_2, ZORDER_ITEM_SHOW, MODAL_DIALOG_NODETAG + i);
         }
         
         auto back_size = soldier_back->getContentSize();
@@ -786,6 +779,21 @@ void LevelSelect::onEnter(){
                 cup_tips->setVisible(true);
         }else{
                 cup_tips->setVisible(false);
+        }
+        
+        auto back_grd = this->getChildByTag(kChoseNumBackTag);
+        for (int i = 2; i <= MAX_PLAYER; i++){
+                auto but_item = (ui::Button*)back_grd->getChildByTag(MODAL_DIALOG_NODETAG + i);
+                bool lock_status =  AchievementEngine::getInstance()->getLevelLockStatus(i);
+                if (false == lock_status){
+                        but_item->setEnabled(false);
+                        but_item->setBright(false);
+                        but_item->loadTextureNormal("target_lock.png");
+                }else{
+                        but_item->setEnabled(true);
+                        but_item->setBright(true);
+                        but_item->loadTextureNormal("level/sel_num_btn_back_em.png");
+                }
         }
 }
 

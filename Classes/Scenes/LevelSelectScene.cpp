@@ -453,6 +453,13 @@ void LevelSelect::pageViewEvent(Ref *pSender, PageView::EventType type)
         if ( 1 == pageView->getTag()){
                 _curChIdx = (int)pageView->getCurrentPageIndex();
                 AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_CHANGE_PLAYER);
+                
+                bool char_lock_stat =  AchievementEngine::getInstance()->getCharLockStatus(_curChIdx + 1);
+                int  price =  AchievementEngine::getInstance()->getCharUnlockPrice(_curChIdx);
+                if (price < 0 && char_lock_stat){
+                        pageView->getItem(_curChIdx)->removeAllChildren();
+                }
+                
         }else if (2 == pageView->getTag()){
                 _curColorIdx = (int)pageView->getCurrentPageIndex();
                 AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_CHANGE_COLOR);

@@ -31,5 +31,16 @@ public:
                            int coin_num = COINS_ANIM_SHOW_NUM, CallFunc* call_bakc = NULL);
         std::string getCharactorImg(std::string key);
         std::string getMapName(std::string key);
+        inline std::string getLockName(int indx, int type){
+                if (0 == type){
+                        return StringUtils::format("_key_charactor_%d_lock_state", indx);
+                }else if (1 == type){
+                        return StringUtils::format("_key_level_%d_lock_state", indx);
+                }
+                return "";
+        }
+        
+        bool getCharLockStatus(int);
+        int getCharUnlockPrice(int);
 };
 #endif /* AchievementEngine_hpp */

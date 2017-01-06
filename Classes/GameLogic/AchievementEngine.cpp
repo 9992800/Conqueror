@@ -294,4 +294,35 @@ std::string AchievementEngine::getMapName(std::string key){
                 return "";
         }
 }
- 
+
+bool AchievementEngine::getCharLockStatus(int ch_idx){
+        std::string ch_lock_key = this->getLockName(ch_idx, 0);
+        auto cache = UserDefault::getInstance();
+        bool status = cache->getBoolForKey(ch_lock_key.c_str(), false);
+        return status;
+}
+
+
+int AchievementEngine::getCharUnlockPrice(int ch_idx){
+        switch (ch_idx) {
+                case 0:
+                        return 0;
+                case 1:
+                        return -1;
+                case 2:
+                        return 20;
+                case 3:
+                        return 50;
+                case 4:
+                        return 90;
+                case 5:
+                        return 140;
+                case 6:
+                        return 200;
+                case 7:
+                        return 500;
+                default:
+                        return 0;
+        }
+}
+

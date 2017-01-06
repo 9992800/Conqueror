@@ -189,13 +189,42 @@ void LevelSelect::initCharactorSel(Vec2 position_num, Size num_size) {
         pageView->setContentSize(size);
         pageView->setDirection(ui::PageView::Direction::VERTICAL);
         pageView->removeAllItems();
-//        pageView->setIndicatorEnabled(true);
         _curChIdx = 0;
         for (int i = 0; i < MAX_PLAYER; i++){
                 std::string name = StringUtils::format("level/ch_player_%d.png", i);
                 auto ch = ImageView::create(name);
                 ch->setPosition(Vec2(size / 2));
                 pageView->insertCustomItem(ch, i);
+                bool char_lock_stat =  AchievementEngine::getInstance()->getCharLockStatus(i);
+                
+                auto ch_size = ch->getContentSize();
+                int  price =  AchievementEngine::getInstance()->getCharUnlockPrice(i);
+                if (false == char_lock_stat && price != 0){
+                        auto lock = ui::Button::create("target_lock.png");
+                        auto lock_size = lock->getContentSize();
+                        lock->setPosition(Vec2(lock_size.width * 0.5f,
+                                               lock_size.height * 0.5f));
+                        ch->addChild(lock);
+                        
+                        Vec2 tips_pos(lock_size.width * 1.2f, lock_size.height * 0.25f);
+                        if (price > 0){
+                                auto coin = Sprite::create("level/coins_show.png");
+                                coin->setPosition(tips_pos);
+                                coin->setScale(0.5f);
+                                lock->addChild(coin);
+                                
+                                auto price_lb = Label::createWithSystemFont(StringUtils::format("X%d", price), "fonts/arial.ttf", 24);
+                                price_lb->setPosition(Vec2(lock_size.width * 2.0f,
+                                                           lock_size.height * 0.25f));
+                                lock->addChild(price_lb);
+                        }else{
+                                auto tips_lb = Sprite::create("not_for_sale.png");
+                                tips_lb->setPosition(tips_pos);
+                                lock->addChild(tips_lb);
+                        }
+                        
+                        lock->addClickEventListener(CC_CALLBACK_1(LevelSelect::actionBuyCharacter, this, i, price));
+                }
         }
         pageView->setTag(1);
         pageView->addEventListener(CC_CALLBACK_2(LevelSelect::pageViewEvent, this));
@@ -229,7 +258,6 @@ void LevelSelect::initColorSel(Vec2 position_num, Size num_size){
         color_list->setDirection(ui::PageView::Direction::VERTICAL);
         color_list->setContentSize(color_size);
         color_list->removeAllItems();
-//        color_list->setIndicatorEnabled(true);
         int color_num = 8;
         float width = 0;
         for (int i = 0; i < color_num; i++){
@@ -605,6 +633,11 @@ void LevelSelect::menuSoundControl(Ref* btn){
         cache->flush();
 }
 
+
+void LevelSelect::actionBuyCharacter(Ref*btn, int ch_idx, int price){
+        
+}
+
 #pragma mark - loading bar
 
 void LevelSelect::onEnter(){
@@ -688,7 +721,6 @@ void LevelSelect::onEnter(){
         int new_cup_num = data_cache->getIntegerForKey(ACHIEVE_DATA_KEY_NEW_ACH_NO, 0);
         if (new_cup_num > 0){
                 cup_tips->setVisible(true);
-//                cup_tips->setString(StringUtils::format("%d", new_cup_num));
         }else{
                 cup_tips->setVisible(false);
         }
@@ -713,6 +745,8 @@ void LevelSelect::showDailyRewards(){
         auto dest = show_layer->convertToNodeSpace(world_p);
         AchievementEngine::getInstance()->dailyOpenReward(show_layer, visible_size * 0.5f, dest, call_back);
 }
+
+
 void LevelSelect::onExit(){
         Layer::onExit();
         _loadingBar->setVisible(false);

@@ -330,5 +330,5 @@ bool AchievementEngine::getLevelLockStatus(int level_idx){
         auto cache = UserDefault::getInstance();
         bool status = cache->getBoolForKey(ch_lock_key.c_str(), false);
         return status;
-}
+} 
 

@@ -56,9 +56,7 @@ void ScreenCoordinate::configScreen(Size mapSize){
                         ++count;
                 }
         }
-        
-        
-        //TODO:: why height is 3 it must h/3
+
         _axis_x[0] = _cellSize.width / 2;
         _axis_x[1] = _cellSize.width;
         _axis_x[2] = _cellSize.width;

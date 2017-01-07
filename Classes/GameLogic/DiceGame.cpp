@@ -679,22 +679,6 @@ void DiceGame::occupayAnimation(int area_id, CallFunc* cb){
 }
 
 void DiceGame::occupyArea(int newOwner, int area){
-        
-//TODO::
-//        TMXLayer * layer = _data->_refereMap->getLayer(LAYER_NAME_IN_TILE_MAP);
-//        GamePlayer* player = _data->_player[newOwner];
-//        
-//        for (int j = 0; j < CEL_MAX; j++){
-//                if (area != _data->_cel[j]){
-//                        continue;
-//                }
-//                
-//                int col = j / XMAX;
-//                int row = j % XMAX;
-//                
-//                layer->setTileGID(player->getGid(), Vec2(row, col));
-//        }
-        
         _data->_areaData[area]->changeOwner(newOwner);
 }
 

@@ -43,7 +43,7 @@ bool ReplayLast::init(){
         ScreenCoordinate::getInstance()->configScreen(visibleSize);
         _gameData->reshDataByBackGrnd(back_layer);
         this->addChild(back_layer, 0, 1);
-        _lowestPostion_y = visibleSize.height + origin.y - visibleSize.height - 6;//TODO::
+        _lowestPostion_y = visibleSize.height + origin.y - visibleSize.height - 6;
      
         
         

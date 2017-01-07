@@ -104,8 +104,7 @@ bool BattleField::init(){
         return true;
 } 
 
-void BattleField::menuExit(Ref* pSender){
-        //TODO::show pop dialog
+void BattleField::menuExit(Ref* pSender){ 
         Director::getInstance()->popScene();
 }
 void BattleField::menuShareGame(Ref* pSender){
@@ -124,7 +123,7 @@ void BattleField::startBattle(){
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         
-        _lowestPostion_y = visibleSize.height + origin.y - map_size.height - 6;//TODO::
+        _lowestPostion_y = visibleSize.height + origin.y - map_size.height - 6;
 }
 
 #pragma mark - overrided scedule

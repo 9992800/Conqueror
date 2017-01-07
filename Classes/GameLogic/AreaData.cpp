@@ -206,7 +206,6 @@ void AreaData::initAreaLine(int cell, int dir, GameData* data){
 }
 
 void AreaData::changeOwner(int newOwner){
-        //TODO::playanimations
         if (_arm == newOwner){
                 return;
         }
@@ -246,11 +245,9 @@ void AreaData::drawBorder(){
 
 
 void AreaData::drawAsSelected(){
-        //TODO:: add animation as Selected
         this->drawPolyGon(-1);
 }
 void AreaData::drawAsUnselected(){
-        //TODO:: remove animations;
         _drawNode->clear();
         drawBorder();
         drawPolyGon(_arm);
@@ -312,15 +309,7 @@ Sprite* AreaData::createSprite(){
 }
 
 
-void AreaData::drawSupply(Node* back, CallFunc* call_back){
-        //TODO::play Animation.
-        
-//        std::string filename = "particles/ExplodingRing.plist";
-//        _emitter = ParticleSystemQuad::create(filename);
-//        _emitter->retain();
-//        back->addChild(_emitter, 10);
-//        Vec2 pos = ScreenCoordinate::getInstance()->getAreaCenterPos(_cpos);
-//        _emitter->setPosition(pos);
+void AreaData::drawSupply(Node* back, CallFunc* call_back){ 
         
         Sprite* sprite = (Sprite*)back->getChildByTag(AREA_TAG_ID_INMAP(_areaId));
         float orig_scal = sprite->getScale();

@@ -41,11 +41,11 @@ bool Achievement::init() {
         exit_btn->addClickEventListener([=](Ref*){
                 Director::getInstance()->popScene();
         });
-        scene_back->addChild(exit_btn);
+        scene_back->addChild(exit_btn, 3);
         
         auto title = Sprite::create("achievement/achieve_title.png");
         title->setPosition(Vec2(visible_size.width / 2, visible_size.height - title->getContentSize().height * 0.5f));
-        scene_back->addChild(title);
+        scene_back->addChild(title, 2);
         
         
         auto default_item = this->createListItem();
@@ -54,10 +54,10 @@ bool Achievement::init() {
         _listView->setDirection(ui::ScrollView::Direction::VERTICAL);
         _listView->setBounceEnabled(true);  
         _listView->setContentSize(Size(default_item->getContentSize().width,
-                                       visible_size.height * 0.8f));
-        _listView->setPosition(Vec2(visible_size.width * 0.02f, visible_size.height * 0.05f));
+                                       visible_size.height));
+        _listView->setPosition(Vec2(visible_size.width * 0.02f, 0.f));
         _listView->setScrollBarPositionFromCorner(Vec2(7, 7)); 
-        scene_back->addChild(_listView);
+        scene_back->addChild(_listView, 1);
         
         _listView->setItemModel(default_item);
         _listView->setGravity(ui::ListView::Gravity::CENTER_VERTICAL);
@@ -146,7 +146,7 @@ ui::Layout* Achievement::createListItem(){
         default_item->addChild(item_desc_txt, 3, k_item_desc_text);
         
         
-        auto butt_on = ui::Button::create("DIALOG2_OK.png","DIALOG2_OK_SEL.png");
+        auto butt_on = ui::Button::create("DIALOG2_OK.png","DIALOG2_OK_SEL.png", "DIALOG2_DISABLED.png");
         auto butt_on_size = butt_on->getContentSize();
         butt_on->setPosition(Vec2(default_item_size.width - butt_on_size.width,
                                   default_item_size.height * 0.5f));
@@ -178,7 +178,9 @@ void Achievement::initItemDetails(ui::Widget* achieve_item, int idx){
         auto new_tag    = (ui::ImageView*)tittle_back->getChildByTag(k_item_status);
         
         if (REWARDS_STATUS_CLOSED == data.bonus_status){
-                button->setTitleText("GET THIS");
+                button->setTitleText("UNOPENED");
+                button->setEnabled(false);
+                button->setBright(false);
         }else if (REWARDS_STATUS_OPEN == data.bonus_status){
                 button->setTitleText("COLLECT");
                 new_tag->setVisible(true);
@@ -187,6 +189,8 @@ void Achievement::initItemDetails(ui::Widget* achieve_item, int idx){
                 button->setTitleText("FINISHED");
                 new_tag->setVisible(false);
                 new_shine->setVisible(false);
+                button->setEnabled(false);
+                button->setBright(false);
         }
 }
 
@@ -257,6 +261,9 @@ void Achievement::updateItem(int itemID, int templateID)
         
         if (REWARDS_STATUS_CLOSED == data.bonus_status){
                 button->setTitleText("GET THIS");
+                button->setEnabled(false);
+                button->setBright(false);
+
         }else if (REWARDS_STATUS_OPEN == data.bonus_status){
                 button->setTitleText("COLLECT");
                 new_tag->setVisible(true);
@@ -265,6 +272,9 @@ void Achievement::updateItem(int itemID, int templateID)
                 button->setTitleText("FINISHED");
                 new_tag->setVisible(false);
                 new_shine->setVisible(false);
+                button->setEnabled(false);
+                button->setBright(false);
+
         }
 }
 
@@ -276,37 +286,32 @@ void Achievement::jumpToGuidScene(AchievementData& data){
 
 void Achievement::collectAchievement(AchievementData& data){
         auto v_size = Director::getInstance()->getVisibleSize();
-        
+        auto cache = UserDefault::getInstance();
         Vector<FiniteTimeAction*> actions;
         
         if (data.bonus_coinsNum > 0){
+                int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS);
+                cur_coins += data.bonus_coinsNum;
+                cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
+                cache->flush();
                 
-                auto call_back = CallFunc::create([this, data](){
-                        auto cache = UserDefault::getInstance();
-                        int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS);
-                        cur_coins += data.bonus_coinsNum;
-                        cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
-                        cache->flush();
-                });
-                auto call_back_todo = CallFunc::create([this, v_size, call_back](){
+                auto call_back_todo = CallFunc::create([this, v_size](){
                 AchievementEngine::getInstance()->coinsAnimShow(this,
                                                                 v_size * 0.5f,
-                                                                v_size, call_back);
+                                                                v_size, NULL);
                 }); 
                 
                 actions.pushBack(call_back_todo);
         }
         if (data.bonus_mercenaryNum > 0){
+                
+                int sup_no = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO);
+                sup_no += data.bonus_mercenaryNum;
+                cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, sup_no);
+                cache->flush();
+
                 auto call_back_todo = CallFunc::create([this, v_size, data](){
                          Vec2 position(v_size * 0.5f);
-                        auto call_back = CallFunc::create([this, data](){
-                                auto cache = UserDefault::getInstance();
-                                int sup_no = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO);
-                                sup_no += data.bonus_mercenaryNum;
-                                cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, sup_no);
-                                cache->flush();
-                        });
-                        
                         auto clean_call_self = CallFunc::create([this, data](){
                                 for (int i = 0; i < data.bonus_mercenaryNum; i++){
                                         this->removeChildByTag(MODAL_DIALOG_NODETAG + i);
@@ -314,8 +319,8 @@ void Achievement::collectAchievement(AchievementData& data){
                         });
 
                         auto to_dest = MoveTo::create(1.0f, v_size);
-                        auto seq_last = Sequence::create(to_dest->clone(), clean_call_self->clone(), call_back->clone(), NULL);
-                        auto seq = Sequence::create(to_dest->clone(), clean_call_self, call_back, NULL);
+                        auto seq_last = Sequence::create(to_dest->clone(), clean_call_self->clone(), NULL);
+                        auto seq = Sequence::create(to_dest->clone(), clean_call_self, NULL);
                         
                         for (int i = 0; i < data.bonus_mercenaryNum; i++){
                                 Vec2 offset(random(-0.05f * v_size.width, 0.05f * v_size.width),
@@ -334,6 +339,10 @@ void Achievement::collectAchievement(AchievementData& data){
                 actions.pushBack(call_back_todo);
         }
         if (data.bonus_charactor_key.length() > 0){
+                auto cache = UserDefault::getInstance();
+                cache->setBoolForKey(data.bonus_charactor_key.c_str(), true);
+                cache->flush();
+                
                 auto call_back_todo = CallFunc::create([this, v_size, data](){
                 
                         std::string img_path = AchievementEngine::getInstance()->getCharactorImg(data.bonus_charactor_key);
@@ -353,10 +362,6 @@ void Achievement::collectAchievement(AchievementData& data){
                         auto cale_by = ScaleBy::create(1.5f, 3.f);
                         auto call_back = CallFunc::create([this, cha_layer, data](){
                                 cha_layer->removeFromParentAndCleanup(true);
-                                
-                                auto cache = UserDefault::getInstance();
-                                cache->setBoolForKey(data.bonus_charactor_key.c_str(), true);
-                                cache->flush();
                         });
                         cha_layer->runAction(Sequence::create(cale_by,
                                                               DelayTime::create(0.3f),
@@ -371,23 +376,18 @@ void Achievement::collectAchievement(AchievementData& data){
                 actions.pushBack(call_back_todo);
         }
         if (data.bonus_map_key.length() > 0){
+                auto cache = UserDefault::getInstance();
+                cache->setBoolForKey(data.bonus_map_key.c_str(), true);
+                cache->flush();
+                
                 auto call_back_todo = CallFunc::create([this, v_size, data](){
                         
                         auto back_flag = Sprite::create("achievement/maplyer_add.png");
                         back_flag->setPosition(v_size * 0.5f);
                         std::string tips = AchievementEngine::getInstance()->getMapName(data.bonus_map_key);
-                        
-//                        auto label = Label::createWithSystemFont(tips, "fonts/arial.ttf", 32);
-//                        label->setPosition(back_flag->getContentSize() * 0.5f);
-//                        back_flag->addChild(label);
-                        
                         auto cale_by = ScaleBy::create(1.f, 2.f);
                         auto call_back = CallFunc::create([this, back_flag, data](){
                                 back_flag->removeFromParentAndCleanup(true);
-                                
-                                auto cache = UserDefault::getInstance();
-                                cache->setBoolForKey(data.bonus_map_key.c_str(), true);
-                                cache->flush();
                         });
                         back_flag->runAction(Sequence::create(cale_by, DelayTime::create(0.5f),
                                                           call_back, NULL));                         

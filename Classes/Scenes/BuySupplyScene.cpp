@@ -54,7 +54,7 @@ bool BuySupply::init() {
                                        visible_size.height));
         _listView->setPosition(Vec2(visible_size.width * 0.02f, 0.f));
         _listView->setScrollBarPositionFromCorner(Vec2(7, 7));
-        scene_back->addChild(_listView);
+        scene_back->addChild(_listView, 1);
         
         _listView->setItemModel(default_item);
         _listView->setGravity(ui::ListView::Gravity::CENTER_VERTICAL);
@@ -97,10 +97,10 @@ void BuySupply::initCurCoins(Node* scene_back){
                 Director::getInstance()->popScene();
         });
         
-        scene_back->addChild(exit_btn);
+        scene_back->addChild(exit_btn, 3);
         auto title = Sprite::create("shopping/buy_supply_title.png");
         title->setPosition(Vec2(visible_size.width / 2, visible_size.height - title->getContentSize().height * 0.5f));
-        scene_back->addChild(title);
+        scene_back->addChild(title, 2);
         
         auto coins_back = Sprite::create("level/coind_back.png");
         auto coins_back_size = coins_back->getContentSize();
@@ -123,7 +123,7 @@ void BuySupply::initCurCoins(Node* scene_back){
         _coinsNumLb->setPosition(coins_back_size * 0.5f);
         coins_back->addChild(_coinsNumLb);
         
-        scene_back->addChild(coins_back);
+        scene_back->addChild(coins_back, 2);
         
         
         auto mercanery_back = Sprite::create("level/coind_back.png");
@@ -145,7 +145,7 @@ void BuySupply::initCurCoins(Node* scene_back){
         _mercenAriesNumLb->setPosition(mercanery_back_size * 0.5f);
         mercanery_back->addChild(_mercenAriesNumLb);
         
-        scene_back->addChild(mercanery_back);
+        scene_back->addChild(mercanery_back, 2);
         
         _soundTotalOn = cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
         _soundEngine = CocosDenshion::SimpleAudioEngine::getInstance();

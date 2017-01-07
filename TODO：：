@@ -8,12 +8,12 @@ TODO：：
 7，  locks to show charactor and level state 
 9,  other charactors and their animations.
 10, modify common tips dialog content position.
-11，icons to show things when win the game, mercenary, coins ,map , characot.
 12， achievments tips text string.
 13, unlock charactor and player . the logic.
+14, the price show of characters in pageviews.
 bugs
 --------------------------------------------------------- 
-2:
+2:bolck all button.
 1:test all the sounds effects.
 3:sounds effect when play animation in battle scene.
 4.the button is  a little small in some dialogs. 
@@ -21,11 +21,14 @@ bugs
 8, how to bug level and charactors.
 9,all fonts in the system. 
 11, test every achievement.
+12，achievement text description fonts and color.
+13，achievement logic bugs ,must change database first andthen play animation.
 
 
 
 
-
+1,rao kai zou
+2,fen bu jin gong
 
 
 

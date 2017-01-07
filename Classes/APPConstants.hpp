@@ -120,6 +120,8 @@ private:
         void initHuoQianShou();
         void initMaonv();
         void initChangQiangShou();
+        void initMonv();
+        void initRenZhe();
 
 private:
         std::map<std::string, AchievementData>  _systemAchievementData;

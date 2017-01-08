@@ -32,6 +32,7 @@ enum{
         key_cup_tips,
         key_charactor_back,
         key_charactor_pageview,
+        key_charactor_lock
 };
 
 enum{
@@ -206,7 +207,7 @@ void LevelSelect::initCharactorSel(Vec2 position_num, Size num_size) {
                         auto lock = ui::Button::create("target_lock.png");
                         auto lock_size = lock->getContentSize();
                         lock->setPosition(ch_size * 0.5f);
-                        ch->addChild(lock);
+                        ch->addChild(lock, 2, key_charactor_lock);
                         
                         Vec2 tips_pos(lock_size.width * 0.1f, -ch_size.height * 0.25f);
                         if (price > 0){
@@ -450,7 +451,7 @@ void LevelSelect::pageViewEvent(Ref *pSender, PageView::EventType type)
         PageView* pageView = dynamic_cast<PageView*>(pSender);
         
         CCLOGWARN("log:%zd tag(%d)", pageView->getCurrentPageIndex(), pageView->getTag());
-        if ( 1 == pageView->getTag()){
+        if (key_charactor_pageview == pageView->getTag()){
                 _curChIdx = (int)pageView->getCurrentPageIndex();
                 AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_CHANGE_PLAYER);
         }else if (2 == pageView->getTag()){
@@ -466,6 +467,20 @@ void LevelSelect::menuOnlineBattle(Ref* btn){
 }
 void LevelSelect::menuStartGame(Ref* btn){
         if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
+        bool char_lock_stat =  AchievementEngine::getInstance()->getCharLockStatus(_curChIdx + 1);
+        if (false == char_lock_stat){
+                auto page_view = (PageView*)this->getChildByTag(key_charactor_back)->getChildByTag(key_charactor_pageview);
+                auto charctor_img = page_view->getItem(_curChIdx);
+                auto lock = charctor_img->getChildByTag(key_charactor_lock);
+                int  price =  AchievementEngine::getInstance()->getCharUnlockPrice(_curChIdx);
+                if (nullptr != lock){
+                        
+                        this->actionBuyCharacter(lock, _curChIdx, price);
+                }
+                
+                return;
+        }
+        
         auto scene = GameScene::createScene(_levelPlayerNum, _curChIdx, _curColorIdx);
         Director::getInstance()->pushScene(scene);
 }

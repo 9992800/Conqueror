@@ -712,7 +712,6 @@ void GameScene::showWinDialog(){
                 ci_no->setPosition(Vec2(coins->getContentSize().width * 1.6f,
                                         coins->getContentSize().height * 0.5f));
                 coins->addChild(ci_no);
-
         }
 }
 

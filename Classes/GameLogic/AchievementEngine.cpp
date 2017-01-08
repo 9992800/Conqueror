@@ -185,7 +185,10 @@ AchievementData AchievementEngine::winnerRewards(int playerNum){
         first_get = cache->getIntegerForKey(achieve_key.c_str(), REWARDS_STATUS_CLOSED);
         if (REWARDS_STATUS_CLOSED == first_get){
                 cache->setIntegerForKey(achieve_key.c_str(), REWARDS_STATUS_OPEN);
+                
                 result_obj = GolbalConfig::getInstance()->getSingleAchievement(achieve_key);
+                cur_coins += result_obj.bonus_coinsNum;
+                
                 int new_cup_num = cache->getIntegerForKey(ACHIEVE_DATA_KEY_NEW_ACH_NO, 0);
                 cache->setIntegerForKey(ACHIEVE_DATA_KEY_NEW_ACH_NO, ++new_cup_num);
         }else{

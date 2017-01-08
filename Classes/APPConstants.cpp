@@ -693,7 +693,7 @@ void GolbalConfig::initAchievementData(){
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY, REWARDS_STATUS_CLOSED);
         AchievementData data_10 = {10, ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY,
                 has_got, 5, 0, "", "",
-                "Use Mercenary", "Use mercenary to make you stronger."
+                "Use Mercenary", "Use mercenary to make you powerfull."
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY, data_10));
         

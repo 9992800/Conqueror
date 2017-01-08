@@ -114,7 +114,7 @@ ui::Layout* Achievement::createListItem(){
         default_item->addChild(achieve_title, 1, k_item_title_backgrd);
         
         auto item_tile_txt = ui::Text::create("Achievement Item", "fonts/arial.ttf", 30);
-        item_tile_txt->setPosition(Vec2(title_size.width *0.2f, title_size.height * 0.7f));
+        item_tile_txt->setPosition(Vec2(title_size.width * 0.25f, title_size.height * 0.7f));
         achieve_title->addChild(item_tile_txt, 2, k_item_title_text);
         
         auto achieve_status = ui::ImageView::create("achievement/achieve_status_new.png");

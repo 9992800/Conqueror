@@ -203,11 +203,10 @@ void LevelSelect::initCharactorSel(Vec2 position_num, Size num_size) {
                 if (false == char_lock_stat && price != 0){
                         auto lock = ui::Button::create("target_lock.png");
                         auto lock_size = lock->getContentSize();
-                        lock->setPosition(Vec2(lock_size.width * 0.5f,
-                                               lock_size.height * 0.5f));
+                        lock->setPosition(ch_size * 0.5f);
                         ch->addChild(lock);
                         
-                        Vec2 tips_pos(lock_size.width * 1.2f, lock_size.height * 0.35f);
+                        Vec2 tips_pos(lock_size.width * 0.45f, -ch_size.height * 0.35f);
                         if (price > 0){
                                 auto coin = Sprite::create("level/coins_show.png");
                                 coin->setPosition(tips_pos);
@@ -215,8 +214,8 @@ void LevelSelect::initCharactorSel(Vec2 position_num, Size num_size) {
                                 lock->addChild(coin);
                                 
                                 auto price_lb = Label::createWithSystemFont(StringUtils::format("X%d", price), "fonts/arial.ttf", 24);
-                                price_lb->setPosition(Vec2(lock_size.width * 1.9f,
-                                                           lock_size.height * 0.35f));
+                                price_lb->setPosition(Vec2(lock_size.width * 0.45f,
+                                                           -ch_size.height * 0.35f));
                                 lock->addChild(price_lb);
                         }else{
                                 auto tips_lb = Sprite::create("not_for_sale.png");

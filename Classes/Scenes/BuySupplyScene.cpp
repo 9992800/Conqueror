@@ -51,7 +51,7 @@ bool BuySupply::init() {
         _listView->setDirection(ui::ScrollView::Direction::VERTICAL);
         _listView->setBounceEnabled(true);
         _listView->setContentSize(Size(default_item->getContentSize().width,
-                                       visible_size.height));
+                                       visible_size.height));// * 0.9f
         _listView->setPosition(Vec2(visible_size.width * 0.02f, 0.f));
         _listView->setScrollBarPositionFromCorner(Vec2(7, 7));
         scene_back->addChild(_listView, 1);

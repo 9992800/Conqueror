@@ -89,7 +89,7 @@ bool GameScene::init()
         this->initMapSize(_curGameData);
         this->initAnimationLayer();
         this->initDialog();
-        this->showWinDialog();
+//        this->showWinDialog();
         
         sdkbox::PluginFacebook::setListener(this);
         sdkbox::PluginFacebook::init();         
@@ -1440,11 +1440,12 @@ void GameScene::onSharedSuccess(const std::string& infos){
                 return;
         }
 }
-void GameScene::onSharedFailed(const std::string&){
+void GameScene::onSharedFailed(const std::string& infos){
         
+        CCLOG("===onSharedFailed=%s", infos.c_str());
 }
 void GameScene::onSharedCancel(){
-        
+        CCLOG("===onSharedFailed=......");
 }
 void GameScene::onAPI(const std::string&, const std::string&){
         

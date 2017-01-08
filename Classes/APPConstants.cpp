@@ -777,6 +777,7 @@ void GolbalConfig::initMercenaryItemData(){
 
 void GolbalConfig::initBasic(){
         UserDefault::getInstance()->setIntegerForKey(LEVEL_2_LOCK_STATE_KEY, true);
+        UserDefault::getInstance()->setIntegerForKey(CHARACTOR_1_LOCK_STATE_KEY, true);
         UserDefault::getInstance()->flush();
 }
 

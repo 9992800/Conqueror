@@ -30,6 +30,8 @@ enum{
         kSoldierBackTag,
         kChoseNumBackTag,
         key_cup_tips,
+        key_charactor_back,
+        key_charactor_pageview,
 };
 
 enum{
@@ -184,7 +186,7 @@ void LevelSelect::initCharactorSel(Vec2 position_num, Size num_size) {
                              - character_back->getContentSize().width / 2,
                              position_num.y);
         character_back->setPosition(position);
-        this->addChild(character_back, ZORDER_BACK_LAYERS);
+        this->addChild(character_back, ZORDER_BACK_LAYERS, key_charactor_back);
         
         PageView* pageView = PageView::create();
         pageView->setContentSize(size);
@@ -228,7 +230,7 @@ void LevelSelect::initCharactorSel(Vec2 position_num, Size num_size) {
         }
         pageView->setTag(1);
         pageView->addEventListener(CC_CALLBACK_2(LevelSelect::pageViewEvent, this));
-        character_back->addChild(pageView);
+        character_back->addChild(pageView, 1, key_charactor_pageview);
         
         auto btn_up = Button::create("level/arrow_up.png");
         btn_up->setPosition(Vec2(size.width / 2,
@@ -451,13 +453,6 @@ void LevelSelect::pageViewEvent(Ref *pSender, PageView::EventType type)
         if ( 1 == pageView->getTag()){
                 _curChIdx = (int)pageView->getCurrentPageIndex();
                 AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_CHANGE_PLAYER);
-                
-                bool char_lock_stat =  AchievementEngine::getInstance()->getCharLockStatus(_curChIdx + 1);
-                int  price =  AchievementEngine::getInstance()->getCharUnlockPrice(_curChIdx);
-                if (price < 0 && char_lock_stat){
-                        pageView->getItem(_curChIdx)->removeAllChildren();
-                }
-                
         }else if (2 == pageView->getTag()){
                 _curColorIdx = (int)pageView->getCurrentPageIndex();
                 AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_CHANGE_COLOR);
@@ -806,6 +801,15 @@ void LevelSelect::onEnter(){
                         but_item->loadTextureNormal("level/sel_num_btn_back_em.png");
                 }
         }
+        
+        auto page_view = (PageView*)this->getChildByTag(key_charactor_back)->getChildByTag(key_charactor_pageview);
+        for (int i = 0; i < MAX_PLAYER; i++){
+                bool char_lock_stat =  AchievementEngine::getInstance()->getCharLockStatus(i + 1);
+                if (char_lock_stat){
+                        page_view->getItem(i)->removeAllChildren();
+                }
+        }
+        
 }
 
 void LevelSelect::update(float delta){

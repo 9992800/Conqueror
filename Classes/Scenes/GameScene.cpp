@@ -1386,7 +1386,8 @@ void GameScene::menuAddArmy(Ref* btn){
         }
         this->playSoundEffect();
         auto cache = UserDefault::getInstance();
-        int cur_mercenary = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO, 0);
+        int cur_mercenary = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO,
+                                                    USER_DEFAULT_SUPPLYNO_ONFIRST);
         int cur_coinsNo = cache->getIntegerForKey(USER_CURRENT_COINS, 0);
         
         if (cur_mercenary <= 0){
@@ -1475,9 +1476,6 @@ void GameScene::onEnter(){
         auto cache      = UserDefault::getInstance();
         int game_speed  = cache->getIntegerForKey(GAME_SPEED_KEY, 1);
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
-        
-        
-        
         
         _soundTotalOn = cache->getBoolForKey(SOUND_MUSIC_TOTAL_KEY, true);
         _musicSwitch = cache->getBoolForKey(BACK_MUSIC_SWITCH_KEY);

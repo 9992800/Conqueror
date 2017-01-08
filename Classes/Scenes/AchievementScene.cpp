@@ -295,17 +295,19 @@ void Achievement::collectAchievement(AchievementData& data){
                 cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
                 cache->flush();
                 
-                auto call_back_todo = CallFunc::create([this, v_size](){
+                int bonus_no = data.bonus_coinsNum;
+                auto call_back_todo = CallFunc::create([this, v_size, bonus_no](){
                 AchievementEngine::getInstance()->coinsAnimShow(this,
                                                                 v_size * 0.5f,
-                                                                v_size, NULL);
+                                                                v_size, NULL, bonus_no);
                 }); 
                 
                 actions.pushBack(call_back_todo);
         }
         if (data.bonus_mercenaryNum > 0){
                 
-                int sup_no = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO);
+                int sup_no = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO,
+                                                     USER_DEFAULT_SUPPLYNO_ONFIRST);
                 sup_no += data.bonus_mercenaryNum;
                 cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, sup_no);
                 cache->flush();

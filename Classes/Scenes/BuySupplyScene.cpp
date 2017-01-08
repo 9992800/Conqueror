@@ -139,7 +139,7 @@ void BuySupply::initCurCoins(Node* scene_back){
         _mercenaryShow->setPosition(mercenary_pos);
         mercanery_back->addChild(_mercenaryShow);
          
-        int mercenary_no = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO);
+        int mercenary_no = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO, USER_DEFAULT_SUPPLYNO_ONFIRST);
         
         _mercenAriesNumLb = Label::createWithSystemFont(StringUtils::format("%d", mercenary_no), "fonts/arial.ttf", 32);
         _mercenAriesNumLb->setPosition(mercanery_back_size * 0.5f);
@@ -325,7 +325,8 @@ void BuySupply::playCoinsSubAnim(MercenaryItem data){
         auto call_back = CallFunc::create([this, data](){
                 auto cache = UserDefault::getInstance();
                 int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, 0);
-                int cur_mercenaries = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO, 0);
+                int cur_mercenaries = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO,
+                                                              USER_DEFAULT_SUPPLYNO_ONFIRST);
                 cur_coins -= data.itemPrice;
                 cur_mercenaries += data.itemValue;
                 cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);

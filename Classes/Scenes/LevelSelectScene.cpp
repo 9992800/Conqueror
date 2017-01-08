@@ -206,7 +206,7 @@ void LevelSelect::initCharactorSel(Vec2 position_num, Size num_size) {
                         lock->setPosition(ch_size * 0.5f);
                         ch->addChild(lock);
                         
-                        Vec2 tips_pos(lock_size.width * 0.45f, -ch_size.height * 0.35f);
+                        Vec2 tips_pos(lock_size.width * 0.1f, -ch_size.height * 0.25f);
                         if (price > 0){
                                 auto coin = Sprite::create("level/coins_show.png");
                                 coin->setPosition(tips_pos);
@@ -214,8 +214,8 @@ void LevelSelect::initCharactorSel(Vec2 position_num, Size num_size) {
                                 lock->addChild(coin);
                                 
                                 auto price_lb = Label::createWithSystemFont(StringUtils::format("X%d", price), "fonts/arial.ttf", 24);
-                                price_lb->setPosition(Vec2(lock_size.width * 0.45f,
-                                                           -ch_size.height * 0.35f));
+                                price_lb->setPosition(Vec2(lock_size.width * 0.9f,
+                                                           -ch_size.height * 0.25f));
                                 lock->addChild(price_lb);
                         }else{
                                 auto tips_lb = Sprite::create("not_for_sale.png");
@@ -654,48 +654,54 @@ void LevelSelect::actionBuyCharacter(Ref*btn, int ch_idx, int price){
                 auto shop = Shopping::createScene();
                 Director::getInstance()->pushScene(shop);
         }else{
-                
-                auto v_size = Director::getInstance()->getVisibleSize();
-                
-                std::string lock_name = AchievementEngine::getInstance()->getLockName(ch_idx + 1, 0);
-                std::string img_path = AchievementEngine::getInstance()->getCharactorImg(lock_name);
-                auto character = Sprite::create(img_path);
-                auto ch_size = character->getContentSize();
-                character->setPosition(ch_size * 0.5f);
-                
-                auto cha_layer = Layer::create();
-                cha_layer->setContentSize(ch_size);
-                cha_layer->addChild(character, 2);
-                
-                auto shining_back = Sprite::create("game_win_shine.png");
-                shining_back->setPosition(ch_size * 0.5f);
-                shining_back->runAction(RepeatForever::create(RotateBy::create(2.0f, 360)));
-                cha_layer->addChild(shining_back, 1);
-                
-                auto cale_by = ScaleBy::create(1.5f, 3.f);
-                
-                auto btn_flag = (ui::Button*)btn;
-                _curCoinsNum -= price;
-                auto call_back = CallFunc::create([this, cha_layer, lock_name, btn_flag](){
+                CommonTipsDialog::showModalDialog(this,"Do you want to buy this character?", [this, btn, price, ch_idx](Ref*){
                         
-                        cha_layer->removeFromParentAndCleanup(true);
+                        auto v_size = Director::getInstance()->getVisibleSize();
+                        
+                        std::string lock_name = AchievementEngine::getInstance()->getLockName(ch_idx + 1, 0);
+                        
+                        _curCoinsNum -= price;
+                        
                         auto cache = UserDefault::getInstance();
                         cache->setBoolForKey(lock_name.c_str(), true);
                         
                         cache->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNum);
-                        btn_flag->removeFromParentAndCleanup(true);
                         _coinsNumLb->setString(tostr(_curCoinsNum));
                         cache->flush();
-
+                        
+                        std::string img_path = AchievementEngine::getInstance()->getCharactorImg(lock_name);
+                        auto character = Sprite::create(img_path);
+                        auto ch_size = character->getContentSize();
+                        character->setPosition(ch_size * 0.5f);
+                        
+                        auto cha_layer = Layer::create();
+                        cha_layer->setContentSize(ch_size);
+                        cha_layer->addChild(character, 2);
+                        
+                        auto shining_back = Sprite::create("game_win_shine.png");
+                        shining_back->setPosition(ch_size * 0.5f);
+                        shining_back->runAction(RepeatForever::create(RotateBy::create(2.0f, 360)));
+                        cha_layer->addChild(shining_back, 1);
+                        
+                        auto cale_by = ScaleBy::create(1.5f, 3.f);
+                        
+                        auto btn_flag = (ui::Button*)btn;
+                        
+                        auto call_back = CallFunc::create([this, cha_layer, btn_flag](){
+                                
+                                cha_layer->removeFromParentAndCleanup(true);
+                                btn_flag->removeFromParentAndCleanup(true);
+                        });
+                        
+                        auto scale_by = ScaleBy::create(0.75f, 1.6f);
+                        _coinsNumLb->runAction(Sequence::create(scale_by, scale_by->reverse(), NULL));
+                        cha_layer->runAction(Sequence::create(cale_by,
+                                                              DelayTime::create(0.3f),
+                                                              call_back, NULL));
+                        
+                        cha_layer->setPosition((v_size - cha_layer->getContentSize()) * 0.5f);
+                        this->addChild(cha_layer, SUPER_LAYER_PRIVILIEGE);
                 });
-                auto scale_by = ScaleBy::create(0.75f, 1.6f);
-                _coinsNumLb->runAction(Sequence::create(scale_by, scale_by->reverse(), NULL));
-                cha_layer->runAction(Sequence::create(cale_by,
-                                                      DelayTime::create(0.3f),
-                                                      call_back, NULL));
-                
-                cha_layer->setPosition((v_size - cha_layer->getContentSize()) * 0.5f);
-                this->addChild(cha_layer, SUPER_LAYER_PRIVILIEGE);
         }
 }
 

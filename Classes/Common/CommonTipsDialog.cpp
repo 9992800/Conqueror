@@ -37,6 +37,21 @@ void CommonTipsDialog::dismiss(){
         Director::getInstance()->getEventDispatcher()->resumeEventListenersForTarget(parent, true);
 }
 
+void CommonTipsDialog::dismiss2(cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback okCallback
+                                , Ref* btn){
+        if (nullptr != okCallback){
+                okCallback(btn);
+        }
+        
+        auto  parent = this->getParent();
+        if (!parent) return;
+        
+        this->removeFromParent();
+        
+        Director::getInstance()->resume();
+        Director::getInstance()->getEventDispatcher()->resumeEventListenersForTarget(parent, true);
+}
+
 bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCallback okCallBack){
         if (nullptr == okCallBack){
                 auto tips_back_size = _tipsBack->getContentSize();
@@ -69,7 +84,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
                 ok_button->setTitleFontSize(28);
                 ok_button->setTitleColor(Color3B::BLACK);
                 ok_button->setTitleFontName("fonts/arial.ttf");
-                ok_button->addClickEventListener(okCallBack);
+                ok_button->addClickEventListener(CC_CALLBACK_0(CommonTipsDialog::dismiss2, this, okCallBack, (Ref*)ok_button));
                 
                 _tipsBack->addChild(ok_button);
         }

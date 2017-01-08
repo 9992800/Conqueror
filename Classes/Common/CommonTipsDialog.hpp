@@ -20,6 +20,7 @@ public:
         static CommonTipsDialog* showModalDialog(Node* parent, std::string, ui::AbstractCheckButton::ccWidgetClickCallback = nullptr);
         static void dismissDialog(Node* parent);
         void dismiss();
+        void dismiss2(cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback, Ref*);
         CREATE_FUNC2(CommonTipsDialog, std::string, text);
         virtual bool init()override;
         bool initWithCallback(ui::AbstractCheckButton::ccWidgetClickCallback);

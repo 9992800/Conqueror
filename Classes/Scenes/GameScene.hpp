@@ -122,7 +122,6 @@ private:
         FightResultData* _attackResult;
         CallFunc*       _afterBattleCallback, *_afterSupplyCallback;
         Layer           *_winDialogLayer, *_lostDialogLayer;
-        int             _curCoinsNo, _curSupplyNo;
         
         bool            _soundTotalOn, _musicSwitch;
         CocosDenshion::SimpleAudioEngine* _soundEngine;

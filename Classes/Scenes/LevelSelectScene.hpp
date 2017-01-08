@@ -59,7 +59,6 @@ private:
 private:
         int                     _count;
         int                     _levelPlayerNum;
-        int                     _curCoinsNum, _curMercenariesNum;
         
         Vec2                    _mostRight, _mostLeft;
         LoadingBar*             _loadingBar;

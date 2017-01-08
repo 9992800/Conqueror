@@ -659,24 +659,25 @@ void LevelSelect::actionBuyCharacter(Ref*btn, int ch_idx, int price){
                 return;
         }
         
-        _curCoinsNum = cache->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
-        if (_curCoinsNum < price){
+        int coins_no = cache->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
+        if (coins_no < price){
                 auto shop = Shopping::createScene();
                 Director::getInstance()->pushScene(shop);
         }else{
-                CommonTipsDialog::showModalDialog(this,"Do you want to buy this character?", [this, btn, price, ch_idx](Ref*){
+                coins_no -= price;
+                CommonTipsDialog::showModalDialog(this,"Do you want to buy this character?", [this, btn, coins_no, ch_idx](Ref*){
                         
                         auto v_size = Director::getInstance()->getVisibleSize();
                         
                         std::string lock_name = AchievementEngine::getInstance()->getLockName(ch_idx + 1, 0);
                         
-                        _curCoinsNum -= price;
+                        
                         
                         auto cache = UserDefault::getInstance();
                         cache->setBoolForKey(lock_name.c_str(), true);
                         
-                        cache->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNum);
-                        _coinsNumLb->setString(tostr(_curCoinsNum));
+                        cache->setIntegerForKey(USER_CURRENT_COINS, coins_no);
+                        _coinsNumLb->setString(tostr(coins_no));
                         cache->flush();
                         
                         std::string img_path = AchievementEngine::getInstance()->getCharactorImg(lock_name);
@@ -759,12 +760,12 @@ void LevelSelect::onEnter(){
                 }
         }
         
-        _curCoinsNum = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
-        _coinsNumLb->setString(tostr(_curCoinsNum));
+        int coins_no = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS, USER_DEFAULT_COINS_ONFIRST);
+        _coinsNumLb->setString(tostr(coins_no));
         
         
-        _curMercenariesNum = UserDefault::getInstance() ->getIntegerForKey(USER_CURRENT_SUPPLY_NO, USER_DEFAULT_SUPPLYNO_ONFIRST);
-        _mercenAriesNumLb->setString(tostr(_curMercenariesNum));
+        int mercenary_no = UserDefault::getInstance() ->getIntegerForKey(USER_CURRENT_SUPPLY_NO, USER_DEFAULT_SUPPLYNO_ONFIRST);
+        _mercenAriesNumLb->setString(tostr(mercenary_no));
         
         _soundEngine = CocosDenshion::SimpleAudioEngine::getInstance();
         _soundEngine->playBackgroundMusic(BACK_MUSIC_LEVEL_SELECT, true);
@@ -840,7 +841,6 @@ void LevelSelect::showDailyRewards(){
                 _coinsNumLb->getParent()->runAction(Sequence::create(scale_by, scale_by->reverse(), NULL));
                 int cur_coins = UserDefault::getInstance()->getIntegerForKey(USER_CURRENT_COINS);
                 _coinsNumLb->setString(StringUtils::format("%d", cur_coins));
-                _curCoinsNum = cur_coins;
         });
         call_back->retain();
         auto dest = show_layer->convertToNodeSpace(world_p);
@@ -859,10 +859,5 @@ void LevelSelect::onExit(){
         auto back_layer = this->getChildByTag(kMainMenuBackTag);
         auto the_wall = back_layer->getChildByTag(kMenuGreatWallTag);
         the_wall->removeAllChildren();
-        
-        auto cache = UserDefault::getInstance();
-        cache->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNum);
-        cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curMercenariesNum);
-        cache->flush();        
 }
 

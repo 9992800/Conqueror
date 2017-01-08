@@ -89,7 +89,7 @@ bool GameScene::init()
         this->initMapSize(_curGameData);
         this->initAnimationLayer();
         this->initDialog();
-//        this->showWinDialog();
+        this->showWinDialog();
         
         sdkbox::PluginFacebook::setListener(this);
         sdkbox::PluginFacebook::init();         
@@ -1385,9 +1385,13 @@ void GameScene::menuAddArmy(Ref* btn){
                 return;
         }
         this->playSoundEffect();
-        if (_curSupplyNo <= 0){
-                if (_curCoinsNo < PRICE_PER_SUPPLEMENT){
-                        std::string tips = StringUtils::format("提示：很抱歉...您当前拥有的金币数(%d)不够兑换一次补兵令了(补兵需要金币:%d)。您可以通过：攻打更多人数关卡，活动礼包，分享或者从商店充值来获得更多量的金币。",  _curCoinsNo,
+        auto cache = UserDefault::getInstance();
+        int cur_mercenary = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO, 0);
+        int cur_coinsNo = cache->getIntegerForKey(USER_CURRENT_COINS, 0);
+        
+        if (cur_mercenary <= 0){
+                if (cur_coinsNo < PRICE_PER_SUPPLEMENT){
+                        std::string tips = StringUtils::format("提示：很抱歉...您当前拥有的金币数(%d)不够兑换一次补兵令了(补兵需要金币:%d)。您可以通过：攻打更多人数关卡，活动礼包，分享或者从商店充值来获得更多量的金币。",  cur_coinsNo,
                                                                PRICE_PER_SUPPLEMENT
                                                                );
                         CommonTipsDialog::showModalDialog((Node*)this, tips);
@@ -1396,21 +1400,19 @@ void GameScene::menuAddArmy(Ref* btn){
                         std::string tips = StringUtils::format("提示：您的补兵数量已用完，需要再次兑换补兵令来补充兵力。%d金币可以兑换一次补兵令。您是否愿意用%d金币兑换补兵令1个。您当前金币数:%d",
                                                                PRICE_PER_SUPPLEMENT,
                                                                PRICE_PER_SUPPLEMENT,
-                                                               _curCoinsNo);
+                                                               cur_coinsNo);
                         
-                        CommonTipsDialog::showModalDialog((Node*)this, tips, [this](Ref* sender){
+                        cur_coinsNo -= PRICE_PER_SUPPLEMENT;
+                        CommonTipsDialog::showModalDialog((Node*)this, tips, [this, cache, cur_coinsNo](Ref* sender){
                                 CommonTipsDialog::dismissDialog(this);
-                                _curCoinsNo -= PRICE_PER_SUPPLEMENT;
-                                UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNo);
-                                UserDefault::getInstance()->flush();
-                                
+                                cache->setIntegerForKey(USER_CURRENT_COINS, cur_coinsNo);
+                                cache->flush();
                                 this->playAddMercenary();
                         });
                 }
         }else{
-                _curSupplyNo--;
-                UserDefault::getInstance()->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curSupplyNo);
-                UserDefault::getInstance()->flush();
+                cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, --cur_mercenary);
+                cache->flush();
                 this->playAddMercenary();
         }
 }
@@ -1471,8 +1473,6 @@ void GameScene::onEnter(){
         Layer::onEnter();
         
         auto cache      = UserDefault::getInstance();
-        _curCoinsNo     = cache->getIntegerForKey(USER_CURRENT_COINS, 0);
-        _curSupplyNo    = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO, 0);
         int game_speed  = cache->getIntegerForKey(GAME_SPEED_KEY, 1);
         Director::getInstance()->getScheduler()->setTimeScale(game_speed);
         
@@ -1496,12 +1496,7 @@ void GameScene::update(float delta){
 
 
 void GameScene::onExit(){
-        Layer::onExit();
-        
-        auto cache = UserDefault::getInstance();
-        cache->setIntegerForKey(USER_CURRENT_COINS, _curCoinsNo);
-        cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, _curSupplyNo);
-        cache->flush();
+        Layer::onExit(); 
         Director::getInstance()->getScheduler()->setTimeScale(1);
         auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
         sound->stopBackgroundMusic();

@@ -311,17 +311,17 @@ int AchievementEngine::getCharUnlockPrice(int ch_idx){
                 case 1:
                         return -1;
                 case 2:
-                        return 20;
+                        return 100;
                 case 3:
-                        return 50;
+                        return 150;
                 case 4:
-                        return 90;
+                        return 250;
                 case 5:
-                        return 140;
+                        return 400;
                 case 6:
-                        return 200;
+                        return 600;
                 case 7:
-                        return 500;
+                        return 850;
                 default:
                         return 0;
         }

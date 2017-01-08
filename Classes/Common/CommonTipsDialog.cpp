@@ -39,14 +39,16 @@ void CommonTipsDialog::dismiss(){
 
 void CommonTipsDialog::dismiss2(cocos2d::ui::AbstractCheckButton::ccWidgetClickCallback okCallback
                                 , Ref* btn){
-        if (nullptr != okCallback){
-                okCallback(btn);
-        }
+        
         
         auto  parent = this->getParent();
         if (!parent) return;
         
         this->removeFromParent();
+        
+        if (nullptr != okCallback){
+                okCallback(btn);
+        }
         
         Director::getInstance()->resume();
         Director::getInstance()->getEventDispatcher()->resumeEventListenersForTarget(parent, true);

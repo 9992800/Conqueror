@@ -1341,7 +1341,7 @@ void GameScene::menuAnimSwitch(Ref* btn){
         
         UserDefault::getInstance()->setBoolForKey(ANIMATION_SWITCH_KEY, _animationIsOn);
         UserDefault::getInstance()->flush();
-        AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY);
+        AchievementEngine::getInstance()->openReward(ACHIEVE_DATA_KEY_FIRST_CLOSE_ANIM);
 }
 
 void GameScene::playAddMercenary(){

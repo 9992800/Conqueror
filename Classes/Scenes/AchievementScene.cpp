@@ -149,8 +149,8 @@ ui::Layout* Achievement::createListItem(){
         
         auto butt_on = ui::Button::create("DIALOG2_OK.png","DIALOG2_OK_SEL.png", "DIALOG2_DISABLED.png");
         auto butt_on_size = butt_on->getContentSize();
-        butt_on->setPosition(Vec2(default_item_size.width - butt_on_size.width * 0.6,
-                                  butt_on_size.height * 0.6f));
+        butt_on->setPosition(Vec2(default_item_size.width - butt_on_size.width * 0.7,
+                                  butt_on_size.height * 0.8f));
         butt_on->setTouchEnabled(true);
         butt_on->setTitleText("GET IT");
         butt_on->setTitleFontName("fonts/arial.ttf");

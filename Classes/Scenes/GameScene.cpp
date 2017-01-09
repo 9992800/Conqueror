@@ -426,7 +426,7 @@ void GameScene::initDialog(){
         game_win_t_back->setPosition(game_win_t_back_pos);
         game_win_back->addChild(game_win_t_back);
         
-        auto win_title_txt = Label::createWithSystemFont("恭喜你统一了整个岛屿!!!", "fonts/arial.ttf", 32);
+        auto win_title_txt = Label::createWithSystemFont("You win. Congratulations!!!", "fonts/arial.ttf", 32);
         win_title_txt->setPosition(Vec2(win_title_txt->getContentSize().width * 0.6,
                                         game_win_t_back->getContentSize().height * 0.7));
         game_win_t_back->addChild(win_title_txt);
@@ -496,7 +496,7 @@ void GameScene::initDialog(){
         game_lost_t_bck->setPosition(game_lost_t_bck_pos);
         game_lost_back->addChild(game_lost_t_bck);
         
-        auto lost_title_txt = Label::createWithSystemFont("很遗憾您失去了您的国家...", "fonts/arial.ttf", 32);
+        auto lost_title_txt = Label::createWithSystemFont("You lost...", "fonts/arial.ttf", 32);
         lost_title_txt->setPosition(Vec2(lost_title_txt->getContentSize().width * 0.55,
                                         game_lost_t_bck->getContentSize().height * 0.7));
         game_lost_t_bck->addChild(lost_title_txt);
@@ -509,7 +509,7 @@ void GameScene::initDialog(){
                                           game_lost_t_bck_pos.y - game_lost_c_bck->getContentSize().height * 0.63f));
         game_lost_back->addChild(game_lost_c_bck);
         auto game_lost_c_bck_size = game_lost_back->getContentSize();
-        auto lost_tips = Label::createWithSystemFont("您可以在战斗中补充兵力来获得更高的几率取得胜利！也可以充值购买补兵来增强您的兵力", "fonts/arial.ttf", 28);
+        auto lost_tips = Label::createWithSystemFont("You can engage the mercenaries to make your country powerfull, the button is on the left-bottom. if you use you mecenaries up, you can get more coins from shop to engage more mercenaries.", "fonts/arial.ttf", 28);
         Size lost_tips_size = lost_tips->getContentSize();
         lost_tips->setAnchorPoint(Vec2(0.f, 1.0f));
         lost_tips->setDimensions(game_lost_c_bck_size.width * 0.9,
@@ -1393,14 +1393,13 @@ void GameScene::menuAddArmy(Ref* btn){
         
         if (cur_mercenary <= 0){
                 if (cur_coinsNo < PRICE_PER_SUPPLEMENT){
-                        std::string tips = StringUtils::format("提示：很抱歉...您当前拥有的金币数(%d)不够兑换一次补兵令了(补兵需要金币:%d)。您可以通过：攻打更多人数关卡，活动礼包，分享或者从商店充值来获得更多量的金币。",  cur_coinsNo,
+                        std::string tips = StringUtils::format("Tips：sorry, you don't have enough coins(%d) to engage one team of mercenaries(cost:%d coions). You can get more coions through these ways:win more battles, share the game, buy from shop.",  cur_coinsNo,
                                                                PRICE_PER_SUPPLEMENT
                                                                );
                         CommonTipsDialog::showModalDialog((Node*)this, tips);
                         return;
                 }else{
-                        std::string tips = StringUtils::format("提示：您的补兵数量已用完，需要再次兑换补兵令来补充兵力。%d金币可以兑换一次补兵令。您是否愿意用%d金币兑换补兵令1个。您当前金币数:%d",
-                                                               PRICE_PER_SUPPLEMENT,
+                        std::string tips = StringUtils::format("Tips：youre mercenaries are used up, you need engage more mercenaries by coins. Do you want to spend %d coins to engage one team of mercenaries ? Your current coins number is :%d", 
                                                                PRICE_PER_SUPPLEMENT,
                                                                cur_coinsNo);
                         

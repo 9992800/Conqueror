@@ -11,6 +11,8 @@ TODO：：
 12， achievments tips text string.
 13, unlock charactor and player . the logic.
 14, the price show of characters in pageviews.
+
+15, data is not correct when you exit before the anima is finished.
 bugs
 --------------------------------------------------------- 
 2:bolck all button.
@@ -23,6 +25,39 @@ bugs
 11, test every achievement.
 12，achievement text description fonts and color.
 13，achievement logic bugs ,must change database first andthen play animation.
+14，post contents and pictures by facebook.
+15,prepair facebook setting for online post.
+
+the achievement coins bonus before post it to online app store.
+-------show the achievement contents.
+-------fnt file test.
+-------achievement show tips fansion. with a card.
+-------music and sounds effect.
+-------english.
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------二期------------------------------ 
+安卓适配
+新手引导
+成就升级
+角色增加
+代码优化
+
+---------------------------三期------------------------------ 
+固定地图
+联机游戏
+
 
 
 
@@ -30,8 +65,24 @@ bugs
 1,rao kai zou
 2,fen bu jin gong
 
+------声音列表
+a,主页面背景音乐，循环播放
+b,战斗界面背景音乐，循环播放
 
-
+1，功能按钮被按下的音效------1S
+2，战斗界面地图选择时，选择NO来更换地图的音效。------1S
+3，战斗界面地图选择时，选择YES来开始战斗的音效。------1S
+4，战斗界面中，地块被选中的音效------1S
+5，进攻时，胜利的效果------1S
+6，进攻时，失败的效果------1S
+7，赢得一局，展示战斗结算界面的音效------2S
+8，GamOver，展示提示的界面音效------2S
+9，动画中，行军的脚步声------1.5S
+10,动画中，战斗星云的刀剑声------1.5S
+11,解锁的音效------1S
+12，领取成就的音效------1S
+13，金币增加和减少的音效------1S
+14，滑动角色和颜色时候，内容切换的声音------1S
 
 
 

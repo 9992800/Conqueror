@@ -89,7 +89,7 @@ bool GameScene::init()
         this->initMapSize(_curGameData);
         this->initAnimationLayer();
         this->initDialog();
-//        this->showWinDialog();
+        this->showWinDialog();
         
         sdkbox::PluginFacebook::setListener(this);
         sdkbox::PluginFacebook::init();         

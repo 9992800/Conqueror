@@ -112,6 +112,8 @@ int AchievementEngine::dailyShareReward(Node* parent, Vec2 from, Vec2 dest,
         struct tm * timeinfo  = localtime (&t);
         int today = 100 * (timeinfo->tm_mon+1) + timeinfo->tm_mday;
         int date_last = cache->getIntegerForKey(SHARE_DAILY_REWARD_KEY, 0);
+        if (date_last == 0)  this->openReward(ACHIEVE_DATA_KEY_FIRST_SHARE);
+        
         if (today == date_last){
                 return 0;
         }

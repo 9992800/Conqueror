@@ -91,9 +91,6 @@ void Splash::onEnter(){
         
         sound->preloadEffect(EFFECT_FILE_SELECTED);
         _count += 1;
-
-        sound->preloadEffect(EFFECT_FILE_DROP_DICE);
-        _count += 1;
         
         sound->preloadEffect(EFFECT_FILE_SUPPLY);
         _count += 1;

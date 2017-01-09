@@ -13,7 +13,8 @@ enum{
         k_item_desc_text,
         k_item_get_btn,
         k_item_status,
-        k_item_status_back
+        k_item_status_back,
+        k_achieve_details
 };
 
 Scene* Achievement::createScene(){
@@ -137,7 +138,7 @@ ui::Layout* Achievement::createListItem(){
         
         auto item_desc_txt = ui::Text::create("This is the description of the achievement.", "fonts/arial.ttf", 28);
         item_desc_txt->setPosition(Vec2(achieve_cup_size.width * 1.2f,
-                                        default_item_size.height * 0.6f));
+                                        default_item_size.height * 0.7f));
         item_desc_txt->setColor(Color3B(50, 30, 30));
         item_desc_txt->setAnchorPoint(Vec2(0.f, 1.0f));
         item_desc_txt->ignoreContentAdaptWithSize(false);
@@ -148,8 +149,8 @@ ui::Layout* Achievement::createListItem(){
         
         auto butt_on = ui::Button::create("DIALOG2_OK.png","DIALOG2_OK_SEL.png", "DIALOG2_DISABLED.png");
         auto butt_on_size = butt_on->getContentSize();
-        butt_on->setPosition(Vec2(default_item_size.width - butt_on_size.width,
-                                  default_item_size.height * 0.5f));
+        butt_on->setPosition(Vec2(default_item_size.width - butt_on_size.width * 0.6,
+                                  butt_on_size.height * 0.6f));
         butt_on->setTouchEnabled(true);
         butt_on->setTitleText("GET IT");
         butt_on->setTitleFontName("fonts/arial.ttf");
@@ -191,6 +192,61 @@ void Achievement::initItemDetails(ui::Widget* achieve_item, int idx){
                 new_shine->setVisible(false);
                 button->setEnabled(false);
                 button->setBright(false);
+        }
+        
+        auto achieve_item_size = achieve_item->getContentSize();
+        int i = 0;
+        if (data.bonus_coinsNum > 0){
+                auto coins_show = ui::ImageView::create("level/coins_show.png");
+                auto coins_show_size = coins_show->getContentSize();
+                auto num =  ui::TextBMFont::create(StringUtils::format("+%d", data.bonus_coinsNum), "fonts/zb_chongzhi_shuzi.fnt");
+                num->setScale(0.9f);
+                num->setPosition(Vec2(coins_show_size.width * 1.5f,
+                                      coins_show_size.height * 0.6f));
+                coins_show->addChild(num);
+                
+                coins_show->setPosition(Vec2(achieve_item_size.width * 0.28f +
+                                             i * coins_show_size.width,
+                                             achieve_item_size.height * 0.25f));
+                achieve_item->addChild(coins_show);
+                i++;
+        }
+        if (data.bonus_mercenaryNum){
+                auto mercenary_show = ui::ImageView::create("level/dice_show.png");
+                auto m_show_size = mercenary_show->getContentSize();
+                auto num =  ui::TextBMFont::create(StringUtils::format("+%d", data.bonus_mercenaryNum), "fonts/zb_chongzhi_shuzi.fnt");
+                num->setScale(0.9f);
+                num->setPosition(Vec2(m_show_size.width * 1.5f,
+                                      m_show_size.height * 0.6f));
+                mercenary_show->addChild(num);
+                
+                mercenary_show->setPosition(Vec2(achieve_item_size.width * 0.28f
+                                                 + i * 3 * m_show_size.width,
+                                             achieve_item_size.height * 0.25f));
+                achieve_item->addChild(mercenary_show);
+                i++;
+        }
+        if (data.bonus_map_key.length() > 0){
+                auto map_add_flag = ui::ImageView::create("achievement/maplyer_add.png");
+                auto flag_size = map_add_flag->getContentSize();
+                map_add_flag->setPosition(Vec2(achieve_item_size.width * 0.28f
+                                               + i * 2 * flag_size.width,
+                                          achieve_item_size.height * 0.25f));
+                achieve_item->addChild(map_add_flag);
+                i++;
+        }
+        
+        if (data.bonus_charactor_key.length() > 0){
+                std::string img_name = AchievementEngine::getInstance()->getCharactorImg(data.bonus_charactor_key);
+                
+                auto charactor = ui::ImageView::create(img_name);
+                charactor->setScale(0.4f);
+                auto ch_size = charactor->getContentSize() * 0.4f;
+                charactor->setPosition(Vec2(achieve_item_size.width * 0.28f
+                                            + i * 1.8 * ch_size.width,
+                                               achieve_item_size.height * 0.25f));
+                achieve_item->addChild(charactor);
+                i++;
         }
 }
 

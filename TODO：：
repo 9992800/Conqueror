@@ -1,39 +1,29 @@
-TODO：：
-1，charactor show on main scene.
+TODO：： 
 2， helping hands to show how to play this game.
 3， logo and icon
 4,  share logic ,share pictures
 5， sound effect logic in whole game.-----new sound for different effect
-6， part of achievementslogic.
-7，  locks to show charactor and level state 
-9,  other charactors and their animations.
-10, modify common tips dialog content position.
-12， achievments tips text string.
-13, unlock charactor and player . the logic.
-14, the price show of characters in pageviews.
+6，  the price show of characters in pageviews.
 
-15, data is not correct when you exit before the anima is finished.
-bugs
 --------------------------------------------------------- 
 2:bolck all button.
 1:test all the sounds effects.
-3:sounds effect when play animation in battle scene.
 4.the button is  a little small in some dialogs. 
 6, all buttons disable when block things.
-8, how to bug level and charactors.
 9,all fonts in the system. 
-11, test every achievement.
-12，achievement text description fonts and color.
-13，achievement logic bugs ,must change database first andthen play animation.
-14，post contents and pictures by facebook.
+14，post contents and pictures by facebook. and also logic of facebook share ,bonus coins
 15,prepair facebook setting for online post.
 
-the achievement coins bonus before post it to online app store.
+16，the achievement coins bonus before post it to online app store.
 -------show the achievement contents.
 -------fnt file test.
--------achievement show tips fansion. with a card.
+-------achievement animation show tips fansion. with a card.
 -------music and sounds effect.
 -------english.
+
+
+
+
 
 
 

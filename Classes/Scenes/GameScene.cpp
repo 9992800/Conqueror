@@ -1301,10 +1301,10 @@ void GameScene::afterCaptureScreen(bool yes, const std::string &outputFilename)
                         
                         sdkbox::FBShareInfo info;
                         info.type  = sdkbox::FB_PHOTO;
-                        info.title = "capture screen";
-                        info.link = "http://www.cocos2d-x.org";
+                        info.title = "Islands Conqueror";
+                        info.link = "https://itunes.apple.com/us/app/island-conqueror/id1172744843?l=zh&ls=1&mt=8";
                         info.image = outputFilename;
-                        sdkbox::PluginFacebook::dialog(info);
+                        sdkbox::PluginFacebook::share(info);
                 }else{
                         sdkbox::PluginFacebook::requestPublishPermissions({sdkbox::FB_PERM_PUBLISH_POST});
                 }
@@ -1321,6 +1321,7 @@ void GameScene::shareThisGame(Ref* btn){
                 permissions.push_back(sdkbox::FB_PERM_READ_PUBLIC_PROFILE);
                 permissions.push_back(sdkbox::FB_PERM_READ_EMAIL);
                 permissions.push_back(sdkbox::FB_PERM_READ_USER_FRIENDS);
+                permissions.push_back(sdkbox::FB_PERM_PUBLISH_POST);
                 sdkbox::PluginFacebook::login(permissions);
         }
 }
@@ -1441,11 +1442,10 @@ void GameScene::onSharedSuccess(const std::string& infos){
         }
 }
 void GameScene::onSharedFailed(const std::string& infos){
-        
         CCLOG("===onSharedFailed=%s", infos.c_str());
 }
 void GameScene::onSharedCancel(){
-        CCLOG("===onSharedFailed=......");
+        CCLOG("===onSharedCancel=......");
 }
 void GameScene::onAPI(const std::string&, const std::string&){
         

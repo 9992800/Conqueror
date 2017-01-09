@@ -149,32 +149,32 @@ AchievementData AchievementEngine::winnerRewards(int playerNum){
                 }
                         break;
                 case 3:{
-                        coins_num = 2;
+                        coins_num = 1;
                         achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_3;
                 }
                         break;
                 case 4:{
-                        coins_num = 2;
+                        coins_num = 1;
                         achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_4;
                 }
                         break;
                 case 5:{
-                        coins_num = 2;
+                        coins_num = 1;
                         achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_5;
                 }
                         break;
                 case 6:{
-                        coins_num = 3;
+                        coins_num = 2;
                         achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_6;
                 }
                         break;
                 case 7:{
-                        coins_num = 3;
+                        coins_num = 2;
                         achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_7;
                 }
                         break;
                 case 8:{
-                        coins_num = 3;
+                        coins_num = 2;
                         achieve_key = ACHIEVE_DATA_KEY_FIRST_WIN_8;
                 }
                         break;
@@ -315,7 +315,7 @@ int AchievementEngine::getCharUnlockPrice(int ch_idx){
                 case 2:
                         return 100;
                 case 3:
-                        return 150;
+                        return 200;
                 case 4:
                         return 250;
                 case 5:

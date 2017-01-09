@@ -173,7 +173,7 @@ enum {
 
 #define USER_DEFAULT_SUPPLYNO_ONFIRST   (3)
 #define TURN_INTERVAL_FOR_SUPPLEMENTS   (4)
-#define TC_VALUE_ONE_SUPPLY             (8)
+#define TC_VALUE_ONE_SUPPLY             (10)
 #define PRICE_PER_SUPPLEMENT            (10)
 
 #define FACEBOOK_INFO_USER_AVATAR_KEY     "_key_facebook_avatar_id"

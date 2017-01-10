@@ -77,11 +77,11 @@ public:
                 return this->_flagImg;
         }
         
-        inline void setAreaColor(Color4F c){
-                this->_areaColor = c;
+        inline void setAreaColorIndex(int c_i){
+                this->_areaColorIndex = c_i;
         }
-        inline Color4F getAreaColor(){
-                return this->_areaColor;
+        inline int getAreaColorIndex(){
+                return this->_areaColorIndex;
         }
         
         inline void setPosCharactorIdx(int i){
@@ -108,7 +108,7 @@ private:
         int     _dice_jun;
         int     _stock;
         std::string _flagImg;
-        Color4F _areaColor;
+        int     _areaColorIndex;
         int     _charactorIdx;
         int     _addtionalSupply;
 private:

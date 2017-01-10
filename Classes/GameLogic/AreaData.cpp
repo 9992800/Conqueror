@@ -263,8 +263,8 @@ void AreaData::drawPolyGon(int owner){
         if (-1 == owner){
                 fillColor = selected_color;
         }else{
-                
-                fillColor = _parentPtr->_player[owner]->getAreaColor();
+                int c_i = _parentPtr->_player[owner]->getAreaColorIndex();
+                fillColor = AreaBackGroundColors[c_i];
         }
         
         for (std::set<int>::iterator it = _cell_idxs.begin(); it != _cell_idxs.end(); ++it){

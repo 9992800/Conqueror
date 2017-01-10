@@ -66,10 +66,17 @@ int GameAI::com_thinking(GameData* data){
                 }
         }
         
+        for (int i = 0; i < MAX_PLAYER; i++){
+                int jun = data->_player[i]->getDiceJun();
+                int dice = data->_player[i]->getDiceC();
+                printf("\r\n==b==plaer=%d===jun=%d===dice=%d===",
+                       i, jun, dice);
+        }
+        
         int target_uid = -1;
         for (int i = 0; i < MAX_PLAYER; i++){
                 GamePlayer* player = data->_player[i];
-                if (player->getDiceC() > total_dice *2 /5){
+                if (player->getDiceC() > total_dice * 0.4){
                         target_uid = i;
                 }
         }
@@ -109,7 +116,9 @@ int GameAI::com_thinking(GameData* data){
                                                         if (data->_player[owner_j]->getDiceJun() == 0){
                                                                 attack = true;
                                                         }
-                                                        if (random(0, 9) > 1){
+                                                        float r_v = rand_0_1() * 10;
+                                                        printf("==1==random=%f", r_v);
+                                                        if (r_v > 1){
                                                                 attack = true;
                                                         }
                                                         if (attack){
@@ -139,7 +148,9 @@ int GameAI::com_thinking(GameData* data){
                                         if (data->_player[owner_j]->getDiceJun() == 0){
                                                 attack = true;
                                         }
-                                        if (random(0, 9) > 1){
+                                        float r_v = rand_0_1() * 10;
+                                        printf("==2==random=%f", r_v);
+                                        if (r_v > 1){
                                                 attack = true;
                                         }
                                         if (attack){
@@ -165,6 +176,8 @@ int GameAI::com_thinking(GameData* data){
         data->_areaFrom = _list_from[random_target];
         data->_areaTo   = _list_to[random_target];
         
+        printf("====count=%d=target=%d===from=%d===to=%d===\r\n\r\n",
+               target_cont, random_target, data->_areaFrom, data->_areaTo);
         return target_cont;
 }
 

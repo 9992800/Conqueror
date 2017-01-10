@@ -31,7 +31,7 @@ GamePlayer::GamePlayer(GamePlayer* obj){
         this->_stock            = obj->_stock;
         this->_gid_inmap        = obj->_gid_inmap;
         this->_flagImg          = obj->_flagImg;
-        this->_areaColor        = obj->_areaColor;
+        this->_areaColorIndex   = obj->_areaColorIndex;
         this->_charactorIdx     = obj->_charactorIdx;
         this->_addtionalSupply  = obj->_addtionalSupply;
 }

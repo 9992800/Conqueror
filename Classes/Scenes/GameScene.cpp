@@ -982,7 +982,10 @@ void GameScene::ShowResultData(){
 
         for (int i = 0; i < _attackResult->_from.size(); i++){
                 int value = _attackResult->_from[i];
-                auto str = DICE_PIC_NAME_STR[_attackResult->_fromPlayer][value - 1];
+                
+                int c_i = _curGameData->_player[_attackResult->_fromPlayer]->getAreaColorIndex();
+                
+                auto str = DICE_PIC_NAME_STR[c_i][value - 1];
                 auto frame = frameCache->getSpriteFrameByName(str);
                 auto dice = Sprite::create();
                 dice->setSpriteFrame(frame);
@@ -1000,7 +1003,8 @@ void GameScene::ShowResultData(){
 
         for (int i = 0; i < _attackResult->_to.size(); i++){
                 int value = _attackResult->_to[i];
-                auto str = DICE_PIC_NAME_STR[_attackResult->_toPlayer][value - 1];
+                int c_i = _curGameData->_player[_attackResult->_toPlayer]->getAreaColorIndex();
+                auto str = DICE_PIC_NAME_STR[c_i][value - 1];
                 auto frame = frameCache->getSpriteFrameByName(str);
                 auto dice = Sprite::create();
                 dice->setSpriteFrame(frame);

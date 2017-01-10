@@ -58,7 +58,8 @@ int GameAI::com_thinking(GameData* data){
                 GamePlayer* player_i = data->_player[i];
                 for (int j = i + 1; j < MAX_PLAYER; j++){
                         GamePlayer* player_j = data->_player[j];
-                        if (player_i->getDiceC() < player_j->getDiceC()){
+                        if (player_i->getDiceC() < player_j->getDiceC()
+                            && player_i->getDiceJun() < player_j->getDiceJun()){
                                 int tmp = player_i->getDiceJun();
                                 player_i->setDiceJun(player_j->getDiceJun());
                                 player_j->setDiceJun(tmp);

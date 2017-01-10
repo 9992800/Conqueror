@@ -349,8 +349,6 @@ void Achievement::collectAchievement(AchievementData& data){
                 int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS);
                 cur_coins += data.bonus_coinsNum;
                 cache->setIntegerForKey(USER_CURRENT_COINS, cur_coins);
-                cache->flush();
-                
                 int bonus_no = data.bonus_coinsNum;
                 auto call_back_todo = CallFunc::create([this, v_size, bonus_no](){
                 AchievementEngine::getInstance()->coinsAnimShow(this,
@@ -366,7 +364,6 @@ void Achievement::collectAchievement(AchievementData& data){
                                                      USER_DEFAULT_SUPPLYNO_ONFIRST);
                 sup_no += data.bonus_mercenaryNum;
                 cache->setIntegerForKey(USER_CURRENT_SUPPLY_NO, sup_no);
-                cache->flush();
 
                 auto call_back_todo = CallFunc::create([this, v_size, data](){
                          Vec2 position(v_size * 0.5f);
@@ -397,9 +394,7 @@ void Achievement::collectAchievement(AchievementData& data){
                 actions.pushBack(call_back_todo);
         }
         if (data.bonus_charactor_key.length() > 0){
-                auto cache = UserDefault::getInstance();
                 cache->setBoolForKey(data.bonus_charactor_key.c_str(), true);
-                cache->flush();
                 
                 auto call_back_todo = CallFunc::create([this, v_size, data](){
                 
@@ -434,9 +429,7 @@ void Achievement::collectAchievement(AchievementData& data){
                 actions.pushBack(call_back_todo);
         }
         if (data.bonus_map_key.length() > 0){
-                auto cache = UserDefault::getInstance();
                 cache->setBoolForKey(data.bonus_map_key.c_str(), true);
-                cache->flush();
                 
                 auto call_back_todo = CallFunc::create([this, v_size, data](){
                         
@@ -456,10 +449,8 @@ void Achievement::collectAchievement(AchievementData& data){
                 actions.pushBack(call_back_todo);
         }
         
-        auto call_back_todo = CallFunc::create([this, v_size, data](){
-                AchievementEngine::getInstance()->finishReward(data.cache_key);
-         });
-        actions.pushBack(call_back_todo);
+        cache->flush();
+        AchievementEngine::getInstance()->finishReward(data.cache_key);
         this->runAction(Sequence::create(actions));
 }
 

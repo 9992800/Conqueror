@@ -58,7 +58,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
         if (nullptr == okCallBack){
                 auto tips_back_size = _tipsBack->getContentSize();
                 auto ok_button = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
-                ok_button->setPosition(Vec2(tips_back_size.width / 2, ok_button->getContentSize().height *1.5f));
+                ok_button->setPosition(Vec2(tips_back_size.width / 2, ok_button->getContentSize().height *1.2f));
                 ok_button->setTitleText("OK");
                 ok_button->setTitleFontSize(28);
                 ok_button->setTitleColor(Color3B::BLACK);
@@ -70,7 +70,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
                 
                 auto tips_back_size = _tipsBack->getContentSize();
                 auto cancel_button = ui::Button::create("DIALOG_CANCEL.png", "DIALOG_CANCEL_SEL.png");
-                cancel_button->setPosition(Vec2(tips_back_size.width / 2+ cancel_button->getContentSize().width , cancel_button->getContentSize().height *1.5f));
+                cancel_button->setPosition(Vec2(tips_back_size.width / 2+ cancel_button->getContentSize().width , cancel_button->getContentSize().height *1.2f));
                 cancel_button->setTitleText("NO");
                 cancel_button->setTitleFontSize(28);
                 cancel_button->setTitleColor(Color3B::BLACK);
@@ -81,7 +81,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
                 
                 
                 auto ok_button = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
-                ok_button->setPosition(Vec2(tips_back_size.width / 2 - ok_button->getContentSize().width, ok_button->getContentSize().height *1.5f));
+                ok_button->setPosition(Vec2(tips_back_size.width / 2 - ok_button->getContentSize().width, ok_button->getContentSize().height *1.2f));
                 ok_button->setTitleText("YES");
                 ok_button->setTitleFontSize(28);
                 ok_button->setTitleColor(Color3B::BLACK);

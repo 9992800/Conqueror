@@ -249,7 +249,6 @@ void GameScene::initOperateBoard(){
         operat_board_m->addChild(first_tip_layer);
 
         auto OK_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
-        OK_btn->cocos2d::Node::setScale(1.2f);
         OK_btn->setTitleText("YES");
         OK_btn->setTitleFontSize(18);
         OK_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuStartGame, this, first_tip_layer));
@@ -259,7 +258,6 @@ void GameScene::initOperateBoard(){
         
         
         auto NO_btn = cocos2d::ui::Button::create("DIALOG_CANCEL.png", "DIALOG_CANCEL_SEL.png");
-        NO_btn->cocos2d::Node::setScale(1.2f);
         NO_btn->setTitleText("NO");
         NO_btn->setTitleFontSize(24);
         NO_btn->setPosition(Vec2(OK_btn->getPosition().x + 48 + NO_btn->getContentSize().width,

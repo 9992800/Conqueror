@@ -15,8 +15,6 @@
 		294D0D641D0D56D500F7F5D4 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 294D0D631D0D56D500F7F5D4 /* CoreText.framework */; };
 		3EACC98F19EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
 		3EACC99019EE6D4300EB3C5E /* res in Resources */ = {isa = PBXBuildFile; fileRef = 3EACC98E19EE6D4300EB3C5E /* res */; };
-		46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7A19C43A67006E1F66 /* HelloWorld.png */; };
-		46880B8219C43A67006E1F66 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 46880B7A19C43A67006E1F66 /* HelloWorld.png */; };
 		46880B8819C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		46880B8919C43A87006E1F66 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 46880B8419C43A87006E1F66 /* AppDelegate.cpp */; };
 		503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 503AE0F617EB97AB00D1A890 /* Icon.icns */; };
@@ -102,8 +100,6 @@
 		7CEC13BC1E18B590005A5664 /* AchievementEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CEC13BA1E18B590005A5664 /* AchievementEngine.cpp */; };
 		8262943E1AAF051F00CB7CF7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8262943D1AAF051F00CB7CF7 /* Security.framework */; };
 		BB34FAAA1DD35B7A0070B4E4 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = BB34FAA91DD35B7A0070B4E4 /* sounds */; };
-		BB51F1091DCF66D50031296E /* share_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = BB51F1071DCF66D50031296E /* share_sel.png */; };
-		BB51F10A1DCF66D50031296E /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = BB51F1081DCF66D50031296E /* share.png */; };
 		BB62DFD31DCD9E7A0037DE0A /* anim in Resources */ = {isa = PBXBuildFile; fileRef = BB62DFD11DCD9E7A0037DE0A /* anim */; };
 		BB8C6E921E0FB78800D091C3 /* ShoppingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB8C6E901E0FB78800D091C3 /* ShoppingScene.cpp */; };
 		BB9A4E241DCB7C6400E88C41 /* GameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB9A4E221DCB7C6400E88C41 /* GameData.cpp */; };
@@ -180,7 +176,6 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		294D0D631D0D56D500F7F5D4 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
 		3EACC98E19EE6D4300EB3C5E /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
-		46880B7A19C43A67006E1F66 /* HelloWorld.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HelloWorld.png; sourceTree = "<group>"; };
 		46880B8419C43A87006E1F66 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		46880B8519C43A87006E1F66 /* AppDelegate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AppDelegate.hpp; sourceTree = "<group>"; };
 		503AE0F617EB97AB00D1A890 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
@@ -302,8 +297,6 @@
 		7CEC13BB1E18B590005A5664 /* AchievementEngine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AchievementEngine.hpp; sourceTree = "<group>"; };
 		8262943D1AAF051F00CB7CF7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		BB34FAA91DD35B7A0070B4E4 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
-		BB51F1071DCF66D50031296E /* share_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_sel.png; sourceTree = "<group>"; };
-		BB51F1081DCF66D50031296E /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
 		BB62DFD11DCD9E7A0037DE0A /* anim */ = {isa = PBXFileReference; lastKnownFileType = folder; path = anim; sourceTree = "<group>"; };
 		BB8C6E901E0FB78800D091C3 /* ShoppingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShoppingScene.cpp; sourceTree = "<group>"; };
 		BB8C6E911E0FB78800D091C3 /* ShoppingScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ShoppingScene.hpp; sourceTree = "<group>"; };
@@ -496,11 +489,8 @@
 				7C733B1A1DC990E200098EDD /* iphone6p */,
 				521A8EA819F11F5000D177D7 /* fonts */,
 				3EACC98E19EE6D4300EB3C5E /* res */,
-				BB51F1071DCF66D50031296E /* share_sel.png */,
 				7C4BA1C71DDE9E8F004F9770 /* search_oppent.png */,
 				7C4BA1CA1DDEA0D2004F9770 /* search_oppent_sel.png */,
-				BB51F1081DCF66D50031296E /* share.png */,
-				46880B7A19C43A67006E1F66 /* HelloWorld.png */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -800,9 +790,7 @@
 				50EF629917ECD46A001EB2F8 /* Icon-100.png in Resources */,
 				5087E78317EB970100C73F5D /* Icon-152.png in Resources */,
 				7C6E80001DD9575A00C5E374 /* history.png in Resources */,
-				46880B8119C43A67006E1F66 /* HelloWorld.png in Resources */,
 				7C4BA1C81DDE9E8F004F9770 /* search_oppent.png in Resources */,
-				BB51F1091DCF66D50031296E /* share_sel.png in Resources */,
 				5087E77D17EB970100C73F5D /* Default-568h@2x.png in Resources */,
 				7C733B1C1DC990E200098EDD /* iphone5 in Resources */,
 				5087E78517EB970100C73F5D /* Icon-72.png in Resources */,
@@ -821,7 +809,6 @@
 				5087E78217EB970100C73F5D /* Icon-144.png in Resources */,
 				7C4BA1D01DDEF682004F9770 /* waiting_ring.png in Resources */,
 				7C6E80051DD9687D00C5E374 /* history_data.png in Resources */,
-				BB51F10A1DCF66D50031296E /* share.png in Resources */,
 				BB34FAAA1DD35B7A0070B4E4 /* sounds in Resources */,
 				3EACC98F19EE6D4300EB3C5E /* res in Resources */,
 				7C82E4281DD57EDD0019C8CF /* online_battle.png in Resources */,
@@ -842,7 +829,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46880B8219C43A67006E1F66 /* HelloWorld.png in Resources */,
 				503AE0F817EB97AB00D1A890 /* Icon.icns in Resources */,
 				3EACC99019EE6D4300EB3C5E /* res in Resources */,
 				521A8EAA19F11F5000D177D7 /* fonts in Resources */,

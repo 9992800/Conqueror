@@ -89,8 +89,8 @@ bool GameScene::init()
         this->initMapSize(_curGameData);
         this->initAnimationLayer();
         this->initDialog();
-//        this->showWinDialog();
-        this->addChild(_lostDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
+//        this->showWinDialog(); 
+//        this->addChild(_lostDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
         
         sdkbox::PluginFacebook::setListener(this);
         sdkbox::PluginFacebook::init();         

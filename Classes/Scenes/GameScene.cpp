@@ -90,6 +90,7 @@ bool GameScene::init()
         this->initAnimationLayer();
         this->initDialog();
 //        this->showWinDialog();
+        this->addChild(_lostDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
         
         sdkbox::PluginFacebook::setListener(this);
         sdkbox::PluginFacebook::init();         
@@ -500,7 +501,7 @@ void GameScene::initDialog(){
                                           game_lost_t_bck_pos.y - game_lost_c_bck->getContentSize().height * 0.63f));
         game_lost_back->addChild(game_lost_c_bck);
         auto game_lost_c_bck_size = game_lost_back->getContentSize();
-        auto lost_tips = Label::createWithSystemFont("You can engage the mercenaries to make your country powerfull, the button is on the left-bottom. if you use you mecenaries up, you can get more coins from shop to engage more mercenaries.", "fonts/arial.ttf", 28);
+        auto lost_tips = Label::createWithSystemFont("You can engage the mercenaries to make your country powerfu. if you use you mecenaries up, you can get more coins from shop to engage more mercenaries.", "fonts/arial.ttf", 26);
         Size lost_tips_size = lost_tips->getContentSize();
         lost_tips->setAnchorPoint(Vec2(0.f, 1.0f));
         lost_tips->setDimensions(game_lost_c_bck_size.width * 0.9,
@@ -514,11 +515,11 @@ void GameScene::initDialog(){
         
         
         auto return_btn_2 = (ui::Button*)return_btn->clone();
-        return_btn_2->setPosition(Vec2(lost_back_size.width / 2 + return_btn_2->getContentSize().width, return_btn_2->getContentSize().height * 1.5f));
+        return_btn_2->setPosition(Vec2(lost_back_size.width / 2 + return_btn_2->getContentSize().width, return_btn_2->getContentSize().height * 1.1f));
         game_lost_back->addChild(return_btn_2);
         
         auto replay_btn_2 = (ui::Button*)replay_btn->clone();
-        replay_btn_2->setPosition(Vec2(lost_back_size.width / 2 - replay_btn_2->getContentSize().width, replay_btn_2->getContentSize().height * 1.5f));
+        replay_btn_2->setPosition(Vec2(lost_back_size.width / 2 - replay_btn_2->getContentSize().width, replay_btn_2->getContentSize().height * 1.1f));
         game_lost_back->addChild(replay_btn_2); 
 }
 

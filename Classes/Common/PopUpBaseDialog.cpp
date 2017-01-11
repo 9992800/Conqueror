@@ -38,14 +38,14 @@ PopUpBaseDialog::PopUpBaseDialog(BaseDialogConfig config):LayerColor::LayerColor
         this->addChild(_backGound, 0, kTagBackGrd);
         
         
-        _title = Label::createWithSystemFont(config._title, "", config._titleFontSize);
+        _title = Label::createWithSystemFont(config._title, "fonts/arial.ttf", config._titleFontSize);
         Size title_size = _title->getContentSize();
         _title->setPosition(Vec2(layer_size.width / 2, layer_size.height - title_size.height));
         _title->setColor(Color3B::RED);
         this->addChild(_title, 1, kTagTittle);
 
        
-        _content = Label::createWithSystemFont(config._content, "", config._contentFontSize);
+        _content = Label::createWithSystemFont(config._content, "fonts/arial.ttf", config._contentFontSize);
         addChild(_content, 1, kTagContent);
         _content->setColor(Color3B::RED);
         Size content_size = _content->getContentSize();

@@ -241,7 +241,7 @@ void GameScene::initOperateBoard(){
         first_tip_layer->setIgnoreAnchorPointForPosition(false);
         first_tip_layer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         
-        auto tips = Label::createWithSystemFont("Do you want to use this map?", "", 40);
+        auto tips = Label::createWithSystemFont("Do you want to use this map?", "fonts/arial.ttf", 40);
         tips->setPosition(Vec2(tips->getContentSize().width / 2 + 20,
                                first_tip_layer->getContentSize().height / 2));
         first_tip_layer->addChild(tips);

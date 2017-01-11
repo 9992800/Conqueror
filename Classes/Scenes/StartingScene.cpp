@@ -94,7 +94,7 @@ void Starting::menuStartGame(Ref* pSender){
         
         
         Size bar_size = _loadingBar->getContentSize();
-        auto label = Label::createWithTTF("Loading", "fonts/Marker Felt.ttf", 24);
+        auto label = Label::createWithTTF("Loading", "fonts/arial.ttf", 24);
         label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
         this->addChild(label, 5);
         

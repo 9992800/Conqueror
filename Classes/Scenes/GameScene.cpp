@@ -250,7 +250,7 @@ void GameScene::initOperateBoard(){
 
         auto OK_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
         OK_btn->setTitleText("YES");
-        OK_btn->setTitleFontSize(18);
+        OK_btn->setTitleFontSize(30);
         OK_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuStartGame, this, first_tip_layer));
         OK_btn->setPosition(Vec2(tips->getContentSize().width + 48 + OK_btn->getContentSize().width / 2,
                                  operat_board_m->getContentSize().height / 2));
@@ -259,8 +259,8 @@ void GameScene::initOperateBoard(){
         
         auto NO_btn = cocos2d::ui::Button::create("DIALOG_CANCEL.png", "DIALOG_CANCEL_SEL.png");
         NO_btn->setTitleText("NO");
-        NO_btn->setTitleFontSize(24);
-        NO_btn->setPosition(Vec2(OK_btn->getPosition().x + 48 + NO_btn->getContentSize().width,
+        NO_btn->setTitleFontSize(30);
+        NO_btn->setPosition(Vec2(OK_btn->getPosition().x + NO_btn->getContentSize().width * 1.1f,
                             operat_board_m->getContentSize().height / 2));
         NO_btn->addClickEventListener(CC_CALLBACK_1(GameScene::createNewMap, this));
         first_tip_layer->addChild(NO_btn);
@@ -281,9 +281,8 @@ void GameScene::initOperateBoard(){
         operat_board_m->addChild(_endTurnTipsLayer);
         
         auto end_turn_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
-        end_turn_btn->cocos2d::Node::setScale(1.2f);
         end_turn_btn->setTitleText("END TURN");
-        end_turn_btn->setTitleFontSize(16);
+        end_turn_btn->setTitleFontSize(26);
         end_turn_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuEndTurn, this));
         end_turn_btn->setPosition(Vec2(operat_board_m->getContentSize().width - 48 - end_turn_btn->getContentSize().width / 2,
                                  operat_board_m->getContentSize().height / 2));

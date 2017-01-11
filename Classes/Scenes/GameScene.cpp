@@ -252,7 +252,7 @@ void GameScene::initOperateBoard(){
         OK_btn->setTitleText("YES");
         OK_btn->setTitleFontSize(30);
         OK_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuStartGame, this, first_tip_layer));
-        OK_btn->setPosition(Vec2(tips->getContentSize().width + 48 + OK_btn->getContentSize().width / 2,
+        OK_btn->setPosition(Vec2(tips->getContentSize().width + 0.7f * OK_btn->getContentSize().width,
                                  operat_board_m->getContentSize().height / 2));
         first_tip_layer->addChild(OK_btn);
         
@@ -282,7 +282,7 @@ void GameScene::initOperateBoard(){
         
         auto end_turn_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
         end_turn_btn->setTitleText("END TURN");
-        end_turn_btn->setTitleFontSize(26);
+        end_turn_btn->setTitleFontSize(22);
         end_turn_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuEndTurn, this));
         end_turn_btn->setPosition(Vec2(operat_board_m->getContentSize().width - 48 - end_turn_btn->getContentSize().width / 2,
                                  operat_board_m->getContentSize().height / 2));
@@ -440,7 +440,7 @@ void GameScene::initDialog(){
         
         auto game_win_c_back_pos = game_win_c_back->getPosition();
         replay_btn->setPosition(Vec2(win_back_size.width / 2,
-                                     replay_btn->getContentSize().height *1.5f));
+                                     replay_btn->getContentSize().height *1.2f));
         auto btn_pos = replay_btn->getPosition();
         auto btn_size = replay_btn->getContentSize();
         game_win_back->addChild(replay_btn);
@@ -451,21 +451,15 @@ void GameScene::initDialog(){
         replay_btn->addClickEventListener(CC_CALLBACK_1(GameScene::gameOver, this, 1));
         
         auto share_btn = (ui::Button*)replay_btn->clone();
-        share_btn->setPosition(Vec2(btn_pos.x - 2.5f * btn_size.width, btn_pos.y));
+        share_btn->setPosition(Vec2(win_back_size.width * 0.22f, btn_pos.y));
         game_win_back->addChild(share_btn);
         share_btn->setTitleText("Share");
-        share_btn->setTitleFontSize(26);
-        share_btn->setTitleFontName("fonts/arial.ttf");
-        share_btn->setTitleColor(Color3B::BLACK);
         share_btn->addClickEventListener(CC_CALLBACK_1(GameScene::shareThisGame, this));
         
         auto return_btn = (ui::Button*)replay_btn->clone();
-        return_btn->setPosition(Vec2(btn_pos.x + 2.5f * btn_size.width, btn_pos.y));
+        return_btn->setPosition(Vec2(win_back_size.width * 0.77f, btn_pos.y));
         game_win_back->addChild(return_btn);
         return_btn->setTitleText("Back");
-        return_btn->setTitleFontSize(26);
-        return_btn->setTitleColor(Color3B::BLACK);
-        return_btn->setTitleFontName("fonts/arial.ttf");
         return_btn->addClickEventListener(CC_CALLBACK_1(GameScene::gameOver, this, 0));
         
         /*

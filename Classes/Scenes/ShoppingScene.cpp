@@ -26,7 +26,7 @@ bool Shopping::init(){
                 return false;
         }
         
-#if defined(COCOS2D_DEBUG)
+#if COCOS2D_DEBUG >= 1
         IAP::setDebug(true);
 #endif
         IAP::setListener(this);

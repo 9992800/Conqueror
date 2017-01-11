@@ -163,7 +163,7 @@ enum {
 #define USER_CURRENT_COINS              "_key_user_current_coins_v"
 #define USER_CURRENT_SUPPLY_NO          "_key_user_current_supply_no"
 
-#if defined(COCOS2D_DEBUG)
+#if COCOS2D_DEBUG >= 1
         #define USER_DEFAULT_COINS_ONFIRST      (30000)
 #else
         #define USER_DEFAULT_COINS_ONFIRST      (30)

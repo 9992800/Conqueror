@@ -48,15 +48,15 @@ bool Shopping::init(){
         this->addChild(back_ground, 0, key_back_ground);
         
         auto return_btn = cocos2d::ui::Button::create("DIALOG_CANCEL.png","DIALOG_CANCEL_SEL.png");
-        return_btn->setPosition(Vec2(back_ground_size.width * 0.92, back_ground_size.height * 0.08));
+        return_btn->setPosition(Vec2(back_ground_size.width - return_btn->getContentSize().width,
+                                     return_btn->getContentSize().height));
         return_btn->addClickEventListener([this](Ref*){
                 if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
                 Director::getInstance()->popScene();
         });
         return_btn->setTitleText("Return");
         return_btn->setTitleFontName("fonts/arial.ttf");
-        return_btn->setTitleFontSize(16);
-        return_btn->setScale(1.4f);
+        return_btn->setTitleFontSize(28);
         back_ground->addChild(return_btn);
         
         
@@ -68,7 +68,7 @@ bool Shopping::init(){
         back_ground->addChild(coins_item_10);
         
         auto item_title_10 = ui::ImageView::create("shopping/shop_item_desc_10.png");
-        item_title_10->setPosition(Vec2(item_size.width * 0.3f, item_size.height * 0.4));
+        item_title_10->setPosition(Vec2(item_size.width * 0.45f, item_size.height * 0.4));
         coins_item_10->addChild(item_title_10);
         
         auto item_price_10 = ui::Text::create("$0.99", "fonts/arial.ttf", 46);
@@ -91,7 +91,7 @@ bool Shopping::init(){
         back_ground->addChild(coins_item_200);
         
         auto item_title_200 = ui::ImageView::create("shopping/shop_item_desc_200.png");
-        item_title_200->setPosition(Vec2(item_size.width * 0.3f, item_size.height * 0.4));
+        item_title_200->setPosition(Vec2(item_size.width * 0.45f, item_size.height * 0.4));
         coins_item_200->addChild(item_title_200);
         
         auto item_price_200 = ui::Text::create("$4.99", "fonts/arial.ttf", 46);
@@ -112,7 +112,7 @@ bool Shopping::init(){
         back_ground->addChild(coins_item_60);
         
         auto item_title_60 = ui::ImageView::create("shopping/shop_item_desc_60.png");
-        item_title_60->setPosition(Vec2(item_size.width * 0.3f, item_size.height * 0.4));
+        item_title_60->setPosition(Vec2(item_size.width * 0.45f, item_size.height * 0.4));
         coins_item_60->addChild(item_title_60);
         
         auto item_price_60 = ui::Text::create("$13.99", "fonts/arial.ttf", 46);
@@ -134,11 +134,11 @@ bool Shopping::init(){
         back_ground->addChild(coins_item_680);
         
         auto item_title_680 = ui::ImageView::create("shopping/shop_item_desc_680.png");
-        item_title_680->setPosition(Vec2(item_size.width * 0.3f, item_size.height * 0.4));
+        item_title_680->setPosition(Vec2(item_size.width * 0.5f, item_size.height * 0.4));
         coins_item_680->addChild(item_title_680);
         
         auto item_price_680 = ui::Text::create("$46.99", "fonts/arial.ttf", 46);
-        item_price_680->setPosition(Vec2(item_size.width * 0.5f, item_size.height * 0.15));
+        item_price_680->setPosition(Vec2(item_size.width * 0.45f, item_size.height * 0.15));
         item_price_680->setIgnoreAnchorPointForPosition(false);
         item_price_680->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         item_price_680->setTextColor(Color4B::BLACK);
@@ -158,7 +158,7 @@ bool Shopping::init(){
         
         
         auto item_title_1480 = ui::ImageView::create("shopping/shop_item_desc_1480.png");
-        item_title_1480->setPosition(Vec2(item_size_big.width * 0.3f, item_size_big.height * 0.4));
+        item_title_1480->setPosition(Vec2(item_size_big.width * 0.4f, item_size_big.height * 0.4));
         coins_item_1480->addChild(item_title_1480);
         
         auto item_price_1480 = ui::Text::create("$94.99", "fonts/arial.ttf", 56);

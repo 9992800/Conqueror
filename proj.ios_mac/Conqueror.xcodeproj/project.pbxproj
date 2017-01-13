@@ -720,7 +720,7 @@
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = 2XYK8RBB6M;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 1;
@@ -948,8 +948,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellflower.Conqueror;
 				PRODUCT_NAME = "Island Conqueror";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "ce6f5698-f608-4b68-8c33-51e60ea7a61c";
+				PROVISIONING_PROFILE_SPECIFIER = Conquero_debug_pro;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -992,8 +992,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellflower.Conqueror;
 				PRODUCT_NAME = "Island Conqueror";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "2cea4210-8779-476f-92ca-d9a76e0eea0e";
+				PROVISIONING_PROFILE_SPECIFIER = Conqueror_release;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1119,6 +1119,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Li Wansheng (2XYK8RBB6M)";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

@@ -1311,13 +1311,21 @@ void GameScene::afterCaptureScreen(bool yes, const std::string &outputFilename)
 void GameScene::shareThisGame(Ref* btn){
         this->playSoundEffect();
         if (sdkbox::PluginFacebook::isLoggedIn()){
-                utils::captureScreen(CC_CALLBACK_2(GameScene::afterCaptureScreen, this), "screen.png");
+//                utils::captureScreen(CC_CALLBACK_2(GameScene::afterCaptureScreen, this), "screen.png");
+                
+                sdkbox::FBShareInfo info;
+                info.type  = sdkbox::FB_PHOTO;
+                info.title = "Islands Conqueror";
+                info.link = "https://itunes.apple.com/us/app/island-conqueror/id1172744843?l=zh&ls=1&mt=8";
+                
+                info.image = FileUtils::getInstance()->fullPathForFilename("fb_used_toshare.png");
+                sdkbox::PluginFacebook::share(info);
+                
         }else{
                 std::vector<std::string> permissions;
                 permissions.push_back(sdkbox::FB_PERM_READ_PUBLIC_PROFILE);
                 permissions.push_back(sdkbox::FB_PERM_READ_EMAIL);
                 permissions.push_back(sdkbox::FB_PERM_READ_USER_FRIENDS);
-                permissions.push_back(sdkbox::FB_PERM_PUBLISH_POST);
                 sdkbox::PluginFacebook::login(permissions);
         }
 }

@@ -778,6 +778,16 @@ void GolbalConfig::initBasic(){
         UserDefault::getInstance()->setIntegerForKey(LEVEL_2_LOCK_STATE_KEY, true);
         UserDefault::getInstance()->setIntegerForKey(CHARACTOR_1_LOCK_STATE_KEY, true);
         UserDefault::getInstance()->flush();
+        
+        Size frame_size = Director::getInstance()->getOpenGLView()->getFrameSize();
+        for (int i = 0; i < MAX_PLAYER; i++){
+                invader_pos[i].x = invader_pos[i].x / designResolutionSize.width * frame_size.width;
+                invader_pos[i].y = invader_pos[i].y / designResolutionSize.height * frame_size.height;
+        
+                
+                keeper_pos[i].x = keeper_pos[i].x / designResolutionSize.width * frame_size.width;
+                keeper_pos[i].y = keeper_pos[i].y / designResolutionSize.height * frame_size.height;
+        }
 }
 
 std::vector<AchievementData> GolbalConfig::getAchievementData(){

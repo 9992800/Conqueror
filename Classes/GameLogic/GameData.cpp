@@ -151,7 +151,7 @@ void GameData::reshDataByBackGrnd(Node* backGrd){
         }
         
         
-        FileUtils::getInstance()->addSearchPath("anim");
+        FileUtils::getInstance()->addSearchPath("common_anim");
         std::string filename = "hailang.csb";
         cocostudio::timeline::ActionTimeline* action =
         CSLoader::createTimeline(filename);

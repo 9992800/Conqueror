@@ -1319,7 +1319,7 @@ void GameScene::shareThisGame(Ref* btn){
                 info.link = "https://itunes.apple.com/us/app/island-conqueror/id1172744843?l=zh&ls=1&mt=8";
                 
                 info.image = FileUtils::getInstance()->fullPathForFilename("fb_used_toshare.png");
-                sdkbox::PluginFacebook::share(info);
+                sdkbox::PluginFacebook::dialog(info);
                 
         }else{
                 std::vector<std::string> permissions;

@@ -7,262 +7,262 @@
             <key>xsssd0001.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{366,414},{90,134}}</string>
+                <string>{{66,448},{62,88}}</string>
                 <key>offset</key>
-                <string>{16,-4}</string>
+                <string>{10,-3}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{61,27},{90,134}}</string>
+                <string>{{39,19},{62,88}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0002.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{230,414},{90,134}}</string>
+                <string>{{66,384},{62,88}}</string>
                 <key>offset</key>
-                <string>{16,-4}</string>
+                <string>{10,-3}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{61,27},{90,134}}</string>
+                <string>{{39,19},{62,88}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0003.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,416},{90,134}}</string>
+                <string>{{2,370},{62,90}}</string>
                 <key>offset</key>
-                <string>{16,-4}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{61,27},{90,134}}</string>
+                <string>{{39,17},{62,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0004.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{138,324},{90,134}}</string>
+                <string>{{186,278},{62,90}}</string>
                 <key>offset</key>
-                <string>{16,-4}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{61,27},{90,134}}</string>
+                <string>{{39,17},{62,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0005.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,324},{90,134}}</string>
+                <string>{{94,258},{62,90}}</string>
                 <key>offset</key>
-                <string>{16,-4}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{61,27},{90,134}}</string>
+                <string>{{39,17},{62,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0006.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{414,278},{90,134}}</string>
+                <string>{{2,258},{62,90}}</string>
                 <key>offset</key>
-                <string>{16,-4}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{61,27},{90,134}}</string>
+                <string>{{39,17},{62,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0007.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{232,2},{90,136}}</string>
+                <string>{{94,194},{62,90}}</string>
                 <key>offset</key>
-                <string>{16,-3}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{61,25},{90,136}}</string>
+                <string>{{39,17},{62,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0008.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{140,232},{90,136}}</string>
+                <string>{{2,194},{62,90}}</string>
                 <key>offset</key>
-                <string>{16,-3}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{61,25},{90,136}}</string>
+                <string>{{39,17},{62,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0009.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,232},{90,136}}</string>
+                <string>{{186,186},{62,90}}</string>
                 <key>offset</key>
-                <string>{16,-3}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{61,25},{90,136}}</string>
+                <string>{{39,17},{62,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0010.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{140,94},{90,136}}</string>
+                <string>{{94,130},{62,90}}</string>
                 <key>offset</key>
-                <string>{16,-3}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{61,25},{90,136}}</string>
+                <string>{{39,17},{62,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0011.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{94,2},{90,136}}</string>
+                <string>{{2,130},{62,90}}</string>
                 <key>offset</key>
-                <string>{16,-3}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{61,25},{90,136}}</string>
+                <string>{{39,17},{62,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0012.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,140},{90,136}}</string>
+                <string>{{66,322},{60,90}}</string>
                 <key>offset</key>
-                <string>{16,-3}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{61,25},{90,136}}</string>
+                <string>{{40,17},{60,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0013.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{90,136}}</string>
+                <string>{{186,94},{62,90}}</string>
                 <key>offset</key>
-                <string>{16,-3}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{61,25},{90,136}}</string>
+                <string>{{39,17},{62,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0014.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{370,186},{90,134}}</string>
+                <string>{{94,66},{62,90}}</string>
                 <key>offset</key>
-                <string>{16,-4}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{61,27},{90,134}}</string>
+                <string>{{39,17},{62,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0015.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{278,322},{90,134}}</string>
+                <string>{{2,66},{62,90}}</string>
                 <key>offset</key>
-                <string>{16,-4}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{61,27},{90,134}}</string>
+                <string>{{39,17},{62,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0016.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{370,2},{90,134}}</string>
+                <string>{{186,2},{62,90}}</string>
                 <key>offset</key>
-                <string>{16,-4}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{61,27},{90,134}}</string>
+                <string>{{39,17},{62,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0017.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{368,94},{90,134}}</string>
+                <string>{{94,2},{62,90}}</string>
                 <key>offset</key>
-                <string>{16,-4}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{61,27},{90,134}}</string>
+                <string>{{39,17},{62,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0018.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{278,186},{90,134}}</string>
+                <string>{{2,2},{62,90}}</string>
                 <key>offset</key>
-                <string>{16,-4}</string>
+                <string>{10,-2}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{61,27},{90,134}}</string>
+                <string>{{39,17},{62,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0019.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{232,94},{90,134}}</string>
+                <string>{{158,370},{62,88}}</string>
                 <key>offset</key>
-                <string>{16,-4}</string>
+                <string>{10,-3}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{61,27},{90,134}}</string>
+                <string>{{39,19},{62,88}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>xsssd0020.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{366,414},{90,134}}</string>
+                <string>{{66,448},{62,88}}</string>
                 <key>offset</key>
-                <string>{16,-4}</string>
+                <string>{10,-3}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{61,27},{90,134}}</string>
+                <string>{{39,19},{62,88}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -270,13 +270,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>xsssd.png</string>
+            <string>xunshoushisd.png</string>
             <key>size</key>
-            <string>{512,512}</string>
+            <string>{256,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:f685d14d20375ac641f9a657c5b99367:c82786eb7bab002c63fc7711466f43e0:54a8122f9aa87ae9f20cc6176936b0df$</string>
+            <string>$TexturePacker:SmartUpdate:96295df539a956b8ad4ef8a534c8c10c:4fa3ebdea5125ae6ec396c1d8ba631e7:8abd8b7078938d774eaba31728120bd9$</string>
             <key>textureFileName</key>
-            <string>xsssd.png</string>
+            <string>xunshoushisd.png</string>
         </dict>
     </dict>
 </plist>

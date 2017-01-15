@@ -4,278 +4,265 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>renwusd0001.png</key>
+            <key>renwu_sd0001.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{690,2},{84,140}}</string>
+                <string>{{194,194},{56,94}}</string>
                 <key>offset</key>
-                <string>{12,-1}</string>
+                <string>{8,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{60,21},{84,140}}</string>
+                <string>{{40,13},{56,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
-            <key>renwusd0002.png</key>
+            <key>renwu_sd0002.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{604,2},{84,140}}</string>
+                <string>{{98,176},{56,94}}</string>
                 <key>offset</key>
-                <string>{12,-1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{60,21},{84,140}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>renwusd0003.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{570,144},{84,140}}</string>
-                <key>offset</key>
-                <string>{12,-1}</string>
+                <string>{8,0}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{60,21},{84,140}}</string>
+                <string>{{40,13},{56,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
-            <key>renwusd0004.png</key>
+            <key>renwu_sd0003.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{518,2},{84,140}}</string>
+                <string>{{2,176},{56,94}}</string>
                 <key>offset</key>
-                <string>{11,-1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{59,21},{84,140}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>renwusd0005.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{432,2},{84,140}}</string>
-                <key>offset</key>
-                <string>{11,-1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{59,21},{84,140}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>renwusd0006.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{428,144},{84,140}}</string>
-                <key>offset</key>
-                <string>{11,-1}</string>
+                <string>{8,0}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{59,21},{84,140}}</string>
+                <string>{{40,13},{56,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
-            <key>renwusd0007.png</key>
+            <key>renwu_sd0004.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{346,2},{84,140}}</string>
+                <string>{{98,118},{56,94}}</string>
                 <key>offset</key>
-                <string>{11,-1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{59,21},{84,140}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>renwusd0008.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{852,170},{82,138}}</string>
-                <key>offset</key>
-                <string>{11,-2}</string>
+                <string>{8,0}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{60,23},{82,138}}</string>
+                <string>{{40,13},{56,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
-            <key>renwusd0009.png</key>
+            <key>renwu_sd0005.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{860,86},{82,138}}</string>
+                <string>{{2,118},{56,94}}</string>
                 <key>offset</key>
-                <string>{11,-2}</string>
+                <string>{7,0}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{60,23},{82,138}}</string>
+                <string>{{39,13},{56,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
-            <key>renwusd0010.png</key>
+            <key>renwu_sd0006.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{860,2},{82,138}}</string>
+                <string>{{194,98},{56,94}}</string>
                 <key>offset</key>
-                <string>{11,-2}</string>
+                <string>{7,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{39,13},{56,94}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
+            </dict>
+            <key>renwu_sd0007.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{118,350},{56,92}}</string>
+                <key>offset</key>
+                <string>{7,-1}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{39,15},{56,92}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
+            </dict>
+            <key>renwu_sd0008.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{60,384},{56,92}}</string>
+                <key>offset</key>
+                <string>{7,-1}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{39,15},{56,92}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
+            </dict>
+            <key>renwu_sd0009.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{96,292},{56,92}}</string>
+                <key>offset</key>
+                <string>{7,-1}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{60,23},{82,138}}</string>
+                <string>{{39,15},{56,92}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
-            <key>renwusd0011.png</key>
+            <key>renwu_sd0010.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{776,2},{82,138}}</string>
+                <string>{{2,292},{56,92}}</string>
                 <key>offset</key>
-                <string>{11,-2}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{60,23},{82,138}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>renwusd0012.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{712,144},{82,138}}</string>
-                <key>offset</key>
-                <string>{11,-2}</string>
+                <string>{7,-1}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{60,23},{82,138}}</string>
+                <string>{{39,15},{56,92}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
-            <key>renwusd0013.png</key>
+            <key>renwu_sd0011.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{286,144},{84,140}}</string>
+                <string>{{2,384},{56,92}}</string>
                 <key>offset</key>
-                <string>{11,-1}</string>
+                <string>{7,-1}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{39,15},{56,92}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
+            </dict>
+            <key>renwu_sd0012.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{190,290},{56,92}}</string>
+                <key>offset</key>
+                <string>{7,-1}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{39,15},{56,92}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
+            </dict>
+            <key>renwu_sd0013.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{96,234},{56,92}}</string>
+                <key>offset</key>
+                <string>{7,-1}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{59,21},{84,140}}</string>
+                <string>{{39,15},{56,92}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
-            <key>renwusd0014.png</key>
+            <key>renwu_sd0014.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{260,2},{84,140}}</string>
+                <string>{{2,234},{56,92}}</string>
                 <key>offset</key>
-                <string>{11,-1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{59,21},{84,140}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>renwusd0015.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{174,2},{84,140}}</string>
-                <key>offset</key>
-                <string>{11,-1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{59,21},{84,140}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>renwusd0016.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{144,144},{84,140}}</string>
-                <key>offset</key>
-                <string>{11,-1}</string>
+                <string>{7,-1}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{59,21},{84,140}}</string>
+                <string>{{39,15},{56,92}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
-            <key>renwusd0017.png</key>
+            <key>renwu_sd0015.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{88,2},{84,140}}</string>
+                <string>{{98,60},{56,94}}</string>
                 <key>offset</key>
-                <string>{11,-1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{59,21},{84,140}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>renwusd0018.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{2,144},{84,140}}</string>
-                <key>offset</key>
-                <string>{12,-1}</string>
+                <string>{7,0}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{60,21},{84,140}}</string>
+                <string>{{39,13},{56,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
-            <key>renwusd0019.png</key>
+            <key>renwu_sd0016.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{84,140}}</string>
+                <string>{{2,60},{56,94}}</string>
                 <key>offset</key>
-                <string>{12,-1}</string>
+                <string>{8,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{40,13},{56,94}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
+            </dict>
+            <key>renwu_sd0017.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{194,2},{56,94}}</string>
+                <key>offset</key>
+                <string>{8,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{60,21},{84,140}}</string>
+                <string>{{40,13},{56,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
-            <key>renwusd0020.png</key>
+            <key>renwu_sd0018.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{690,2},{84,140}}</string>
+                <string>{{98,2},{56,94}}</string>
                 <key>offset</key>
-                <string>{12,-1}</string>
+                <string>{8,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{40,13},{56,94}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
+            </dict>
+            <key>renwu_sd0019.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{56,94}}</string>
+                <key>offset</key>
+                <string>{8,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{40,13},{56,94}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
+            </dict>
+            <key>renwu_sd0020.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{194,194},{56,94}}</string>
+                <key>offset</key>
+                <string>{8,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{60,21},{84,140}}</string>
+                <string>{{40,13},{56,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>renwusd0021.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{690,2},{84,140}}</string>
-                <key>offset</key>
-                <string>{12,-1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{60,21},{84,140}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -283,13 +270,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>renwusd.png</string>
+            <string>hanshisd.png</string>
             <key>size</key>
-            <string>{1024,256}</string>
+            <string>{256,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:cf1cdafda87f6bc371ea6f50442428d5:168361ddd0b82aea5ccc5ac85a91dcf8:70cf8749aeb9174d9efec5cf78b3c21b$</string>
+            <string>$TexturePacker:SmartUpdate:52453e56b1c25fe9bce86e7f9e54fca8:043ef97bab4dfbd174f0168a8916d508:580e8593f4d62ce1591432eedfe11ab0$</string>
             <key>textureFileName</key>
-            <string>renwusd.png</string>
+            <string>hanshisd.png</string>
         </dict>
     </dict>
 </plist>

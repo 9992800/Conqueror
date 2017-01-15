@@ -7,158 +7,158 @@
             <key>hqsrun010001.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{108,130},{98,126}}</string>
+                <string>{{2,72},{66,86}}</string>
                 <key>offset</key>
-                <string>{16,-8}</string>
+                <string>{10,-5}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{57,35},{98,126}}</string>
+                <string>{{37,22},{66,86}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>hqsrun010002.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{208,2},{96,126}}</string>
+                <string>{{174,260},{64,84}}</string>
                 <key>offset</key>
-                <string>{15,-8}</string>
+                <string>{10,-6}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{57,35},{96,126}}</string>
+                <string>{{38,24},{64,84}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>hqsrun010003.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{128,388},{100,124}}</string>
+                <string>{{2,140},{68,84}}</string>
                 <key>offset</key>
-                <string>{11,-9}</string>
+                <string>{7,-6}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{51,37},{100,124}}</string>
+                <string>{{33,24},{68,84}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>hqsrun010004.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{254,386},{98,124}}</string>
+                <string>{{2,210},{66,84}}</string>
                 <key>offset</key>
-                <string>{15,-9}</string>
+                <string>{10,-6}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{56,37},{98,124}}</string>
+                <string>{{37,24},{66,84}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>hqsrun010005.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,388},{100,124}}</string>
+                <string>{{174,174},{66,84}}</string>
                 <key>offset</key>
-                <string>{17,-9}</string>
+                <string>{12,-6}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{57,37},{100,124}}</string>
+                <string>{{39,24},{66,84}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>hqsrun010006.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,260},{100,126}}</string>
+                <string>{{90,72},{68,84}}</string>
                 <key>offset</key>
-                <string>{16,-8}</string>
+                <string>{10,-6}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{56,35},{100,126}}</string>
+                <string>{{36,24},{68,84}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>hqsrun010007.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{102,128}}</string>
+                <string>{{90,2},{68,86}}</string>
                 <key>offset</key>
-                <string>{15,-7}</string>
+                <string>{10,-5}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{54,33},{102,128}}</string>
+                <string>{{36,22},{68,86}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>hqsrun010008.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{106,2},{100,126}}</string>
+                <string>{{2,2},{68,86}}</string>
                 <key>offset</key>
-                <string>{17,-8}</string>
+                <string>{11,-5}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{57,35},{100,126}}</string>
+                <string>{{37,22},{68,86}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>hqsrun010009.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,132},{104,126}}</string>
+                <string>{{178,2},{70,84}}</string>
                 <key>offset</key>
-                <string>{17,-8}</string>
+                <string>{11,-6}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{55,35},{104,126}}</string>
+                <string>{{36,24},{70,84}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>hqsrun010010.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{104,260},{98,126}}</string>
+                <string>{{88,142},{66,84}}</string>
                 <key>offset</key>
-                <string>{17,-8}</string>
+                <string>{11,-6}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{58,35},{98,126}}</string>
+                <string>{{38,24},{66,84}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>hqsrun010011.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{354,2},{96,126}}</string>
+                <string>{{88,210},{64,84}}</string>
                 <key>offset</key>
-                <string>{15,-10}</string>
+                <string>{10,-7}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{57,37},{96,126}}</string>
+                <string>{{38,25},{64,84}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>hqsrun010012.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{204,258},{96,126}}</string>
+                <string>{{176,88},{66,84}}</string>
                 <key>offset</key>
-                <string>{16,-8}</string>
+                <string>{10,-6}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{58,35},{96,126}}</string>
+                <string>{{37,24},{66,84}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -168,9 +168,9 @@
             <key>realTextureFileName</key>
             <string>hqsrun01.png</string>
             <key>size</key>
-            <string>{512,512}</string>
+            <string>{256,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:3963ae6b8b5ea3f652c394af9c38e3c2:6393370bf02efbe816157848e53dd091:7185efe508c8b41a854b6ee7e272bcce$</string>
+            <string>$TexturePacker:SmartUpdate:d5ec9c3d301100be6d1f16205a55b392:251db4233796d3db2641e8edf3dd8eea:7185efe508c8b41a854b6ee7e272bcce$</string>
             <key>textureFileName</key>
             <string>hqsrun01.png</string>
         </dict>

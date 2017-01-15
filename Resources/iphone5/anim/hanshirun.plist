@@ -7,158 +7,158 @@
             <key>renwurun0001.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{128,2},{122,138}}</string>
+                <string>{{2,188},{82,92}}</string>
                 <key>offset</key>
-                <string>{-15,-6}</string>
+                <string>{-10,-4}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{14,27},{122,138}}</string>
+                <string>{{9,18},{82,92}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>renwurun0002.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{136,142},{120,136}}</string>
+                <string>{{2,364},{80,90}}</string>
                 <key>offset</key>
-                <string>{-13,-9}</string>
+                <string>{-8,-6}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{17,31},{120,136}}</string>
+                <string>{{12,21},{80,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>renwurun0003.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{252,2},{116,134}}</string>
+                <string>{{84,272},{78,90}}</string>
                 <key>offset</key>
-                <string>{-10,-12}</string>
+                <string>{-7,-8}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{22,35},{116,134}}</string>
+                <string>{{14,23},{78,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>renwurun0004.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{370,2},{130,130}}</string>
+                <string>{{84,352},{88,88}}</string>
                 <key>offset</key>
-                <string>{-16,-6}</string>
+                <string>{-11,-4}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{9,31},{130,130}}</string>
+                <string>{{5,20},{88,88}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>renwurun0005.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,148},{140,132}}</string>
+                <string>{{98,2},{94,90}}</string>
                 <key>offset</key>
-                <string>{-20,-5}</string>
+                <string>{-13,-3}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,29},{140,132}}</string>
+                <string>{{0,18},{94,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>renwurun0006.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{124,290},{134,136}}</string>
+                <string>{{98,94},{92,92}}</string>
                 <key>offset</key>
-                <string>{-18,-3}</string>
+                <string>{-14,-2}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{5,25},{134,136}}</string>
+                <string>{{0,16},{92,92}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>renwurun0007.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{124,144}}</string>
+                <string>{{2,2},{92,94}}</string>
                 <key>offset</key>
-                <string>{-14,-3}</string>
+                <string>{-14,-1}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{14,21},{124,144}}</string>
+                <string>{{0,14},{92,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>renwurun0008.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,290},{120,138}}</string>
+                <string>{{2,96},{90,92}}</string>
                 <key>offset</key>
-                <string>{-12,-8}</string>
+                <string>{-13,-2}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{18,29},{120,138}}</string>
+                <string>{{2,16},{90,92}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>renwurun0009.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{260,260},{116,128}}</string>
+                <string>{{96,188},{82,90}}</string>
                 <key>offset</key>
-                <string>{-10,-15}</string>
+                <string>{-9,-5}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{22,41},{116,128}}</string>
+                <string>{{10,20},{82,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>renwurun0010.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{370,134},{130,124}}</string>
+                <string>{{174,360},{80,88}}</string>
                 <key>offset</key>
-                <string>{-18,-9}</string>
+                <string>{-8,-7}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{7,37},{130,124}}</string>
+                <string>{{12,23},{80,88}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>renwurun0011.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{128,2},{122,138}}</string>
+                <string>{{176,272},{78,86}}</string>
                 <key>offset</key>
-                <string>{-15,-6}</string>
+                <string>{-7,-10}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{14,27},{122,138}}</string>
+                <string>{{14,27},{78,86}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>renwurun0012.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{136,142},{120,136}}</string>
+                <string>{{2,272},{80,90}}</string>
                 <key>offset</key>
-                <string>{-13,-9}</string>
+                <string>{-9,-7}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{17,31},{120,136}}</string>
+                <string>{{11,22},{80,90}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -166,13 +166,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>renwurun.png</string>
+            <string>hanshirun.png</string>
             <key>size</key>
-            <string>{512,512}</string>
+            <string>{256,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:0251ddb425852c4583b058540931cc94:9b4835e352cb2efd98b88ce5d9226dec:1743a6d6bd9721ce71cc5ccdda7c3fbe$</string>
+            <string>$TexturePacker:SmartUpdate:c7b4a4f74bc8e5bb5c6c0b4a9dffaab2:ca4ddc2eb9a6c31bceebbebb102ff750:0cc48e58dcd237c780e74f7d93f4e484$</string>
             <key>textureFileName</key>
-            <string>renwurun.png</string>
+            <string>hanshirun.png</string>
         </dict>
     </dict>
 </plist>

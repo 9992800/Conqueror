@@ -7,262 +7,262 @@
             <key>mvsd010001.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{570,142},{96,138}}</string>
-                <key>offset</key>
-                <string>{-9,-2}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{33,23},{96,138}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>mvsd010002.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{476,284},{96,138}}</string>
-                <key>offset</key>
-                <string>{-9,-2}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{33,23},{96,138}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>mvsd010003.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{474,2},{96,138}}</string>
-                <key>offset</key>
-                <string>{-9,-2}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{33,23},{96,138}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>mvsd010004.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{190,144},{94,140}}</string>
-                <key>offset</key>
-                <string>{-8,-1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{35,21},{94,140}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>mvsd010005.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{190,2},{94,140}}</string>
-                <key>offset</key>
-                <string>{-8,-1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{35,21},{94,140}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>mvsd010006.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{380,2},{92,140}}</string>
-                <key>offset</key>
-                <string>{-7,-1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{37,21},{92,140}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>mvsd010007.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{290,286},{92,140}}</string>
-                <key>offset</key>
-                <string>{-7,-1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{37,21},{92,140}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>mvsd010008.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{286,144},{92,140}}</string>
-                <key>offset</key>
-                <string>{-6,-1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{38,21},{92,140}}</string>
-                <key>sourceSize</key>
-                <string>{180,180}</string>
-            </dict>
-            <key>mvsd010009.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{384,286},{90,140}}</string>
+                <string>{{190,384},{62,92}}</string>
                 <key>offset</key>
                 <string>{-5,-1}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{40,21},{90,140}}</string>
+                <string>{{24,15},{62,92}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
+            </dict>
+            <key>mvsd010002.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,382},{62,92}}</string>
+                <key>offset</key>
+                <string>{-5,-1}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{24,15},{62,92}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
+            </dict>
+            <key>mvsd010003.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{96,380},{62,92}}</string>
+                <key>offset</key>
+                <string>{-5,-1}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{24,15},{62,92}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
+            </dict>
+            <key>mvsd010004.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,318},{62,92}}</string>
+                <key>offset</key>
+                <string>{-5,-1}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{24,15},{62,92}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
+            </dict>
+            <key>mvsd010005.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,66},{62,94}}</string>
+                <key>offset</key>
+                <string>{-5,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{24,13},{62,94}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
+            </dict>
+            <key>mvsd010006.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,192},{60,94}}</string>
+                <key>offset</key>
+                <string>{-4,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{26,13},{60,94}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
+            </dict>
+            <key>mvsd010007.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{194,194},{60,94}}</string>
+                <key>offset</key>
+                <string>{-4,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{26,13},{60,94}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
+            </dict>
+            <key>mvsd010008.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{98,190},{60,94}}</string>
+                <key>offset</key>
+                <string>{-4,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{26,13},{60,94}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
+            </dict>
+            <key>mvsd010009.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,130},{60,94}}</string>
+                <key>offset</key>
+                <string>{-3,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{27,13},{60,94}}</string>
+                <key>sourceSize</key>
+                <string>{120,120}</string>
             </dict>
             <key>mvsd010010.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,146},{90,142}}</string>
+                <string>{{98,128},{60,94}}</string>
                 <key>offset</key>
-                <string>{-5,0}</string>
+                <string>{-3,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{40,19},{90,142}}</string>
+                <string>{{27,13},{60,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>mvsd010011.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{90,142}}</string>
+                <string>{{98,2},{62,94}}</string>
                 <key>offset</key>
-                <string>{-5,0}</string>
+                <string>{-4,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{40,19},{90,142}}</string>
+                <string>{{25,13},{62,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>mvsd010012.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{380,144},{90,140}}</string>
+                <string>{{194,98},{60,94}}</string>
                 <key>offset</key>
-                <string>{-6,-1}</string>
+                <string>{-4,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{39,21},{90,140}}</string>
+                <string>{{26,13},{60,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>mvsd010013.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{286,2},{92,140}}</string>
+                <string>{{98,66},{60,94}}</string>
                 <key>offset</key>
-                <string>{-7,-1}</string>
+                <string>{-4,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{37,21},{92,140}}</string>
+                <string>{{26,13},{60,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>mvsd010014.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{196,286},{92,140}}</string>
+                <string>{{194,2},{60,94}}</string>
                 <key>offset</key>
-                <string>{-7,-1}</string>
+                <string>{-4,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{37,21},{92,140}}</string>
+                <string>{{26,13},{60,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>mvsd010015.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{100,286},{94,140}}</string>
+                <string>{{2,2},{62,94}}</string>
                 <key>offset</key>
-                <string>{-8,-1}</string>
+                <string>{-5,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{35,21},{94,140}}</string>
+                <string>{{24,13},{62,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>mvsd010016.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{94,144},{94,140}}</string>
+                <string>{{96,316},{62,92}}</string>
                 <key>offset</key>
-                <string>{-8,-1}</string>
+                <string>{-5,-1}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{35,21},{94,140}}</string>
+                <string>{{24,15},{62,92}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>mvsd010017.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{94,2},{94,140}}</string>
+                <string>{{2,254},{62,92}}</string>
                 <key>offset</key>
-                <string>{-8,-1}</string>
+                <string>{-5,-1}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{35,21},{94,140}}</string>
+                <string>{{24,15},{62,92}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>mvsd010018.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,290},{96,140}}</string>
+                <string>{{192,290},{62,92}}</string>
                 <key>offset</key>
-                <string>{-9,-1}</string>
+                <string>{-5,-1}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{33,21},{96,140}}</string>
+                <string>{{24,15},{62,92}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>mvsd010019.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{472,144},{96,138}}</string>
+                <string>{{98,252},{62,92}}</string>
                 <key>offset</key>
-                <string>{-9,-2}</string>
+                <string>{-5,-1}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{33,23},{96,138}}</string>
+                <string>{{24,15},{62,92}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>mvsd010020.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{570,142},{96,138}}</string>
+                <string>{{190,384},{62,92}}</string>
                 <key>offset</key>
-                <string>{-9,-2}</string>
+                <string>{-5,-1}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{33,23},{96,138}}</string>
+                <string>{{24,15},{62,92}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -272,9 +272,9 @@
             <key>realTextureFileName</key>
             <string>mvsd01.png</string>
             <key>size</key>
-            <string>{1024,512}</string>
+            <string>{256,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:f91000249a9402b04f84fce065055362:c9b7898b8b64c257a1da05e7b720b209:d89a9055bfd85ae4cb182545b95fec6f$</string>
+            <string>$TexturePacker:SmartUpdate:53354216f441a39c8b444d12b7031a43:6ca996e6b58d1ec7b418c858e235487e:d89a9055bfd85ae4cb182545b95fec6f$</string>
             <key>textureFileName</key>
             <string>mvsd01.png</string>
         </dict>

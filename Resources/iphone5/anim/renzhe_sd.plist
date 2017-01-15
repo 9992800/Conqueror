@@ -7,262 +7,262 @@
             <key>rzsd010001.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{242,2},{118,144}}</string>
+                <string>{{2,2},{78,98}}</string>
                 <key>offset</key>
-                <string>{-21,-7}</string>
+                <string>{-14,-4}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{10,25},{118,144}}</string>
+                <string>{{7,15},{78,98}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010002.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{122,294},{118,144}}</string>
+                <string>{{82,82},{78,96}}</string>
                 <key>offset</key>
-                <string>{-21,-7}</string>
+                <string>{-14,-5}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{10,25},{118,144}}</string>
+                <string>{{7,17},{78,96}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010003.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{122,148},{118,144}}</string>
+                <string>{{376,2},{78,96}}</string>
                 <key>offset</key>
-                <string>{-21,-7}</string>
+                <string>{-14,-5}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{10,25},{118,144}}</string>
+                <string>{{7,17},{78,96}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010004.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{122,2},{118,144}}</string>
+                <string>{{278,2},{78,96}}</string>
                 <key>offset</key>
-                <string>{-21,-7}</string>
+                <string>{-14,-5}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{10,25},{118,144}}</string>
+                <string>{{7,17},{78,96}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010005.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,294},{118,144}}</string>
+                <string>{{180,2},{78,96}}</string>
                 <key>offset</key>
-                <string>{-21,-7}</string>
+                <string>{-14,-4}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{10,25},{118,144}}</string>
+                <string>{{7,16},{78,96}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010006.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{362,290},{118,142}}</string>
+                <string>{{162,258},{78,94}}</string>
                 <key>offset</key>
-                <string>{-21,-7}</string>
+                <string>{-14,-5}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{10,26},{118,142}}</string>
+                <string>{{7,18},{78,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010007.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{482,2},{116,142}}</string>
+                <string>{{162,162},{78,94}}</string>
                 <key>offset</key>
-                <string>{-20,-7}</string>
+                <string>{-14,-4}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{12,26},{116,142}}</string>
+                <string>{{7,17},{78,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010008.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{600,288},{116,140}}</string>
+                <string>{{354,82},{78,94}}</string>
                 <key>offset</key>
-                <string>{-20,-7}</string>
+                <string>{-14,-5}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{12,27},{116,140}}</string>
+                <string>{{7,18},{78,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010009.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{482,288},{116,140}}</string>
+                <string>{{258,82},{78,94}}</string>
                 <key>offset</key>
-                <string>{-20,-7}</string>
+                <string>{-14,-4}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{12,27},{116,140}}</string>
+                <string>{{7,17},{78,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010010.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{718,2},{116,138}}</string>
+                <string>{{162,354},{78,92}}</string>
                 <key>offset</key>
-                <string>{-20,-7}</string>
+                <string>{-14,-5}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{12,28},{116,138}}</string>
+                <string>{{7,19},{78,92}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010011.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{602,144},{116,138}}</string>
+                <string>{{162,82},{78,94}}</string>
                 <key>offset</key>
-                <string>{-20,-7}</string>
+                <string>{-14,-4}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{12,28},{116,138}}</string>
+                <string>{{7,17},{78,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010012.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{600,2},{116,140}}</string>
+                <string>{{82,372},{78,94}}</string>
                 <key>offset</key>
-                <string>{-20,-7}</string>
+                <string>{-14,-5}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{12,27},{116,140}}</string>
+                <string>{{7,18},{78,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010013.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{482,146},{118,140}}</string>
+                <string>{{82,276},{78,94}}</string>
                 <key>offset</key>
-                <string>{-21,-7}</string>
+                <string>{-14,-5}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{10,27},{118,140}}</string>
+                <string>{{7,18},{78,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010014.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{362,146},{118,142}}</string>
+                <string>{{82,180},{78,94}}</string>
                 <key>offset</key>
-                <string>{-21,-7}</string>
+                <string>{-14,-5}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{10,26},{118,142}}</string>
+                <string>{{7,18},{78,94}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010015.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{362,2},{118,142}}</string>
+                <string>{{82,2},{78,96}}</string>
                 <key>offset</key>
-                <string>{-21,-7}</string>
+                <string>{-14,-4}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{10,26},{118,142}}</string>
+                <string>{{7,16},{78,96}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010016.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{242,292},{118,142}}</string>
+                <string>{{2,396},{78,96}}</string>
                 <key>offset</key>
-                <string>{-21,-7}</string>
+                <string>{-14,-4}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{10,26},{118,142}}</string>
+                <string>{{7,16},{78,96}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010017.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{242,148},{118,142}}</string>
+                <string>{{2,298},{78,96}}</string>
                 <key>offset</key>
-                <string>{-21,-7}</string>
+                <string>{-14,-4}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{10,26},{118,142}}</string>
+                <string>{{7,16},{78,96}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010018.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,148},{118,144}}</string>
+                <string>{{2,200},{78,96}}</string>
                 <key>offset</key>
-                <string>{-21,-7}</string>
+                <string>{-14,-5}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{10,25},{118,144}}</string>
+                <string>{{7,17},{78,96}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010019.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{118,144}}</string>
+                <string>{{2,102},{78,96}}</string>
                 <key>offset</key>
-                <string>{-21,-7}</string>
+                <string>{-14,-5}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{10,25},{118,144}}</string>
+                <string>{{7,17},{78,96}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
             <key>rzsd010020.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{242,2},{118,144}}</string>
+                <string>{{2,2},{78,98}}</string>
                 <key>offset</key>
-                <string>{-21,-7}</string>
+                <string>{-14,-4}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{10,25},{118,144}}</string>
+                <string>{{7,15},{78,98}}</string>
                 <key>sourceSize</key>
-                <string>{180,180}</string>
+                <string>{120,120}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -272,9 +272,9 @@
             <key>realTextureFileName</key>
             <string>rzsd01.png</string>
             <key>size</key>
-            <string>{1024,512}</string>
+            <string>{512,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:f125bcbd3798fda86773d22adbd9990b:c959dc68014111ee1479aa99edc2f036:d73ed2a4170ea4fbb7b3ad480dc0ea08$</string>
+            <string>$TexturePacker:SmartUpdate:219727086f993dcc89da5b809983e3c8:bc27e2514be40aa6b9e3bedd57ce0667:d73ed2a4170ea4fbb7b3ad480dc0ea08$</string>
             <key>textureFileName</key>
             <string>rzsd01.png</string>
         </dict>

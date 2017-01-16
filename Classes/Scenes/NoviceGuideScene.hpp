@@ -10,5 +10,19 @@
 #define NoviceGuideScene_hpp
 
 #include <stdio.h>
+#include "cocos2d.h"
 
+USING_NS_CC;
+
+class NoviceGuide : public cocos2d::Layer{
+        
+public:
+        static Scene* createScene();
+        virtual bool init() override;
+        CREATE_FUNC(NoviceGuide);
+        ~NoviceGuide();
+        void onEnter() override;
+        void update(float delta)override;
+        virtual void onExit()override;
+};
 #endif /* NoviceGuideScene_hpp */

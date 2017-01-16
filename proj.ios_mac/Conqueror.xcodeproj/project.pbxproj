@@ -590,8 +590,8 @@
 				7C21A0E61DCB2F450035ECC6 /* GameSettingsScene.cpp */,
 				7C4193AF1E13AB7E00FD029E /* BuySupplyScene.hpp */,
 				7C4193AE1E13AB7E00FD029E /* BuySupplyScene.cpp */,
-				7C2786D21E2CBD9500AF4EC9 /* NoviceGuideScene.cpp */,
 				7C2786D31E2CBD9500AF4EC9 /* NoviceGuideScene.hpp */,
+				7C2786D21E2CBD9500AF4EC9 /* NoviceGuideScene.cpp */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";

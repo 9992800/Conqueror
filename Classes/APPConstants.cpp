@@ -138,6 +138,7 @@ GolbalConfig::GolbalConfig(){
         
         frameCache->addSpriteFramesWithFile("anim/dice_colors.plist", "anim/dice_colors.png");
         frameCache->addSpriteFramesWithFile("anim/coins_change.plist", "anim/coins_change.png");
+        frameCache->addSpriteFramesWithFile("common_anim/loadingdh.plist", "anim/loadingdh.png");
 }
 
 GolbalConfig::~GolbalConfig(){
@@ -192,6 +193,7 @@ GolbalConfig::~GolbalConfig(){
         
         frameCache->removeSpriteFramesFromFile("anim/dice_colors.plist");
         frameCache->removeSpriteFramesFromFile("anim/coins_change.plist");
+        frameCache->removeSpriteFramesFromFile("common_anim/loadingdh.plist");
 }
 
 
@@ -615,6 +617,18 @@ void GolbalConfig::initAnimation(){
         
         animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
         AnimationCache::getInstance()->addAnimation(animation, "coins_changes");
+        
+        //---------------------------------------------------------------
+        animFrames.clear();
+        for (int i = 0; i < 10; i++){
+                sprintf(str, "loding%d.png", i);
+                auto frame = frameCache->getSpriteFrameByName(str);
+                animFrames.pushBack(frame);
+        }
+        
+        animation = Animation::createWithSpriteFrames(animFrames, frame_delay);
+        AnimationCache::getInstance()->addAnimation(animation, "common_waiting");
+        
 }
 
 void GolbalConfig::initAchievementData(){

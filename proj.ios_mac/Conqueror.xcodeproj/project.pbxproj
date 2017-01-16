@@ -40,7 +40,6 @@
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
 		7C152D691DFFA70000E6C1BB /* APPConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C152D671DFFA70000E6C1BB /* APPConstants.cpp */; };
-		7C21A0D91DC9A11E0035ECC6 /* StartingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0D71DC9A11E0035ECC6 /* StartingScene.cpp */; };
 		7C21A0DC1DC9C06C0035ECC6 /* sliderProgress.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C21A0DB1DC9C06C0035ECC6 /* sliderProgress.png */; };
 		7C21A0E11DC9E9A80035ECC6 /* SplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0DF1DC9E9A80035ECC6 /* SplashScene.cpp */; };
 		7C21A0E41DC9ED930035ECC6 /* LevelSelectScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0E21DC9ED930035ECC6 /* LevelSelectScene.cpp */; };
@@ -207,8 +206,6 @@
 		7C152D671DFFA70000E6C1BB /* APPConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = APPConstants.cpp; sourceTree = "<group>"; };
 		7C152D681DFFA70000E6C1BB /* APPConstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = APPConstants.hpp; sourceTree = "<group>"; };
 		7C21A0D31DC996F10035ECC6 /* AppMacros.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AppMacros.hpp; sourceTree = "<group>"; };
-		7C21A0D71DC9A11E0035ECC6 /* StartingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StartingScene.cpp; sourceTree = "<group>"; };
-		7C21A0D81DC9A11E0035ECC6 /* StartingScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StartingScene.hpp; sourceTree = "<group>"; };
 		7C21A0DB1DC9C06C0035ECC6 /* sliderProgress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sliderProgress.png; sourceTree = "<group>"; };
 		7C21A0DF1DC9E9A80035ECC6 /* SplashScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SplashScene.cpp; sourceTree = "<group>"; };
 		7C21A0E01DC9E9A80035ECC6 /* SplashScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SplashScene.hpp; sourceTree = "<group>"; };
@@ -576,8 +573,6 @@
 			children = (
 				7C21A0E01DC9E9A80035ECC6 /* SplashScene.hpp */,
 				7C21A0DF1DC9E9A80035ECC6 /* SplashScene.cpp */,
-				7C21A0D81DC9A11E0035ECC6 /* StartingScene.hpp */,
-				7C21A0D71DC9A11E0035ECC6 /* StartingScene.cpp */,
 				7C21A0E31DC9ED930035ECC6 /* LevelSelectScene.hpp */,
 				7C21A0E21DC9ED930035ECC6 /* LevelSelectScene.cpp */,
 				7C21A0EB1DCB39050035ECC6 /* GameScene.hpp */,
@@ -876,7 +871,6 @@
 				7C21A0E11DC9E9A80035ECC6 /* SplashScene.cpp in Sources */,
 				BBC812DE1DCA3CB000EC8874 /* GameHelpScene.cpp in Sources */,
 				7C21A1101DCB4F010035ECC6 /* JoinData.cpp in Sources */,
-				7C21A0D91DC9A11E0035ECC6 /* StartingScene.cpp in Sources */,
 				7C21A0F71DCB3A3C0035ECC6 /* PopUpBaseDialog.cpp in Sources */,
 				7C21A10F1DCB4F010035ECC6 /* GamePlayer.cpp in Sources */,
 				7C21A10D1DCB4F010035ECC6 /* AreaData.cpp in Sources */,

@@ -34,8 +34,12 @@ bool ModalLayer::init(){
         _backGround->setPosition(Vec2(visibleSize / 2));
         this->addChild(_backGround, 0, kTagBackGrd);
         
-        _waitingTips = Sprite::create("waiting_ring.png");
+        auto frameCache = SpriteFrameCache::getInstance();
+        
+        auto frame = frameCache->getSpriteFrameByName("loding0.png");
+        _waitingTips = Sprite::create();
         _waitingTips->setPosition(center);
+        _waitingTips->setSpriteFrame(frame);
         this->addChild(_waitingTips);
         
         return true;
@@ -56,8 +60,13 @@ void ModalLayer::afterAnimation(){
 
 void ModalLayer::onEnter(){
         Layer::onEnter();
+        auto cache = AnimationCache::getInstance();
+        auto waiting_anim = cache->getAnimation("common_waiting")->clone();
+        waiting_anim->setLoops(60);
+        waiting_anim->setRestoreOriginalFrame(true);
+        
         CallFunc* callback = CallFunc::create(std::bind(&ModalLayer::afterAnimation, this));
-        Sequence*  s = Sequence::create(Repeat::create(RotateBy::create(1, 360*1), 60) , callback, nullptr);
+        Sequence*  s = Sequence::create(Animate::create(waiting_anim) , callback, nullptr);
         _waitingTips->runAction(s);
 }
 

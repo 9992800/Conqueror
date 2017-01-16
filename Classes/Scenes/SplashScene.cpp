@@ -6,8 +6,7 @@
 //
 //
 
-#include "SplashScene.hpp"
-#include "StartingScene.hpp"
+#include "SplashScene.hpp" 
 #include "SimpleAudioEngine.h"
 #include "AppMacros.hpp"
 #include "GamePayUtil.hpp"

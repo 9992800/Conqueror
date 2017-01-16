@@ -1316,7 +1316,7 @@ void GameScene::shareThisGame(Ref* btn){
                 info.link = "https://itunes.apple.com/us/app/island-conqueror/id1172744843?l=zh&ls=1&mt=8";
                 
                 info.image = FileUtils::getInstance()->fullPathForFilename("fb_used_toshare.png");
-                sdkbox::PluginFacebook::share(info);
+                sdkbox::PluginFacebook::dialog(info);
                 
         }else{
                 std::vector<std::string> permissions;
@@ -1425,15 +1425,16 @@ void GameScene::onLogin(bool, const std::string&){
 }
 void GameScene::onSharedSuccess(const std::string& infos){
         CCLOG("===onSharedSuccess=%s", infos.c_str());
+        
+        _winDialogLayer->removeFromParent();
         auto visible_size = Director::getInstance()->getVisibleSize();
         auto from = visible_size * 0.5f;
-        Vec2 dest(0, visible_size.height);
         auto call_back = CallFunc::create([this](){
                 _theGameLogic->finishHistoryRecord();
                 Director::getInstance()->popScene();
         });
         
-        int rewards = AchievementEngine::getInstance()->dailyShareReward(_controlLayer, from, dest, call_back);
+        int rewards = AchievementEngine::getInstance()->dailyShareReward(_controlLayer, from, visible_size, call_back);
         
         if (rewards == 0){
                 _theGameLogic->finishHistoryRecord();

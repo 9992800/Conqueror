@@ -21,5 +21,37 @@ bool NoviceGuide::init(){
                 return false;
         }
         
+        this->initMap();
+        
+        this->initController();
+        
+        this->initGuideData();
+        
         return true;
+}
+
+NoviceGuide::~NoviceGuide(){
+}
+
+#pragma mark - init logic
+
+void NoviceGuide::initMap(){
+}
+
+void NoviceGuide::initController(){
+}
+
+void NoviceGuide::initGuideData(){
+}
+
+#pragma mark -  update logic
+
+void NoviceGuide::onEnter(){
+        Layer::onEnter();
+}
+void NoviceGuide::update(float delta){
+}
+
+void NoviceGuide::onExit(){
+        Layer::onExit();
 }

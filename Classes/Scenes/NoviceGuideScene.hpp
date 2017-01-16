@@ -24,5 +24,9 @@ public:
         void onEnter() override;
         void update(float delta)override;
         virtual void onExit()override;
+        
+        void initMap();
+        void initController();
+        void initGuideData();
 };
 #endif /* NoviceGuideScene_hpp */

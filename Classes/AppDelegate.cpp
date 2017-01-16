@@ -3,7 +3,7 @@
 #include "AppMacros.hpp"
 #include "MapBasicInfo.hpp" 
 #include "audio/include/SimpleAudioEngine.h"
-
+#include "Sdkbox/Sdkbox.h" 
 using namespace CocosDenshion;
 AppDelegate::AppDelegate()
 {
@@ -50,6 +50,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
                 searchPath.push_back(smallResource.directory);
                 director->setContentScaleFactor(smallResource.size.height/designResolutionSize.height);
         }
+        
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        sdkbox::init("dca2d3a93158765c0d2bf71f2cd35cbd", "d931613d4786cd34");
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        sdkbox::init("36496fe1ef29addc1d4cffadef1230ab", "e9d28c96a0d91f80", "googleplay");
+        sdkbox::init("a21a531fe0b8c82b5900125aa3333696", "ecec9255e641a32e", "playphone");
+#endif
 
         FileUtils::getInstance()->setSearchPaths(searchPath);
         

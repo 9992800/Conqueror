@@ -960,7 +960,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bellflower.Conqueror;
 				PRODUCT_NAME = "Island Conqueror";
-				PROVISIONING_PROFILE = "ce6f5698-f608-4b68-8c33-51e60ea7a61c";
+				PROVISIONING_PROFILE = "ad923f62-bb07-426b-a8ac-e6fdee5464f1";
 				PROVISIONING_PROFILE_SPECIFIER = Conquero_debug_pro;
 				SDKROOT = iphoneos;
 				STRIP_PNG_TEXT = NO;

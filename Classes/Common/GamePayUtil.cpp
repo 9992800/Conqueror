@@ -27,7 +27,11 @@ GamePayUtil* GamePayUtil::getInstance()
 #pragma mark - init the app store
 
 bool GamePayUtil::init(){
+#if COCOS2D_DEBUG >= 1
         IAP::setDebug(true);
+#else
+        IAP::setDebug(false);
+#endif
         IAP::setListener(this);
         IAP::init();
         

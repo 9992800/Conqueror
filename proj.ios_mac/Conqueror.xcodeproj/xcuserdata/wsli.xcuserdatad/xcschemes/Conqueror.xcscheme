@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-               BuildableName = "Conqueror.app"
+               BuildableName = "Island Conqueror.app"
                BlueprintName = "Conqueror"
                ReferencedContainer = "container:Conqueror.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "Conqueror.app"
+            BuildableName = "Island Conqueror.app"
             BlueprintName = "Conqueror"
             ReferencedContainer = "container:Conqueror.xcodeproj">
          </BuildableReference>
@@ -56,7 +56,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "Conqueror.app"
+            BuildableName = "Island Conqueror.app"
             BlueprintName = "Conqueror"
             ReferencedContainer = "container:Conqueror.xcodeproj">
          </BuildableReference>
@@ -75,14 +75,14 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
-            BuildableName = "Conqueror.app"
+            BuildableName = "Island Conqueror.app"
             BlueprintName = "Conqueror"
             ReferencedContainer = "container:Conqueror.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
-      buildConfiguration = "Debug">
+      buildConfiguration = "Release">
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"

@@ -4,7 +4,7 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>cqssd010001.png</key>
+            <key>cassd010001.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,354},{108,174}}</string>
@@ -17,7 +17,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010002.png</key>
+            <key>cassd010002.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,178},{108,174}}</string>
@@ -30,7 +30,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010003.png</key>
+            <key>cassd010003.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{178,354},{106,174}}</string>
@@ -43,7 +43,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010004.png</key>
+            <key>cassd010004.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{530,354},{104,174}}</string>
@@ -56,7 +56,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010005.png</key>
+            <key>cassd010005.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{432,178},{104,174}}</string>
@@ -69,7 +69,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010006.png</key>
+            <key>cassd010006.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{432,2},{104,174}}</string>
@@ -82,7 +82,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010007.png</key>
+            <key>cassd010007.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{354,354},{104,174}}</string>
@@ -95,7 +95,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010008.png</key>
+            <key>cassd010008.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{706,320},{104,172}}</string>
@@ -108,7 +108,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010009.png</key>
+            <key>cassd010009.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{538,214},{104,172}}</string>
@@ -121,7 +121,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010010.png</key>
+            <key>cassd010010.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{706,108},{104,172}}</string>
@@ -134,7 +134,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010011.png</key>
+            <key>cassd010011.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{880,2},{104,172}}</string>
@@ -147,7 +147,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010012.png</key>
+            <key>cassd010012.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{706,2},{104,172}}</string>
@@ -160,7 +160,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010013.png</key>
+            <key>cassd010013.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{326,178},{104,174}}</string>
@@ -173,7 +173,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010014.png</key>
+            <key>cassd010014.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{326,2},{104,174}}</string>
@@ -186,7 +186,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010015.png</key>
+            <key>cassd010015.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{220,178},{104,174}}</string>
@@ -199,7 +199,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010016.png</key>
+            <key>cassd010016.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{220,2},{104,174}}</string>
@@ -212,7 +212,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010017.png</key>
+            <key>cassd010017.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{112,178},{106,174}}</string>
@@ -225,7 +225,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010018.png</key>
+            <key>cassd010018.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{112,2},{106,174}}</string>
@@ -238,7 +238,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010019.png</key>
+            <key>cassd010019.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{108,174}}</string>
@@ -251,7 +251,7 @@
                 <key>sourceSize</key>
                 <string>{180,180}</string>
             </dict>
-            <key>cqssd010020.png</key>
+            <key>cassd010020.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,354},{108,174}}</string>
@@ -274,7 +274,7 @@
             <key>size</key>
             <string>{1024,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:050ff3cf20261236bba68c94f25e280e:f0648038776798ca29a4cd789f1264df:820dfe7d21008a38fc1086e26b4e430c$</string>
+            <string>$TexturePacker:SmartUpdate:c46b670a886be454e38f73a84c314150:f0648038776798ca29a4cd789f1264df:820dfe7d21008a38fc1086e26b4e430c$</string>
             <key>textureFileName</key>
             <string>cqssd01.png</string>
         </dict>

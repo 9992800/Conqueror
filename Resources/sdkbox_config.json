@@ -1,6 +1,7 @@
 {
         "ios" : {
                 "Facebook" : {
+                        "debug" : false,
                         "app_id" : "608545899354118",
                         "url_scheme_suffix" : ""
                 },
@@ -31,7 +32,7 @@
         },
         "android" : {
                 "Facebook" : {
-                        "debug" : true
+                        "debug" : false
                 },
                 "iap" : {
                         "key" : "iLGKOXzrWf0i+iNudibv+zAM6mk=",

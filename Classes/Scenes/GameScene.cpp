@@ -226,11 +226,8 @@ void GameScene::initOperateBoard(){
                                                   "maps/supply_finished.png");
         _addArmyBtn->setPosition(operat_board_r->getContentSize() / 2);
         _addArmyBtn->addClickEventListener(CC_CALLBACK_1(GameScene::menuAddArmy, this));
-        auto counter = Label::createWithSystemFont("0", "fonts/arial.ttf", 48);
-        counter->setIgnoreAnchorPointForPosition(false);
-        counter->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+        auto counter =  ui::TextBMFont::create("0", "fonts/zb_chongzhi_shuzi.fnt");
         counter->setPosition(_addArmyBtn->getContentSize() / 2);
-        counter->setColor(Color3B::ORANGE);
         _addArmyBtn->addChild(counter, 1, key_supply_turn_counter_tag);
         counter->setVisible(false);
         operat_board_r->addChild(_addArmyBtn);
@@ -1218,7 +1215,7 @@ void GameScene::menuEndTurn(Ref* pSender){
         
         
         _addtionalSupplyCounter--;
-        Label* counter_lab = (Label*)_addArmyBtn->getChildByTag(key_supply_turn_counter_tag);
+        ui::TextBMFont* counter_lab = (ui::TextBMFont*)_addArmyBtn->getChildByTag(key_supply_turn_counter_tag);
         
         if (_addtionalSupplyCounter == 0){
                 _addArmyBtn->setEnabled(true);
@@ -1377,7 +1374,7 @@ void GameScene::playAddMercenary(){
         
         _addArmyBtn->setEnabled(false);
         _addArmyBtn->setBright(false);
-        Label* counter_lab = (Label*)_addArmyBtn->getChildByTag(key_supply_turn_counter_tag);
+        ui::TextBMFont* counter_lab = (ui::TextBMFont*)_addArmyBtn->getChildByTag(key_supply_turn_counter_tag);
         _addtionalSupplyCounter = TURN_INTERVAL_FOR_SUPPLEMENTS;
         counter_lab->setString(StringUtils::format("%d", TURN_INTERVAL_FOR_SUPPLEMENTS));
         counter_lab->setVisible(true);

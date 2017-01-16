@@ -25,14 +25,7 @@ bool ModalLayer::init(){
         this->setContentSize(visibleSize);
         this->setPosition(center);
         this->setIgnoreAnchorPointForPosition(false);
-        this->setAnchorPoint(Vec2(0.5f, 0.5f));
-        
-        auto _backGround = cocos2d::ui::Scale9Sprite::create("Modal_DIALOG_BG.png");
-        Size  bg_size(visibleSize.width / 2, visibleSize.height / 2);
-        _backGround->setContentSize(bg_size);
-        _backGround->setCapInsets(Rect(8, 8, 32, 32));
-        _backGround->setPosition(Vec2(visibleSize / 2));
-        this->addChild(_backGround, 0, kTagBackGrd);
+        this->setAnchorPoint(Vec2(0.5f, 0.5f)); 
         
         auto frameCache = SpriteFrameCache::getInstance();
         
@@ -62,7 +55,7 @@ void ModalLayer::onEnter(){
         Layer::onEnter();
         auto cache = AnimationCache::getInstance();
         auto waiting_anim = cache->getAnimation("common_waiting")->clone();
-        waiting_anim->setLoops(60);
+        waiting_anim->setLoops(120);
         waiting_anim->setRestoreOriginalFrame(true);
         
         CallFunc* callback = CallFunc::create(std::bind(&ModalLayer::afterAnimation, this));

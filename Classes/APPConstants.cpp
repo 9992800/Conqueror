@@ -138,7 +138,7 @@ GolbalConfig::GolbalConfig(){
         
         frameCache->addSpriteFramesWithFile("anim/dice_colors.plist", "anim/dice_colors.png");
         frameCache->addSpriteFramesWithFile("anim/coins_change.plist", "anim/coins_change.png");
-        frameCache->addSpriteFramesWithFile("common_anim/loadingdh.plist", "anim/loadingdh.png");
+        frameCache->addSpriteFramesWithFile("common_anim/loadingdh.plist", "common_anim/loadingdh.png");
 }
 
 GolbalConfig::~GolbalConfig(){

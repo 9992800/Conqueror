@@ -47,13 +47,13 @@ GameData* DiceGame::initGameData(int num, int character, int colorIndex){
                 _data->_player[i]->setPosCharactorIdx(i);
         }
         
-        
         if (colorIndex < num){
                 std::string str = _data->_player[_data->_userId]->getFlagImge();
                 _data->_player[colorIndex]->setFlagImg(str);
                 int c_i = _data->_player[_data->_userId]->getAreaColorIndex();
                 _data->_player[colorIndex]->setAreaColorIndex(c_i);
         }
+        
         _data->_player[_data->_userId]->setFlagImg(player_flag_img);
         _data->_player[_data->_userId]->setAreaColorIndex(colorIndex);
         
@@ -61,6 +61,7 @@ GameData* DiceGame::initGameData(int num, int character, int colorIndex){
                 int idx = _data->_player[_data->_userId]->getPosCharactorIdx();
                 _data->_player[character]->setPosCharactorIdx(idx);
         }
+        
         _data->_player[_data->_userId]->setPosCharactorIdx(character);
         
         _clonedGameData = GameData::createWithData(_data);

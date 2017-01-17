@@ -25,9 +25,6 @@ public:
         virtual void onEnter() override;
         void update(float delta)override;
         virtual void onExit()override;
-        
-        void gameOver(Ref* btn, int result);
-
 private:
         int _count = 0;
         LoadingBar* _loadingBar;

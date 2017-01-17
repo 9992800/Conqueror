@@ -130,6 +130,9 @@ enum {
 #define ADS_LOCK_STATE_KEY              "_key_ads_lock_state"
 
 
+#define GAME_STATUS_GUIDE_FINISHED      "_key_game_status_guide_finished"
+
+
 #define CHARACTOR_1_LOCK_STATE_KEY      "_key_charactor_1_lock_state"
 #define CHARACTOR_2_LOCK_STATE_KEY      "_key_charactor_2_lock_state"
 #define CHARACTOR_3_LOCK_STATE_KEY      "_key_charactor_3_lock_state"
@@ -164,7 +167,7 @@ enum {
 #define USER_CURRENT_SUPPLY_NO          "_key_user_current_supply_no"
 
 #if COCOS2D_DEBUG >= 1
-        #define USER_DEFAULT_COINS_ONFIRST      (30000)
+        #define USER_DEFAULT_COINS_ONFIRST      (300)
 #else
         #define USER_DEFAULT_COINS_ONFIRST      (30)
 #endif
@@ -230,10 +233,6 @@ enum{
 
 #define TILE_COLOR_BACKGRUND Color4B(0x3E, 0xA5, 0xDD, 255)
 //Color4F((float)0x3E/0xff, (float)0xA5/0xff, (float)0xDD/0xff, 1),//back ground
- 
-#define MAP_GAM_WIDTH   (60)
-
-#define MAP_GAM_HEIGHT  (60)
 
 enum {
         PLAYER_ROLE_TYPE_ZHANSHI = 0,

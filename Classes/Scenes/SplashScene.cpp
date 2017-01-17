@@ -13,6 +13,7 @@
 #include "PopUpOkCancelDialog.hpp"
 #include "LevelSelectScene.hpp"
 #include "APPConstants.hpp"
+#include "NoviceGuideScene.hpp"
 
 using namespace CocosDenshion;
 #pragma makr - init scene
@@ -60,11 +61,6 @@ bool Splash::init()
         
         return true;
 }
-
-void Splash::gameOver(Ref* btn, int result){
-        
-}
-
 
 #pragma makr - refresh loading bars
 
@@ -131,11 +127,14 @@ void Splash::update(float delta){
         if (_count < 100)
                 _count += 1 ;
         else{
-//                auto starting = Starting::createScene();
-//                Director::getInstance()->replaceScene(starting);
-                
-                auto main = LevelSelect::createScene();
-                Director::getInstance()->replaceScene(main);
+                bool guide_finished = UserDefault::getInstance()->getBoolForKey(GAME_STATUS_GUIDE_FINISHED, false);
+                if (guide_finished){
+                        auto main = LevelSelect::createScene();
+                        Director::getInstance()->replaceScene(main);
+                }else{
+                        auto scene = NoviceGuide::createScene();
+                        Director::getInstance()->replaceScene(scene);
+                }
         }
         
         _loadingBar->setPercent(_count);

@@ -36,6 +36,8 @@ private:
         void showSelectGuide(Ref*);
         void showSupplyGuide(Ref*);
         void showEngageMercenary(Ref*);
+        void choseFromArea(Ref*);
+        void choseToArea(Ref*);
         
 private:
         int     _curGuideState;
@@ -48,7 +50,16 @@ private:
         cocos2d::Sprite *_tcShowMe,
                         *_tcShowEnemy,
                         *_guideHandUpDown,
-                        *_guideHandLeftRight;
+                        *_guideHandLeftRight,
+                        *_tcMapShineBeforeAction,
+                        *_tcMapShinefterAction,
+                        *_beforeActionFromMe,
+                        *_befroeActionTargetEnemy,
+                        *_afterActionMe,
+                        *_afterActionEnmey,
+                        *_meShineBack,
+                        *_enemyShineBack;
+        
         cocos2d::ui::Scale9Sprite  *_guideLayer;
         cocos2d::Label  *_contentText, *_tcShowNumbMe, *_tcShowNumbEnemy;
         cocos2d::RepeatForever  *_handsUpDownAnim,

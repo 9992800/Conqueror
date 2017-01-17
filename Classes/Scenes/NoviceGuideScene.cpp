@@ -55,6 +55,7 @@ NoviceGuide::~NoviceGuide(){
 
 #pragma mark - init logic
 void NoviceGuide::initMap(){
+        auto visible_size = Director::getInstance()->getVisibleSize();
         auto back_ground = LayerColor::create(TILE_COLOR_BACKGRUND);
         this->addChild(back_ground, 1);
         auto back_layer_size = back_ground->getContentSize();
@@ -63,7 +64,62 @@ void NoviceGuide::initMap(){
         guide_back_img->setPosition(back_layer_size * 0.5f);
         back_ground->addChild(guide_back_img);
         
+        _tcMapShineBeforeAction = Sprite::create("guide/shine_char_me_tc_8.png");
+        _tcMapShineBeforeAction->setPosition(visible_size * 0.5f);
+        guide_back_img->addChild(_tcMapShineBeforeAction, 2);
         
+        _tcMapShinefterAction = Sprite::create("guide/shine_char_me_tc_9.png");
+        _tcMapShinefterAction->setPosition(visible_size * 0.5f);
+        guide_back_img->addChild(_tcMapShinefterAction, 2);
+        
+        _meShineBack = Sprite::create("guide/shine_char_me.png");
+        _meShineBack->setPosition(visible_size * 0.5f);
+        guide_back_img->addChild(_meShineBack, 2);
+        
+        _enemyShineBack = Sprite::create("guide/shine_target_enemy.png");
+        _enemyShineBack->setPosition(visible_size * 0.5f);
+        guide_back_img->addChild(_enemyShineBack, 2);
+        
+        _tcMapShineBeforeAction->setOpacity(0);
+        auto fade_in = FadeOut::create(1.f);
+        auto shining = RepeatForever::create(Sequence::create(fade_in, fade_in->reverse(), NULL));
+        
+        _tcMapShinefterAction->setVisible(false);
+        _tcMapShineBeforeAction->setVisible(false);
+        _enemyShineBack->setVisible(false);
+        _meShineBack->setVisible(false);
+        
+        _enemyShineBack->runAction(shining->clone());
+        _meShineBack->runAction(shining->clone());
+        _tcMapShineBeforeAction->runAction(shining->clone());
+        _tcMapShinefterAction->runAction(shining);
+        
+        _beforeActionFromMe = Sprite::create("guide/char_me_s.png");
+        _beforeActionFromMe->setPosition(visible_size * 0.5f);
+        guide_back_img->addChild(_beforeActionFromMe, 1);
+        
+        _afterActionMe = Sprite::create("guide/char_me_e.png");
+        _afterActionMe->setPosition(visible_size * 0.5f);
+        guide_back_img->addChild(_afterActionMe, 1);
+        _afterActionMe->setVisible(false);
+        
+        _befroeActionTargetEnemy = Sprite::create("guide/target_enemy_s.png");
+        _befroeActionTargetEnemy->setPosition(visible_size * 0.5f);
+        guide_back_img->addChild(_befroeActionTargetEnemy, 1);
+        
+        _afterActionEnmey = Sprite::create("guide/target_enemy_e.png");
+        _afterActionEnmey->setPosition(visible_size * 0.5f);
+        guide_back_img->addChild(_afterActionEnmey, 1);
+        
+        auto select_from = ui::Button::create("level/sel_num_btn_back.png");
+        select_from->addClickEventListener(CC_CALLBACK_1(NoviceGuide::choseFromArea, this));
+        select_from->setPosition(Vec2(visible_size.width *0.25f, visible_size.height * 0.7f));
+        guide_back_img->addChild(select_from, 3);
+        
+        auto target_to = ui::Button::create("level/sel_num_btn_back.png");
+        target_to->addClickEventListener(CC_CALLBACK_1(NoviceGuide::choseToArea, this));
+        target_to->setPosition(Vec2(visible_size.width *0.4f, visible_size.height * 0.75f));
+        guide_back_img->addChild(target_to, 3);
 }
 
 void NoviceGuide::initController(){
@@ -202,23 +258,21 @@ void NoviceGuide::initController(){
         character_me->setScale(0.7);
         auto ch_size = character_me->getContentSize();
 
-        _tcShowNumbMe = Label::createWithSystemFont("X4", "fonts/arial.ttf", 26);
+        _tcShowNumbMe = Label::createWithSystemFont("X8", "fonts/arial.ttf", 26);
         character_me->addChild(_tcShowNumbMe);
         _tcShowNumbMe->setPosition(Vec2(ch_size.width, ch_size.height / 2));
         character_me->setPosition(p_size.width * 0.4,  p_size.height * 0.7);
         _tcShowMe->addChild(character_me);
         
         
-        //TODO::
+
         _tcShowEnemy = Sprite::create("maps/supply_back_1.png");
         _tcShowEnemy->setPosition(Vec2(21 +  1.5  * p_size.width,  roll->getContentSize().height - p_size.height / 2));
         roll->addChild(_tcShowEnemy, 1);
         auto character_enemy = Sprite::create("xunshoushi_pos.png");
         character_enemy->setScale(0.7f);
         
-        
-        //TODO::
-        _tcShowNumbEnemy = Label::createWithSystemFont("X3", "fonts/arial.ttf", 26);
+        _tcShowNumbEnemy = Label::createWithSystemFont("X6", "fonts/arial.ttf", 26);
         character_enemy->addChild(_tcShowNumbEnemy);
         _tcShowNumbEnemy->setPosition(Vec2(ch_size.width, ch_size.height / 2));
         character_enemy->setPosition(p_size.width * 0.4,  p_size.height * 0.7);
@@ -281,6 +335,7 @@ void NoviceGuide::initGuideData(){
         _nextButton->setTitleText("Next");
         _nextButton->setTitleFontName("fonts/arial.ttf");
         _nextButton->setTitleFontSize(24);
+        _nextButton->setVisible(false);
         _guideLayer->addChild(_nextButton, 1, kGuideLayerNextBtnTag);
 }
 
@@ -323,7 +378,7 @@ void NoviceGuide::menuStartGame(Ref* pSender){
         _guideHandLeftRight->setVisible(true);
         _guideHandUpDown->setVisible(false);
         
-        _contentText->setString("       Here it shows the max number of  your joined area, it also means how many soldiers you can get after this turn. In this guide although you have 16 areas in the map, but the max number of joined area is 4. Here it also shows the same informatins of your enemy.");
+        _contentText->setString("       Here it shows the max number of  your joined area, it also means how many soldiers you can get after this turn. In this guide although you have 15 areas in the map, but the max number of joined area is 8. Here it also shows the same informatins of your enemy.");
         
         auto scale_by = ScaleBy::create(0.8f, 1.2f);
         auto seq = Repeat::create(Sequence::create(scale_by, scale_by->reverse(), NULL), 5);
@@ -334,9 +389,10 @@ void NoviceGuide::menuStartGame(Ref* pSender){
         
         auto pos2 = this->convertToNodeSpace(pos);
         _guideHandLeftRight->setPosition(Vec2(pos2.x - _tcShowMe->getContentSize().width, pos2.y));
-        _guideLayer->setPosition(Vec2(pos2.x, pos2.y - 0.8f *_contentText->getContentSize().height));
+        _guideLayer->setPosition(Vec2(pos2.x + 0.5f * _contentText->getContentSize().width, pos2.y - 0.8f *_contentText->getContentSize().height));
         _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::showSelectGuide, this));
         _nextButton->setVisible(true);
+        _tcMapShinefterAction->setVisible(true);
 }
 
 void NoviceGuide::menuEndTurn(Ref* pSender){
@@ -355,9 +411,12 @@ void NoviceGuide::showSelectGuide(Ref* btn){
         _guideHandLeftRight->setVisible(true);
         _guideHandUpDown->setVisible(false);
         
-        //TODO::From area scale animation, after selected,next step.
-        
         _curGuideState = GUIDE_GAME_STATUS_SELECT_SELF;
+        
+        _tcMapShinefterAction->setVisible(false);
+        _meShineBack->setVisible(true);
+        
+        _contentText->setString("       Click this area.");
 }
 
 void NoviceGuide::showSupplyGuide(Ref*){
@@ -423,8 +482,8 @@ void NoviceGuide::showSupplyGuide(Ref*){
                 auto seq = Sequence::create(scale_by, scale_by->reverse(), NULL);
                 _tcShowMe->runAction(seq->clone());
                 _tcShowEnemy->runAction(seq);
-                _tcShowNumbMe->setString("X5");
-                _tcShowNumbEnemy->setString("X2");//TODO::
+                _tcShowNumbMe->setString("X9");
+                _tcShowNumbEnemy->setString("X5");
         });
         
         
@@ -454,7 +513,7 @@ void NoviceGuide::showEngageMercenary(Ref*){
                 
                 btn_anim->removeFromParentAndCleanup(true);
                 
-                _tcShowNumbMe->setString("X15");//TODO::
+                _tcShowNumbMe->setString("X19");
                 auto scale_s = ScaleTo::create(0.3, 1.4f);
                 auto scale_s_r = ScaleTo::create(0.3, 1.0f);
                 auto seq = Sequence::create(scale_s, scale_s_r, NULL);
@@ -467,4 +526,13 @@ void NoviceGuide::showEngageMercenary(Ref*){
         _counterTurns = ui::TextBMFont::create("4", "fonts/zb_chongzhi_shuzi.fnt");
         _counterTurns->setPosition(_mercenaryBtn->getContentSize() * 0.5f);
         _mercenaryBtn->addChild(_counterTurns);
+}
+
+
+void NoviceGuide::choseFromArea(Ref*){
+        
+}
+
+void NoviceGuide::choseToArea(Ref*){
+        
 }

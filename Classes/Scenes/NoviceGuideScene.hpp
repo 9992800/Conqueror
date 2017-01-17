@@ -10,7 +10,9 @@
 #define NoviceGuideScene_hpp
 
 #include <stdio.h>
-#include "cocos2d.h" 
+#include "cocos2d.h"
+
+USING_NS_CC;
 
 class NoviceGuide : public cocos2d::Layer{
         
@@ -26,19 +28,33 @@ public:
         void initMap();
         void initController();
         void initGuideData();
-        void initTopTittle();
-        
 private:
         void menuExit(Ref* pSender);
         void menuEngageArmy(Ref* pSender);
         void menuStartGame(Ref* pSender);
         void menuEndTurn(Ref* pSender);
+        void showSelectGuide(Ref*);
+        void showSupplyGuide(Ref*);
+        void showEngageMercenary(Ref*);
         
 private:
+        int     _curGuideState;
         Layer   *_controlLayer,
                 *_diceResultLayer,
                 *_endTurnTipsLayer,
                 *_supplyShowLayer,
                 *_choseMapLayer;
+        
+        cocos2d::Sprite *_tcShowMe,
+                        *_tcShowEnemy,
+                        *_guideHandUpDown,
+                        *_guideHandLeftRight;
+        cocos2d::ui::Scale9Sprite  *_guideLayer;
+        cocos2d::Label  *_contentText, *_tcShowNumbMe, *_tcShowNumbEnemy;
+        cocos2d::RepeatForever  *_handsUpDownAnim,
+                                *_handsLeftRightAnim;
+        
+        ui::Button    *_nextButton, *_mercenaryBtn, *_endTurnBtn;
+        ui::TextBMFont* _counterTurns;
 };
 #endif /* NoviceGuideScene_hpp */

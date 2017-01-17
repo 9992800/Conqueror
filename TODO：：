@@ -1,17 +1,12 @@
 TODO：： 
-4,  share logic ,share pictures
+4,  share logic
 5， sound effect logic in whole game.-----new sound for different effect
-
---------------------------------------------------------- 
-2:bolck all button.
-1:test all the sounds effects. 
-14，post contents and pictures by facebook. and also logic of facebook share ,bonus coins
-15,prepair facebook setting for online post.
+1， logic of facebook share
+15, prepair facebook setting for online post.
  
--------show the achievement contents. 
 -------achievement animation show tips fansion. with a card.
 -------music and sounds effect.
--------english.
+-------the sound in tutorial
 
 
 
@@ -22,6 +17,13 @@ TODO：：
 
 
 
+
+
+
+
+
+
+======step1======
 
 
 
@@ -37,16 +39,16 @@ TODO：：
 
 
 ---------------------------二期------------------------------ 
-安卓适配
+
 新手引导
 成就升级
-角色增加
-代码优化
+角色增加 
 fnt 文件普及化
 
 ---------------------------三期------------------------------ 
 固定地图
 联机游戏
+安卓适配
 
 
 

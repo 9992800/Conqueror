@@ -29,7 +29,7 @@ bool ModalLayer::init(){
         
         auto frameCache = SpriteFrameCache::getInstance();
         
-        auto frame = frameCache->getSpriteFrameByName("loding0.png");
+        auto frame = frameCache->getSpriteFrameByName("loding0001.png");
         _waitingTips = Sprite::create();
         _waitingTips->setPosition(center);
         _waitingTips->setSpriteFrame(frame);

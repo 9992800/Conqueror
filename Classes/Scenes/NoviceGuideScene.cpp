@@ -16,6 +16,7 @@ enum{
         GUIDE_GAME_STATUS_START,
         GUIDE_GAME_STATUS_SELECT_SELF,
         GUIDE_GAME_STATUS_SELECT_ENEMY,
+        GUIDE_GAME_STATUS_SHOW_TCRES,
         GUIDE_GAME_STATUS_SHOW_MYRES,
         GUIDE_GAME_STATUS_SHOW_ENRES,
         GUIDE_GAME_STATUS_ENGAGE_MERCENARY,
@@ -110,13 +111,14 @@ void NoviceGuide::initMap(){
         _afterActionEnmey = Sprite::create("guide/target_enemy_e.png");
         _afterActionEnmey->setPosition(visible_size * 0.5f);
         guide_back_img->addChild(_afterActionEnmey, 1);
+        _afterActionEnmey->setVisible(false);
         
-        auto select_from = ui::Button::create("level/sel_num_btn_back.png");
+        auto select_from = ui::Button::create("level/sel_num_btn_back.png");//TODO::sel_num_btn_back_em
         select_from->addClickEventListener(CC_CALLBACK_1(NoviceGuide::choseFromArea, this));
         select_from->setPosition(Vec2(visible_size.width *0.25f, visible_size.height * 0.7f));
         guide_back_img->addChild(select_from, 3);
         
-        auto target_to = ui::Button::create("level/sel_num_btn_back.png");
+        auto target_to = ui::Button::create("level/sel_num_btn_back.png");//TODO::sel_num_btn_back_em
         target_to->addClickEventListener(CC_CALLBACK_1(NoviceGuide::choseToArea, this));
         target_to->setPosition(Vec2(visible_size.width *0.4f, visible_size.height * 0.75f));
         guide_back_img->addChild(target_to, 3);
@@ -389,7 +391,7 @@ void NoviceGuide::menuStartGame(Ref* pSender){
         
         auto pos2 = this->convertToNodeSpace(pos);
         _guideHandLeftRight->setPosition(Vec2(pos2.x - _tcShowMe->getContentSize().width, pos2.y));
-        _guideLayer->setPosition(Vec2(pos2.x + 0.5f * _contentText->getContentSize().width, pos2.y - 0.8f *_contentText->getContentSize().height));
+        _guideLayer->setPosition(Vec2(pos2.x + 0.6f * _contentText->getContentSize().width, pos2.y - 0.8f *_contentText->getContentSize().height));
         _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::showSelectGuide, this));
         _nextButton->setVisible(true);
         _tcMapShinefterAction->setVisible(true);
@@ -415,8 +417,6 @@ void NoviceGuide::showSelectGuide(Ref* btn){
         
         _tcMapShinefterAction->setVisible(false);
         _meShineBack->setVisible(true);
-        
-        _contentText->setString("       Click this area.");
 }
 
 void NoviceGuide::showSupplyGuide(Ref*){
@@ -530,9 +530,37 @@ void NoviceGuide::showEngageMercenary(Ref*){
 
 
 void NoviceGuide::choseFromArea(Ref*){
+        _enemyShineBack->setVisible(true);
+        _contentText->setString("       Click this area as your target.");
         
+        _curGuideState = GUIDE_GAME_STATUS_SELECT_ENEMY;
 }
 
 void NoviceGuide::choseToArea(Ref*){
+        auto cache = AnimationCache::getInstance();
+        auto fire = cache->getAnimation("finght_occupay");
+        fire->setRestoreOriginalFrame(true);
         
+        auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName("XX0001.png");
+        auto fire_spr = Sprite::create();
+        fire_spr->setSpriteFrame(frame);
+        fire_spr->setScale(0.5f);
+        fire_spr->setPosition(Vec2(_enemyShineBack->getContentSize() / 2));
+        _enemyShineBack->addChild(fire_spr);
+        
+        fire_spr->runAction(Sequence::create(Animate::create(fire), [this](){
+                _enemyShineBack->setVisible(false);
+                _meShineBack->setVisible(false);
+                _beforeActionFromMe->setVisible(false);
+                _afterActionMe->setVisible(true);
+                _befroeActionTargetEnemy->setVisible(false);
+                _afterActionEnmey->setVisible(true);
+                _tcMapShinefterAction->setVisible(true);
+                
+        }, NULL));
+        
+        _curGuideState = GUIDE_GAME_STATUS_SHOW_TCRES;
+        _contentText->setString("Now the max number of your joined area is 9 and your total areas number is 16.");
+        _nextButton->setVisible(true);
+        _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::menuEngageArmy, this));
 }

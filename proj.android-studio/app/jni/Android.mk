@@ -20,11 +20,11 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/AppDelegate.cpp \
                    ../../../Classes/APPConstants.cpp \
                    ../../../Classes/Scenes/SplashScene.cpp \
-                   ../../../Classes/Scenes/StartingScene.cpp \
                    ../../../Classes/Scenes/LevelSelectScene.cpp \
                    ../../../Classes/Scenes/ReplayLastScene.cpp \
                    ../../../Classes/Scenes/ShoppingScene.cpp \
                    ../../../Classes/Scenes/GameScene.cpp \
+                   ../../../Classes/Scenes/NoviceGuideScene.cpp \
                    ../../../Classes/Scenes/AchievementScene.cpp \
                    ../../../Classes/Scenes/BuySupplyScene.cpp \
                    ../../../Classes/RandomMap/RandomMap.cpp \

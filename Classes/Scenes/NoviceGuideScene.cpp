@@ -376,13 +376,7 @@ void NoviceGuide::menuEngageArmy(Ref* pSender){
         if (GUIDE_GAME_STATUS_ENGAGE_MERCENARY != _curGuideState)
                 return;
         
-        _curGuideState = GUIDE_GAME_STATUS_SUPPLY;
-        _counterTurns->setString("3");
         
-        _contentText->setString("Click this button to end your turn. Don't attack too much enemy's area, this will make your areas weak. Keep your area with more soldier then the enemy will not occupy your area easily.");
-        auto pos1 = _mercenaryBtn->getParent()->convertToWorldSpace(_mercenaryBtn->getPosition());
-        auto pos2 = this->convertToNodeSpace(pos1);
-        _guideHandUpDown->setPosition(pos2);
         
         auto btn_anim = _mercenaryBtn->clone();
         auto parent = _mercenaryBtn->getParent();
@@ -402,6 +396,16 @@ void NoviceGuide::menuEngageArmy(Ref* pSender){
                 auto seq = Sequence::create(scale_s, scale_s_r, NULL);
                 _tcShowMe->runAction(seq);
                 
+                
+                _curGuideState = GUIDE_GAME_STATUS_SUPPLY;
+                
+                _contentText->setString("Click this button to end your turn. Don't attack too much enemy's area, this will make your areas weak. Keep your area with more soldier then the enemy will not occupy your area easily.");
+                auto pos1 = _endTurnBtn->getParent()->convertToWorldSpace(_endTurnBtn->getPosition());
+                auto pos2 = this->convertToNodeSpace(pos1);
+                _guideHandUpDown->setPosition(pos2);
+                auto layer_size = _guideLayer->getContentSize();
+                _guideLayer->setPosition(pos2 + Vec2(0, 0.7 * layer_size.height));
+                
         }), NULL));
         
         _mercenaryBtn->setEnabled(false);
@@ -418,7 +422,7 @@ void NoviceGuide::menuStartGame(Ref* pSender){
         _guideHandLeftRight->setVisible(true);
         _guideHandUpDown->setVisible(false);
         
-        _contentText->setString("Here it shows the max number of  your joined area, it also means how many soldiers you can get after this turn.");
+        _contentText->setString("Here it shows the max number of  your adjoining area, it also means how many soldiers you can get after this turn.");
         
         auto scale_by = ScaleBy::create(0.8f, 1.2f);
         auto seq = Repeat::create(Sequence::create(scale_by, scale_by->reverse(), NULL), 5);
@@ -439,6 +443,7 @@ void NoviceGuide::menuEndTurn(Ref* pSender){
         if (GUIDE_GAME_STATUS_SUPPLY != _curGuideState)
                 return;
         
+        _counterTurns->setString("3");
 //        _curGuideState = ;
 }
 
@@ -458,10 +463,11 @@ void NoviceGuide::showSelectGuide(Ref* btn){
         
         auto pos1 = _selectFrom->getParent()->convertToWorldSpace(_selectFrom->getPosition());
         auto pos2 = this->convertToNodeSpace(pos1);
-        _guideHandUpDown->setPosition(pos2 + Vec2(0, -80));
+        _guideHandUpDown->setPosition(pos2 + Vec2(0, -60));
 }
 
-void NoviceGuide::showSupplyGuide(Ref*){
+void NoviceGuide::showCombatResult(Node* fires){
+        fires->removeFromParent();
         _endTurnTipsLayer->setVisible(false);
         _diceResultLayer->setVisible(true);
         _curGuideState = GUIDE_GAME_STATUS_SHOW_MYRES;
@@ -469,9 +475,9 @@ void NoviceGuide::showSupplyGuide(Ref*){
         auto back_size = _diceResultLayer->getContentSize();
         Size dice_size;
         auto frameCache = SpriteFrameCache::getInstance();
-        int from[] = {1, 4, 5, 6};
-        int to[] = {5, 6, 2};
-        for (int i = 0; i < 4; i++){
+        int from[] = {1, 4, 5, 6, 2, 2, 3};
+        int to[] = {5, 6};
+        for (int i = 0; i < 7; i++){
                 int value = from[i];
                 std::string dice_n = DICE_PIC_NAME_STR[0][value - 1];
                 auto frame = frameCache->getSpriteFrameByName(dice_n);
@@ -483,12 +489,12 @@ void NoviceGuide::showSupplyGuide(Ref*){
                 _diceResultLayer->addChild(dice);
         }
         
-        auto from_value = Label::createWithSystemFont("16", "fonts/arial.ttf", 40);
+        auto from_value = Label::createWithSystemFont("23", "fonts/arial.ttf", 40);
         from_value->setPosition(Vec2(back_size.width / 2 - 5 * dice_size.width - 10,
                                      dice_size.height));
         _diceResultLayer->addChild(from_value);
         
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 2; i++){
                 int value = to[i];
                 auto str = DICE_PIC_NAME_STR[1][value - 1];
                 auto frame = frameCache->getSpriteFrameByName(str);
@@ -499,14 +505,14 @@ void NoviceGuide::showSupplyGuide(Ref*){
                 dice->setPosition(pos);
                 _diceResultLayer->addChild(dice);
         }
-        auto to_value = Label::createWithSystemFont("13", "fonts/arial.ttf", 40);
+        auto to_value = Label::createWithSystemFont("11", "fonts/arial.ttf", 40);
         to_value->setPosition(Vec2(back_size.width / 2 + 4 * dice_size.width + 10, dice_size.height));
         _diceResultLayer->addChild(to_value);
         
-        _contentText->setString("This is your combat result, you have 4 soldiers in the area, so that means you can have 4 dices. One soldier stands for one dice chance. The dice results are:1, 4, 5, 6. And the total value is:16.");
+        _contentText->setString("This is your combat result:1, 4, 5, 6, 2, 2, 3, total:23. You have 7 soldiers in the area which means you can have 7 dice chances.");
         _guideHandLeftRight->setVisible(false);
         _guideHandUpDown->setVisible(true);
-        auto pos = _diceResultLayer->convertToWorldSpace(Vec2(back_size.width / 2 + 2 * dice_size.width + 10, dice_size.height));
+        auto pos = _diceResultLayer->convertToWorldSpace(Vec2(back_size.width / 2 - 2 * dice_size.width + 10, dice_size.height));
         auto pos2 = this->convertToNodeSpace(pos);
         auto pos3 = pos2 + Vec2(6 * dice_size.width, 0);
         _guideHandUpDown->setPosition(pos2);
@@ -516,10 +522,10 @@ void NoviceGuide::showSupplyGuide(Ref*){
         _nextButton->addClickEventListener([this, pos3](Ref*){
                 
                 _curGuideState = GUIDE_GAME_STATUS_SHOW_ENRES;
-                _contentText->setString("This is your enemy's result, it has 3 soldiers  and the dice results are:5, 6, 2, the total value is:13. So you win this combat and occupy its area. So your max number of joined areas will be bigger and vice versa.");
+                _contentText->setString("This is your enemy's result:5, 6, total:11. There're only 2 soldiers in this area. So you can win this combat and occupy its area easily. It also makes your adjoining area number bigger.");
                 _guideHandUpDown->setPosition(pos3);
                 
-                _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::showEngageMercenary, this));
+                _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::showNewTcValue, this));
                 auto scale_by = ScaleBy::create(0.8f, 1.5f);
                 auto seq = Sequence::create(scale_by, scale_by->reverse(), NULL);
                 _tcShowMe->runAction(seq->clone());
@@ -556,7 +562,7 @@ void NoviceGuide::choseFromArea(Ref*){
         
         auto pos1 = _targetTo->getParent()->convertToWorldSpace(_targetTo->getPosition());
         auto pos2 = this->convertToNodeSpace(pos1);
-        _guideHandUpDown->setPosition(pos2 + Vec2(0, -80));
+        _guideHandUpDown->setPosition(pos2 + Vec2(0, -60));
 }
 
 void NoviceGuide::choseToArea(Ref*){
@@ -582,20 +588,19 @@ void NoviceGuide::choseToArea(Ref*){
         fire_spr->setPosition(Vec2(visible_size.width *0.4f, visible_size.height * 0.75f));
         this->addChild(fire_spr, 5);
         
-        auto call_back = CallFunc::create(std::bind(&NoviceGuide::showNewTcValue, this, fire_spr));
+        auto call_back = CallFunc::create(std::bind(&NoviceGuide::showCombatResult, this, fire_spr));
         
         fire_spr->runAction(Sequence::create(Animate::create(fire), call_back, NULL));
 }
 
-void NoviceGuide::showNewTcValue(Node* fire){
-        fire->removeFromParent();
+void NoviceGuide::showNewTcValue(Ref*){
         _tcShowNumbMe->setString("9");
         _tcShowNumbEnemy->setString("5");
         _tcMapShineafterAction->setVisible(true);
         _guideHandLeftRight->setVisible(true);
         _guideHandUpDown->setVisible(false);
         _curGuideState = GUIDE_GAME_STATUS_ENGAGE_MERCENARY;
-        _contentText->setString("Now the max number of your joined area is 9 and your total areas number is 16.");
+        _contentText->setString("Now the max number of your adjoining area is 9 and your total areas number is 16.");
         _nextButton->setVisible(true);
         _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::showEngageMercenary, this));
         auto pos = _tcShowMe->getParent()->convertToWorldSpace(_tcShowMe->getPosition());

@@ -34,9 +34,9 @@ private:
         void menuStartGame(Ref* pSender);
         void menuEndTurn(Ref* pSender);
         void showSelectGuide(Ref*);
-        void showSupplyGuide(Ref*);
+        void showCombatResult(Node*);
         void showEngageMercenary(Ref*);
-        void showNewTcValue(Node*);
+        void showNewTcValue(Ref*);
         void choseFromArea(Ref*);
         void choseToArea(Ref*);
         

@@ -15,12 +15,13 @@
 #include "GameData.hpp"
 #include "ReplayLastScene.hpp"
 #include "SimpleAudioEngine.h"
+#include "PluginFacebook/PluginFacebook.h"
 
 using namespace cocos2d::ui;
 USING_NS_CC;
 using namespace std;
 
-class LevelSelect : public cocos2d::Layer
+class LevelSelect : public cocos2d::Layer, sdkbox::FacebookListener
 {
 public:
         static Scene* createScene();
@@ -40,9 +41,23 @@ protected:
         void menuGetMoreDices(Ref* btn);
         void menuShowAchievement(Ref*);
         void menuPlayHistory(Ref* btn);
+        void menuShareGame(Ref* btn);
         void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
         void btnChosePlayerNum(Ref*, int);
         void actionBuyCharacter(Ref*, int, int);
+        
+        void onLogin(bool, const std::string&)override;
+        void onSharedSuccess(const std::string&)override;
+        void onSharedFailed(const std::string&)override;
+        void onSharedCancel()override;
+        void onAPI(const std::string&, const std::string&)override;
+        void onPermission(bool, const std::string&)override;
+        void onFetchFriends(bool, const std::string&)override;
+        void onRequestInvitableFriends(const sdkbox::FBInvitableFriendsInfo&)override;
+        void onInviteFriendsWithInviteIdsResult(bool, const std::string&)override;
+        void onInviteFriendsResult(bool, const std::string&)override;
+        void onGetUserInfo(const sdkbox::FBGraphUser&)override;
+        
 private:
         Size initCenterMainFrame(Vec2);
         void initCharactorSel(Vec2, Size);

@@ -92,8 +92,9 @@ bool GameScene::init()
 //        this->showWinDialog(); 
 //        this->addChild(_lostDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
         
+        sdkbox::PluginFacebook::init();
         sdkbox::PluginFacebook::setListener(this);
-        sdkbox::PluginFacebook::init();         
+        
         return true;
 }
 
@@ -1501,4 +1502,5 @@ void GameScene::onExit(){
         auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
         sound->stopBackgroundMusic();
         sound->stopAllEffects();
+        sdkbox::PluginFacebook::removeListener();
 }

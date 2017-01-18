@@ -19,6 +19,8 @@
 #include "BuySupplyScene.hpp"
 #include "AchievementEngine.hpp"
 #include "CommonTipsDialog.hpp"
+#include "ui/CocosGUI.h"
+
 
 enum{
         key_loading_bar1,
@@ -89,6 +91,9 @@ bool LevelSelect::init()
         if (!Layer::init()){
                 return false;
         }
+        
+        sdkbox::PluginFacebook::init();
+        sdkbox::PluginFacebook::setListener(this);
         
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -338,6 +343,12 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         auto start_game = MenuItemImage::create("level/start_game.png","level/start_game_sel.png", CC_CALLBACK_1(LevelSelect::menuStartGame, this));
         start_game->setPosition(Vec2(visibleSize.width / 2,
                                      start_game->getContentSize().height));
+        
+        auto share_btn = ui::Button::create("facebook_share.png");
+        share_btn->addClickEventListener(CC_CALLBACK_1(LevelSelect::menuShareGame, this));
+        share_btn->setPosition(Vec2(origin.x + visibleSize.width -  2.5f * system_setting->getContentSize().width,
+                                    origin.y + 60));
+        this->addChild(share_btn, ZORDER_ITEM_CONTROL);
         /*
          /////////////////////////////////////////////////////////
                         coins buttons
@@ -397,8 +408,6 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         arm_back->addChild(add_arm);
         
         this->addChild(arm_back, ZORDER_ITEM_CONTROL);
-        
-        
         
         _achievementCtrl = MenuItemImage::create("achievement.png", "achievement_sel.png", CC_CALLBACK_1(LevelSelect::menuShowAchievement, this));
         _achievementCtrl->setPosition(Vec2(_achievementCtrl->getContentSize().width ,system_setting->getPosition().y));
@@ -617,6 +626,26 @@ void LevelSelect::menuPlayHistory(Ref* pSender){
         if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
 }
 
+void LevelSelect::menuShareGame(Ref* btn){
+        if (sdkbox::PluginFacebook::isLoggedIn()){
+                //                utils::captureScreen(CC_CALLBACK_2(GameScene::afterCaptureScreen, this), "screen.png");
+                
+                sdkbox::FBShareInfo info;
+                info.type  = sdkbox::FB_PHOTO;
+                info.title = "Islands Conqueror";
+                info.link = "https://itunes.apple.com/us/app/island-conqueror/id1172744843?l=zh&ls=1&mt=8";
+                
+                info.image = FileUtils::getInstance()->fullPathForFilename("fb_used_toshare.png");
+                sdkbox::PluginFacebook::dialog(info);
+                
+        }else{
+                std::vector<std::string> permissions;
+                permissions.push_back(sdkbox::FB_PERM_READ_PUBLIC_PROFILE);
+                permissions.push_back(sdkbox::FB_PERM_READ_EMAIL);
+                permissions.push_back(sdkbox::FB_PERM_READ_USER_FRIENDS);
+                sdkbox::PluginFacebook::login(permissions);
+        }
+}
 
 void LevelSelect::menuSoundControl(Ref* btn){
         auto cache = UserDefault::getInstance();
@@ -859,5 +888,25 @@ void LevelSelect::onExit(){
         auto back_layer = this->getChildByTag(kMainMenuBackTag);
         auto the_wall = back_layer->getChildByTag(kMenuGreatWallTag);
         the_wall->removeAllChildren();
+        
+        sdkbox::PluginFacebook::removeListener();
 }
 
+#pragma mark - facebook sharing things.
+void LevelSelect::onLogin(bool, const std::string&){}
+
+void LevelSelect::onSharedSuccess(const std::string&){
+        auto visible_size = Director::getInstance()->getVisibleSize();
+        auto from = visible_size * 0.5f;
+        AchievementEngine::getInstance()->dailyShareReward(this, from, visible_size, NULL);
+}
+
+void LevelSelect::onSharedFailed(const std::string&){}
+void LevelSelect::onSharedCancel(){}
+void LevelSelect::onAPI(const std::string&, const std::string&){}
+void LevelSelect::onPermission(bool, const std::string&){}
+void LevelSelect::onFetchFriends(bool, const std::string&){}
+void LevelSelect::onRequestInvitableFriends(const sdkbox::FBInvitableFriendsInfo&){}
+void LevelSelect::onInviteFriendsWithInviteIdsResult(bool, const std::string&){}
+void LevelSelect::onInviteFriendsResult(bool, const std::string&){}
+void LevelSelect::onGetUserInfo(const sdkbox::FBGraphUser&){}

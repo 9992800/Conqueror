@@ -36,7 +36,7 @@ private:
         void showSelectGuide(Ref*);
         void showSupplyGuide(Ref*);
         void showEngageMercenary(Ref*);
-        void showNewTcValue();
+        void showNewTcValue(Node*);
         void choseFromArea(Ref*);
         void choseToArea(Ref*);
         

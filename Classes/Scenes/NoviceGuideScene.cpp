@@ -16,7 +16,6 @@ enum{
         GUIDE_GAME_STATUS_START,
         GUIDE_GAME_STATUS_SELECT_SELF,
         GUIDE_GAME_STATUS_SELECT_ENEMY,
-        GUIDE_GAME_STATUS_SHOW_TCRES,
         GUIDE_GAME_STATUS_SHOW_MYRES,
         GUIDE_GAME_STATUS_SHOW_ENRES,
         GUIDE_GAME_STATUS_ENGAGE_MERCENARY,
@@ -25,6 +24,11 @@ enum{
         
         kChoseMapYesTag = 100,
         kGuideLayerNextBtnTag,
+        
+        ZORDER_BACK_LEVEL,
+        ZORDER_FRONT_LEVEL,
+        ZORDER_SHINNING_LEVEL,
+        ZORDER_ACTION_LEVEL
 };
 
 Scene* NoviceGuide::createScene(){
@@ -68,22 +72,22 @@ void NoviceGuide::initMap(){
         
         _tcMapShineBeforeAction = Sprite::create("guide/shine_char_me_tc_8.png");
         _tcMapShineBeforeAction->setPosition(visible_size * 0.5f);
-        guide_back_img->addChild(_tcMapShineBeforeAction, 2);
+        guide_back_img->addChild(_tcMapShineBeforeAction, ZORDER_SHINNING_LEVEL);
         
         _tcMapShineafterAction = Sprite::create("guide/shine_char_me_tc_9.png");
         _tcMapShineafterAction->setPosition(visible_size * 0.5f);
-        guide_back_img->addChild(_tcMapShineafterAction, 2);
+        guide_back_img->addChild(_tcMapShineafterAction, ZORDER_SHINNING_LEVEL);
         
         _meShineBack = Sprite::create("guide/shine_char_me.png");
         _meShineBack->setPosition(visible_size * 0.5f);
-        guide_back_img->addChild(_meShineBack, 2);
+        guide_back_img->addChild(_meShineBack, ZORDER_SHINNING_LEVEL);
         
         _enemyShineBack = Sprite::create("guide/shine_target_enemy.png");
         _enemyShineBack->setPosition(visible_size * 0.5f);
-        guide_back_img->addChild(_enemyShineBack, 2);
+        guide_back_img->addChild(_enemyShineBack, ZORDER_SHINNING_LEVEL);
         
         _tcMapShineBeforeAction->setOpacity(0);
-        auto fade_in = FadeOut::create(1.f);
+        auto fade_in = FadeOut::create(.8f);
         auto shining = RepeatForever::create(Sequence::create(fade_in, fade_in->reverse(), NULL));
         
         _tcMapShineafterAction->setVisible(false);
@@ -98,31 +102,36 @@ void NoviceGuide::initMap(){
         
         _beforeActionFromMe = Sprite::create("guide/char_me_s.png");
         _beforeActionFromMe->setPosition(visible_size * 0.5f);
-        guide_back_img->addChild(_beforeActionFromMe, 1);
+        guide_back_img->addChild(_beforeActionFromMe, ZORDER_BACK_LEVEL);
         
         _afterActionMe = Sprite::create("guide/char_me_e.png");
         _afterActionMe->setPosition(visible_size * 0.5f);
-        guide_back_img->addChild(_afterActionMe, 1);
+        guide_back_img->addChild(_afterActionMe, ZORDER_BACK_LEVEL);
         _afterActionMe->setVisible(false);
         
         _befroeActionTargetEnemy = Sprite::create("guide/target_enemy_s.png");
         _befroeActionTargetEnemy->setPosition(visible_size * 0.5f);
-        guide_back_img->addChild(_befroeActionTargetEnemy, 1);
+        guide_back_img->addChild(_befroeActionTargetEnemy, ZORDER_BACK_LEVEL);
         
         _afterActionEnmey = Sprite::create("guide/target_enemy_e.png");
         _afterActionEnmey->setPosition(visible_size * 0.5f);
-        guide_back_img->addChild(_afterActionEnmey, 1);
+        guide_back_img->addChild(_afterActionEnmey, ZORDER_FRONT_LEVEL);
         _afterActionEnmey->setVisible(false);
+        
+        _afterActionEnmeyBg = Sprite::create("guide/char_me_tc_bg.png");
+        _afterActionEnmeyBg->setPosition(visible_size * 0.5f);
+        guide_back_img->addChild(_afterActionEnmeyBg, ZORDER_BACK_LEVEL);
+        _afterActionEnmeyBg->setVisible(false);
         
         _selectFrom = ui::Button::create("level/sel_num_btn_back.png");//TODO::sel_num_btn_back_em
         _selectFrom->addClickEventListener(CC_CALLBACK_1(NoviceGuide::choseFromArea, this));
         _selectFrom->setPosition(Vec2(visible_size.width *0.25f, visible_size.height * 0.7f));
-        guide_back_img->addChild(_selectFrom, 3);
+        guide_back_img->addChild(_selectFrom, ZORDER_ACTION_LEVEL);
         
         _targetTo = ui::Button::create("level/sel_num_btn_back.png");//TODO::sel_num_btn_back_em
         _targetTo->addClickEventListener(CC_CALLBACK_1(NoviceGuide::choseToArea, this));
         _targetTo->setPosition(Vec2(visible_size.width *0.4f, visible_size.height * 0.75f));
-        guide_back_img->addChild(_targetTo, 3);
+        guide_back_img->addChild(_targetTo, ZORDER_ACTION_LEVEL);
 }
 
 void NoviceGuide::initController(){
@@ -373,6 +382,32 @@ void NoviceGuide::menuEngageArmy(Ref* pSender){
         auto pos1 = _mercenaryBtn->getParent()->convertToWorldSpace(_mercenaryBtn->getPosition());
         auto pos2 = this->convertToNodeSpace(pos1);
         _guideHandUpDown->setPosition(pos2);
+        
+        auto btn_anim = _mercenaryBtn->clone();
+        auto parent = _mercenaryBtn->getParent();
+        btn_anim->setPosition(_mercenaryBtn->getPosition());
+        parent->addChild(btn_anim);
+        Vec2 pos = parent->convertToNodeSpace(_tcShowMe->getParent()->convertToWorldSpace(_tcShowMe->getPosition()));
+        auto move = MoveTo::create(0.8,  pos);
+        auto scale = ScaleTo::create(0.8, 0.6f);
+        btn_anim->runAction(Sequence::create(Spawn::create(move, scale, NULL),
+                                             CallFunc::create( [this, btn_anim](){
+                
+                btn_anim->removeFromParentAndCleanup(true);
+                
+                _tcShowNumbMe->setString("X19");
+                auto scale_s = ScaleTo::create(0.3, 1.4f);
+                auto scale_s_r = ScaleTo::create(0.3, 1.0f);
+                auto seq = Sequence::create(scale_s, scale_s_r, NULL);
+                _tcShowMe->runAction(seq);
+                
+        }), NULL));
+        
+        _mercenaryBtn->setEnabled(false);
+        _mercenaryBtn->setBright(false);
+        _counterTurns = ui::TextBMFont::create("4", "fonts/zb_chongzhi_shuzi.fnt");
+        _counterTurns->setPosition(_mercenaryBtn->getContentSize() * 0.5f);
+        _mercenaryBtn->addChild(_counterTurns);
 }
 
 void NoviceGuide::menuStartGame(Ref* pSender){
@@ -422,7 +457,7 @@ void NoviceGuide::showSelectGuide(Ref* btn){
         
         auto pos1 = _selectFrom->getParent()->convertToWorldSpace(_selectFrom->getPosition());
         auto pos2 = this->convertToNodeSpace(pos1);
-        _guideHandUpDown->setPosition(pos2);
+        _guideHandUpDown->setPosition(pos2 + Vec2(0, -80));
 }
 
 void NoviceGuide::showSupplyGuide(Ref*){
@@ -505,48 +540,29 @@ void NoviceGuide::showEngageMercenary(Ref*){
         auto pos1 = _mercenaryBtn->getParent()->convertToWorldSpace(_mercenaryBtn->getPosition());
         auto pos2 = this->convertToNodeSpace(pos1);
         _guideHandUpDown->setPosition(pos2);
-        
-        
-        auto btn_anim = _mercenaryBtn->clone();
-        auto parent = _mercenaryBtn->getParent();
-        btn_anim->setPosition(_mercenaryBtn->getPosition());
-        parent->addChild(btn_anim);
-        Vec2 pos = parent->convertToNodeSpace(_tcShowMe->getParent()->convertToWorldSpace(_tcShowMe->getPosition()));
-        auto move = MoveTo::create(0.8,  pos);
-        auto scale = ScaleTo::create(0.8, 0.6f);
-        btn_anim->runAction(Sequence::create(Spawn::create(move, scale, NULL),
-                                             CallFunc::create( [this, btn_anim](){
-                
-                btn_anim->removeFromParentAndCleanup(true);
-                
-                _tcShowNumbMe->setString("X19");
-                auto scale_s = ScaleTo::create(0.3, 1.4f);
-                auto scale_s_r = ScaleTo::create(0.3, 1.0f);
-                auto seq = Sequence::create(scale_s, scale_s_r, NULL);
-                _tcShowMe->runAction(seq);
-                
-        }), NULL));
-        
-        _mercenaryBtn->setEnabled(false);
-        _mercenaryBtn->setBright(false);
-        _counterTurns = ui::TextBMFont::create("4", "fonts/zb_chongzhi_shuzi.fnt");
-        _counterTurns->setPosition(_mercenaryBtn->getContentSize() * 0.5f);
-        _mercenaryBtn->addChild(_counterTurns);
 }
 
 
 void NoviceGuide::choseFromArea(Ref*){
         _enemyShineBack->setVisible(true);
-        _contentText->setString("Attack this area to get more lands. You can defeat him easily because you have much more soldiers.");
+        _contentText->setString("Click this area to attack your enenmy. You can defeat him easily because you have much more soldiers.");
         
         _curGuideState = GUIDE_GAME_STATUS_SELECT_ENEMY;
         
         auto pos1 = _targetTo->getParent()->convertToWorldSpace(_targetTo->getPosition());
         auto pos2 = this->convertToNodeSpace(pos1);
-        _guideHandUpDown->setPosition(pos2);
+        _guideHandUpDown->setPosition(pos2 + Vec2(0, -80));
 }
 
 void NoviceGuide::choseToArea(Ref*){
+        _enemyShineBack->setVisible(false);
+        _meShineBack->setVisible(false);
+        _beforeActionFromMe->setVisible(false);
+        _afterActionMe->setVisible(true);
+        _befroeActionTargetEnemy->setVisible(false);
+        _afterActionEnmey->setVisible(true);
+        _afterActionEnmeyBg->setVisible(true);
+        
         auto cache = AnimationCache::getInstance();
         auto fire = cache->getAnimation("finght_occupay");
         fire->setRestoreOriginalFrame(true);
@@ -559,23 +575,22 @@ void NoviceGuide::choseToArea(Ref*){
         auto pos2 = this->convertToNodeSpace(pos1);
         
         fire_spr->setPosition(pos2);
-        this->addChild(fire_spr);
+        this->addChild(fire_spr, 5);
         
-        fire_spr->runAction(Sequence::create(Animate::create(fire), [this](){
-                _enemyShineBack->setVisible(false);
-                _meShineBack->setVisible(false);
-                _beforeActionFromMe->setVisible(false);
-                _afterActionMe->setVisible(true);
-                _befroeActionTargetEnemy->setVisible(false);
-                _afterActionEnmey->setVisible(true);
-                _tcMapShineafterAction->setVisible(true);
-                
-                _curGuideState = GUIDE_GAME_STATUS_SHOW_TCRES;
-                _contentText->setString("Now the max number of your joined area is 9 and your total areas number is 16.");
-                _nextButton->setVisible(true);
-                _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::menuEngageArmy, this));
-                
-        }, NULL));
+        auto call_back = CallFunc::create(std::bind(&NoviceGuide::showNewTcValue, this));
         
-        
+        fire_spr->runAction(Sequence::create(Animate::create(fire), call_back, NULL));
+}
+
+void NoviceGuide::showNewTcValue(){
+        _tcMapShineafterAction->setVisible(true);
+        _guideHandLeftRight->setVisible(true);
+        _guideHandUpDown->setVisible(false);
+        _curGuideState = GUIDE_GAME_STATUS_ENGAGE_MERCENARY;
+        _contentText->setString("Now the max number of your joined area is 9 and your total areas number is 16.");
+        _nextButton->setVisible(true);
+        _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::showEngageMercenary, this));
+        auto pos = _tcShowMe->getParent()->convertToWorldSpace(_tcShowMe->getPosition());
+        auto pos2 = this->convertToNodeSpace(pos);
+        _guideHandLeftRight->setPosition(pos2 + Vec2(-60, 0));
 }

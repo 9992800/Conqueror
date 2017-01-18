@@ -36,6 +36,7 @@ private:
         void showSelectGuide(Ref*);
         void showSupplyGuide(Ref*);
         void showEngageMercenary(Ref*);
+        void showNewTcValue();
         void choseFromArea(Ref*);
         void choseToArea(Ref*);
         
@@ -57,6 +58,7 @@ private:
                         *_befroeActionTargetEnemy,
                         *_afterActionMe,
                         *_afterActionEnmey,
+                        *_afterActionEnmeyBg,
                         *_meShineBack,
                         *_enemyShineBack;
         

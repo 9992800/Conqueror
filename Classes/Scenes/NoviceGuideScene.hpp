@@ -11,6 +11,8 @@
 
 #include <stdio.h>
 #include "cocos2d.h"
+#include "AppMacros.hpp"
+#include "SimpleAudioEngine.h"
 
 USING_NS_CC;
 
@@ -29,7 +31,7 @@ public:
         void initController();
         void initGuideData();
 private:
-        void menuExit(Ref* pSender);
+        void menuExit(Ref*, int);
         void menuEngageArmy(Ref* pSender);
         void menuStartGame(Ref* pSender);
         void menuEndTurn(Ref* pSender);
@@ -39,6 +41,10 @@ private:
         void showNewTcValue(Ref*);
         void choseFromArea(Ref*);
         void choseToArea(Ref*);
+        
+        inline void playSoundEffect(const char *sound = EFFECT_FILE_SELECTED){
+                CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(sound);
+        }
         
 private:
         int     _curGuideState;
@@ -63,7 +69,10 @@ private:
                         *_enemyShineBack;
         
         cocos2d::ui::Scale9Sprite  *_guideLayer;
-        cocos2d::Label  *_contentText, *_tcShowNumbMe, *_tcShowNumbEnemy;
+        cocos2d::Label  *_contentText,
+                        *_tcShowNumbMe,
+                        *_tcShowNumbEnemy;
+        
         cocos2d::RepeatForever  *_handsUpDownAnim,
                                 *_handsLeftRightAnim;
         

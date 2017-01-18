@@ -8,7 +8,6 @@
 
 #include "ui/CocosGUI.h"
 #include "NoviceGuideScene.hpp"
-#include "AppMacros.hpp"
 #include "LevelSelectScene.hpp"
 
 enum{
@@ -21,6 +20,8 @@ enum{
         GUIDE_GAME_STATUS_SHOW_NEWTC,
         GUIDE_GAME_STATUS_ENGAGE_MERCENARY,
         GUIDE_GAME_STATUS_SUPPLY,
+        GUIDE_GAME_STATUS_FINISHED,
+
         
         
         kChoseMapYesTag = 100,
@@ -141,7 +142,7 @@ void NoviceGuide::initController(){
         auto exit_btn = ui::Button::create("CloseNormal.png", "CloseSelected.png");
         exit_btn->setPosition(Vec2(exit_btn->getContentSize().width / 2,
                                    visible_size.height - exit_btn->getContentSize().height / 2));
-        exit_btn->addClickEventListener(CC_CALLBACK_1(NoviceGuide::menuExit, this));
+        exit_btn->addClickEventListener(CC_CALLBACK_1(NoviceGuide::menuExit, this, 0));
         _controlLayer->addChild(exit_btn);
         
         auto operat_board = Sprite::create("maps/openrate_back.png");
@@ -367,7 +368,11 @@ void NoviceGuide::onExit(){
 
 
 #pragma mark - menu actions.
-void NoviceGuide::menuExit(Ref* pSender){ 
+void NoviceGuide::menuExit(Ref* pSender, int status){
+        if (status == 1){
+                UserDefault::getInstance()->setBoolForKey(GAME_STATUS_GUIDE_FINISHED, true);
+                UserDefault::getInstance()->flush();
+        }
         auto main = LevelSelect::createScene();
         Director::getInstance()->replaceScene(main);
 }
@@ -399,10 +404,10 @@ void NoviceGuide::menuEngageArmy(Ref* pSender){
                 
                 _curGuideState = GUIDE_GAME_STATUS_SUPPLY;
                 
-                _contentText->setString("Click this button to end your turn. Don't attack too much enemy's area, this will make your areas weak. Keep your area with more soldier then the enemy will not occupy your area easily.");
+                _contentText->setString("Click this button to end your turn. Don't attack too much enemy's area, this will make your areas weak. It's safet to keep your area with more soldier.");
                 auto pos1 = _endTurnBtn->getParent()->convertToWorldSpace(_endTurnBtn->getPosition());
                 auto pos2 = this->convertToNodeSpace(pos1);
-                _guideHandUpDown->setPosition(pos2);
+                _guideHandUpDown->setPosition(pos2 + Vec2(0, -60.f));
                 auto layer_size = _guideLayer->getContentSize();
                 _guideLayer->setPosition(pos2 + Vec2(0, 0.7 * layer_size.height));
                 
@@ -444,14 +449,42 @@ void NoviceGuide::menuEndTurn(Ref* pSender){
                 return;
         
         _counterTurns->setString("3");
-//        _curGuideState = ;
+        _curGuideState = GUIDE_GAME_STATUS_FINISHED;
+        _endTurnTipsLayer->setVisible(false);
+        _supplyShowLayer->setVisible(true);
+        
+        auto back_size = _supplyShowLayer->getContentSize();
+        for (int i = 0; i < 19; i++){
+                std::string charact_name = CHARACTER_NAME[0];
+                float scal_factor = 0.5f;
+                auto character = Sprite::create(charact_name);
+                auto ch_size = character->getContentSize() * scal_factor;
+                character->setScale(scal_factor);
+                Vec2 pos;
+                if (i / AREA_MAX > 0){
+                        pos.x = (2 * (i - AREA_MAX) + 1) * 0.5f * ch_size.width * 0.7;
+                        pos.y = back_size.height * 0.25f;
+                }else{
+                        pos.x = (2 * i + 1) * 0.5f * ch_size.width * 0.7;
+                        pos.y = 3 * back_size.height * 0.25f;
+                }
+                character->setPosition(pos);
+                _supplyShowLayer->addChild(character);
+        }
+        _contentText->setString("Here it shows the soldiers you can get this turn. They will be added to your areas randomly.And then your enemy will attack you. Ready to Fire.");
+        _nextButton->setVisible(true);
+        _nextButton->setTitleText("Fire!");
+        
+        _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::menuExit,this, 1));
+        
+        _guideHandUpDown->setPosition(Vec2(back_size.width * 0.4f, 0.f));
 }
 
 
 void NoviceGuide::showSelectGuide(Ref* btn){
         _nextButton->setVisible(false);
         
-        _contentText->setString("Click the area as invader to attack your enenmies neighbored on you.");
+        _contentText->setString("Click the area as invader army to attack your enenmies neighbored on you.");
         
         _guideHandLeftRight->setVisible(false);
         _guideHandUpDown->setVisible(true);
@@ -468,6 +501,7 @@ void NoviceGuide::showSelectGuide(Ref* btn){
 
 void NoviceGuide::showCombatResult(Node* fires){
         fires->removeFromParent();
+        _tcMapShineafterAction->setVisible(false);
         _endTurnTipsLayer->setVisible(false);
         _diceResultLayer->setVisible(true);
         _curGuideState = GUIDE_GAME_STATUS_SHOW_MYRES;
@@ -490,7 +524,7 @@ void NoviceGuide::showCombatResult(Node* fires){
         }
         
         auto from_value = Label::createWithSystemFont("23", "fonts/arial.ttf", 40);
-        from_value->setPosition(Vec2(back_size.width / 2 - 5 * dice_size.width - 10,
+        from_value->setPosition(Vec2(back_size.width / 2 - 8 * dice_size.width - 10,
                                      dice_size.height));
         _diceResultLayer->addChild(from_value);
         
@@ -512,17 +546,17 @@ void NoviceGuide::showCombatResult(Node* fires){
         _contentText->setString("This is your combat result:1, 4, 5, 6, 2, 2, 3, total:23. You have 7 soldiers in the area which means you can have 7 dice chances.");
         _guideHandLeftRight->setVisible(false);
         _guideHandUpDown->setVisible(true);
-        auto pos = _diceResultLayer->convertToWorldSpace(Vec2(back_size.width / 2 - 2 * dice_size.width + 10, dice_size.height));
-        auto pos2 = this->convertToNodeSpace(pos);
+        auto pos = _diceResultLayer->convertToWorldSpace(Vec2(back_size.width / 2 - 4 * dice_size.width + 10, dice_size.height));
+        auto pos2 = this->convertToNodeSpace(pos) + Vec2(0, -40.f);
         auto pos3 = pos2 + Vec2(6 * dice_size.width, 0);
         _guideHandUpDown->setPosition(pos2);
         
-        _guideLayer->setPosition(Vec2(pos2.x, pos2.y + _contentText->getContentSize().height));
+        _guideLayer->setPosition(Vec2(pos2.x, pos2.y + 1.2f * _contentText->getContentSize().height));
         
         _nextButton->addClickEventListener([this, pos3](Ref*){
                 
                 _curGuideState = GUIDE_GAME_STATUS_SHOW_ENRES;
-                _contentText->setString("This is your enemy's result:5, 6, total:11. There're only 2 soldiers in this area. So you can win this combat and occupy its area easily. It also makes your adjoining area number bigger.");
+                _contentText->setString("This is your enemy's result:5, 6, total:11. There're only 2 soldiers in this area. So you can win and occupy this area.");
                 _guideHandUpDown->setPosition(pos3);
                 
                 _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::showNewTcValue, this));
@@ -538,6 +572,7 @@ void NoviceGuide::showCombatResult(Node* fires){
         _nextButton->setVisible(true);
 }
 void NoviceGuide::showEngageMercenary(Ref*){
+        _tcMapShineafterAction->setVisible(false);
         _guideHandUpDown->setVisible(true);
         _guideHandLeftRight->setVisible(false);
         _endTurnTipsLayer->setVisible(true);
@@ -547,7 +582,7 @@ void NoviceGuide::showEngageMercenary(Ref*){
         _contentText->setString("Click this button to engage mercenaries, you will get extra 10 sodilers to make you powerfull, but this can be used only once in every 4 turns.");
         auto pos1 = _mercenaryBtn->getParent()->convertToWorldSpace(_mercenaryBtn->getPosition());
         auto pos2 = this->convertToNodeSpace(pos1);
-        _guideHandUpDown->setPosition(pos2);
+        _guideHandUpDown->setPosition(pos2 + Vec2(40.f, -40.f));
         auto layer_size = _guideLayer->getContentSize();
         _guideLayer->setPosition(pos2 + Vec2(-0.4f * layer_size.width,
                                              0.7f * layer_size.height));
@@ -562,7 +597,7 @@ void NoviceGuide::choseFromArea(Ref*){
         
         auto pos1 = _targetTo->getParent()->convertToWorldSpace(_targetTo->getPosition());
         auto pos2 = this->convertToNodeSpace(pos1);
-        _guideHandUpDown->setPosition(pos2 + Vec2(0, -60));
+        _guideHandUpDown->setPosition(pos2 + Vec2(20, -60));
 }
 
 void NoviceGuide::choseToArea(Ref*){

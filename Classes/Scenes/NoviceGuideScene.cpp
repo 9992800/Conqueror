@@ -471,7 +471,7 @@ void NoviceGuide::menuEndTurn(Ref* pSender){
                 character->setPosition(pos);
                 _supplyShowLayer->addChild(character);
         }
-        _contentText->setString("Here it shows the soldiers you can get this turn. They will be added to your areas randomly.And then your enemy will attack you. Ready to Fire.");
+        _contentText->setString("Here it shows the soldiers you can get this turn. They will be added to your areas, and then your enemy will attack you. Get ready to Fire!!!");
         _nextButton->setVisible(true);
         _nextButton->setTitleText("Fire!");
         
@@ -620,7 +620,7 @@ void NoviceGuide::choseToArea(Ref*){
         auto fire_spr = Sprite::create();
         fire_spr->setSpriteFrame(frame);
         auto visible_size = Director::getInstance()->getVisibleSize();
-        fire_spr->setPosition(Vec2(visible_size.width *0.4f, visible_size.height * 0.75f));
+        fire_spr->setPosition(Vec2(visible_size.width * 0.4f, visible_size.height * 0.75f));
         this->addChild(fire_spr, 5);
         
         auto call_back = CallFunc::create(std::bind(&NoviceGuide::showCombatResult, this, fire_spr));
@@ -641,4 +641,6 @@ void NoviceGuide::showNewTcValue(Ref*){
         auto pos = _tcShowMe->getParent()->convertToWorldSpace(_tcShowMe->getPosition());
         auto pos2 = this->convertToNodeSpace(pos);
         _guideHandLeftRight->setPosition(pos2 + Vec2(-60, 0));
+        auto layer_size = _guideLayer->getContentSize();
+        _guideLayer->setPosition(pos2 + Vec2(0, -0.7f * layer_size.height));
 }

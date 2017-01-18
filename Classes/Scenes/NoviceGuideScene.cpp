@@ -404,7 +404,7 @@ void NoviceGuide::menuEngageArmy(Ref* pSender){
                 
                 _curGuideState = GUIDE_GAME_STATUS_SUPPLY;
                 
-                _contentText->setString("Click this button to end your turn. Don't attack too much enemy's area, this will make your areas weak. It's safet to keep your area with more soldier.");
+                _contentText->setString("Click this button to end your turn. Don't attack too much enemy's area, this will make your areas weak. It's better to keep your area with more soldiers.");
                 auto pos1 = _endTurnBtn->getParent()->convertToWorldSpace(_endTurnBtn->getPosition());
                 auto pos2 = this->convertToNodeSpace(pos1);
                 _guideHandUpDown->setPosition(pos2 + Vec2(0, -60.f));
@@ -427,7 +427,7 @@ void NoviceGuide::menuStartGame(Ref* pSender){
         _guideHandLeftRight->setVisible(true);
         _guideHandUpDown->setVisible(false);
         
-        _contentText->setString("Here it shows the max number of  your adjoining area, it also means how many soldiers you can get after this turn.");
+        _contentText->setString("Here it shows the max number of  your adjoining area, it also means the number of soldiers you can get after this turn.");
         
         auto scale_by = ScaleBy::create(0.8f, 1.2f);
         auto seq = Repeat::create(Sequence::create(scale_by, scale_by->reverse(), NULL), 5);
@@ -471,7 +471,7 @@ void NoviceGuide::menuEndTurn(Ref* pSender){
                 character->setPosition(pos);
                 _supplyShowLayer->addChild(character);
         }
-        _contentText->setString("Here it shows the soldiers you can get this turn. They will be added to your areas, and then your enemy will attack you. Get ready to Fire!!!");
+        _contentText->setString("Here it shows the soldiers you can get after this turn. They will be added to your areas, and then your enemy will attack you. Get ready to Fire!!!");
         _nextButton->setVisible(true);
         _nextButton->setTitleText("Fire!");
         
@@ -642,5 +642,5 @@ void NoviceGuide::showNewTcValue(Ref*){
         auto pos2 = this->convertToNodeSpace(pos);
         _guideHandLeftRight->setPosition(pos2 + Vec2(-60, 0));
         auto layer_size = _guideLayer->getContentSize();
-        _guideLayer->setPosition(pos2 + Vec2(0, -0.7f * layer_size.height));
+        _guideLayer->setPosition(pos2 + Vec2(0.5f * layer_size.width, -0.7f * layer_size.height));
 }

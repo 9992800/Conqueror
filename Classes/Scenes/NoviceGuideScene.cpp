@@ -62,16 +62,17 @@ void NoviceGuide::initMap(){
         auto back_layer_size = back_ground->getContentSize();
         
         auto guide_back_img = Sprite::create("guide/guid_backgrd.png");
-        guide_back_img->setPosition(back_layer_size * 0.5f);
+        guide_back_img->setPosition(Vec2(back_layer_size.width * 0.5f,
+                                         back_layer_size.height * 0.56f));
         back_ground->addChild(guide_back_img);
         
         _tcMapShineBeforeAction = Sprite::create("guide/shine_char_me_tc_8.png");
         _tcMapShineBeforeAction->setPosition(visible_size * 0.5f);
         guide_back_img->addChild(_tcMapShineBeforeAction, 2);
         
-        _tcMapShinefterAction = Sprite::create("guide/shine_char_me_tc_9.png");
-        _tcMapShinefterAction->setPosition(visible_size * 0.5f);
-        guide_back_img->addChild(_tcMapShinefterAction, 2);
+        _tcMapShineafterAction = Sprite::create("guide/shine_char_me_tc_9.png");
+        _tcMapShineafterAction->setPosition(visible_size * 0.5f);
+        guide_back_img->addChild(_tcMapShineafterAction, 2);
         
         _meShineBack = Sprite::create("guide/shine_char_me.png");
         _meShineBack->setPosition(visible_size * 0.5f);
@@ -85,7 +86,7 @@ void NoviceGuide::initMap(){
         auto fade_in = FadeOut::create(1.f);
         auto shining = RepeatForever::create(Sequence::create(fade_in, fade_in->reverse(), NULL));
         
-        _tcMapShinefterAction->setVisible(false);
+        _tcMapShineafterAction->setVisible(false);
         _tcMapShineBeforeAction->setVisible(false);
         _enemyShineBack->setVisible(false);
         _meShineBack->setVisible(false);
@@ -93,7 +94,7 @@ void NoviceGuide::initMap(){
         _enemyShineBack->runAction(shining->clone());
         _meShineBack->runAction(shining->clone());
         _tcMapShineBeforeAction->runAction(shining->clone());
-        _tcMapShinefterAction->runAction(shining);
+        _tcMapShineafterAction->runAction(shining);
         
         _beforeActionFromMe = Sprite::create("guide/char_me_s.png");
         _beforeActionFromMe->setPosition(visible_size * 0.5f);
@@ -113,15 +114,15 @@ void NoviceGuide::initMap(){
         guide_back_img->addChild(_afterActionEnmey, 1);
         _afterActionEnmey->setVisible(false);
         
-        auto select_from = ui::Button::create("level/sel_num_btn_back.png");//TODO::sel_num_btn_back_em
-        select_from->addClickEventListener(CC_CALLBACK_1(NoviceGuide::choseFromArea, this));
-        select_from->setPosition(Vec2(visible_size.width *0.25f, visible_size.height * 0.7f));
-        guide_back_img->addChild(select_from, 3);
+        _selectFrom = ui::Button::create("level/sel_num_btn_back.png");//TODO::sel_num_btn_back_em
+        _selectFrom->addClickEventListener(CC_CALLBACK_1(NoviceGuide::choseFromArea, this));
+        _selectFrom->setPosition(Vec2(visible_size.width *0.25f, visible_size.height * 0.7f));
+        guide_back_img->addChild(_selectFrom, 3);
         
-        auto target_to = ui::Button::create("level/sel_num_btn_back.png");//TODO::sel_num_btn_back_em
-        target_to->addClickEventListener(CC_CALLBACK_1(NoviceGuide::choseToArea, this));
-        target_to->setPosition(Vec2(visible_size.width *0.4f, visible_size.height * 0.75f));
-        guide_back_img->addChild(target_to, 3);
+        _targetTo = ui::Button::create("level/sel_num_btn_back.png");//TODO::sel_num_btn_back_em
+        _targetTo->addClickEventListener(CC_CALLBACK_1(NoviceGuide::choseToArea, this));
+        _targetTo->setPosition(Vec2(visible_size.width *0.4f, visible_size.height * 0.75f));
+        guide_back_img->addChild(_targetTo, 3);
 }
 
 void NoviceGuide::initController(){
@@ -289,14 +290,14 @@ void NoviceGuide::initController(){
 void NoviceGuide::initGuideData(){
         
         _curGuideState = GUIDE_GAME_STATUS_INIT;
-        
-        auto layer_size = Director::getInstance()->getVisibleSize() * 0.5f;
+        auto visible_size = Director::getInstance()->getVisibleSize();
+        Size layer_size(visible_size.width * 0.4f, visible_size.height * 0.3f);
         _guideLayer = cocos2d::ui::Scale9Sprite::create("DIALOG_BACKGROUND.png");
         _guideLayer->setContentSize(layer_size);
         _guideLayer->setCapInsets(Rect(12, 12, 40, 40));
         this->addChild(_guideLayer, 3);
         
-        _contentText = Label::createWithSystemFont("    Click 'YES' to select this map as your battle field, the map is created randomly. If you don't like this map, you can click 'NO' to recreate a new map. In this guide, click 'YES' to start game please.", "fonts/arial.ttf", 24);
+        _contentText = Label::createWithSystemFont("    Click 'YES' to select this map as your battle field, the map is created randomly.", "fonts/arial.ttf", 24);
         _guideLayer->addChild(_contentText);
         Size content_size = _contentText->getContentSize();
         _contentText->setAnchorPoint(Vec2(0.f, 1.0f));
@@ -333,7 +334,8 @@ void NoviceGuide::initGuideData(){
         
         _nextButton = ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
         auto but_size = _nextButton->getContentSize();
-        _nextButton->setPosition(Vec2(layer_size.width - 0.7f * but_size.width, but_size.height * 0.7f));
+        _nextButton->setPosition(Vec2(layer_size.width - 0.55f * but_size.width,
+                                      -but_size.height * 0.55f));
         _nextButton->setTitleText("Next");
         _nextButton->setTitleFontName("fonts/arial.ttf");
         _nextButton->setTitleFontSize(24);
@@ -380,7 +382,7 @@ void NoviceGuide::menuStartGame(Ref* pSender){
         _guideHandLeftRight->setVisible(true);
         _guideHandUpDown->setVisible(false);
         
-        _contentText->setString("       Here it shows the max number of  your joined area, it also means how many soldiers you can get after this turn. In this guide although you have 15 areas in the map, but the max number of joined area is 8. Here it also shows the same informatins of your enemy.");
+        _contentText->setString("       Here it shows the max number of  your joined area, it also means how many soldiers you can get after this turn.");
         
         auto scale_by = ScaleBy::create(0.8f, 1.2f);
         auto seq = Repeat::create(Sequence::create(scale_by, scale_by->reverse(), NULL), 5);
@@ -394,7 +396,7 @@ void NoviceGuide::menuStartGame(Ref* pSender){
         _guideLayer->setPosition(Vec2(pos2.x + 0.6f * _contentText->getContentSize().width, pos2.y - 0.8f *_contentText->getContentSize().height));
         _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::showSelectGuide, this));
         _nextButton->setVisible(true);
-        _tcMapShinefterAction->setVisible(true);
+        _tcMapShineBeforeAction->setVisible(true);
 }
 
 void NoviceGuide::menuEndTurn(Ref* pSender){
@@ -408,15 +410,19 @@ void NoviceGuide::menuEndTurn(Ref* pSender){
 void NoviceGuide::showSelectGuide(Ref* btn){
         _nextButton->setVisible(false);
         
-        _contentText->setString("Click this area to attack your enenmy.");
+        _contentText->setString("Click the area as invader to attack your enenmies neighbored on you.");
         
-        _guideHandLeftRight->setVisible(true);
-        _guideHandUpDown->setVisible(false);
+        _guideHandLeftRight->setVisible(false);
+        _guideHandUpDown->setVisible(true);
         
         _curGuideState = GUIDE_GAME_STATUS_SELECT_SELF;
         
-        _tcMapShinefterAction->setVisible(false);
+        _tcMapShineBeforeAction->setVisible(false);
         _meShineBack->setVisible(true);
+        
+        auto pos1 = _selectFrom->getParent()->convertToWorldSpace(_selectFrom->getPosition());
+        auto pos2 = this->convertToNodeSpace(pos1);
+        _guideHandUpDown->setPosition(pos2);
 }
 
 void NoviceGuide::showSupplyGuide(Ref*){
@@ -531,9 +537,13 @@ void NoviceGuide::showEngageMercenary(Ref*){
 
 void NoviceGuide::choseFromArea(Ref*){
         _enemyShineBack->setVisible(true);
-        _contentText->setString("       Click this area as your target.");
+        _contentText->setString("Attack this area to get more lands. You can defeat him easily because you have much more soldiers.");
         
         _curGuideState = GUIDE_GAME_STATUS_SELECT_ENEMY;
+        
+        auto pos1 = _targetTo->getParent()->convertToWorldSpace(_targetTo->getPosition());
+        auto pos2 = this->convertToNodeSpace(pos1);
+        _guideHandUpDown->setPosition(pos2);
 }
 
 void NoviceGuide::choseToArea(Ref*){
@@ -544,9 +554,12 @@ void NoviceGuide::choseToArea(Ref*){
         auto frame = SpriteFrameCache::getInstance()->getSpriteFrameByName("XX0001.png");
         auto fire_spr = Sprite::create();
         fire_spr->setSpriteFrame(frame);
-        fire_spr->setScale(0.5f);
-        fire_spr->setPosition(Vec2(_enemyShineBack->getContentSize() / 2));
-        _enemyShineBack->addChild(fire_spr);
+        
+        auto pos1 = _enemyShineBack->getParent()->convertToWorldSpace(_enemyShineBack->getPosition());
+        auto pos2 = this->convertToNodeSpace(pos1);
+        
+        fire_spr->setPosition(pos2);
+        this->addChild(fire_spr);
         
         fire_spr->runAction(Sequence::create(Animate::create(fire), [this](){
                 _enemyShineBack->setVisible(false);
@@ -555,12 +568,14 @@ void NoviceGuide::choseToArea(Ref*){
                 _afterActionMe->setVisible(true);
                 _befroeActionTargetEnemy->setVisible(false);
                 _afterActionEnmey->setVisible(true);
-                _tcMapShinefterAction->setVisible(true);
+                _tcMapShineafterAction->setVisible(true);
+                
+                _curGuideState = GUIDE_GAME_STATUS_SHOW_TCRES;
+                _contentText->setString("Now the max number of your joined area is 9 and your total areas number is 16.");
+                _nextButton->setVisible(true);
+                _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::menuEngageArmy, this));
                 
         }, NULL));
         
-        _curGuideState = GUIDE_GAME_STATUS_SHOW_TCRES;
-        _contentText->setString("Now the max number of your joined area is 9 and your total areas number is 16.");
-        _nextButton->setVisible(true);
-        _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::menuEngageArmy, this));
+        
 }

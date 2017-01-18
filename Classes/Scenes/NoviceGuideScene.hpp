@@ -52,7 +52,7 @@ private:
                         *_guideHandUpDown,
                         *_guideHandLeftRight,
                         *_tcMapShineBeforeAction,
-                        *_tcMapShinefterAction,
+                        *_tcMapShineafterAction,
                         *_beforeActionFromMe,
                         *_befroeActionTargetEnemy,
                         *_afterActionMe,
@@ -65,7 +65,11 @@ private:
         cocos2d::RepeatForever  *_handsUpDownAnim,
                                 *_handsLeftRightAnim;
         
-        ui::Button    *_nextButton, *_mercenaryBtn, *_endTurnBtn;
+        ui::Button      *_nextButton,
+                        *_mercenaryBtn,
+                        *_endTurnBtn,
+                        *_selectFrom,
+                        *_targetTo;
         ui::TextBMFont* _counterTurns;
 };
 #endif /* NoviceGuideScene_hpp */

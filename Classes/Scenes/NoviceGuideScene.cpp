@@ -504,7 +504,6 @@ void NoviceGuide::showCombatResult(Node* fires){
         _tcMapShineafterAction->setVisible(false);
         _endTurnTipsLayer->setVisible(false);
         _diceResultLayer->setVisible(true);
-        _curGuideState = GUIDE_GAME_STATUS_SHOW_MYRES;
         
         auto back_size = _diceResultLayer->getContentSize();
         Size dice_size;
@@ -555,7 +554,7 @@ void NoviceGuide::showCombatResult(Node* fires){
         
         _nextButton->addClickEventListener([this, pos3](Ref*){
                 
-                _curGuideState = GUIDE_GAME_STATUS_SHOW_ENRES;
+                _curGuideState = GUIDE_GAME_STATUS_SHOW_NEWTC;
                 _contentText->setString("This is your enemy's result:5, 6, total:11. There're only 2 soldiers in this area. So you can win and occupy this area.");
                 _guideHandUpDown->setPosition(pos3);
                 
@@ -604,7 +603,8 @@ void NoviceGuide::choseToArea(Ref*){
         if (GUIDE_GAME_STATUS_SELECT_ENEMY != _curGuideState){
                 return;
         }
-        _curGuideState = GUIDE_GAME_STATUS_SHOW_NEWTC;
+        
+        _curGuideState = GUIDE_GAME_STATUS_SHOW_MYRES;
         _enemyShineBack->setVisible(false);
         _meShineBack->setVisible(false);
         _beforeActionFromMe->setVisible(false);

@@ -357,6 +357,7 @@ void NoviceGuide::initGuideData(){
 #pragma mark -  update logic
 void NoviceGuide::onEnter(){
         Layer::onEnter();
+        CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(BACK_MUSIC_IN_BATTLE);
 }
 
 void NoviceGuide::update(float delta){
@@ -364,6 +365,7 @@ void NoviceGuide::update(float delta){
 
 void NoviceGuide::onExit(){
         Layer::onExit();
+        CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 }
 
 
@@ -382,7 +384,7 @@ void NoviceGuide::menuEngageArmy(Ref* pSender){
                 return;
         
         
-        
+        this->playSoundEffect();
         auto btn_anim = _mercenaryBtn->clone();
         auto parent = _mercenaryBtn->getParent();
         btn_anim->setPosition(_mercenaryBtn->getPosition());
@@ -421,6 +423,7 @@ void NoviceGuide::menuEngageArmy(Ref* pSender){
 }
 
 void NoviceGuide::menuStartGame(Ref* pSender){
+        this->playSoundEffect();
         _choseMapLayer->removeFromParent();
         _endTurnTipsLayer->setVisible(true);
         _curGuideState = GUIDE_GAME_STATUS_START;
@@ -448,6 +451,7 @@ void NoviceGuide::menuEndTurn(Ref* pSender){
         if (GUIDE_GAME_STATUS_SUPPLY != _curGuideState)
                 return;
         
+        this->playSoundEffect();
         _counterTurns->setString("3");
         _curGuideState = GUIDE_GAME_STATUS_FINISHED;
         _endTurnTipsLayer->setVisible(false);
@@ -483,7 +487,7 @@ void NoviceGuide::menuEndTurn(Ref* pSender){
 
 void NoviceGuide::showSelectGuide(Ref* btn){
         _nextButton->setVisible(false);
-        
+        this->playSoundEffect();
         _contentText->setString("Click the area as invader army to attack your enenmies neighbored on you.");
         
         _guideHandLeftRight->setVisible(false);
@@ -553,7 +557,7 @@ void NoviceGuide::showCombatResult(Node* fires){
         _guideLayer->setPosition(Vec2(pos2.x, pos2.y + 1.2f * _contentText->getContentSize().height));
         
         _nextButton->addClickEventListener([this, pos3](Ref*){
-                
+                this->playSoundEffect();
                 _curGuideState = GUIDE_GAME_STATUS_SHOW_NEWTC;
                 _contentText->setString("This is your enemy's result:5, 6, total:11. There're only 2 soldiers in this area. So you can win and occupy this area.");
                 _guideHandUpDown->setPosition(pos3);
@@ -571,6 +575,7 @@ void NoviceGuide::showCombatResult(Node* fires){
         _nextButton->setVisible(true);
 }
 void NoviceGuide::showEngageMercenary(Ref*){
+        this->playSoundEffect();
         _tcMapShineafterAction->setVisible(false);
         _guideHandUpDown->setVisible(true);
         _guideHandLeftRight->setVisible(false);
@@ -590,6 +595,7 @@ void NoviceGuide::showEngageMercenary(Ref*){
 
 void NoviceGuide::choseFromArea(Ref*){
         _enemyShineBack->setVisible(true);
+        this->playSoundEffect();
         _contentText->setString("Click this area to attack your enenmy. You can defeat him easily because you have much more soldiers.");
         
         _curGuideState = GUIDE_GAME_STATUS_SELECT_ENEMY;
@@ -603,7 +609,7 @@ void NoviceGuide::choseToArea(Ref*){
         if (GUIDE_GAME_STATUS_SELECT_ENEMY != _curGuideState){
                 return;
         }
-        
+        this->playSoundEffect();
         _curGuideState = GUIDE_GAME_STATUS_SHOW_MYRES;
         _enemyShineBack->setVisible(false);
         _meShineBack->setVisible(false);
@@ -629,6 +635,7 @@ void NoviceGuide::choseToArea(Ref*){
 }
 
 void NoviceGuide::showNewTcValue(Ref*){
+        this->playSoundEffect();
         _tcShowNumbMe->setString("9");
         _tcShowNumbEnemy->setString("5");
         _tcMapShineafterAction->setVisible(true);

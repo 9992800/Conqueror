@@ -119,7 +119,7 @@ void BuySupply::initCurCoins(Node* scene_back){
         auto cache = UserDefault::getInstance();
         int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS);
         
-        _coinsNumLb = Label::createWithSystemFont(StringUtils::format("%d", cur_coins), "fonts/arial.ttf", 32);
+        _coinsNumLb = Label::createWithSystemFont(StringUtils::format("%d", cur_coins), SYSTEM_FONTS, 32);
         _coinsNumLb->setPosition(coins_back_size * 0.5f);
         coins_back->addChild(_coinsNumLb);
         
@@ -141,7 +141,7 @@ void BuySupply::initCurCoins(Node* scene_back){
          
         int mercenary_no = cache->getIntegerForKey(USER_CURRENT_SUPPLY_NO, USER_DEFAULT_SUPPLYNO_ONFIRST);
         
-        _mercenAriesNumLb = Label::createWithSystemFont(StringUtils::format("%d", mercenary_no), "fonts/arial.ttf", 32);
+        _mercenAriesNumLb = Label::createWithSystemFont(StringUtils::format("%d", mercenary_no), SYSTEM_FONTS, 32);
         _mercenAriesNumLb->setPosition(mercanery_back_size * 0.5f);
         mercanery_back->addChild(_mercenAriesNumLb);
         
@@ -196,7 +196,7 @@ ui::Layout* BuySupply::createListItem(){
                                   default_item_size.height * 0.5f));
         butt_on->setTouchEnabled(true);
         butt_on->setTitleText("Get it");
-        butt_on->setTitleFontName("fonts/arial.ttf");
+        butt_on->setTitleFontName(SYSTEM_FONTS);
         butt_on->setTitleFontSize(38);
         butt_on->addClickEventListener(CC_CALLBACK_1(BuySupply::actionGetItem, this));
         butt_on->setName("ssss_ssss");

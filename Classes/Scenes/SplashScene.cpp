@@ -53,7 +53,7 @@ bool Splash::init()
         this->addChild(_loadingBarBack, 1);
         
         Size bar_size = _loadingBar->getContentSize();
-        auto label = Label::createWithTTF("Loading", "fonts/arial.ttf", 24);
+        auto label = Label::createWithSystemFont("Loading", SYSTEM_FONTS, 24);
         label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
         this->addChild(label, 3);
         

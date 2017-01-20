@@ -114,7 +114,7 @@ ui::Layout* Achievement::createListItem(){
                                         default_item_size.height - title_size.height * 0.5f));
         default_item->addChild(achieve_title, 1, k_item_title_backgrd);
         
-        auto item_tile_txt = ui::Text::create("Achievement Item", "fonts/arial.ttf", 30);
+        auto item_tile_txt = ui::Text::create("Achievement Item", SYSTEM_FONTS, 30);
         item_tile_txt->setPosition(Vec2(title_size.width * 0.25f, title_size.height * 0.7f));
         achieve_title->addChild(item_tile_txt, 2, k_item_title_text);
         
@@ -136,7 +136,7 @@ ui::Layout* Achievement::createListItem(){
         achieve_cup->setPosition(achieve_cup_size * 0.6f);
         default_item->addChild(achieve_cup, 2);
         
-        auto item_desc_txt = ui::Text::create("This is the description of the achievement.", "fonts/arial.ttf", 28);
+        auto item_desc_txt = ui::Text::create("This is the description of the achievement.", SYSTEM_FONTS, 28);
         item_desc_txt->setPosition(Vec2(achieve_cup_size.width * 1.2f,
                                         default_item_size.height * 0.7f));
         item_desc_txt->setColor(Color3B(50, 30, 30));
@@ -153,7 +153,7 @@ ui::Layout* Achievement::createListItem(){
                                   butt_on_size.height * 0.8f));
         butt_on->setTouchEnabled(true);
         butt_on->setTitleText("GET IT");
-        butt_on->setTitleFontName("fonts/arial.ttf");
+        butt_on->setTitleFontName(SYSTEM_FONTS);
         butt_on->setTitleFontSize(32);
         butt_on->setName("ssss_ssss");
         butt_on->addClickEventListener(CC_CALLBACK_1(Achievement::actionButton, this));

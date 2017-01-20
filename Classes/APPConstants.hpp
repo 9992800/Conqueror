@@ -23,7 +23,8 @@ extern std::string ANIM_NAME_DEFEATED_SHOW[2][8];
 extern Color4F AreaBackGroundColors[];
 extern Color4F border_color;
 extern Color4F selected_color;
-
+extern std::string SYSTEM_FONTS;
+extern ValueMap LOCALIZED_STRING_MAP;
 
 #define ACHIEVE_DATA_KEY_FIRST_WIN_2            "_key_achive_data_first_win_2"
 #define ACHIEVE_DATA_KEY_FIRST_WIN_3            "_key_achive_data_first_win_3"

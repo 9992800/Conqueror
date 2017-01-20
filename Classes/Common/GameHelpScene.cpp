@@ -6,6 +6,7 @@
 //
 //
 
+#include "AppConstants.hpp"
 #include "GameHelpScene.hpp"
 
 #pragma makr - init scene
@@ -31,7 +32,7 @@ bool GameHelp::init()
         sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
         this->addChild(sprite, 0);
         
-        auto label = Label::createWithTTF("this is a help page.", "fonts/arial.ttf", 24);
+        auto label = Label::createWithSystemFont("this is a help page.", SYSTEM_FONTS, 24);
         label->setPosition(Vec2(origin.x + visibleSize.width / 2,
                                 origin.y + visibleSize.height / 2));
         this->addChild(label, 2);

@@ -63,8 +63,8 @@ Color4F AreaBackGroundColors[] = {Color4F((float)200/255, (float)180/255, (float
 
 Color4F border_color = Color4F(0.0, 0.0, 0.0, 1.0);
 Color4F selected_color = Color4F(0.2, 0.0, 0.0, 0.7);
-
-
+std::string  SYSTEM_FONTS = "";
+ValueMap LOCALIZED_STRING_MAP;
 
 static GolbalConfig* s_SharedBean;
 int GolbalConfig::CURRENT_GAME_LEVEL = CURRENT_GAME_LEVEL_EASY;
@@ -809,16 +809,20 @@ void GolbalConfig::initBasic(){
         cache->flush();
         
         const char* currentLanguageCode = Application::getInstance()->getCurrentLanguageCode();
+        std::string file_path = StringUtils::format("fonts/Localized_%s.plist", currentLanguageCode); 
         
-        CCLOG("currentLanguageCode=%s", currentLanguageCode);
-        
+        std::string path = FileUtils::getInstance()->fullPathForFilename(file_path);
+        LOCALIZED_STRING_MAP = FileUtils::getInstance()->getValueMapFromFile(path);
         LanguageType currentLanguageType = Application::getInstance()->getCurrentLanguage();
-        switch (currentLanguageType)
-        {
+        switch (currentLanguageType){
                 default:
-                case LanguageType::ENGLISH:
+                case LanguageType::ENGLISH:{
+                        SYSTEM_FONTS = "fonts/arial.ttf";
+                }
                         break;
-                case LanguageType::CHINESE:
+                case LanguageType::CHINESE:{
+                        SYSTEM_FONTS = "";
+                }
                         break;
         }
 }

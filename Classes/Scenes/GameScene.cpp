@@ -166,7 +166,7 @@ void GameScene::initAreaTcShow(){
                 auto ch_size = character->getContentSize();
                 
                 std::string tc_str = StringUtils::format("X%d", player->getAreaTc());
-                auto numbser = Label::createWithSystemFont(tc_str, "fonts/arial.ttf", 26);
+                auto numbser = Label::createWithSystemFont(tc_str, SYSTEM_FONTS, 26);
                 character->addChild(numbser);
                 numbser->setPosition(Vec2(ch_size.width, ch_size.height / 2));
                 
@@ -240,7 +240,7 @@ void GameScene::initOperateBoard(){
         first_tip_layer->setIgnoreAnchorPointForPosition(false);
         first_tip_layer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         
-        auto tips = Label::createWithSystemFont("Do you want to use this map?", "fonts/arial.ttf", 40);
+        auto tips = Label::createWithSystemFont("Do you want to use this map?", SYSTEM_FONTS, 40);
         tips->setPosition(Vec2(tips->getContentSize().width / 2 + 20,
                                first_tip_layer->getContentSize().height / 2));
         first_tip_layer->addChild(tips);
@@ -272,7 +272,7 @@ void GameScene::initOperateBoard(){
         _endTurnTipsLayer->setVisible(false);
         
         
-        auto attack_tips = Label::createWithSystemFont("1.Click your area. 2.Click neighbor to attack", "fonts/arial.ttf", 30);
+        auto attack_tips = Label::createWithSystemFont("1.Click your area. 2.Click neighbor to attack", SYSTEM_FONTS, 30);
         attack_tips->setPosition(Vec2(attack_tips->getContentSize().width / 2 + 20,
                                _endTurnTipsLayer->getContentSize().height / 2));
         _endTurnTipsLayer->addChild(attack_tips);
@@ -422,7 +422,7 @@ void GameScene::initDialog(){
         game_win_t_back->setPosition(game_win_t_back_pos);
         game_win_back->addChild(game_win_t_back);
         
-        auto win_title_txt = Label::createWithSystemFont("You win. Congratulations!!!", "fonts/arial.ttf", 32);
+        auto win_title_txt = Label::createWithSystemFont("You win. Congratulations!!!", SYSTEM_FONTS, 32);
         win_title_txt->setPosition(Vec2(win_title_txt->getContentSize().width * 0.6,
                                         game_win_t_back->getContentSize().height * 0.7));
         game_win_t_back->addChild(win_title_txt);
@@ -445,7 +445,7 @@ void GameScene::initDialog(){
         game_win_back->addChild(replay_btn);
         replay_btn->setTitleText("Replay");
         replay_btn->setTitleFontSize(26);
-        replay_btn->setTitleFontName("fonts/arial.ttf");
+        replay_btn->setTitleFontName(SYSTEM_FONTS);
         replay_btn->setTitleColor(Color3B::BLACK);
         replay_btn->addClickEventListener(CC_CALLBACK_1(GameScene::gameOver, this, 1));
         
@@ -486,7 +486,7 @@ void GameScene::initDialog(){
         game_lost_t_bck->setPosition(game_lost_t_bck_pos);
         game_lost_back->addChild(game_lost_t_bck);
         
-        auto lost_title_txt = Label::createWithSystemFont("You lost...", "fonts/arial.ttf", 32);
+        auto lost_title_txt = Label::createWithSystemFont("You lost...", SYSTEM_FONTS, 32);
         lost_title_txt->setPosition(Vec2(lost_title_txt->getContentSize().width * 0.55,
                                         game_lost_t_bck->getContentSize().height * 0.7));
         game_lost_t_bck->addChild(lost_title_txt);
@@ -499,7 +499,7 @@ void GameScene::initDialog(){
                                           game_lost_t_bck_pos.y - game_lost_c_bck->getContentSize().height * 0.63f));
         game_lost_back->addChild(game_lost_c_bck);
         auto game_lost_c_bck_size = game_lost_back->getContentSize();
-        auto lost_tips = Label::createWithSystemFont("You can engage the mercenaries to make your country powerfu. if you use you mecenaries up, you can get more coins from shop to engage more mercenaries.", "fonts/arial.ttf", 26);
+        auto lost_tips = Label::createWithSystemFont("You can engage the mercenaries to make your country powerfu. if you use you mecenaries up, you can get more coins from shop to engage more mercenaries.", SYSTEM_FONTS, 26);
         Size lost_tips_size = lost_tips->getContentSize();
         lost_tips->setAnchorPoint(Vec2(0.f, 1.0f));
         lost_tips->setDimensions(game_lost_c_bck_size.width * 0.9,
@@ -663,7 +663,7 @@ void GameScene::showWinDialog(){
         AchievementEngine::getInstance()->winCounter();
         
         auto back_size = content_back->getContentSize();
-        auto win_tips = Label::createWithSystemFont("Rewards:", "fonts/arial.ttf", 28);
+        auto win_tips = Label::createWithSystemFont("Rewards:", SYSTEM_FONTS, 28);
         win_tips->setColor(Color3B::BLACK);
         win_tips->setPosition(Vec2(win_tips->getContentSize().width * 0.55,
                                    back_size.height - win_tips->getContentSize().height * 0.6));
@@ -675,7 +675,7 @@ void GameScene::showWinDialog(){
                 content_back->addChild(coins);
                 
                 std::string coins_num = StringUtils::format("X%d", data.bonus_coinsNum);
-                auto num_label = Label::createWithSystemFont(coins_num, "fonts/arial.ttf", 42);
+                auto num_label = Label::createWithSystemFont(coins_num, SYSTEM_FONTS, 42);
                 num_label->setPosition(Vec2(coins->getContentSize().width * 1.6,
                                             coins->getContentSize().height * 0.5f));
                 coins->addChild(num_label);
@@ -686,7 +686,7 @@ void GameScene::showWinDialog(){
                                             back_size.height * .5f));
                 content_back->addChild(achieve_show);
                 
-                auto achieve_tittle = Label::createWithSystemFont(data.title, "fonts/arial.ttf", 28);
+                auto achieve_tittle = Label::createWithSystemFont(data.title, SYSTEM_FONTS, 28);
                 achieve_tittle->setPosition(Vec2(achieve_size.width * 2.f,
                                             achieve_size.height * 0.3f));
                 achieve_show->addChild(achieve_tittle);
@@ -698,7 +698,7 @@ void GameScene::showWinDialog(){
                                         back_size.height * .5f));
                 content_back->addChild(coins);
                 
-                auto ci_no = Label::createWithSystemFont(coins_num, "fonts/arial.ttf", 42);
+                auto ci_no = Label::createWithSystemFont(coins_num, SYSTEM_FONTS, 42);
                 ci_no->setPosition(Vec2(coins->getContentSize().width * 1.6f,
                                         coins->getContentSize().height * 0.5f));
                 coins->addChild(ci_no);
@@ -985,7 +985,7 @@ void GameScene::ShowResultData(){
                 _diceResultLayer->addChild(dice);
 
                 if (i == _attackResult->_from.size() - 1){
-                        auto from_value = Label::createWithSystemFont(StringUtils::format("%d", _attackResult->_fromSum), "fonts/arial.ttf", 40);
+                        auto from_value = Label::createWithSystemFont(StringUtils::format("%d", _attackResult->_fromSum), SYSTEM_FONTS, 40);
                         from_value->setPosition(Vec2(pos.x - dice_size.width - 10, pos.y));
                         _diceResultLayer->addChild(from_value);
                 }
@@ -1004,7 +1004,7 @@ void GameScene::ShowResultData(){
                 _diceResultLayer->addChild(dice);
 
                 if (i == _attackResult->_to.size() - 1){
-                        auto to_value = Label::createWithSystemFont(StringUtils::format("%d", _attackResult->_toSum), "fonts/arial.ttf", 40);
+                        auto to_value = Label::createWithSystemFont(StringUtils::format("%d", _attackResult->_toSum), SYSTEM_FONTS, 40);
                         to_value->setPosition(Vec2(pos.x + dice_size.width + 10, pos.y));
                         _diceResultLayer->addChild(to_value);
                 }

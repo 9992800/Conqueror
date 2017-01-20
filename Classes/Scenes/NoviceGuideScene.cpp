@@ -188,7 +188,7 @@ void NoviceGuide::initController(){
         _choseMapLayer->setIgnoreAnchorPointForPosition(false);
         _choseMapLayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         
-        auto tips = Label::createWithSystemFont("Do you want to use this map?", "fonts/arial.ttf", 40);
+        auto tips = Label::createWithSystemFont("Do you want to use this map?", SYSTEM_FONTS, 40);
         tips->setPosition(Vec2(tips->getContentSize().width / 2 + 20,
                                _choseMapLayer->getContentSize().height / 2));
         _choseMapLayer->addChild(tips);
@@ -219,7 +219,7 @@ void NoviceGuide::initController(){
         _endTurnTipsLayer->setVisible(false);
         
         
-        auto attack_tips = Label::createWithSystemFont("1.Click your area. 2.Click neighbor to attack", "fonts/arial.ttf", 30);
+        auto attack_tips = Label::createWithSystemFont("1.Click your area. 2.Click neighbor to attack", SYSTEM_FONTS, 30);
         attack_tips->setPosition(Vec2(attack_tips->getContentSize().width / 2 + 20,
                                       _endTurnTipsLayer->getContentSize().height / 2));
         _endTurnTipsLayer->addChild(attack_tips);
@@ -272,7 +272,7 @@ void NoviceGuide::initController(){
         character_me->setScale(0.7);
         auto ch_size = character_me->getContentSize();
 
-        _tcShowNumbMe = Label::createWithSystemFont("X8", "fonts/arial.ttf", 26);
+        _tcShowNumbMe = Label::createWithSystemFont("X8", SYSTEM_FONTS, 26);
         character_me->addChild(_tcShowNumbMe);
         _tcShowNumbMe->setPosition(Vec2(ch_size.width, ch_size.height / 2));
         character_me->setPosition(p_size.width * 0.4,  p_size.height * 0.7);
@@ -286,7 +286,7 @@ void NoviceGuide::initController(){
         auto character_enemy = Sprite::create("xunshoushi_pos.png");
         character_enemy->setScale(0.7f);
         
-        _tcShowNumbEnemy = Label::createWithSystemFont("X6", "fonts/arial.ttf", 26);
+        _tcShowNumbEnemy = Label::createWithSystemFont("X6", SYSTEM_FONTS, 26);
         character_enemy->addChild(_tcShowNumbEnemy);
         _tcShowNumbEnemy->setPosition(Vec2(ch_size.width, ch_size.height / 2));
         character_enemy->setPosition(p_size.width * 0.4,  p_size.height * 0.7);
@@ -308,7 +308,7 @@ void NoviceGuide::initGuideData(){
         _guideLayer->setCapInsets(Rect(12, 12, 40, 40));
         this->addChild(_guideLayer, 3);
         
-        _contentText = Label::createWithSystemFont("Click 'YES' to select this map as your battle field, the map is created randomly.", "fonts/arial.ttf", 24);
+        _contentText = Label::createWithSystemFont("Click 'YES' to select this map as your battle field, the map is created randomly.", SYSTEM_FONTS, 24);
         _guideLayer->addChild(_contentText);
         Size content_size = _contentText->getContentSize();
         _contentText->setAnchorPoint(Vec2(0.f, 1.0f));
@@ -348,7 +348,7 @@ void NoviceGuide::initGuideData(){
         _nextButton->setPosition(Vec2(layer_size.width - 0.55f * but_size.width,
                                       but_size.height * 0.55f));
         _nextButton->setTitleText("Next");
-        _nextButton->setTitleFontName("fonts/arial.ttf");
+        _nextButton->setTitleFontName(SYSTEM_FONTS);
         _nextButton->setTitleFontSize(24);
         _nextButton->setVisible(false);
         _guideLayer->addChild(_nextButton, 1, kGuideLayerNextBtnTag);
@@ -526,7 +526,7 @@ void NoviceGuide::showCombatResult(Node* fires){
                 _diceResultLayer->addChild(dice);
         }
         
-        auto from_value = Label::createWithSystemFont("23", "fonts/arial.ttf", 40);
+        auto from_value = Label::createWithSystemFont("23", SYSTEM_FONTS, 40);
         from_value->setPosition(Vec2(back_size.width / 2 - 8 * dice_size.width - 10,
                                      dice_size.height));
         _diceResultLayer->addChild(from_value);
@@ -542,7 +542,7 @@ void NoviceGuide::showCombatResult(Node* fires){
                 dice->setPosition(pos);
                 _diceResultLayer->addChild(dice);
         }
-        auto to_value = Label::createWithSystemFont("11", "fonts/arial.ttf", 40);
+        auto to_value = Label::createWithSystemFont("11", SYSTEM_FONTS, 40);
         to_value->setPosition(Vec2(back_size.width / 2 + 4 * dice_size.width + 10, dice_size.height));
         _diceResultLayer->addChild(to_value);
         

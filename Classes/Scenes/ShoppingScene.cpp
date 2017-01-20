@@ -57,7 +57,7 @@ bool Shopping::init(){
                 Director::getInstance()->popScene();
         });
         return_btn->setTitleText("Return");
-        return_btn->setTitleFontName("fonts/arial.ttf");
+        return_btn->setTitleFontName(SYSTEM_FONTS);
         return_btn->setTitleFontSize(28);
         back_ground->addChild(return_btn);
         
@@ -73,7 +73,7 @@ bool Shopping::init(){
         item_title_10->setPosition(Vec2(item_size.width * 0.45f, item_size.height * 0.4));
         coins_item_10->addChild(item_title_10);
         
-        auto item_price_10 = ui::Text::create("$0.99", "fonts/arial.ttf", 46);
+        auto item_price_10 = ui::Text::create("$0.99", SYSTEM_FONTS, 46);
         item_price_10->setPosition(Vec2(item_size.width * 0.5f, item_size.height * 0.15));
         item_price_10->setIgnoreAnchorPointForPosition(false);
         item_price_10->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
@@ -96,7 +96,7 @@ bool Shopping::init(){
         item_title_200->setPosition(Vec2(item_size.width * 0.45f, item_size.height * 0.4));
         coins_item_200->addChild(item_title_200);
         
-        auto item_price_200 = ui::Text::create("$4.99", "fonts/arial.ttf", 46);
+        auto item_price_200 = ui::Text::create("$4.99", SYSTEM_FONTS, 46);
         item_price_200->setPosition(Vec2(item_size.width * 0.5f, item_size.height * 0.15));
         item_price_200->setIgnoreAnchorPointForPosition(false);
         item_price_200->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
@@ -117,7 +117,7 @@ bool Shopping::init(){
         item_title_60->setPosition(Vec2(item_size.width * 0.45f, item_size.height * 0.4));
         coins_item_60->addChild(item_title_60);
         
-        auto item_price_60 = ui::Text::create("$13.99", "fonts/arial.ttf", 46);
+        auto item_price_60 = ui::Text::create("$13.99", SYSTEM_FONTS, 46);
         item_price_60->setPosition(Vec2(item_size.width * 0.5f, item_size.height * 0.15));
         item_price_60->setIgnoreAnchorPointForPosition(false);
         item_price_60->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
@@ -139,7 +139,7 @@ bool Shopping::init(){
         item_title_680->setPosition(Vec2(item_size.width * 0.5f, item_size.height * 0.4));
         coins_item_680->addChild(item_title_680);
         
-        auto item_price_680 = ui::Text::create("$46.99", "fonts/arial.ttf", 46);
+        auto item_price_680 = ui::Text::create("$46.99", SYSTEM_FONTS, 46);
         item_price_680->setPosition(Vec2(item_size.width * 0.45f, item_size.height * 0.15));
         item_price_680->setIgnoreAnchorPointForPosition(false);
         item_price_680->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
@@ -163,7 +163,7 @@ bool Shopping::init(){
         item_title_1480->setPosition(Vec2(item_size_big.width * 0.4f, item_size_big.height * 0.4));
         coins_item_1480->addChild(item_title_1480);
         
-        auto item_price_1480 = ui::Text::create("$94.99", "fonts/arial.ttf", 56);
+        auto item_price_1480 = ui::Text::create("$94.99", SYSTEM_FONTS, 56);
         item_price_1480->setPosition(Vec2(item_size_big.width * 0.5f, item_size_big.height * 0.15));
         item_price_1480->setIgnoreAnchorPointForPosition(false);
         item_price_1480->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
@@ -188,7 +188,7 @@ bool Shopping::init(){
         auto cache = UserDefault::getInstance();
         int cur_coins = cache->getIntegerForKey(USER_CURRENT_COINS, 0);
         
-        _coinsNumLb = Label::createWithSystemFont(StringUtils::format("%d", cur_coins), "fonts/arial.ttf", 32);
+        _coinsNumLb = Label::createWithSystemFont(StringUtils::format("%d", cur_coins), SYSTEM_FONTS, 32);
         _coinsNumLb->setPosition(coins_back_size * 0.5f);
         coins_back->addChild(_coinsNumLb);
         

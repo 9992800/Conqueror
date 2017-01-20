@@ -62,7 +62,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
                 ok_button->setTitleText("OK");
                 ok_button->setTitleFontSize(28);
                 ok_button->setTitleColor(Color3B::BLACK);
-                ok_button->setTitleFontName("fonts/arial.ttf");
+                ok_button->setTitleFontName(SYSTEM_FONTS);
                 ok_button->addClickEventListener(CC_CALLBACK_0(CommonTipsDialog::dismiss, this));
                 
                 _tipsBack->addChild(ok_button);
@@ -74,7 +74,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
                 cancel_button->setTitleText("NO");
                 cancel_button->setTitleFontSize(28);
                 cancel_button->setTitleColor(Color3B::BLACK);
-                cancel_button->setTitleFontName("fonts/arial.ttf");
+                cancel_button->setTitleFontName(SYSTEM_FONTS);
                 cancel_button->addClickEventListener(CC_CALLBACK_0(CommonTipsDialog::dismiss, this));
                 
                 _tipsBack->addChild(cancel_button);
@@ -85,7 +85,7 @@ bool CommonTipsDialog::initWithCallback(ui::AbstractCheckButton::ccWidgetClickCa
                 ok_button->setTitleText("YES");
                 ok_button->setTitleFontSize(28);
                 ok_button->setTitleColor(Color3B::BLACK);
-                ok_button->setTitleFontName("fonts/arial.ttf");
+                ok_button->setTitleFontName(SYSTEM_FONTS);
                 ok_button->addClickEventListener(CC_CALLBACK_0(CommonTipsDialog::dismiss2, this, okCallBack, (Ref*)ok_button));
                 
                 _tipsBack->addChild(ok_button);
@@ -119,7 +119,7 @@ bool CommonTipsDialog::init(){
         _tipsBack->addChild(content_back);
         
         
-        auto content = Label::createWithSystemFont(_contentTxt, "fonts/arial.ttf", 24);
+        auto content = Label::createWithSystemFont(_contentTxt, SYSTEM_FONTS, 24);
         auto content_size = content->getContentSize();
         
         content->setAnchorPoint(Vec2(0.f, 1.0f));

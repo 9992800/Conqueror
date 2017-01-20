@@ -5,7 +5,7 @@
 //  Created by Wansheng Li on 2016/10/30.
 //
 //
-
+#include "AppConstants.hpp"
 #include "PopUpOkCancelDialog.hpp"
 
 PopUpOkCancelDialog* PopUpOkCancelDialog::create(BaseDialogConfig config){
@@ -50,7 +50,7 @@ bool PopUpOkCancelDialog::init(){
         float button_gap = s.width * 0.2;
         _okButton->setPosition(Vec2(s.width / 2 - button_gap,  ok_size.height / 2 + 30));
         
-        _okLabel = Label::createWithSystemFont("OK", "fonts/arial.ttf", 24);
+        _okLabel = Label::createWithSystemFont("OK", SYSTEM_FONTS, 24);
         _okButton->addChild(_okLabel);
         _okLabel->setPosition(Vec2(ok_size / 2));
         
@@ -58,7 +58,7 @@ bool PopUpOkCancelDialog::init(){
         Size cancel_size = _cancelButton->getContentSize();
         _cancelButton->setPosition(Vec2(s.width / 2 + button_gap, cancel_size.height / 2 + 30));
         
-        _cancelLabel = Label::createWithSystemFont("Cancel", "fonts/arial.ttf", 24);
+        _cancelLabel = Label::createWithSystemFont("Cancel", SYSTEM_FONTS, 24);
         _cancelButton->addChild(_cancelLabel);
         _cancelLabel->setPosition(Vec2(cancel_size / 2));
         

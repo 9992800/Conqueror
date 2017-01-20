@@ -110,7 +110,7 @@ bool LevelSelect::init()
         _loadingBar->setPosition(pos);
         
         Size bar_size = _loadingBar->getContentSize();
-        auto label = Label::createWithSystemFont("Loading", "fonts/arial.ttf", 24);
+        auto label = Label::createWithSystemFont("Loading", SYSTEM_FONTS, 24);
         label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
         _loadingBar->addChild(label, 4, key_loading_bar2);
         this->addChild(_loadingBar, 3, key_loading_bar1);
@@ -221,7 +221,7 @@ void LevelSelect::initCharactorSel(Vec2 position_num, Size num_size) {
                                 coin->setScale(0.8f);
                                 lock->addChild(coin);
                                 
-                                auto price_lb = Label::createWithSystemFont(StringUtils::format("X%d", price), "fonts/arial.ttf", 24);
+                                auto price_lb = Label::createWithSystemFont(StringUtils::format("X%d", price), SYSTEM_FONTS, 24);
                                 price_lb->setPosition(Vec2(lock_size.width * 0.9f,
                                                            -ch_size.height * 0.25f));
                                 lock->addChild(price_lb);
@@ -372,7 +372,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         add_coins->setPosition(Vec2(0, coins_back_size.height * 0.5f));
         coins_back->addChild(add_coins);
         
-        _coinsNumLb = Label::createWithSystemFont("0", "fonts/arial.ttf", 32);
+        _coinsNumLb = Label::createWithSystemFont("0", SYSTEM_FONTS, 32);
         _coinsNumLb->setPosition(coins_back_size * 0.5f);
         coins_back->addChild(_coinsNumLb);
         
@@ -397,7 +397,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         arm_show->setPosition(arm_pos);
         arm_back->addChild(arm_show);
         
-        _mercenAriesNumLb = Label::createWithSystemFont("0", "fonts/arial.ttf", 32);//
+        _mercenAriesNumLb = Label::createWithSystemFont("0", SYSTEM_FONTS, 32);//
         _mercenAriesNumLb->setPosition(arm_back_size * 0.5f);
         arm_back->addChild(_mercenAriesNumLb);
         

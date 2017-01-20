@@ -74,7 +74,7 @@ void AchievementEngine::coinsAnimShow(Node* parent, Vec2 from, Vec2 dest,
         }
         
         std::string num_str = StringUtils::format("+%d", coins_num);
-        auto num_tips = Label::createWithSystemFont(num_str, "fonts/arial.ttf", 68);
+        auto num_tips = Label::createWithSystemFont(num_str, SYSTEM_FONTS, 68);
         num_tips->setTextColor(Color4B::RED);
         num_tips->setPosition(from);
         parent->addChild(num_tips, SUPER_LAYER_PRIVILIEGE, MODAL_DIALOG_NODETAG + coins_num);

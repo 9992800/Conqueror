@@ -5,6 +5,8 @@
 //  Created by Wansheng Li on 2016/10/30.
 //
 //
+
+#include "AppConstants.hpp"
 #include "PopUpBaseDialog.hpp"
 PopUpBaseDialog::PopUpBaseDialog(BaseDialogConfig config):LayerColor::LayerColor(){
         _baseConfig = config;
@@ -38,14 +40,14 @@ PopUpBaseDialog::PopUpBaseDialog(BaseDialogConfig config):LayerColor::LayerColor
         this->addChild(_backGound, 0, kTagBackGrd);
         
         
-        _title = Label::createWithSystemFont(config._title, "fonts/arial.ttf", config._titleFontSize);
+        _title = Label::createWithSystemFont(config._title, SYSTEM_FONTS, config._titleFontSize);
         Size title_size = _title->getContentSize();
         _title->setPosition(Vec2(layer_size.width / 2, layer_size.height - title_size.height));
         _title->setColor(Color3B::RED);
         this->addChild(_title, 1, kTagTittle);
 
        
-        _content = Label::createWithSystemFont(config._content, "fonts/arial.ttf", config._contentFontSize);
+        _content = Label::createWithSystemFont(config._content, SYSTEM_FONTS, config._contentFontSize);
         addChild(_content, 1, kTagContent);
         _content->setColor(Color3B::RED);
         Size content_size = _content->getContentSize();

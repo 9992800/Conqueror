@@ -92,6 +92,12 @@ typedef struct MercenaryItem_tag{
         std::string     priceNoImg;
 }MercenaryItem;
 
+enum {
+        CURRENT_GAME_LEVEL_EASY = 1,
+        CURRENT_GAME_LEVEL_NORMAL,
+        CURRENT_GAME_LEVEL_HARD
+};
+
 class GolbalConfig:public Ref{
 public:
         static GolbalConfig* getInstance();
@@ -104,6 +110,7 @@ public:
         AchievementData getSingleAchievement(std::string key){
                 return this->_systemAchievementData.at(key);
         }
+        static int CURRENT_GAME_LEVEL;
 protected:
         GolbalConfig();
         ~GolbalConfig();

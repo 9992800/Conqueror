@@ -1395,13 +1395,11 @@ void GameScene::menuAddArmy(Ref* btn){
         
         if (cur_mercenary <= 0){
                 if (cur_coinsNo < PRICE_PER_SUPPLEMENT){
-                        std::string tips = StringUtils::format("Tips：sorry, you don't have enough coins(%d) to engage one team of mercenaries(cost:%d coions). You can get more coions through these ways:win more battles, share the game, buy from shop.",  cur_coinsNo,
-                                                               PRICE_PER_SUPPLEMENT
-                                                               );
+                        std::string tips = StringUtils::format("Tips：sorry, you don't have enough coins(%d) to engage mercenary(cost:%d coions). You can get more coions through these ways:win more battles, share the game, buy from shop.",  cur_coinsNo, PRICE_PER_SUPPLEMENT);
                         CommonTipsDialog::showModalDialog((Node*)this, tips);
                         return;
                 }else{
-                        std::string tips = StringUtils::format("Tips：youre mercenaries are used up, you need engage more mercenaries by coins. Do you want to spend %d coins to engage one team of mercenaries ? Your current coins number is :%d", 
+                        std::string tips = StringUtils::format("Tips：youre mercenaries are used up, you need to engage more mercenaries by coins. Do you want to spend %d coins to engage one team of mercenaries ? Your current coins is :%d",
                                                                PRICE_PER_SUPPLEMENT,
                                                                cur_coinsNo);
                         

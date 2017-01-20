@@ -131,7 +131,7 @@ enum {
 
 
 #define GAME_STATUS_GUIDE_FINISHED      "_key_game_status_guide_finished"
-
+#define GAME_DIFFICULT_LEVEL            "_key_game_difficult_level"
 
 #define CHARACTOR_1_LOCK_STATE_KEY      "_key_charactor_1_lock_state"
 #define CHARACTOR_2_LOCK_STATE_KEY      "_key_charactor_2_lock_state"

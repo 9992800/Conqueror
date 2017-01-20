@@ -209,11 +209,15 @@ int AchievementEngine::winCounter(){
         cache->setIntegerForKey(ACHIEVE_WIN_3TIME_COUNTER, ++continuous_win);
         int status = cache->getIntegerForKey(ACHIEVE_DATA_KEY_WIN_3TIMES,
                                              REWARDS_STATUS_CLOSED);
-        if (REWARDS_STATUS_CLOSED == status && 3 == continuous_win){
+        if (REWARDS_STATUS_CLOSED == status && 3 == continuous_win){//TODO::
                 cache->setIntegerForKey(ACHIEVE_DATA_KEY_WIN_3TIMES,
                                         REWARDS_STATUS_OPEN);
                 int new_ach_no = cache->getIntegerForKey(ACHIEVE_DATA_KEY_NEW_ACH_NO, 0);
                 cache->setIntegerForKey(ACHIEVE_DATA_KEY_NEW_ACH_NO, ++new_ach_no);
+                
+                
+                GolbalConfig::CURRENT_GAME_LEVEL = CURRENT_GAME_LEVEL_NORMAL;
+                cache->setIntegerForKey(GAME_DIFFICULT_LEVEL, CURRENT_GAME_LEVEL_NORMAL);
         }
         
         cache->flush();

@@ -467,9 +467,19 @@ FightResultData* DiceGame::startBattle(){
         
         int from_sum = 0, to_sum = 0;
         
+        //tips:for novice users. make roboot weak at start.
+        bool is_novice_user = CURRENT_GAME_LEVEL_EASY == GolbalConfig::CURRENT_GAME_LEVEL
+        && result_data->_fromPlayer == _data->_userId;
+        
         area_from->clearFightValue();
         for (int i = 0; i < area_from->getDice(); i++){
-                int random_value = random(1, 6);
+                int random_value = 6;
+                if (is_novice_user){
+                        random_value = random(2, 6);
+                }else{
+                        random_value = random(1, 6);
+                }
+                
                 area_from->recordFightValue(random_value);
                 from_sum += random_value;
                 result_data->_from.push_back(random_value);
@@ -477,7 +487,13 @@ FightResultData* DiceGame::startBattle(){
         
         area_to->clearFightValue();
         for (int i = 0; i < area_to->getDice(); i++){
-                int random_value = random(1, 6);
+                int random_value = 1;
+                if (is_novice_user){
+                        random_value = random(1, 5);
+                }else{
+                        random_value = random(1, 6);
+                }
+                
                 area_to->recordFightValue(random_value);
                 to_sum += random_value;
                 result_data->_to.push_back(random_value);

@@ -67,6 +67,7 @@ Color4F selected_color = Color4F(0.2, 0.0, 0.0, 0.7);
 
 
 static GolbalConfig* s_SharedBean;
+int GolbalConfig::CURRENT_GAME_LEVEL = CURRENT_GAME_LEVEL_EASY;
 
 GolbalConfig* GolbalConfig::getInstance()
 {
@@ -789,9 +790,9 @@ void GolbalConfig::initMercenaryItemData(){
 }
 
 void GolbalConfig::initBasic(){
-        UserDefault::getInstance()->setIntegerForKey(LEVEL_2_LOCK_STATE_KEY, true);
-        UserDefault::getInstance()->setIntegerForKey(CHARACTOR_1_LOCK_STATE_KEY, true);
-        UserDefault::getInstance()->flush();
+        auto cache = UserDefault::getInstance();
+        cache->setIntegerForKey(LEVEL_2_LOCK_STATE_KEY, true);
+        cache->setIntegerForKey(CHARACTOR_1_LOCK_STATE_KEY, true);
         
         Size frame_size = Director::getInstance()->getOpenGLView()->getFrameSize();
         for (int i = 0; i < MAX_PLAYER; i++){
@@ -802,6 +803,12 @@ void GolbalConfig::initBasic(){
                 keeper_pos[i].x = keeper_pos[i].x / designResolutionSize.width * frame_size.width;
                 keeper_pos[i].y = keeper_pos[i].y / designResolutionSize.height * frame_size.height;
         }
+        
+        CURRENT_GAME_LEVEL = cache->getIntegerForKey(GAME_DIFFICULT_LEVEL,
+                                                     CURRENT_GAME_LEVEL_EASY);
+        
+        
+        cache->flush();
 }
 
 std::vector<AchievementData> GolbalConfig::getAchievementData(){

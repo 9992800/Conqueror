@@ -40,6 +40,7 @@
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
 		7C152D691DFFA70000E6C1BB /* APPConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C152D671DFFA70000E6C1BB /* APPConstants.cpp */; };
+		7C1CFE931E3211A600095E64 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7C1CFE951E3211A600095E64 /* InfoPlist.strings */; };
 		7C21A0DC1DC9C06C0035ECC6 /* sliderProgress.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C21A0DB1DC9C06C0035ECC6 /* sliderProgress.png */; };
 		7C21A0E11DC9E9A80035ECC6 /* SplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0DF1DC9E9A80035ECC6 /* SplashScene.cpp */; };
 		7C21A0E41DC9ED930035ECC6 /* LevelSelectScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0E21DC9ED930035ECC6 /* LevelSelectScene.cpp */; };
@@ -206,6 +207,8 @@
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		7C152D671DFFA70000E6C1BB /* APPConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = APPConstants.cpp; sourceTree = "<group>"; };
 		7C152D681DFFA70000E6C1BB /* APPConstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = APPConstants.hpp; sourceTree = "<group>"; };
+		7C1CFE941E3211A600095E64 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7C1CFE961E3211C600095E64 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		7C21A0D31DC996F10035ECC6 /* AppMacros.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AppMacros.hpp; sourceTree = "<group>"; };
 		7C21A0DB1DC9C06C0035ECC6 /* sliderProgress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sliderProgress.png; sourceTree = "<group>"; };
 		7C21A0DF1DC9E9A80035ECC6 /* SplashScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SplashScene.cpp; sourceTree = "<group>"; };
@@ -427,6 +430,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				7C1CFE951E3211A600095E64 /* InfoPlist.strings */,
 				46880B8319C43A87006E1F66 /* Classes */,
 				46880B7519C43A67006E1F66 /* Resources */,
 				1AC6FAE5180E9839004C840B /* cocos2d_libs.xcodeproj */,
@@ -747,6 +751,7 @@
 				Japanese,
 				French,
 				German,
+				"zh-Hans",
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
 			projectDirPath = "";
@@ -794,6 +799,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C4384C81E287F91004B900E /* Icon-180.png in Resources */,
+				7C1CFE931E3211A600095E64 /* InfoPlist.strings in Resources */,
 				7C4384C71E287F91004B900E /* Icon-152.png in Resources */,
 				5087E77F17EB970100C73F5D /* Default@2x.png in Resources */,
 				7C6E80001DD9575A00C5E374 /* history.png in Resources */,
@@ -922,6 +928,19 @@
 			targetProxy = 1AC6FB24180E99E1004C840B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7C1CFE951E3211A600095E64 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7C1CFE941E3211A600095E64 /* en */,
+				7C1CFE961E3211C600095E64 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			path = ios;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {

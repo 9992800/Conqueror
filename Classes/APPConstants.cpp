@@ -807,6 +807,20 @@ void GolbalConfig::initBasic(){
         CURRENT_GAME_LEVEL = cache->getIntegerForKey(GAME_DIFFICULT_LEVEL,
                                                      CURRENT_GAME_LEVEL_EASY); 
         cache->flush();
+        
+        const char* currentLanguageCode = Application::getInstance()->getCurrentLanguageCode();
+        
+        CCLOG("currentLanguageCode=%s", currentLanguageCode);
+        
+        LanguageType currentLanguageType = Application::getInstance()->getCurrentLanguage();
+        switch (currentLanguageType)
+        {
+                default:
+                case LanguageType::ENGLISH:
+                        break;
+                case LanguageType::CHINESE:
+                        break;
+        }
 }
 
 std::vector<AchievementData> GolbalConfig::getAchievementData(){

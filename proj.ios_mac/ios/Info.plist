@@ -73,6 +73,8 @@
 	<string>608545899354118</string>
 	<key>FacebookDisplayName</key>
 	<string>Island Conqueror</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

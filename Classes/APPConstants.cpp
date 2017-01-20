@@ -805,9 +805,7 @@ void GolbalConfig::initBasic(){
         }
         
         CURRENT_GAME_LEVEL = cache->getIntegerForKey(GAME_DIFFICULT_LEVEL,
-                                                     CURRENT_GAME_LEVEL_EASY);
-        
-        
+                                                     CURRENT_GAME_LEVEL_EASY); 
         cache->flush();
 }
 

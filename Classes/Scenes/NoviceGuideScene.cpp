@@ -188,7 +188,8 @@ void NoviceGuide::initController(){
         _choseMapLayer->setIgnoreAnchorPointForPosition(false);
         _choseMapLayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         
-        auto tips = Label::createWithSystemFont("Do you want to use this map?", SYSTEM_FONTS, 40);
+        Value v4 = LOCALIZED_STRING_MAP.find("usethismap")->second;
+        auto tips = Label::createWithSystemFont(v4.asString(), SYSTEM_FONTS, 40);
         tips->setPosition(Vec2(tips->getContentSize().width / 2 + 20,
                                _choseMapLayer->getContentSize().height / 2));
         _choseMapLayer->addChild(tips);
@@ -218,8 +219,8 @@ void NoviceGuide::initController(){
         _endTurnTipsLayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         _endTurnTipsLayer->setVisible(false);
         
-        
-        auto attack_tips = Label::createWithSystemFont("1.Click your area. 2.Click neighbor to attack", SYSTEM_FONTS, 30);
+        Value v3 = LOCALIZED_STRING_MAP.find("actionTips")->second;
+        auto attack_tips = Label::createWithSystemFont(v3.asString(), SYSTEM_FONTS, 30);
         attack_tips->setPosition(Vec2(attack_tips->getContentSize().width / 2 + 20,
                                       _endTurnTipsLayer->getContentSize().height / 2));
         _endTurnTipsLayer->addChild(attack_tips);
@@ -308,7 +309,8 @@ void NoviceGuide::initGuideData(){
         _guideLayer->setCapInsets(Rect(12, 12, 40, 40));
         this->addChild(_guideLayer, 3);
         
-        _contentText = Label::createWithSystemFont("Click 'YES' to select this map as your battle field, the map is created randomly.", SYSTEM_FONTS, 24);
+        Value v3 = LOCALIZED_STRING_MAP.find("noviceStartGame")->second;
+        _contentText = Label::createWithSystemFont(v3.asString(), SYSTEM_FONTS, 24);
         _guideLayer->addChild(_contentText);
         Size content_size = _contentText->getContentSize();
         _contentText->setAnchorPoint(Vec2(0.f, 1.0f));
@@ -347,7 +349,8 @@ void NoviceGuide::initGuideData(){
         auto but_size = _nextButton->getContentSize();
         _nextButton->setPosition(Vec2(layer_size.width - 0.55f * but_size.width,
                                       but_size.height * 0.55f));
-        _nextButton->setTitleText("Next");
+        Value v7 = LOCALIZED_STRING_MAP.find("next")->second;
+        _nextButton->setTitleText(v7.asString());
         _nextButton->setTitleFontName(SYSTEM_FONTS);
         _nextButton->setTitleFontSize(24);
         _nextButton->setVisible(false);
@@ -405,8 +408,8 @@ void NoviceGuide::menuEngageArmy(Ref* pSender){
                 
                 
                 _curGuideState = GUIDE_GAME_STATUS_SUPPLY;
-                
-                _contentText->setString("Click this button to end your turn. Don't attack too much enemy's area, this will make your areas weak. It's better to keep your area with more soldiers.");
+                Value v7 = LOCALIZED_STRING_MAP.find("noviceEndTurn")->second;
+                _contentText->setString(v7.asString());
                 auto pos1 = _endTurnBtn->getParent()->convertToWorldSpace(_endTurnBtn->getPosition());
                 auto pos2 = this->convertToNodeSpace(pos1);
                 _guideHandUpDown->setPosition(pos2 + Vec2(0, -60.f));
@@ -430,7 +433,8 @@ void NoviceGuide::menuStartGame(Ref* pSender){
         _guideHandLeftRight->setVisible(true);
         _guideHandUpDown->setVisible(false);
         
-        _contentText->setString("Here it shows the max number of  your adjoining area, it also means the number of soldiers you can get after this turn.");
+        Value v7 = LOCALIZED_STRING_MAP.find("noviceFlagTips")->second;
+        _contentText->setString(v7.asString());
         
         auto scale_by = ScaleBy::create(0.8f, 1.2f);
         auto seq = Repeat::create(Sequence::create(scale_by, scale_by->reverse(), NULL), 5);
@@ -475,7 +479,8 @@ void NoviceGuide::menuEndTurn(Ref* pSender){
                 character->setPosition(pos);
                 _supplyShowLayer->addChild(character);
         }
-        _contentText->setString("Here it shows the soldiers you can get after this turn. They will be added to your areas, and then your enemy will attack you. Get ready to Fire!!!");
+        Value v7 = LOCALIZED_STRING_MAP.find("noviceSupplyTips")->second;
+        _contentText->setString(v7.asString());
         _nextButton->setVisible(true);
         _nextButton->setTitleText("Fire!");
         
@@ -488,7 +493,8 @@ void NoviceGuide::menuEndTurn(Ref* pSender){
 void NoviceGuide::showSelectGuide(Ref* btn){
         _nextButton->setVisible(false);
         this->playSoundEffect();
-        _contentText->setString("Click the area as invader army to attack your enenmies neighbored on you.");
+        Value v7 = LOCALIZED_STRING_MAP.find("noviceSelectTips")->second;
+        _contentText->setString(v7.asString());
         
         _guideHandLeftRight->setVisible(false);
         _guideHandUpDown->setVisible(true);
@@ -546,7 +552,8 @@ void NoviceGuide::showCombatResult(Node* fires){
         to_value->setPosition(Vec2(back_size.width / 2 + 4 * dice_size.width + 10, dice_size.height));
         _diceResultLayer->addChild(to_value);
         
-        _contentText->setString("This is your combat result:1, 4, 5, 6, 2, 2, 3, total:23. You have 7 soldiers in the area which means you can have 7 dice chances.");
+        Value v7 = LOCALIZED_STRING_MAP.find("noviceMyResult")->second;
+        _contentText->setString(v7.asString());
         _guideHandLeftRight->setVisible(false);
         _guideHandUpDown->setVisible(true);
         auto pos = _diceResultLayer->convertToWorldSpace(Vec2(back_size.width / 2 - 4 * dice_size.width + 10, dice_size.height));
@@ -559,7 +566,8 @@ void NoviceGuide::showCombatResult(Node* fires){
         _nextButton->addClickEventListener([this, pos3](Ref*){
                 this->playSoundEffect();
                 _curGuideState = GUIDE_GAME_STATUS_SHOW_NEWTC;
-                _contentText->setString("This is your enemy's result:5, 6, total:11. There're only 2 soldiers in this area. So you can win and occupy this area.");
+                Value v7 = LOCALIZED_STRING_MAP.find("noviceRobotResult")->second;
+                _contentText->setString(v7.asString());
                 _guideHandUpDown->setPosition(pos3);
                 
                 _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::showNewTcValue, this));
@@ -583,7 +591,8 @@ void NoviceGuide::showEngageMercenary(Ref*){
         _diceResultLayer->setVisible(false);
         _nextButton->setVisible(false);
         _curGuideState = GUIDE_GAME_STATUS_ENGAGE_MERCENARY;
-        _contentText->setString("Click this button to engage mercenaries, you will get extra 10 sodilers to make you powerfull, but this can be used only once in every 4 turns.");
+        Value v7 = LOCALIZED_STRING_MAP.find("noviceEngageMercenary")->second;
+        _contentText->setString(v7.asString());
         auto pos1 = _mercenaryBtn->getParent()->convertToWorldSpace(_mercenaryBtn->getPosition());
         auto pos2 = this->convertToNodeSpace(pos1);
         _guideHandUpDown->setPosition(pos2 + Vec2(40.f, -40.f));
@@ -596,7 +605,8 @@ void NoviceGuide::showEngageMercenary(Ref*){
 void NoviceGuide::choseFromArea(Ref*){
         _enemyShineBack->setVisible(true);
         this->playSoundEffect();
-        _contentText->setString("Click this area to attack your enenmy. You can defeat him easily because you have much more soldiers.");
+        Value v7 = LOCALIZED_STRING_MAP.find("noviceAttackEnemy")->second;
+        _contentText->setString(v7.asString());
         
         _curGuideState = GUIDE_GAME_STATUS_SELECT_ENEMY;
         
@@ -642,7 +652,9 @@ void NoviceGuide::showNewTcValue(Ref*){
         _guideHandLeftRight->setVisible(true);
         _guideHandUpDown->setVisible(false);
         _curGuideState = GUIDE_GAME_STATUS_ENGAGE_MERCENARY;
-        _contentText->setString("Now the max number of your adjoining area is 9 and your total areas number is 16.");
+        
+        Value v7 = LOCALIZED_STRING_MAP.find("noviceFlagTips2")->second;
+        _contentText->setString(v7.asString());
         _nextButton->setVisible(true);
         _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::showEngageMercenary, this));
         auto pos = _tcShowMe->getParent()->convertToWorldSpace(_tcShowMe->getPosition());

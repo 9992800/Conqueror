@@ -52,7 +52,8 @@ bool GameSettings::init()
                                       title_pos.y - 2 * volumn_size.height);
         setting_back->addChild(effect_size_back, 1);
         
-        auto effect_title = Label::createWithSystemFont("Sound Effect", SYSTEM_FONTS, 28);
+        Value v3 = LOCALIZED_STRING_MAP.find("soundEffect")->second;
+        auto effect_title = Label::createWithSystemFont(v3.asString(), SYSTEM_FONTS, 28);
         effect_title->setPosition(Vec2(setting_back_size.width / 2,
                                        title_pos.y - volumn_size.height));
         setting_back->addChild(effect_title);
@@ -90,7 +91,8 @@ bool GameSettings::init()
                                       effect_size_back->getPosition().y - 2 * music_size.height);
         setting_back->addChild(music_back, 1);
         
-        auto music_title = Label::createWithSystemFont("Back Music", SYSTEM_FONTS, 28);
+        Value v4 = LOCALIZED_STRING_MAP.find("backMusic")->second;
+        auto music_title = Label::createWithSystemFont(v4.asString(), SYSTEM_FONTS, 28);
         music_title->setPosition(Vec2(setting_back_size.width / 2,
                                        effect_size_back->getPosition().y - music_size.height));
         setting_back->addChild(music_title);

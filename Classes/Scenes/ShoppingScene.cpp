@@ -56,7 +56,8 @@ bool Shopping::init(){
                 if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
                 Director::getInstance()->popScene();
         });
-        return_btn->setTitleText("Return");
+        Value v = LOCALIZED_STRING_MAP.find("back")->second;
+        return_btn->setTitleText(v.asString());
         return_btn->setTitleFontName(SYSTEM_FONTS);
         return_btn->setTitleFontSize(28);
         back_ground->addChild(return_btn);

@@ -195,7 +195,8 @@ ui::Layout* BuySupply::createListItem(){
         butt_on->setPosition(Vec2(default_item_size.width - butt_on_size.width * 0.8f,
                                   default_item_size.height * 0.5f));
         butt_on->setTouchEnabled(true);
-        butt_on->setTitleText("Get it");
+        Value v4 = LOCALIZED_STRING_MAP.find("supplyGetIt")->second;
+        butt_on->setTitleText(v4.asString());
         butt_on->setTitleFontName(SYSTEM_FONTS);
         butt_on->setTitleFontSize(38);
         butt_on->addClickEventListener(CC_CALLBACK_1(BuySupply::actionGetItem, this));

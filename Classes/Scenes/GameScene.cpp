@@ -240,7 +240,8 @@ void GameScene::initOperateBoard(){
         first_tip_layer->setIgnoreAnchorPointForPosition(false);
         first_tip_layer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         
-        auto tips = Label::createWithSystemFont("Do you want to use this map?", SYSTEM_FONTS, 40);
+        Value v = LOCALIZED_STRING_MAP.find("usethismap")->second;
+        auto tips = Label::createWithSystemFont(v.asString(), SYSTEM_FONTS, 40);
         tips->setPosition(Vec2(tips->getContentSize().width / 2 + 20,
                                first_tip_layer->getContentSize().height / 2));
         first_tip_layer->addChild(tips);
@@ -248,7 +249,8 @@ void GameScene::initOperateBoard(){
         operat_board_m->addChild(first_tip_layer);
 
         auto OK_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
-        OK_btn->setTitleText("YES");
+        Value v6 = LOCALIZED_STRING_MAP.find("YES")->second;
+        OK_btn->setTitleText(v6.asString());
         OK_btn->setTitleFontSize(30);
         OK_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuStartGame, this, first_tip_layer));
         OK_btn->setPosition(Vec2(tips->getContentSize().width + 0.7f * OK_btn->getContentSize().width,
@@ -257,7 +259,8 @@ void GameScene::initOperateBoard(){
         
         
         auto NO_btn = cocos2d::ui::Button::create("DIALOG_CANCEL.png", "DIALOG_CANCEL_SEL.png");
-        NO_btn->setTitleText("NO");
+        Value v7 = LOCALIZED_STRING_MAP.find("NO")->second;
+        NO_btn->setTitleText(v7.asString());
         NO_btn->setTitleFontSize(30);
         NO_btn->setPosition(Vec2(OK_btn->getPosition().x + NO_btn->getContentSize().width * 1.1f,
                             operat_board_m->getContentSize().height / 2));
@@ -271,16 +274,18 @@ void GameScene::initOperateBoard(){
         _endTurnTipsLayer->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
         _endTurnTipsLayer->setVisible(false);
         
-        
-        auto attack_tips = Label::createWithSystemFont("1.Click your area. 2.Click neighbor to attack", SYSTEM_FONTS, 30);
+        Value v2 = LOCALIZED_STRING_MAP.find("actionTips")->second;
+        auto attack_tips = Label::createWithSystemFont(v2.asString(), SYSTEM_FONTS, 30);
         attack_tips->setPosition(Vec2(attack_tips->getContentSize().width / 2 + 20,
                                _endTurnTipsLayer->getContentSize().height / 2));
         _endTurnTipsLayer->addChild(attack_tips);
         
         operat_board_m->addChild(_endTurnTipsLayer);
         
+        
+        Value v3 = LOCALIZED_STRING_MAP.find("endTurn")->second;
         auto end_turn_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
-        end_turn_btn->setTitleText("END TURN");
+        end_turn_btn->setTitleText(v3.asString());
         end_turn_btn->setTitleFontSize(22);
         end_turn_btn->addClickEventListener(CC_CALLBACK_1(GameScene::menuEndTurn, this));
         end_turn_btn->setPosition(Vec2(operat_board_m->getContentSize().width - 48 - end_turn_btn->getContentSize().width / 2,
@@ -422,7 +427,8 @@ void GameScene::initDialog(){
         game_win_t_back->setPosition(game_win_t_back_pos);
         game_win_back->addChild(game_win_t_back);
         
-        auto win_title_txt = Label::createWithSystemFont("You win. Congratulations!!!", SYSTEM_FONTS, 32);
+        Value v = LOCALIZED_STRING_MAP.find("wintips")->second;
+        auto win_title_txt = Label::createWithSystemFont(v.asString(), SYSTEM_FONTS, 32);
         win_title_txt->setPosition(Vec2(win_title_txt->getContentSize().width * 0.6,
                                         game_win_t_back->getContentSize().height * 0.7));
         game_win_t_back->addChild(win_title_txt);
@@ -436,14 +442,15 @@ void GameScene::initDialog(){
         
         
         auto replay_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
-        
         auto game_win_c_back_pos = game_win_c_back->getPosition();
         replay_btn->setPosition(Vec2(win_back_size.width / 2,
                                      replay_btn->getContentSize().height *1.2f));
         auto btn_pos = replay_btn->getPosition();
         auto btn_size = replay_btn->getContentSize();
         game_win_back->addChild(replay_btn);
-        replay_btn->setTitleText("Replay");
+        
+        Value v_btn1 = LOCALIZED_STRING_MAP.find("replay")->second;
+        replay_btn->setTitleText(v_btn1.asString());
         replay_btn->setTitleFontSize(26);
         replay_btn->setTitleFontName(SYSTEM_FONTS);
         replay_btn->setTitleColor(Color3B::BLACK);
@@ -452,13 +459,15 @@ void GameScene::initDialog(){
         auto share_btn = (ui::Button*)replay_btn->clone();
         share_btn->setPosition(Vec2(win_back_size.width * 0.22f, btn_pos.y));
         game_win_back->addChild(share_btn);
-        share_btn->setTitleText("Share");
+        Value v_btn2 = LOCALIZED_STRING_MAP.find("share")->second;
+        share_btn->setTitleText(v_btn2.asString());
         share_btn->addClickEventListener(CC_CALLBACK_1(GameScene::shareThisGame, this));
         
         auto return_btn = (ui::Button*)replay_btn->clone();
         return_btn->setPosition(Vec2(win_back_size.width * 0.77f, btn_pos.y));
         game_win_back->addChild(return_btn);
-        return_btn->setTitleText("Back");
+        Value v_btn3 = LOCALIZED_STRING_MAP.find("back")->second;
+        return_btn->setTitleText(v_btn3.asString());
         return_btn->addClickEventListener(CC_CALLBACK_1(GameScene::gameOver, this, 0));
         
         /*
@@ -486,7 +495,8 @@ void GameScene::initDialog(){
         game_lost_t_bck->setPosition(game_lost_t_bck_pos);
         game_lost_back->addChild(game_lost_t_bck);
         
-        auto lost_title_txt = Label::createWithSystemFont("You lost...", SYSTEM_FONTS, 32);
+        Value v3 = LOCALIZED_STRING_MAP.find("lost")->second;
+        auto lost_title_txt = Label::createWithSystemFont(v3.asString(), SYSTEM_FONTS, 32);
         lost_title_txt->setPosition(Vec2(lost_title_txt->getContentSize().width * 0.55,
                                         game_lost_t_bck->getContentSize().height * 0.7));
         game_lost_t_bck->addChild(lost_title_txt);
@@ -499,7 +509,8 @@ void GameScene::initDialog(){
                                           game_lost_t_bck_pos.y - game_lost_c_bck->getContentSize().height * 0.63f));
         game_lost_back->addChild(game_lost_c_bck);
         auto game_lost_c_bck_size = game_lost_back->getContentSize();
-        auto lost_tips = Label::createWithSystemFont("You can engage the mercenaries to make your country powerfu. if you use you mecenaries up, you can get more coins from shop to engage more mercenaries.", SYSTEM_FONTS, 26);
+        Value v4 = LOCALIZED_STRING_MAP.find("losttips")->second;
+        auto lost_tips = Label::createWithSystemFont(v4.asString(), SYSTEM_FONTS, 26);
         Size lost_tips_size = lost_tips->getContentSize();
         lost_tips->setAnchorPoint(Vec2(0.f, 1.0f));
         lost_tips->setDimensions(game_lost_c_bck_size.width * 0.9,
@@ -663,7 +674,8 @@ void GameScene::showWinDialog(){
         AchievementEngine::getInstance()->winCounter();
         
         auto back_size = content_back->getContentSize();
-        auto win_tips = Label::createWithSystemFont("Rewards:", SYSTEM_FONTS, 28);
+        Value v3 = LOCALIZED_STRING_MAP.find("rewards")->second;
+        auto win_tips = Label::createWithSystemFont(v3.asString(), SYSTEM_FONTS, 28);
         win_tips->setColor(Color3B::BLACK);
         win_tips->setPosition(Vec2(win_tips->getContentSize().width * 0.55,
                                    back_size.height - win_tips->getContentSize().height * 0.6));
@@ -1269,7 +1281,9 @@ void GameScene::menuStartGame(Ref* pSender, Layer* parent){
 
 void GameScene::menuExit(Ref* pSender){
         this->playSoundEffect();
-        CommonTipsDialog::showModalDialog((Node*)this, "Are you sure to exit ?", [this](Ref* sender){
+        
+        Value v3 = LOCALIZED_STRING_MAP.find("exitTips")->second;
+        CommonTipsDialog::showModalDialog((Node*)this, v3.asString(), [this](Ref* sender){
                 this->playSoundEffect();
                 CommonTipsDialog::dismissDialog(this);
                 Director::getInstance()->popScene();
@@ -1395,16 +1409,13 @@ void GameScene::menuAddArmy(Ref* btn){
         
         if (cur_mercenary <= 0){
                 if (cur_coinsNo < PRICE_PER_SUPPLEMENT){
-                        std::string tips = StringUtils::format("Tips：sorry, you don't have enough coins(%d) to engage mercenary(cost:%d coions). You can get more coions through these ways:win more battles, share the game, buy from shop.",  cur_coinsNo, PRICE_PER_SUPPLEMENT);
-                        CommonTipsDialog::showModalDialog((Node*)this, tips);
+                        Value v3 = LOCALIZED_STRING_MAP.find("nocoinsformercenary")->second;
+                        CommonTipsDialog::showModalDialog((Node*)this, v3.asString());
                         return;
                 }else{
-                        std::string tips = StringUtils::format("Tips：youre mercenaries are used up, you need to engage more mercenaries by coins. Do you want to spend %d coins to engage one team of mercenaries ? Your current coins is :%d",
-                                                               PRICE_PER_SUPPLEMENT,
-                                                               cur_coinsNo);
-                        
+                        Value v3 = LOCALIZED_STRING_MAP.find("usecoinsformercenary")->second;
                         cur_coinsNo -= PRICE_PER_SUPPLEMENT;
-                        CommonTipsDialog::showModalDialog((Node*)this, tips, [this, cache, cur_coinsNo](Ref* sender){
+                        CommonTipsDialog::showModalDialog((Node*)this, v3.asString(), [this, cache, cur_coinsNo](Ref* sender){
                                 CommonTipsDialog::dismissDialog(this);
                                 cache->setIntegerForKey(USER_CURRENT_COINS, cur_coinsNo);
                                 cache->flush();

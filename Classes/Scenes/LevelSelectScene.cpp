@@ -110,7 +110,8 @@ bool LevelSelect::init()
         _loadingBar->setPosition(pos);
         
         Size bar_size = _loadingBar->getContentSize();
-        auto label = Label::createWithSystemFont("Loading", SYSTEM_FONTS, 24);
+        Value v = LOCALIZED_STRING_MAP.find("loading")->second;
+        auto label = Label::createWithSystemFont(v.asString(), SYSTEM_FONTS, 24);
         label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
         _loadingBar->addChild(label, 4, key_loading_bar2);
         this->addChild(_loadingBar, 3, key_loading_bar1);
@@ -684,7 +685,8 @@ void LevelSelect::actionBuyCharacter(Ref*btn, int ch_idx, int price){
         auto cache = UserDefault::getInstance();
         
         if (price < 0){
-                CommonTipsDialog::showModalDialog(this,"This role is not for sale , you need to win it from battle.");
+                Value v = LOCALIZED_STRING_MAP.find("notforsale")->second;
+                CommonTipsDialog::showModalDialog(this, v.asString());
                 return;
         }
         
@@ -694,7 +696,8 @@ void LevelSelect::actionBuyCharacter(Ref*btn, int ch_idx, int price){
                 Director::getInstance()->pushScene(shop);
         }else{
                 coins_no -= price;
-                CommonTipsDialog::showModalDialog(this,"Do you want to buy this character?", [this, btn, coins_no, ch_idx](Ref*){
+                Value v = LOCALIZED_STRING_MAP.find("buycharacter")->second;
+                CommonTipsDialog::showModalDialog(this, v.asString(), [this, btn, coins_no, ch_idx](Ref*){
                         
                         auto v_size = Director::getInstance()->getVisibleSize();
                         

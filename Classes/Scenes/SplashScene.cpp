@@ -32,6 +32,8 @@ bool Splash::init()
                 return false;
         }
         
+        GolbalConfig::getInstance();
+        
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
         
@@ -53,11 +55,12 @@ bool Splash::init()
         this->addChild(_loadingBarBack, 1);
         
         Size bar_size = _loadingBar->getContentSize();
-        auto label = Label::createWithSystemFont("Loading", SYSTEM_FONTS, 24);
+        Value v = LOCALIZED_STRING_MAP.find("loading")->second;
+        auto label = Label::createWithSystemFont(v.asString(), SYSTEM_FONTS, 24);
         label->setPosition(Vec2(pos.x, pos.y + bar_size.height / 2));
         this->addChild(label, 3);
         
-        GolbalConfig::getInstance();
+        
         
         return true;
 }

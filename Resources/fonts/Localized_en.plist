@@ -6,5 +6,135 @@
 	<string>loading...</string>
 	<key>YES</key>
 	<string>YES</string>
+	<key>NO</key>
+	<string>NO</string>
+	<key>notforsale</key>
+	<string>This role is not for sale , you need to win it from battle.</string>
+	<key>buycharacter</key>
+	<string>Do you want to buy this character?</string>
+	<key>usethismap</key>
+	<string>Do you want to use this map?</string>
+	<key>actionTips</key>
+	<string>1.Click your area. 2.Click neighbor to attack</string>
+	<key>wintips</key>
+	<string>You win. Congratulations!!!</string>
+	<key>replay</key>
+	<string>Replay</string>
+	<key>share</key>
+	<string>Share</string>
+	<key>back</key>
+	<string>Back</string>
+	<key>lost</key>
+	<string>You lost...</string>
+	<key>endTurn</key>
+	<string>END TURN</string>
+	<key>rewards</key>
+	<string>Rewards:</string>
+	<key>exitTips</key>
+	<string>Are you sure to exit ?</string>
+	<key>nocoinsformercenary</key>
+	<string>Tips：sorry, you don&apos;t have enough coins to engage mercenary. You can get more coions through these ways:win more battles, share the game, buy from shop.</string>
+	<key>usecoinsformercenary</key>
+	<string>Tips：your mercenaries are used up, you need to engage more mercenaries by coins. Do you want to spend 10 coins to engage one team of mercenaries?</string>
+	<key>losttips</key>
+	<string>You can engage the mercenaries to make your country powerfu. if you use you mecenaries up, you can get more coins from shop to engage more mercenaries.</string>
+	<key>achieveclose</key>
+	<string>UNOPENED</string>
+	<key>achievecollect</key>
+	<string>COLLECT</string>
+	<key>achievefinish</key>
+	<string>FINISHED</string>
+	<key>soundEffect</key>
+	<string>Sound Effect</string>
+	<key>backMusic</key>
+	<string>Back Music</string>
+	<key>supplyGetIt</key>
+	<string>Get it</string>
+	<key>noviceStartGame</key>
+	<string>Click &apos;YES&apos; to select this map as your battle field, the map is created randomly.</string>
+	<key>next</key>
+	<string>Next</string>
+	<key>noviceEndTurn</key>
+	<string>Click this button to end your turn. Don&apos;t attack too much enemy&apos;s area, this will make your areas weak. It&apos;s better to keep your area with more soldiers.</string>
+	<key>noviceFlagTips</key>
+	<string>Here it shows the max number of  your adjoining area, it also means the number of soldiers you can get after this turn.</string>
+	<key>noviceSupplyTips</key>
+	<string>Here it shows the soldiers you can get after this turn. They will be added to your areas, and then your enemy will attack you. Get ready to Fire!!!</string>
+	<key>noviceSelectTips</key>
+	<string>Click the area as invader army to attack your enenmies neighbored on you.</string>
+	<key>noviceMyResult</key>
+	<string>This is your combat result:1, 4, 5, 6, 2, 2, 3, total:23. You have 7 soldiers in the area which means you can have 7 dice chances.</string>
+	<key>noviceRobotResult</key>
+	<string>This is your enemy&apos;s result:5, 6, total:11. There&apos;re only 2 soldiers in this area. So you can win and occupy this area.</string>
+	<key>noviceEngageMercenary</key>
+	<string>Click this button to engage mercenaries, you will get extra 10 sodilers to make you powerfull, but this can be used only once in every 4 turns.</string>
+	<key>noviceAttackEnemy</key>
+	<string>Click this area to attack your enenmy. You can defeat him easily because you have much more soldiers.</string>
+	<key>noviceFlagTips2</key>
+	<string>Now the max number of your adjoining area is 9 and your total areas number is 16.</string>
+	<key>achieveNameWin2</key>
+	<string>Win 2 Players</string>
+	<key>achieveDetailWin2</key>
+	<string>Overcome enemy and occupy all islands.</string>
+	<key>achieveNameWin3</key>
+	<string>Win 3 Players</string>
+	<key>achieveDetailWin3</key>
+	<string>Overcome 2 enemies and occupy all islands.</string>
+	<key>achieveNameWin4</key>
+	<string>Win 4 Players</string>
+	<key>achieveDetailWin4</key>
+	<string>Overcome 3 enemies and occupy all islands.</string>
+	<key>achieveNameWin5</key>
+	<string>Win 5 Players</string>
+	<key>achieveDetailWin5</key>
+	<string>Overcome 4 enemies and occupy all islands.</string>
+	<key>achieveNameWin6</key>
+	<string>Win 6 Players</string>
+	<key>achieveDetailWin6</key>
+	<string>Overcome 5 enemies and occupy all islands.</string>
+	<key>achieveNameWin7</key>
+	<string>Win 7 Players</string>
+	<key>achieveDetailWin7</key>
+	<string>Overcome 6 enemies and occupy all islands.</string>
+	<key>achieveNameWin8</key>
+	<string>Win 8 Players</string>
+	<key>achieveDetailWin8</key>
+	<string>Overcome 7 enemies and occupy all islands.</string>
+	<key>achieveContinousWin</key>
+	<string>3 wins</string>
+	<key>achieveContinousWinDetails</key>
+	<string>Continuous win 3 times.</string>
+	<key>achieveShare</key>
+	<string>Share Game</string>
+	<key>achieveShareDetails</key>
+	<string>Share this game to your FB friends.</string>
+	<key>achieveEngage</key>
+	<string>Use Mercenary</string>
+	<key>achieveEngageDetails</key>
+	<string>Use mercenary to make you powerfull.</string>
+	<key>achieveCloseAnim</key>
+	<string>Close Animation</string>
+	<key>achieveCloseAnimDetails</key>
+	<string>Close the fighting animation in the battle when you&apos;re familar with the game.</string>
+	<key>achieveReplay</key>
+	<string>Replay</string>
+	<key>achieveReplayDetails</key>
+	<string>Replay the same battle map when you lose the game.</string>
+	<key>achievePurchase</key>
+	<string>Purchase</string>
+	<key>achievePurchaseDetails</key>
+	<string>Buy coins in the shop.</string>
+	<key>achieveColor</key>
+	<string>Change Color</string>
+	<key>achieveColorDetails</key>
+	<string>Change your charactor in the battle.</string>
+	<key>achieveCharacter</key>
+	<string>Change Charactor</string>
+	<key>achieveCharacterDetails</key>
+	<string>Change your charactor in the battle.</string>
+	<key>achieveBuyEngage</key>
+	<string>Engage</string>
+	<key>achieveBuyEngageDetails</key>
+	<string>Engage mercenary using coins.</string>
 </dict>
 </plist>

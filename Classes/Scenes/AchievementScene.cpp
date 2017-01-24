@@ -179,15 +179,18 @@ void Achievement::initItemDetails(ui::Widget* achieve_item, int idx){
         auto new_tag    = (ui::ImageView*)tittle_back->getChildByTag(k_item_status);
         
         if (REWARDS_STATUS_CLOSED == data.bonus_status){
-                button->setTitleText("UNOPENED");
+                Value v3 = LOCALIZED_STRING_MAP.find("achieveclose")->second;
+                button->setTitleText(v3.asString());
                 button->setEnabled(false);
                 button->setBright(false);
         }else if (REWARDS_STATUS_OPEN == data.bonus_status){
-                button->setTitleText("COLLECT");
+                Value v3 = LOCALIZED_STRING_MAP.find("achievecollect")->second;
+                button->setTitleText(v3.asString());
                 new_tag->setVisible(true);
                 new_shine->setVisible(true);
         }else{
-                button->setTitleText("FINISHED");
+                Value v3 = LOCALIZED_STRING_MAP.find("achievefinish")->second;
+                button->setTitleText(v3.asString());
                 new_tag->setVisible(false);
                 new_shine->setVisible(false);
                 button->setEnabled(false);

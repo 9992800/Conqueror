@@ -34,7 +34,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #endif
         director->setAnimationInterval(1.0f / 60);
      
-        glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_HEIGHT);
+        glview->setDesignResolutionSize(designResolutionSize.width, designResolutionSize.height, ResolutionPolicy::FIXED_WIDTH);
         auto frameSize = glview->getFrameSize();
         
         std::vector<std::string> searchPath;
@@ -42,13 +42,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
         {
                 MapResolustion::initConfig(MapResolustion::BIG_SCREEN_RESOLUTION);
                 searchPath.push_back(largeResource.directory);
-                director->setContentScaleFactor(largeResource.size.height/designResolutionSize.height);
+                director->setContentScaleFactor(largeResource.size.width/designResolutionSize.width);
         } 
         else
         {
                 MapResolustion::initConfig(MapResolustion::SMALL_SCREEN_RESOLUTION);
                 searchPath.push_back(smallResource.directory);
-                director->setContentScaleFactor(smallResource.size.height/designResolutionSize.height);
+                director->setContentScaleFactor(smallResource.size.width/designResolutionSize.width);
         }
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)

@@ -859,8 +859,9 @@ void GolbalConfig::initBasic(){
                         RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_60","shopping/mercenary_tips_60.png"));
                         RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_90","shopping/mercenary_tips_90.png"));
                         RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_100","shopping/mercenary_tips_100.png"));
-                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_buy_tittle","shopping/buy_supply_title.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("achieve_tittle","achievement/achieve_title.png"));
                         
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_buy_tittle","shopping/buy_supply_title.png"));
                         
                         
                         RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("shop_times_10","shopping/shop_item_desc_10.png"));
@@ -886,8 +887,10 @@ void GolbalConfig::initBasic(){
                         RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_60","shopping/mercenary_tips_60_zh.png"));
                         RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_90","shopping/mercenary_tips_90_zh.png"));
                         RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_100","shopping/mercenary_tips_100_zh.png"));
-                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_buy_tittle","shopping/buy_supply_title_zh.png"));
                         
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("achieve_tittle","achievement/achieve_title_zh.png"));
+                        
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_buy_tittle","shopping/buy_supply_title_zh.png"));
                         
                         RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("shop_times_10","shopping/shop_item_desc_10_zh.png"));
                         RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("shop_times_60","shopping/shop_item_desc_60_zh.png"));

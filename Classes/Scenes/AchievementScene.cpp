@@ -44,7 +44,7 @@ bool Achievement::init() {
         });
         scene_back->addChild(exit_btn, 3);
         
-        auto title = Sprite::create("achievement/achieve_title.png");
+        auto title = Sprite::create(RESOURCE_NAME_MAP.find("achieve_tittle")->second);
         title->setPosition(Vec2(visible_size.width / 2, visible_size.height - title->getContentSize().height * 0.5f));
         scene_back->addChild(title, 2);
         

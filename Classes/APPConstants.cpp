@@ -65,6 +65,7 @@ Color4F border_color = Color4F(0.0, 0.0, 0.0, 1.0);
 Color4F selected_color = Color4F(0.2, 0.0, 0.0, 0.7);
 std::string  SYSTEM_FONTS = "";
 ValueMap LOCALIZED_STRING_MAP;
+std::map<std::string, std::string> RESOURCE_NAME_MAP;
 
 static GolbalConfig* s_SharedBean;
 int GolbalConfig::CURRENT_GAME_LEVEL = CURRENT_GAME_LEVEL_EASY;
@@ -793,31 +794,31 @@ void GolbalConfig::initAchievementData(){
 void GolbalConfig::initMercenaryItemData(){
         _mercenaryItemPriceData = std::vector<MercenaryItem>();
         
-        MercenaryItem item_1 = {1, 10, "shopping/mercenary_tips_1.png",
+        MercenaryItem item_1 = {1, 10, RESOURCE_NAME_MAP.find("merc_times_1")->second,
                 "shopping/NO_1.png", "shopping/NO_10.png"};
         _mercenaryItemPriceData.push_back(item_1);
         
-        MercenaryItem item_5 = {5, 50, "shopping/mercenary_tips_5.png",
+        MercenaryItem item_5 = {5, 50, RESOURCE_NAME_MAP.find("merc_times_5")->second,
                 "shopping/NO_5.png", "shopping/NO_50.png"};
         _mercenaryItemPriceData.push_back(item_5);
         
-        MercenaryItem item_10 = {10, 100, "shopping/mercenary_tips_10.png",
+        MercenaryItem item_10 = {10, 100, RESOURCE_NAME_MAP.find("merc_times_10")->second,
                 "shopping/NO_10.png", "shopping/NO_100.png"};
         _mercenaryItemPriceData.push_back(item_10);
         
-        MercenaryItem item_30 = {30, 300, "shopping/mercenary_tips_30.png",
+        MercenaryItem item_30 = {30, 300, RESOURCE_NAME_MAP.find("merc_times_30")->second,
                 "shopping/NO_30.png", "shopping/NO_300.png"};
         _mercenaryItemPriceData.push_back(item_30);
         
-        MercenaryItem item_60 = {60, 600, "shopping/mercenary_tips_60.png",
+        MercenaryItem item_60 = {60, 600, RESOURCE_NAME_MAP.find("merc_times_60")->second,
                 "shopping/NO_60.png", "shopping/NO_600.png"};
         _mercenaryItemPriceData.push_back(item_60);
         
-        MercenaryItem item_90 = {90, 900, "shopping/mercenary_tips_90.png",
+        MercenaryItem item_90 = {90, 900, RESOURCE_NAME_MAP.find("merc_times_90")->second,
                 "shopping/NO_90.png", "shopping/NO_900.png"};
         _mercenaryItemPriceData.push_back(item_90);
         
-        MercenaryItem item_100 = {100, 1000, "shopping/mercenary_tips_100.png",
+        MercenaryItem item_100 = {100, 1000, RESOURCE_NAME_MAP.find("merc_times_100")->second,
                 "shopping/NO_100.png", "shopping/NO_1000.png"};
         _mercenaryItemPriceData.push_back(item_100);
 }
@@ -851,10 +852,55 @@ void GolbalConfig::initBasic(){
                 default:
                 case LanguageType::ENGLISH:{
                         SYSTEM_FONTS = "fonts/arial.ttf";
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_1","shopping/mercenary_tips_1.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_5","shopping/mercenary_tips_5.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_10","shopping/mercenary_tips_10.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_30","shopping/mercenary_tips_30.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_60","shopping/mercenary_tips_60.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_90","shopping/mercenary_tips_90.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_100","shopping/mercenary_tips_100.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_buy_tittle","shopping/buy_supply_title.png"));
+                        
+                        
+                        
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("shop_times_10","shopping/shop_item_desc_10.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("shop_times_60","shopping/shop_item_desc_60.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("shop_times_200","shopping/shop_item_desc_200.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("shop_times_680","shopping/shop_item_desc_680.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("shop_times_1480","shopping/shop_item_desc_1480.png"));
+                        
+                        
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("setting_title","settings/scene_title.png"));
+                        
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("game_win","game_win_title.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("game_lost","game_lost_title.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("common_tips","common_dialog_title.png"));
                 }
                         break;
                 case LanguageType::CHINESE:{
                         SYSTEM_FONTS = "";
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_1","shopping/mercenary_tips_1_zh.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_5","shopping/mercenary_tips_5_zh.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_10","shopping/mercenary_tips_10_zh.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_30","shopping/mercenary_tips_30_zh.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_60","shopping/mercenary_tips_60_zh.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_90","shopping/mercenary_tips_90_zh.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_times_100","shopping/mercenary_tips_100_zh.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("merc_buy_tittle","shopping/buy_supply_title_zh.png"));
+                        
+                        
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("shop_times_10","shopping/shop_item_desc_10_zh.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("shop_times_60","shopping/shop_item_desc_60_zh.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("shop_times_200","shopping/shop_item_desc_200_zh.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("shop_times_680","shopping/shop_item_desc_680_zh.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("shop_times_1480","shopping/shop_item_desc_1480_zh.png"));
+                        
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("setting_title","settings/scene_title_zh.png"));
+                        
+                        
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("game_win","game_win_title_zh.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("game_lost","game_lost_title_zh.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("common_tips","common_dialog_title_zh.png"));
                 }
                         break;
         }

@@ -106,7 +106,7 @@ bool CommonTipsDialog::init(){
         this->setContentSize(tips_back_size);
         this->setPosition(visible_size / 2);
         
-        auto tips_title = Sprite::create("common_dialog_title.png");
+        auto tips_title = Sprite::create(RESOURCE_NAME_MAP.find("common_tips")->second);
         tips_title->setPosition(tips_back_size.width / 2,
                 tips_back_size.height + tips_title->getContentSize().height * 0.2);
         _tipsBack->addChild(tips_title);

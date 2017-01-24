@@ -70,7 +70,7 @@ bool Shopping::init(){
         coins_item_10->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_ID_10COINS_KEY));
         back_ground->addChild(coins_item_10);
         
-        auto item_title_10 = ui::ImageView::create("shopping/shop_item_desc_10.png");
+        auto item_title_10 = ui::ImageView::create(RESOURCE_NAME_MAP.find("shop_times_10")->second);
         item_title_10->setPosition(Vec2(item_size.width * 0.45f, item_size.height * 0.4));
         coins_item_10->addChild(item_title_10);
         
@@ -93,7 +93,7 @@ bool Shopping::init(){
         coins_item_200->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_ID_200COINS_KEY));
         back_ground->addChild(coins_item_200);
         
-        auto item_title_200 = ui::ImageView::create("shopping/shop_item_desc_200.png");
+        auto item_title_200 = ui::ImageView::create(RESOURCE_NAME_MAP.find("shop_times_200")->second);
         item_title_200->setPosition(Vec2(item_size.width * 0.45f, item_size.height * 0.4));
         coins_item_200->addChild(item_title_200);
         
@@ -114,7 +114,7 @@ bool Shopping::init(){
         coins_item_60->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_ID_60COINS_KEY));
         back_ground->addChild(coins_item_60);
         
-        auto item_title_60 = ui::ImageView::create("shopping/shop_item_desc_60.png");
+        auto item_title_60 = ui::ImageView::create(RESOURCE_NAME_MAP.find("shop_times_60")->second);
         item_title_60->setPosition(Vec2(item_size.width * 0.45f, item_size.height * 0.4));
         coins_item_60->addChild(item_title_60);
         
@@ -136,7 +136,7 @@ bool Shopping::init(){
         coins_item_680->addClickEventListener(CC_CALLBACK_1(Shopping::buyItems, this, SHOP_ITEM_ID_680COINS_KEY));
         back_ground->addChild(coins_item_680);
         
-        auto item_title_680 = ui::ImageView::create("shopping/shop_item_desc_680.png");
+        auto item_title_680 = ui::ImageView::create(RESOURCE_NAME_MAP.find("shop_times_680")->second);
         item_title_680->setPosition(Vec2(item_size.width * 0.5f, item_size.height * 0.4));
         coins_item_680->addChild(item_title_680);
         
@@ -160,7 +160,7 @@ bool Shopping::init(){
         auto item_size_big = coins_item_1480->getContentSize();
         
         
-        auto item_title_1480 = ui::ImageView::create("shopping/shop_item_desc_1480.png");
+        auto item_title_1480 = ui::ImageView::create(RESOURCE_NAME_MAP.find("shop_times_1480")->second);
         item_title_1480->setPosition(Vec2(item_size_big.width * 0.4f, item_size_big.height * 0.4));
         coins_item_1480->addChild(item_title_1480);
         

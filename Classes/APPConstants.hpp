@@ -25,6 +25,7 @@ extern Color4F border_color;
 extern Color4F selected_color;
 extern std::string SYSTEM_FONTS;
 extern ValueMap LOCALIZED_STRING_MAP;
+extern std::map<std::string, std::string> RESOURCE_NAME_MAP;
 
 #define ACHIEVE_DATA_KEY_FIRST_WIN_2            "_key_achive_data_first_win_2"
 #define ACHIEVE_DATA_KEY_FIRST_WIN_3            "_key_achive_data_first_win_3"

@@ -37,7 +37,7 @@ bool GameSettings::init()
         setting_back->addChild(exit_btn);
         
         //Titile
-        auto scene_title = ui::ImageView::create("settings/scene_title.png");
+        auto scene_title = ui::ImageView::create(RESOURCE_NAME_MAP.find("setting_title")->second);
         scene_title->setPosition(Vec2(setting_back_size.width * 0.5,
                                  setting_back_size.height -
                                       scene_title->getContentSize().height * 0.5f));

@@ -411,7 +411,7 @@ void GameScene::initDialog(){
         _winDialogLayer->setContentSize(win_back_size);
         _winDialogLayer->addChild(game_win_back, 1, key_winer_back);
         
-        auto game_win_title = Sprite::create("game_win_title.png");
+        auto game_win_title = Sprite::create(RESOURCE_NAME_MAP.find("game_win")->second);
         game_win_title->setPosition(Vec2(win_back_size.width / 2, win_back_size.height + game_win_title->getContentSize().height * 0.2));
         game_win_back->addChild(game_win_title, 2);
         
@@ -486,7 +486,7 @@ void GameScene::initDialog(){
         _lostDialogLayer->setContentSize(lost_back_size);
         _lostDialogLayer->addChild(game_lost_back, 1);
         
-        auto game_lost_title = Sprite::create("game_lost_title.png");
+        auto game_lost_title = Sprite::create(RESOURCE_NAME_MAP.find("game_lost")->second);
         game_lost_title->setPosition(Vec2(lost_back_size.width / 2, lost_back_size.height + game_lost_title->getContentSize().height * 0.2));
         game_lost_back->addChild(game_lost_title, 2);
         

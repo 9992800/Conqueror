@@ -653,7 +653,7 @@ void GolbalConfig::initAchievementData(){
         v2 = LOCALIZED_STRING_MAP.find("achieveDetailWin3")->second;
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_3, REWARDS_STATUS_CLOSED);
         AchievementData data_2 = {2, ACHIEVE_DATA_KEY_FIRST_WIN_3,
-                has_got, 5, 1, "", LEVEL_4_LOCK_STATE_KEY,
+                has_got, 8, 0, "", LEVEL_4_LOCK_STATE_KEY,
                 v1.asString(), v2.asString()
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_WIN_3, data_2));
@@ -662,7 +662,7 @@ void GolbalConfig::initAchievementData(){
         v2 = LOCALIZED_STRING_MAP.find("achieveDetailWin4")->second;
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_4, REWARDS_STATUS_CLOSED);
         AchievementData data_3 = {3, ACHIEVE_DATA_KEY_FIRST_WIN_4,
-                has_got, 0, 2, "", LEVEL_5_LOCK_STATE_KEY,
+                has_got, 5, 1, "", LEVEL_5_LOCK_STATE_KEY,
                 v1.asString(), v1.asString()
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_WIN_4, data_3));
@@ -671,7 +671,7 @@ void GolbalConfig::initAchievementData(){
         v2 = LOCALIZED_STRING_MAP.find("achieveDetailWin5")->second;
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_5, REWARDS_STATUS_CLOSED);
         AchievementData data_4 = {4, ACHIEVE_DATA_KEY_FIRST_WIN_5,
-                has_got, 5, 2, "", LEVEL_6_LOCK_STATE_KEY,
+                has_got, 10, 1, "", LEVEL_6_LOCK_STATE_KEY,
                 v1.asString(), v2.asString()
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_WIN_5, data_4));;
@@ -681,7 +681,7 @@ void GolbalConfig::initAchievementData(){
         v2 = LOCALIZED_STRING_MAP.find("achieveDetailWin6")->second;
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_6, REWARDS_STATUS_CLOSED);
         AchievementData data_5 = {5, ACHIEVE_DATA_KEY_FIRST_WIN_6,
-                has_got, 10, 2, "", LEVEL_7_LOCK_STATE_KEY,
+                has_got, 5, 2, "", LEVEL_7_LOCK_STATE_KEY,
                 v1.asString(), v2.asString()
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_WIN_6, data_5));
@@ -690,7 +690,7 @@ void GolbalConfig::initAchievementData(){
         v2 = LOCALIZED_STRING_MAP.find("achieveDetailWin7")->second;
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_WIN_7, REWARDS_STATUS_CLOSED);
         AchievementData data_6 = {6, ACHIEVE_DATA_KEY_FIRST_WIN_7,
-                has_got, 0, 3, "", LEVEL_8_LOCK_STATE_KEY,
+                has_got, 10, 2, "", LEVEL_8_LOCK_STATE_KEY,
                 v1.asString(), v2.asString()
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_WIN_7, data_6));
@@ -717,7 +717,7 @@ void GolbalConfig::initAchievementData(){
         v2 = LOCALIZED_STRING_MAP.find("achieveShareDetails")->second;
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_SHARE, REWARDS_STATUS_CLOSED);
         AchievementData data_9 = {9, ACHIEVE_DATA_KEY_FIRST_SHARE,
-                has_got, 19,  0, "", "",
+                has_got, 12,  0, "", "",
                 v1.asString(), v2.asString()
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_SHARE, data_9));
@@ -726,7 +726,7 @@ void GolbalConfig::initAchievementData(){
         v2 = LOCALIZED_STRING_MAP.find("achieveEngageDetails")->second;
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY, REWARDS_STATUS_CLOSED);
         AchievementData data_10 = {10, ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY,
-                has_got, 0, 2, "", "",
+                has_got, 9, 1, "", "",
                 v1.asString(), v2.asString()
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_USE_MERCENARY, data_10));
@@ -735,7 +735,7 @@ void GolbalConfig::initAchievementData(){
         v2 = LOCALIZED_STRING_MAP.find("achieveCloseAnimDetails")->second;
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_CLOSE_ANIM, REWARDS_STATUS_CLOSED);
         AchievementData data_11 = {11, ACHIEVE_DATA_KEY_FIRST_CLOSE_ANIM,
-                has_got, 0, 1, "", "",
+                has_got, 8, 0, "", "",
                 v1.asString(), v2.asString()
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_CLOSE_ANIM, data_11));
@@ -744,7 +744,7 @@ void GolbalConfig::initAchievementData(){
         v2 = LOCALIZED_STRING_MAP.find("achieveReplayDetails")->second;
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_RETRY, REWARDS_STATUS_CLOSED);
         AchievementData data_12 = {12, ACHIEVE_DATA_KEY_FIRST_RETRY,
-                has_got, 5, 1, "", "",
+                has_got, 9, 0, "", "",
                 v1.asString(), v2.asString()
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_RETRY, data_12));
@@ -754,7 +754,7 @@ void GolbalConfig::initAchievementData(){
         v2 = LOCALIZED_STRING_MAP.find("achievePurchaseDetails")->second;
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_BUY_COINS, REWARDS_STATUS_CLOSED);
         AchievementData data_13 = {13, ACHIEVE_DATA_KEY_FIRST_BUY_COINS,
-                has_got, 5, 2, "", "",
+                has_got, 10, 0, "", "",
                 v1.asString(),
                 v2.asString()
         };
@@ -765,7 +765,7 @@ void GolbalConfig::initAchievementData(){
         v2 = LOCALIZED_STRING_MAP.find("achieveColorDetails")->second;
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_CHANGE_COLOR, REWARDS_STATUS_CLOSED);
         AchievementData data_14 = {14, ACHIEVE_DATA_KEY_FIRST_CHANGE_COLOR,
-                has_got, 9, 0, "", "",
+                has_got, 5, 0, "", "",
                 v1.asString(), v2.asString()
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_CHANGE_COLOR, data_14));
@@ -775,7 +775,7 @@ void GolbalConfig::initAchievementData(){
         v2 = LOCALIZED_STRING_MAP.find("achieveCharacterDetails")->second;
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_CHANGE_PLAYER, REWARDS_STATUS_CLOSED);
         AchievementData data_15 = {15, ACHIEVE_DATA_KEY_FIRST_CHANGE_PLAYER,
-                has_got, 0, 1, "", "",
+                has_got, 7, 0, "", "",
                 v1.asString(), v2.asString()
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_CHANGE_PLAYER, data_15));
@@ -785,7 +785,7 @@ void GolbalConfig::initAchievementData(){
         v2 = LOCALIZED_STRING_MAP.find("achieveBuyEngageDetails")->second;
         has_got = cache->getIntegerForKey(ACHIEVE_DATA_KEY_FIRST_ENGAGE, REWARDS_STATUS_CLOSED);
         AchievementData data_16 = {16, ACHIEVE_DATA_KEY_FIRST_ENGAGE,
-                has_got, 0, 1, "", "",
+                has_got, 8, 0, "", "",
                 v1.asString(), v2.asString()
         };
         _systemAchievementData.insert(std::pair<std::string, AchievementData>(ACHIEVE_DATA_KEY_FIRST_ENGAGE, data_16));
@@ -876,6 +876,11 @@ void GolbalConfig::initBasic(){
                         RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("game_win","game_win_title.png"));
                         RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("game_lost","game_lost_title.png"));
                         RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("common_tips","common_dialog_title.png"));
+                        
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("level_tittle","level/sel_num_header.png"));
+                        
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("start_game","level/start_game.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("start_game_sel","level/start_game_sel.png"));
                 }
                         break;
                 case LanguageType::CHINESE:{
@@ -904,6 +909,11 @@ void GolbalConfig::initBasic(){
                         RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("game_win","game_win_title_zh.png"));
                         RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("game_lost","game_lost_title_zh.png"));
                         RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("common_tips","common_dialog_title_zh.png"));
+                        
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string,
+                                                 std::string>("level_tittle","level/sel_num_header_zh.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("start_game","level/start_game_zh.png"));
+                        RESOURCE_NAME_MAP.insert(std::pair<std::string, std::string>("start_game_sel","level/start_game_sel_zh.png"));
                 }
                         break;
         }

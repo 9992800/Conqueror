@@ -197,7 +197,8 @@ void NoviceGuide::initController(){
         operat_board_m->addChild(_choseMapLayer);
         
         auto OK_btn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
-        OK_btn->setTitleText("YES");
+        auto v1 = LOCALIZED_STRING_MAP.find("YES")->second;
+        OK_btn->setTitleText(v1.asString());
         OK_btn->setTitleFontSize(30);
         OK_btn->addClickEventListener(CC_CALLBACK_1(NoviceGuide::menuStartGame, this));
         OK_btn->setPosition(Vec2(tips->getContentSize().width + 0.7f * OK_btn->getContentSize().width,
@@ -206,7 +207,8 @@ void NoviceGuide::initController(){
         
         
         auto NO_btn = cocos2d::ui::Button::create("DIALOG_CANCEL.png", "DIALOG_CANCEL_SEL.png");
-        NO_btn->setTitleText("NO");
+        auto v2 = LOCALIZED_STRING_MAP.find("NO")->second;
+        NO_btn->setTitleText(v2.asString());
         NO_btn->setTitleFontSize(30);
         NO_btn->setPosition(Vec2(OK_btn->getPosition().x + NO_btn->getContentSize().width * 1.1f,
                                  operat_board_m->getContentSize().height / 2));
@@ -228,7 +230,8 @@ void NoviceGuide::initController(){
         operat_board_m->addChild(_endTurnTipsLayer);
         
         _endTurnBtn = cocos2d::ui::Button::create("DIALOG_OK.png", "DIALOG_OK_SEL.png");
-        _endTurnBtn->setTitleText("END TURN");
+        auto v5 = LOCALIZED_STRING_MAP.find("endTurn")->second;
+        _endTurnBtn->setTitleText(v5.asString());
         _endTurnBtn->setTitleFontSize(22);
         _endTurnBtn->addClickEventListener(CC_CALLBACK_1(NoviceGuide::menuEndTurn, this));
         _endTurnBtn->setPosition(Vec2(operat_board_m->getContentSize().width - 48 - _endTurnBtn->getContentSize().width / 2,

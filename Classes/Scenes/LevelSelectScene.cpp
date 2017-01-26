@@ -177,7 +177,8 @@ Size LevelSelect::initCenterMainFrame(Vec2 position_num){
         _num_sel_back_grd->setPosition(pos_1);
         chose_num_back->addChild(_num_sel_back_grd);
         
-        auto chose_num_header = Sprite::create("level/sel_num_header.png");
+        
+        auto chose_num_header = Sprite::create(RESOURCE_NAME_MAP.find("level_tittle")->second);
         chose_num_header->setPosition(Vec2(num_size.width / 2,
                                            num_size.height - chose_num_header->getContentSize().height / 2 + 8));
         chose_num_back->addChild(chose_num_header, ZORDER_ITEM_SHOW);
@@ -341,7 +342,9 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         system_setting->setPosition(Vec2(origin.x + visibleSize.width -  system_setting->getContentSize().width,
                                      origin.y + 60));
         
-        auto start_game = MenuItemImage::create("level/start_game.png","level/start_game_sel.png", CC_CALLBACK_1(LevelSelect::menuStartGame, this));
+        auto v1 = RESOURCE_NAME_MAP.find("start_game")->second;
+        auto v2 = RESOURCE_NAME_MAP.find("start_game_sel")->second;
+        auto start_game = MenuItemImage::create(v1, v2, CC_CALLBACK_1(LevelSelect::menuStartGame, this));
         start_game->setPosition(Vec2(visibleSize.width / 2,
                                      start_game->getContentSize().height));
         

@@ -566,25 +566,28 @@ void NoviceGuide::showCombatResult(Node* fires){
         
         _guideLayer->setPosition(Vec2(pos2.x, pos2.y + 1.2f * _contentText->getContentSize().height));
         
-        _nextButton->addClickEventListener([this, pos3](Ref*){
-                this->playSoundEffect();
-                _curGuideState = GUIDE_GAME_STATUS_SHOW_NEWTC;
-                Value v7 = LOCALIZED_STRING_MAP.find("noviceRobotResult")->second;
-                _contentText->setString(v7.asString());
-                _guideHandUpDown->setPosition(pos3);
-                
-                _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::showNewTcValue, this));
-                auto scale_by = ScaleBy::create(0.8f, 1.5f);
-                auto seq = Sequence::create(scale_by, scale_by->reverse(), NULL);
-                _tcShowMe->runAction(seq->clone());
-                _tcShowEnemy->runAction(seq);
-                _tcShowNumbMe->setString("X9");
-                _tcShowNumbEnemy->setString("X5");
-        });
+        _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::showRobootResult, this, pos3));
         
         
         _nextButton->setVisible(true);
 }
+
+void NoviceGuide::showRobootResult(Ref*, Vec2 pos3){
+        this->playSoundEffect();
+        _curGuideState = GUIDE_GAME_STATUS_SHOW_NEWTC;
+        Value v7 = LOCALIZED_STRING_MAP.find("noviceRobotResult")->second;
+        _contentText->setString(v7.asString());
+        _guideHandUpDown->setPosition(pos3);
+
+        _nextButton->addClickEventListener(CC_CALLBACK_1(NoviceGuide::showNewTcValue, this));
+        auto scale_by = ScaleBy::create(0.8f, 1.5f);
+        auto seq = Sequence::create(scale_by, scale_by->reverse(), NULL);
+        _tcShowMe->runAction(seq->clone());
+        _tcShowEnemy->runAction(seq);
+        _tcShowNumbMe->setString("X9");
+        _tcShowNumbEnemy->setString("X5");
+}
+
 void NoviceGuide::showEngageMercenary(Ref*){
         this->playSoundEffect();
         _tcMapShineafterAction->setVisible(false);

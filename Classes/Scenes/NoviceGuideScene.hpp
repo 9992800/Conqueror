@@ -38,6 +38,7 @@ private:
         void showSelectGuide(Ref*);
         void showCombatResult(Node*);
         void showEngageMercenary(Ref*);
+        void showRobootResult(Ref*, Vec2);
         void showNewTcValue(Ref*);
         void choseFromArea(Ref*);
         void choseToArea(Ref*);

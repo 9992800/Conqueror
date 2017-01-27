@@ -1325,6 +1325,17 @@ void GameScene::shareThisGame(Ref* btn){
         if (sdkbox::PluginFacebook::isLoggedIn()){
 //                utils::captureScreen(CC_CALLBACK_2(GameScene::afterCaptureScreen, this), "screen.png");
                 
+                bool need_to_request = true;
+                for (auto& permission : sdkbox::PluginFacebook::getPermissionList()) {
+                        CCLOG("##FB>> permission %s", permission.data());
+                        if (permission == sdkbox::FB_PERM_PUBLISH_POST){
+                                need_to_request = false;
+                                break;
+                        }
+                }
+                if (need_to_request)
+                        sdkbox::PluginFacebook::requestPublishPermissions({sdkbox::FB_PERM_PUBLISH_POST});
+                
                 sdkbox::FBShareInfo info;
                 info.type  = sdkbox::FB_PHOTO;
                 info.title = "Islands Conqueror";
@@ -1431,7 +1442,7 @@ void GameScene::menuAddArmy(Ref* btn){
 
 #pragma mark - facebook share delegate
 void GameScene::onLogin(bool, const std::string&){
-        
+        sdkbox::PluginFacebook::requestPublishPermissions({sdkbox::FB_PERM_PUBLISH_POST});
 }
 void GameScene::onSharedSuccess(const std::string& infos){
         CCLOG("===onSharedSuccess=%s", infos.c_str());

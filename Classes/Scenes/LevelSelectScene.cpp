@@ -631,8 +631,19 @@ void LevelSelect::menuPlayHistory(Ref* pSender){
 }
 
 void LevelSelect::menuShareGame(Ref* btn){
+        
         if (sdkbox::PluginFacebook::isLoggedIn()){
-                //                utils::captureScreen(CC_CALLBACK_2(GameScene::afterCaptureScreen, this), "screen.png");
+                
+                bool need_to_request = true;
+                for (auto& permission : PluginFacebook::getPermissionList()) {
+                        CCLOG("##FB>> permission %s", permission.data());
+                        if (permission == FB_PERM_PUBLISH_POST){
+                                need_to_request = false;
+                                break;
+                        }
+                }
+                if (need_to_request)
+                        PluginFacebook::requestPublishPermissions({FB_PERM_PUBLISH_POST});
                 
                 sdkbox::FBShareInfo info;
                 info.type  = sdkbox::FB_PHOTO;
@@ -640,7 +651,7 @@ void LevelSelect::menuShareGame(Ref* btn){
                 info.link = "https://itunes.apple.com/us/app/island-conqueror/id1172744843?l=zh&ls=1&mt=8";
                 
                 info.image = FileUtils::getInstance()->fullPathForFilename("fb_used_toshare.png");
-                sdkbox::PluginFacebook::dialog(info);
+                sdkbox::PluginFacebook::share(info);
                 
         }else{
                 std::vector<std::string> permissions;
@@ -899,18 +910,31 @@ void LevelSelect::onExit(){
 }
 
 #pragma mark - facebook sharing things.
-void LevelSelect::onLogin(bool, const std::string&){}
+void LevelSelect::onLogin(bool isLogin, const std::string& error){
+        CCLOG("##FB isLogin: %d, error: %s", isLogin, error.c_str());
+        PluginFacebook::requestPublishPermissions({FB_PERM_PUBLISH_POST});
+}
 
-void LevelSelect::onSharedSuccess(const std::string&){
+void LevelSelect::onSharedSuccess(const std::string& result){
+        
+        CCLOG("===onSharedSuccess=%s", result.c_str());
+        
         auto visible_size = Director::getInstance()->getVisibleSize();
         auto from = visible_size * 0.5f;
         AchievementEngine::getInstance()->dailyShareReward(this, from, visible_size, NULL);
 }
 
-void LevelSelect::onSharedFailed(const std::string&){}
-void LevelSelect::onSharedCancel(){}
-void LevelSelect::onAPI(const std::string&, const std::string&){}
-void LevelSelect::onPermission(bool, const std::string&){}
+void LevelSelect::onSharedFailed(const std::string& error){
+        CCLOG("===onSharedFailed=%s", error.c_str());
+}
+void LevelSelect::onSharedCancel(){
+        CCLOG("===onSharedCancel=");
+}
+void LevelSelect::onAPI(const std::string&, const std::string&){
+}
+void LevelSelect::onPermission(bool isLogin, const std::string& error){
+        CCLOG("##FB onPermission: %d, error: %s", isLogin, error.c_str());
+}
 void LevelSelect::onFetchFriends(bool, const std::string&){}
 void LevelSelect::onRequestInvitableFriends(const sdkbox::FBInvitableFriendsInfo&){}
 void LevelSelect::onInviteFriendsWithInviteIdsResult(bool, const std::string&){}

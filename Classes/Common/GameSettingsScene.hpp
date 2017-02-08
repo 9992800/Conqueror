@@ -25,7 +25,7 @@ public:
                 Director::getInstance()->getEventDispatcher()->resumeEventListenersForTarget(getParent());
         }
         virtual bool init() override;
-        CREATE_FUNC2(GameSettings);
+        CREATE_FUNC(GameSettings);
 private:
         void menuExit(Ref*);
         void menuAnimSwitch(Ref*);

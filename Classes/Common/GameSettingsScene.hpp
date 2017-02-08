@@ -18,8 +18,14 @@ USING_NS_CC;
 class GameSettings : public cocos2d::LayerColor
 {
 public:
+        GameSettings(){
+                Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(getParent(), true);
+        }
+        ~GameSettings(){
+                Director::getInstance()->getEventDispatcher()->resumeEventListenersForTarget(getParent());
+        }
         virtual bool init() override;
-        CREATE_FUNC(GameSettings);
+        CREATE_FUNC2(GameSettings);
 private:
         void menuExit(Ref*);
         void menuAnimSwitch(Ref*);

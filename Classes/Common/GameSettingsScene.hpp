@@ -18,14 +18,14 @@ USING_NS_CC;
 class GameSettings : public cocos2d::LayerColor
 {
 public:
-        GameSettings(){
-                Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(getParent(), true);
+        GameSettings(Node* parent):_parentLayer(parent){
+                Director::getInstance()->getEventDispatcher()->pauseEventListenersForTarget(_parentLayer, true);
         }
         ~GameSettings(){
-                Director::getInstance()->getEventDispatcher()->resumeEventListenersForTarget(getParent());
+                Director::getInstance()->getEventDispatcher()->resumeEventListenersForTarget(_parentLayer, true);
         }
         virtual bool init() override;
-        CREATE_FUNC(GameSettings);
+        CREATE_FUNC2(GameSettings, Node*, parent);
 private:
         void menuExit(Ref*);
         void menuAnimSwitch(Ref*);
@@ -39,6 +39,7 @@ private:
         int             _gameSpeed;
         ui::LoadingBar  *_soundEffect, *_backMusic;
         ui::Button     *_speedBtn1, *_speedBtn2,*_speedBtn3;
+        Node*           _parentLayer;
 };
 
 

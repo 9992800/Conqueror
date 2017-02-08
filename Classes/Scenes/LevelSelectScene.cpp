@@ -500,7 +500,7 @@ void LevelSelect::menuStartGame(Ref* btn){
 
 void LevelSelect::menuShowSettigns(Ref* btn){
         if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
-        auto settings = GameSettings::create();
+        auto settings = GameSettings::create(this);
         this->addChild(settings, ZORDER_TOP_LEVEL_SHOW); }
 
 

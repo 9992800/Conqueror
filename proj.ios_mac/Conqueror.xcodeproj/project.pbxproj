@@ -88,6 +88,9 @@
 		7C558EB91DEC1D52007722D7 /* sliderProgress_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C558EB81DEC1D52007722D7 /* sliderProgress_back.png */; };
 		7C558EE21DEE784A007722D7 /* FightResultData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C558EE01DEE784A007722D7 /* FightResultData.cpp */; };
 		7C67A7B51DD1BE6B004B5151 /* WebSocktUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */; };
+		7C6B6FB71E4AD7DF00E53CBE /* TollGateTreeMainScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6B6FB51E4AD7DF00E53CBE /* TollGateTreeMainScene.cpp */; };
+		7C6B6FBA1E4AD85900E53CBE /* GameBattleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6B6FB81E4AD85900E53CBE /* GameBattleScene.cpp */; };
+		7C6B6FBD1E4AD88200E53CBE /* GameTreeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6B6FBB1E4AD88200E53CBE /* GameTreeData.cpp */; };
 		7C6E7FFD1DD94F5300C5E374 /* ReplayLastScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */; };
 		7C6E80001DD9575A00C5E374 /* history.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E7FFF1DD9575A00C5E374 /* history.png */; };
 		7C6E80041DD9687D00C5E374 /* history_data_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6E80011DD9687D00C5E374 /* history_data_sel.png */; };
@@ -283,6 +286,12 @@
 		7C558EE11DEE784A007722D7 /* FightResultData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FightResultData.hpp; sourceTree = "<group>"; };
 		7C67A7B31DD1BE6B004B5151 /* WebSocktUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WebSocktUtil.cpp; sourceTree = "<group>"; };
 		7C67A7B41DD1BE6B004B5151 /* WebSocktUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = WebSocktUtil.hpp; sourceTree = "<group>"; };
+		7C6B6FB51E4AD7DF00E53CBE /* TollGateTreeMainScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TollGateTreeMainScene.cpp; sourceTree = "<group>"; };
+		7C6B6FB61E4AD7DF00E53CBE /* TollGateTreeMainScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TollGateTreeMainScene.hpp; sourceTree = "<group>"; };
+		7C6B6FB81E4AD85900E53CBE /* GameBattleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameBattleScene.cpp; sourceTree = "<group>"; };
+		7C6B6FB91E4AD85900E53CBE /* GameBattleScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameBattleScene.hpp; sourceTree = "<group>"; };
+		7C6B6FBB1E4AD88200E53CBE /* GameTreeData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameTreeData.cpp; sourceTree = "<group>"; };
+		7C6B6FBC1E4AD88200E53CBE /* GameTreeData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameTreeData.hpp; sourceTree = "<group>"; };
 		7C6E7FFB1DD94F5300C5E374 /* ReplayLastScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReplayLastScene.cpp; sourceTree = "<group>"; };
 		7C6E7FFC1DD94F5300C5E374 /* ReplayLastScene.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ReplayLastScene.hpp; sourceTree = "<group>"; };
 		7C6E7FFF1DD9575A00C5E374 /* history.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = history.png; sourceTree = "<group>"; };
@@ -510,6 +519,7 @@
 		46880B8319C43A87006E1F66 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				7C6B6FB31E4AD7BE00E53CBE /* TollGateScenes */,
 				7C21A0FA1DCB3B0F0035ECC6 /* RandomMap */,
 				7C82E41D1DD55D3B0019C8CF /* Network */,
 				7C21A0ED1DCB39560035ECC6 /* GameLogic */,
@@ -636,6 +646,19 @@
 				BB9A4E251DCB84A200E88C41 /* MapCreator.cpp */,
 			);
 			path = RandomMap;
+			sourceTree = "<group>";
+		};
+		7C6B6FB31E4AD7BE00E53CBE /* TollGateScenes */ = {
+			isa = PBXGroup;
+			children = (
+				7C6B6FB51E4AD7DF00E53CBE /* TollGateTreeMainScene.cpp */,
+				7C6B6FB61E4AD7DF00E53CBE /* TollGateTreeMainScene.hpp */,
+				7C6B6FB81E4AD85900E53CBE /* GameBattleScene.cpp */,
+				7C6B6FB91E4AD85900E53CBE /* GameBattleScene.hpp */,
+				7C6B6FBB1E4AD88200E53CBE /* GameTreeData.cpp */,
+				7C6B6FBC1E4AD88200E53CBE /* GameTreeData.hpp */,
+			);
+			path = TollGateScenes;
 			sourceTree = "<group>";
 		};
 		7C82E41D1DD55D3B0019C8CF /* Network */ = {
@@ -879,6 +902,8 @@
 				7C4BA1D41DDF0A90004F9770 /* UserSessionBean.cpp in Sources */,
 				7C4973E71E0D137F007B5A1A /* CommonTipsDialog.cpp in Sources */,
 				7C4193B01E13AB7E00FD029E /* BuySupplyScene.cpp in Sources */,
+				7C6B6FB71E4AD7DF00E53CBE /* TollGateTreeMainScene.cpp in Sources */,
+				7C6B6FBA1E4AD85900E53CBE /* GameBattleScene.cpp in Sources */,
 				7C21A0E11DC9E9A80035ECC6 /* SplashScene.cpp in Sources */,
 				BBC812DE1DCA3CB000EC8874 /* GameHelpScene.cpp in Sources */,
 				7C21A1101DCB4F010035ECC6 /* JoinData.cpp in Sources */,
@@ -891,6 +916,7 @@
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				BB9AC9751E12047B00460A85 /* AchievementScene.cpp in Sources */,
 				BB8C6E921E0FB78800D091C3 /* ShoppingScene.cpp in Sources */,
+				7C6B6FBD1E4AD88200E53CBE /* GameTreeData.cpp in Sources */,
 				7C4DA6A51DE2E973001CC255 /* BattleFieldBean.cpp in Sources */,
 				BBC12E5E1DCE2F830035A571 /* GamePayUtil.cpp in Sources */,
 				7C2786D41E2CBD9500AF4EC9 /* NoviceGuideScene.cpp in Sources */,

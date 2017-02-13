@@ -136,5 +136,9 @@
 	<string>Engage</string>
 	<key>achieveBuyEngageDetails</key>
 	<string>Engage mercenary using coins.</string>
+	<key>share_tittle</key>
+	<string>Island Conqueror</string>
+	<key>share_details</key>
+	<string>So funny a game, Come here and play with me.</string>
 </dict>
 </plist>

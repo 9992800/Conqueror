@@ -44,6 +44,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         auto frameSize = glview->getFrameSize();
         
         std::vector<std::string> searchPath;
+        searchPath.push_back("common_anim");
         if (frameSize.height > smallResource.size.height)
         {
                 MapResolustion::initConfig(MapResolustion::BIG_SCREEN_RESOLUTION);

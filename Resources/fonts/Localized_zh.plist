@@ -136,5 +136,9 @@
 	<string>购买雇佣兵</string>
 	<key>achieveBuyEngageDetails</key>
 	<string>使用金币购买更多的雇佣兵。</string>
+	<key>share_tittle</key>
+	<string>岛屿小战争</string>
+	<key>share_details</key>
+	<string>快来这里成为霸主吧</string>
 </dict>
 </plist>

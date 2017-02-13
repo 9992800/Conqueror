@@ -643,7 +643,12 @@ void shareCallback(int platform, int stCode, string& errorMsg) {
         string result = "";
         if (stCode == 200) {
                 result = "分享成功";
+                
                 log("#### HelloWorld 分享成功 --> Cocos2d-x SDK ");
+                auto visible_size = Director::getInstance()->getVisibleSize();
+                auto from = visible_size * 0.5f;
+                AchievementEngine::getInstance()->dailyShareReward(this, from, visible_size, NULL);
+                
         } else if (stCode == -1) {
                 result = "分享取消";
                 log("#### HelloWorld 分享取消 --> Cocos2d-x SDK ");

@@ -628,10 +628,9 @@ void LevelSelect::menuPlayHistory(Ref* pSender){
         
         if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
 }
-void boardDismissCallback() {
-        
+
+void boardDismissCallback2() {
         log("dismiss");
-        
 }
 /*
  * 分享回调
@@ -639,7 +638,7 @@ void boardDismissCallback() {
  * @param stCode 返回码, 200代表分享成功, 100代表开始分享
  * @param errorMsg 分享失败时的错误信息,android平台没有错误信息
  */
-void shareCallback(int platform, int stCode, string& errorMsg) {
+void shareCallback2(int platform, int stCode, string& errorMsg) {
         
         log("#### callback!!!!!!");
         string result = "";
@@ -676,7 +675,7 @@ void LevelSelect::menuShareGame(Ref* btn){
         platforms->push_back(WEIXIN);
         platforms->push_back(WEIXIN_CIRCLE);
         platforms->push_back(FACEBOOK);
-        sdk->setBoardDismissCallback(boarddismiss_selector(boardDismissCallback));
+        sdk->setBoardDismissCallback(boarddismiss_selector(boardDismissCallback2));
         
         std::string image_path = FileUtils::getInstance()->fullPathForFilename("fb_used_toshare.png");
         Value v = LOCALIZED_STRING_MAP.find("share_tittle")->second;
@@ -684,7 +683,7 @@ void LevelSelect::menuShareGame(Ref* btn){
         sdk->openShare(platforms, v.asString().c_str(),
                        v.asString().c_str() ,image_path.c_str(),
                        "https://itunes.apple.com/cn/app/dao-yu-xiao-zhan-zheng/id1172744843?mt=8",
-                       share_selector(shareCallback));
+                       share_selector(shareCallback2));
 }
 
 void LevelSelect::menuSoundControl(Ref* btn){

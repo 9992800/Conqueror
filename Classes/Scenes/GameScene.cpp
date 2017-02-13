@@ -13,6 +13,8 @@
 #include "PopUpOkDialog.hpp"
 #include "CommonTipsDialog.hpp"
 #include "AchievementEngine.hpp"
+#include "Cocos2dx/Common/CCUMSocialSDK.h"
+USING_NS_UM_SOCIAL;
 
 enum{
         ZORDER_BACK_GROUND = 0,
@@ -46,6 +48,8 @@ enum{
 int GameScene::_playerNumber = 2;
 int GameScene::_charactorIdx = 0;
 int GameScene::_colorIdx = 0;
+
+GameScene* s_instance2 = nullptr;
 Scene* GameScene::createScene(int gameLevel, int charactorIdx, int colorIdx)
 {
         auto scene = Scene::create();
@@ -90,6 +94,7 @@ bool GameScene::init()
         this->initAnimationLayer();
         this->initDialog(); 
         
+        s_instance2 = this;
         return true;
 }
 
@@ -1301,8 +1306,66 @@ void GameScene::afterCaptureScreen(bool yes, const std::string &outputFilename)
         
 }
 
+
+void boardDismissCallback() {
+        
+        log("dismiss");
+        
+}
+/*
+ * 分享回调
+ * @param platform 要分享到的目标平台
+ * @param stCode 返回码, 200代表分享成功, 100代表开始分享
+ * @param errorMsg 分享失败时的错误信息,android平台没有错误信息
+ */
+void shareCallback(int platform, int stCode, string& errorMsg) {
+        
+        log("#### callback!!!!!!");
+        string result = "";
+        if (stCode == 200) {
+                result = "分享成功";
+                
+                log("#### HelloWorld 分享成功 --> Cocos2d-x SDK ");
+                auto visible_size = Director::getInstance()->getVisibleSize();
+                auto from = visible_size * 0.5f;
+                AchievementEngine::getInstance()->dailyShareReward(s_instance2, from, visible_size, NULL);
+                
+        } else if (stCode == -1) {
+                result = "分享取消";
+                log("#### HelloWorld 分享取消 --> Cocos2d-x SDK ");
+        }
+        else {
+                result = "分享失败";
+                log("#### HelloWorld 分享出错 --> Cocos2d-x SDK, Error:%s ", errorMsg.c_str());
+        }
+        
+        istringstream is;
+        is >> platform;
+        result.append(is.str());
+        log("#### callback!!!!!! %s\n",result.c_str());
+        
+        log("platform num is : %d, %d", platform, stCode);
+        
+}
+
 void GameScene::shareThisGame(Ref* btn){
         this->playSoundEffect();
+        
+        CCUMSocialSDK *sdk = CCUMSocialSDK::create( );
+        vector<int>* platforms = new vector<int>();
+        platforms->push_back(WEIXIN);
+        platforms->push_back(WEIXIN_CIRCLE);
+        platforms->push_back(FACEBOOK);
+        sdk->setBoardDismissCallback(boarddismiss_selector(boardDismissCallback));
+        
+        std::string image_path = FileUtils::getInstance()->fullPathForFilename("fb_used_toshare.png");
+        Value v = LOCALIZED_STRING_MAP.find("share_tittle")->second;
+        Value v2 = LOCALIZED_STRING_MAP.find("share_details")->second;
+        sdk->openShare(platforms, v.asString().c_str(),
+                       v.asString().c_str() ,image_path.c_str(),
+                       "https://itunes.apple.com/cn/app/dao-yu-xiao-zhan-zheng/id1172744843?mt=8",
+                       share_selector(shareCallback));
+
 }
 
 void GameScene::menuAnimSwitch(Ref* btn){

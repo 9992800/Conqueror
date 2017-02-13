@@ -20,7 +20,8 @@
 #include "AchievementEngine.hpp"
 #include "CommonTipsDialog.hpp"
 #include "ui/CocosGUI.h"
-
+#include "Cocos2dx/Common/CCUMSocialSDK.h"
+USING_NS_UM_SOCIAL;
 
 enum{
         key_loading_bar1,
@@ -91,9 +92,6 @@ bool LevelSelect::init()
         if (!Layer::init()){
                 return false;
         }
-        
-        sdkbox::PluginFacebook::init();
-        sdkbox::PluginFacebook::setListener(this);
         
         auto visibleSize = Director::getInstance()->getVisibleSize();
         Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -628,37 +626,51 @@ void LevelSelect::menuPlayHistory(Ref* pSender){
         
         if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
 }
+void boardDismissCallback() {
+        
+        log("dismiss");
+        
+}
+/*
+ * 分享回调
+ * @param platform 要分享到的目标平台
+ * @param stCode 返回码, 200代表分享成功, 100代表开始分享
+ * @param errorMsg 分享失败时的错误信息,android平台没有错误信息
+ */
+void shareCallback(int platform, int stCode, string& errorMsg) {
+        
+        log("#### callback!!!!!!");
+        string result = "";
+        if (stCode == 200) {
+                result = "分享成功";
+                log("#### HelloWorld 分享成功 --> Cocos2d-x SDK ");
+        } else if (stCode == -1) {
+                result = "分享取消";
+                log("#### HelloWorld 分享取消 --> Cocos2d-x SDK ");
+        }
+        else {
+                result = "分享失败";
+                log("#### HelloWorld 分享出错 --> Cocos2d-x SDK ");
+                cout << errorMsg << endl;
+        }
+        
+        istringstream is;
+        is >> platform;
+        result.append(is.str());
+        log("#### callback!!!!!! %s\n",result.c_str());
+        
+        log("platform num is : %d, %d", platform, stCode);
+        
+}
 
 void LevelSelect::menuShareGame(Ref* btn){
-        
-        if (sdkbox::PluginFacebook::isLoggedIn()){
-                
-                bool need_to_request = true;
-                for (auto& permission : PluginFacebook::getPermissionList()) {
-                        CCLOG("##FB>> permission %s", permission.data());
-                        if (permission == FB_PERM_PUBLISH_POST){
-                                need_to_request = false;
-                                break;
-                        }
-                }
-                if (need_to_request)
-                        PluginFacebook::requestPublishPermissions({FB_PERM_PUBLISH_POST});
-                
-                sdkbox::FBShareInfo info;
-                info.type  = sdkbox::FB_PHOTO;
-                info.title = "Islands Conqueror";
-                info.link = "https://itunes.apple.com/us/app/island-conqueror/id1172744843?l=zh&ls=1&mt=8";
-                
-                info.image = FileUtils::getInstance()->fullPathForFilename("fb_used_toshare.png");
-                sdkbox::PluginFacebook::share(info);
-                
-        }else{
-                std::vector<std::string> permissions;
-                permissions.push_back(sdkbox::FB_PERM_READ_PUBLIC_PROFILE);
-                permissions.push_back(sdkbox::FB_PERM_READ_EMAIL);
-                permissions.push_back(sdkbox::FB_PERM_READ_USER_FRIENDS);
-                sdkbox::PluginFacebook::login(permissions);
-        }
+        CCUMSocialSDK *sdk = CCUMSocialSDK::create( );
+        vector<int>* platforms = new vector<int>();
+        platforms->push_back(WEIXIN);
+        platforms->push_back(WEIXIN_CIRCLE);
+        platforms->push_back(FACEBOOK);
+        sdk->setBoardDismissCallback(boarddismiss_selector(boardDismissCallback));
+        sdk->openShare(platforms, "来自分享面板", "title" ,"https://dev.umeng.com/images/tab2_1.png","https://wsq.umeng.com/",share_selector(shareCallback));
 }
 
 void LevelSelect::menuSoundControl(Ref* btn){
@@ -903,39 +915,5 @@ void LevelSelect::onExit(){
         
         auto back_layer = this->getChildByTag(kMainMenuBackTag);
         auto the_wall = back_layer->getChildByTag(kMenuGreatWallTag);
-        the_wall->removeAllChildren();
-        
-        sdkbox::PluginFacebook::removeListener();
+        the_wall->removeAllChildren(); 
 }
-
-#pragma mark - facebook sharing things.
-void LevelSelect::onLogin(bool isLogin, const std::string& error){
-        CCLOG("##FB isLogin: %d, error: %s", isLogin, error.c_str());
-        PluginFacebook::requestPublishPermissions({FB_PERM_PUBLISH_POST});
-}
-
-void LevelSelect::onSharedSuccess(const std::string& result){
-        
-        CCLOG("===onSharedSuccess=%s", result.c_str());
-        
-        auto visible_size = Director::getInstance()->getVisibleSize();
-        auto from = visible_size * 0.5f;
-        AchievementEngine::getInstance()->dailyShareReward(this, from, visible_size, NULL);
-}
-
-void LevelSelect::onSharedFailed(const std::string& error){
-        CCLOG("===onSharedFailed=%s", error.c_str());
-}
-void LevelSelect::onSharedCancel(){
-        CCLOG("===onSharedCancel=");
-}
-void LevelSelect::onAPI(const std::string&, const std::string&){
-}
-void LevelSelect::onPermission(bool isLogin, const std::string& error){
-        CCLOG("##FB onPermission: %d, error: %s", isLogin, error.c_str());
-}
-void LevelSelect::onFetchFriends(bool, const std::string&){}
-void LevelSelect::onRequestInvitableFriends(const sdkbox::FBInvitableFriendsInfo&){}
-void LevelSelect::onInviteFriendsWithInviteIdsResult(bool, const std::string&){}
-void LevelSelect::onInviteFriendsResult(bool, const std::string&){}
-void LevelSelect::onGetUserInfo(const sdkbox::FBGraphUser&){}

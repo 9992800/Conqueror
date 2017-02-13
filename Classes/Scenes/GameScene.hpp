@@ -12,11 +12,10 @@
 #include "cocos2d.h"
 #include "FightResultData.hpp"
 #include "ui/CocosGUI.h"
-#include "PluginFacebook/PluginFacebook.h"
 #include "SimpleAudioEngine.h"
 
 USING_NS_CC;
-class GameScene : public cocos2d::Layer, sdkbox::FacebookListener
+class GameScene : public cocos2d::Layer
 {
         
 public:
@@ -73,19 +72,7 @@ private:
         void WinnerBack();
         void ShowResultData();
         
-protected:
-        void onLogin(bool, const std::string&)override;
-        void onSharedSuccess(const std::string&)override;
-        void onSharedFailed(const std::string&)override;
-        void onSharedCancel()override;
-        void onAPI(const std::string&, const std::string&)override;
-        void onPermission(bool, const std::string&)override;
-        void onFetchFriends(bool, const std::string&)override;
-        void onRequestInvitableFriends(const sdkbox::FBInvitableFriendsInfo&)override;
-        void onInviteFriendsWithInviteIdsResult(bool, const std::string&)override;
-        void onInviteFriendsResult(bool, const std::string&)override;
-        void onGetUserInfo(const sdkbox::FBGraphUser&)override;
-        
+protected:         
         void onEnter() override;
         void update(float delta)override;
         virtual void onExit()override;

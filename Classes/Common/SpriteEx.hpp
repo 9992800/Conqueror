@@ -12,11 +12,9 @@
 #include "picojson.h"
 #include "network/HttpRequest.h"
 #include "network/HttpClient.h"
-#include "PluginFacebook/PluginFacebook.h"
 
 
-USING_NS_CC;
-using namespace sdkbox;
+USING_NS_CC; 
 
 class SpriteEx : public Sprite
 {

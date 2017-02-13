@@ -88,12 +88,7 @@ bool GameScene::init()
         this->initControlLayer();
         this->initMapSize(_curGameData);
         this->initAnimationLayer();
-        this->initDialog();
-//        this->showWinDialog(); 
-//        this->addChild(_lostDialogLayer, ZORDER_DIALOG_LAYER, key_dialog_layer_tag);
-        
-        sdkbox::PluginFacebook::init();
-        sdkbox::PluginFacebook::setListener(this);
+        this->initDialog(); 
         
         return true;
 }
@@ -1303,54 +1298,11 @@ void GameScene::gameOver(Ref* btn, int result){
 
 void GameScene::afterCaptureScreen(bool yes, const std::string &outputFilename)
 {
-        if (!outputFilename.empty() && FileUtils::getInstance()->isFileExist(outputFilename)){
-                CCLOG("##FB afterCaptureScreen: %s", outputFilename.c_str());
-                if (yes) {
-                        
-                        sdkbox::FBShareInfo info;
-                        info.type  = sdkbox::FB_PHOTO;
-                        info.title = "Islands Conqueror";
-                        info.link = "https://itunes.apple.com/us/app/island-conqueror/id1172744843?l=zh&ls=1&mt=8";
-                        info.image = outputFilename;
-                        sdkbox::PluginFacebook::share(info);
-                }else{
-                        sdkbox::PluginFacebook::requestPublishPermissions({sdkbox::FB_PERM_PUBLISH_POST});
-                }
-        }
         
 }
 
 void GameScene::shareThisGame(Ref* btn){
         this->playSoundEffect();
-        if (sdkbox::PluginFacebook::isLoggedIn()){
-//                utils::captureScreen(CC_CALLBACK_2(GameScene::afterCaptureScreen, this), "screen.png");
-                
-                bool need_to_request = true;
-                for (auto& permission : sdkbox::PluginFacebook::getPermissionList()) {
-                        CCLOG("##FB>> permission %s", permission.data());
-                        if (permission == sdkbox::FB_PERM_PUBLISH_POST){
-                                need_to_request = false;
-                                break;
-                        }
-                }
-                if (need_to_request)
-                        sdkbox::PluginFacebook::requestPublishPermissions({sdkbox::FB_PERM_PUBLISH_POST});
-                
-                sdkbox::FBShareInfo info;
-                info.type  = sdkbox::FB_PHOTO;
-                info.title = "Islands Conqueror";
-                info.link = "https://itunes.apple.com/us/app/island-conqueror/id1172744843?l=zh&ls=1&mt=8";
-                
-                info.image = FileUtils::getInstance()->fullPathForFilename("fb_used_toshare.png");
-                sdkbox::PluginFacebook::dialog(info);
-                
-        }else{
-                std::vector<std::string> permissions;
-                permissions.push_back(sdkbox::FB_PERM_READ_PUBLIC_PROFILE);
-                permissions.push_back(sdkbox::FB_PERM_READ_EMAIL);
-                permissions.push_back(sdkbox::FB_PERM_READ_USER_FRIENDS);
-                sdkbox::PluginFacebook::login(permissions);
-        }
 }
 
 void GameScene::menuAnimSwitch(Ref* btn){
@@ -1439,58 +1391,6 @@ void GameScene::menuAddArmy(Ref* btn){
                 this->playAddMercenary();
         }
 }
-
-#pragma mark - facebook share delegate
-void GameScene::onLogin(bool, const std::string&){
-        sdkbox::PluginFacebook::requestPublishPermissions({sdkbox::FB_PERM_PUBLISH_POST});
-}
-void GameScene::onSharedSuccess(const std::string& infos){
-        CCLOG("===onSharedSuccess=%s", infos.c_str());
-        
-        _winDialogLayer->removeFromParent();
-        auto visible_size = Director::getInstance()->getVisibleSize();
-        auto from = visible_size * 0.5f;
-        auto call_back = CallFunc::create([this](){
-                _theGameLogic->finishHistoryRecord();
-                Director::getInstance()->popScene();
-        });
-        
-        int rewards = AchievementEngine::getInstance()->dailyShareReward(_controlLayer, from, visible_size, call_back);
-        
-        if (rewards == 0){
-                _theGameLogic->finishHistoryRecord();
-                Director::getInstance()->popScene();
-                return;
-        }
-}
-void GameScene::onSharedFailed(const std::string& infos){
-        CCLOG("===onSharedFailed=%s", infos.c_str());
-}
-void GameScene::onSharedCancel(){
-        CCLOG("===onSharedCancel=......");
-}
-void GameScene::onAPI(const std::string&, const std::string&){
-        
-}
-void GameScene::onPermission(bool, const std::string&){
-        
-}
-void GameScene::onFetchFriends(bool, const std::string&){
-        
-}
-void GameScene::onRequestInvitableFriends(const sdkbox::FBInvitableFriendsInfo&){
-        
-}
-void GameScene::onInviteFriendsWithInviteIdsResult(bool, const std::string&){
-        
-}
-void GameScene::onInviteFriendsResult(bool, const std::string&){
-        
-}
-void GameScene::onGetUserInfo(const sdkbox::FBGraphUser&){
-        
-}
-
 #pragma mark - on screen show and disapear
 
 void GameScene::onEnter(){
@@ -1521,6 +1421,5 @@ void GameScene::onExit(){
         Director::getInstance()->getScheduler()->setTimeScale(1);
         auto sound = CocosDenshion::SimpleAudioEngine::getInstance();
         sound->stopBackgroundMusic();
-        sound->stopAllEffects();
-        sdkbox::PluginFacebook::removeListener();
+        sound->stopAllEffects(); 
 }

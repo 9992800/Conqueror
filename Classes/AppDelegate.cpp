@@ -19,6 +19,12 @@ void AppDelegate::initGLContextAttrs()
         GLView::setGLContextAttrs(glContextAttrs);
 }
 
+// If you want to use packages manager to install more packages,
+// don't modify or remove this function
+static int register_all_packages()
+{
+        return 0; //flag for packages manager
+}
 
 bool AppDelegate::applicationDidFinishLaunching() {
         
@@ -50,15 +56,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
                 searchPath.push_back(smallResource.directory);
                 director->setContentScaleFactor(smallResource.size.width/designResolutionSize.width);
         }
-        
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        sdkbox::init("dca2d3a93158765c0d2bf71f2cd35cbd", "d931613d4786cd34");
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        sdkbox::init("36496fe1ef29addc1d4cffadef1230ab", "e9d28c96a0d91f80", "googleplay");
-        sdkbox::init("a21a531fe0b8c82b5900125aa3333696", "ecec9255e641a32e", "playphone");
-#endif
 
         FileUtils::getInstance()->setSearchPaths(searchPath);
+        
+        register_all_packages();
         
         auto scene = Splash::createScene();
         director->runWithScene(scene);

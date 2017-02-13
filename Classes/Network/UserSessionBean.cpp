@@ -7,9 +7,7 @@
 //
 #include "AppMacros.hpp"
 #include "UserSessionBean.hpp"
-
-using namespace sdkbox;
-
+  
 static UserSessionBean* s_SharedBean;
 
 UserSessionBean* UserSessionBean::getInstance()
@@ -24,8 +22,6 @@ UserSessionBean* UserSessionBean::getInstance()
 }
 
 bool UserSessionBean::init(){
-        PluginFacebook::setListener(this);
-        PluginFacebook::init();
         this->initSession();
         return true;
 }
@@ -44,22 +40,6 @@ void UserSessionBean::initSession(){
         std::string basic_info = UserDefault::getInstance()->getStringForKey(FACEBOOK_INFO_USER_FB_BASIC, "");
         
         std::string uuid = cocos2d::UserDefault::getInstance()->getStringForKey(USER_DEVICE_UUID, "");
-        
-        if (!PluginFacebook::isLoggedIn() || basic_info.length() == 0){
-                std::vector<std::string> permissions;
-                permissions.push_back(FB_PERM_READ_PUBLIC_PROFILE);
-                permissions.push_back(sdkbox::FB_PERM_READ_EMAIL);
-                permissions.push_back(sdkbox::FB_PERM_READ_USER_FRIENDS);
-                PluginFacebook::login(permissions);
-        }else{
-                this->_fbBasiceInfo = FBGraphUser(basic_info);
-                this->_fbUserId = PluginFacebook::getUserID();
-                this->_fbUserAvatarPath = UserDefault::getInstance()->getStringForKey(FACEBOOK_INFO_USER_AVATAR_KEY, "");
-                
-                if (_fbUserAvatarPath.length() == 0){
-                        this->reloadFBAvatar();
-                }
-        }
 }
 
 void UserSessionBean::onHttpRequestCompleted(HttpClient *sender,
@@ -85,8 +65,7 @@ void UserSessionBean::onHttpRequestCompleted(HttpClient *sender,
 
 void UserSessionBean::reloadFBAvatar(){
         
-        network::HttpRequest* request = new network::HttpRequest();
-        request->setUrl(this->_fbBasiceInfo.getPictureURL().data());
+        network::HttpRequest* request = new network::HttpRequest(); 
         request->setRequestType(network::HttpRequest::Type::GET);
         request->setResponseCallback(CC_CALLBACK_2(UserSessionBean::onHttpRequestCompleted, this));
         network::HttpClient::getInstance()->send(request);
@@ -96,84 +75,6 @@ void UserSessionBean::reloadFBAvatar(){
 void UserSessionBean::inviteMyFriendToThisBattle(){
         
 }
-
-#pragma mark - facebook callback
-
-
-/*********************
- * Facebook callbacks
- *********************/
-void UserSessionBean::onLogin(bool isLogin, const std::string& error)
-{
-        CCLOG("##FB isLogin: %d, error: %s id=%s", isLogin, error.c_str(), PluginFacebook::getUserID().c_str());
-}
-
-void UserSessionBean::onAPI(const std::string& tag, const std::string& jsonData)
-{
-        CCLOG("##FB onAPI: tag -> %s, json -> %s", tag.c_str(), jsonData.c_str());
-}
-
-void UserSessionBean::onSharedSuccess(const std::string& message)
-{
-        CCLOG("##FB onSharedSuccess:%s", message.c_str());
-}
-
-void UserSessionBean::onSharedFailed(const std::string& message)
-{
-        CCLOG("##FB onSharedFailed:%s", message.c_str());
-}
-
-void UserSessionBean::onSharedCancel()
-{
-        CCLOG("##FB onSharedCancel");
-}
-
-void UserSessionBean::onPermission(bool isLogin, const std::string& error)
-{
-        CCLOG("##FB onPermission: %d, error: %s", isLogin, error.c_str()); }
-
-void UserSessionBean::onFetchFriends(bool ok, const std::string& msg)
-{
-        CCLOG("##FB %s: %d = %s", __FUNCTION__, ok, msg.data());
-}
-
-void UserSessionBean::onRequestInvitableFriends( const FBInvitableFriendsInfo& friends )
-{
-        CCLOG("Request Inviteable Friends Begin");
-        for (auto it = friends.begin(); it != friends.end(); ++it) {
-                CCLOG("Invitable friend: %s", it->getName().c_str());
-        }
-        CCLOG("Request Inviteable Friends End");
-}
-
-void UserSessionBean::onInviteFriendsWithInviteIdsResult( bool result, const std::string& msg )
-{
-        CCLOG("on invite friends with invite ids %s= '%s'", result?"ok":"error", msg.c_str());
-}
-
-void UserSessionBean::onInviteFriendsResult( bool result, const std::string& msg )
-{
-        CCLOG("on invite friends %s= '%s'", result?"ok":"error", msg.c_str());
-}
-
-void UserSessionBean::onGetUserInfo( const sdkbox::FBGraphUser& userInfo )
-{
-        if (userInfo.getUserId() == PluginFacebook::getUserID()){
-                CCLOG("on onGetUserInfo friends.....................");
-                this->_fbBasiceInfo = userInfo;
-                this->_fbUserId = userInfo.getUserId();
-                this->_fbUserName = userInfo.getName();
-                this->reloadFBAvatar();
-                CCLOG("Facebook josn:'%s' ", userInfo.toJSONString().c_str());
-                UserDefault::getInstance()->setStringForKey(FACEBOOK_INFO_USER_FB_BASIC, userInfo.toJSONString());
-                UserDefault::getInstance()->flush();
-        }else{
-                
-        }
-}
-
-
-
 #pragma mark - utils functions
 
 bool UserSessionBean::checkResponse(HttpResponse *response, picojson::value& data){

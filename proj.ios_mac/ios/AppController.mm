@@ -29,7 +29,7 @@
 #import "RootViewController.h"
 #import "AppMacros.hpp"
 
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <UMSocialCore/UMSocialCore.h>
 
 @implementation AppController
 
@@ -41,7 +41,23 @@
 // cocos2d application instance
 static AppDelegate s_sharedApplication;
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+        
+        
+        [[UMSocialManager defaultManager] openLog:YES];
+        
+        // 获取友盟social版本号
+        NSLog(@"UMeng social version: %@", [UMSocialGlobal umSocialSDKVersion]);
+        [UMSocialGlobal shareInstance].type = @"Cocos2d-x";
+        //设置友盟appkey
+        [[UMSocialManager defaultManager] setUmSocialAppkey:@"58a152c1310c934055000358"];
+        
+        //设置微信的appKey和appSecret
+        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wx2db3ffa3b2baa12a" appSecret:@"d517d1e027c8ba54bb9da54660d49ebb" redirectURL:@"http://mobile.umeng.com/social"];
+        
+        //设置Facebook的appKey和UrlString
+        [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_Facebook appKey:@"608545899354118"  appSecret:nil redirectURL:@"http://www.umeng.com/social"];
+        
         cocos2d::Application *app = cocos2d::Application::getInstance();
         app->initGLContextAttrs();
         cocos2d::GLViewImpl::convertAttrs();
@@ -88,14 +104,12 @@ static AppDelegate s_sharedApplication;
         cocos2d::GLView *glview = cocos2d::GLViewImpl::createWithEAGLView(eaglView);
         cocos2d::Director::getInstance()->setOpenGLView(glview);
         
-        bool ret= [[FBSDKApplicationDelegate sharedInstance] application:application
-                                           didFinishLaunchingWithOptions:launchOptions];
-        
         NSString* uid = [[UIDevice currentDevice] identifierForVendor].UUIDString;
         app->run();
         
         cocos2d::UserDefault::getInstance()->setStringForKey(USER_DEVICE_UUID, [uid UTF8String]);
-                 return ret;
+        
+        return YES;
 }
 
 
@@ -112,10 +126,20 @@ static AppDelegate s_sharedApplication;
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-        return [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                              openURL:url
-                                                    sourceApplication:sourceApplication
-                                                           annotation:annotation];
+        BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
+        if (!result) {
+                // 其他如支付等SDK的回调
+        }
+        return result;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+        BOOL result = [[UMSocialManager defaultManager] handleOpenURL:url];
+        if (!result) {
+                // 其他如支付等SDK的回调
+        }
+        return result;
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -123,9 +147,7 @@ static AppDelegate s_sharedApplication;
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
      //We don't need to call this method any more. It will interupt user defined game pause&resume logic
-    /* cocos2d::Director::getInstance()->resume(); */
-        
-        [FBSDKAppEvents activateApp];
+    /* cocos2d::Director::getInstance()->resume(); */ 
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {

@@ -47,6 +47,7 @@ enum{
         ZORDER_TOP_LEVEL_SHOW
 };
 
+LevelSelect* s_instance = nullptr;
 
 template<typename T>
 std::vector<T> parseData(const char* key)
@@ -125,6 +126,7 @@ bool LevelSelect::init()
                                          CallFunc::create(CC_CALLBACK_0(LevelSelect::showDailyRewards, this)),
                                          nullptr));
         
+        s_instance = this;
         return true;
 }
 
@@ -647,7 +649,7 @@ void shareCallback(int platform, int stCode, string& errorMsg) {
                 log("#### HelloWorld 分享成功 --> Cocos2d-x SDK ");
                 auto visible_size = Director::getInstance()->getVisibleSize();
                 auto from = visible_size * 0.5f;
-                AchievementEngine::getInstance()->dailyShareReward(this, from, visible_size, NULL);
+                AchievementEngine::getInstance()->dailyShareReward(s_instance, from, visible_size, NULL);
                 
         } else if (stCode == -1) {
                 result = "分享取消";

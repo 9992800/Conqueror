@@ -43,8 +43,7 @@ protected:
         void menuShareGame(Ref* btn);
         void pageViewEvent(cocos2d::Ref* sender, cocos2d::ui::PageView::EventType type);
         void btnChosePlayerNum(Ref*, int);
-        void actionBuyCharacter(Ref*, int, int);
-        
+        void actionBuyCharacter(Ref*, int, int);        
 private:
         Size initCenterMainFrame(Vec2);
         void initCharactorSel(Vec2, Size);

@@ -39,6 +39,7 @@
 		521A8EA919F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		521A8EAA19F11F5000D177D7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 521A8EA819F11F5000D177D7 /* fonts */; };
 		52B47A471A53D09C004E4C60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B47A461A53D09B004E4C60 /* Security.framework */; };
+		7C0AC03C1E53369100B79541 /* static_map in Resources */ = {isa = PBXBuildFile; fileRef = 7C0AC03B1E53369100B79541 /* static_map */; };
 		7C152D691DFFA70000E6C1BB /* APPConstants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C152D671DFFA70000E6C1BB /* APPConstants.cpp */; };
 		7C1CFE931E3211A600095E64 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7C1CFE951E3211A600095E64 /* InfoPlist.strings */; };
 		7C21A0E11DC9E9A80035ECC6 /* SplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C21A0DF1DC9E9A80035ECC6 /* SplashScene.cpp */; };
@@ -226,6 +227,7 @@
 		521A8E6319F0C34300D177D7 /* Default-736h@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h@3x.png"; sourceTree = "<group>"; };
 		521A8EA819F11F5000D177D7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
 		52B47A461A53D09B004E4C60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		7C0AC03B1E53369100B79541 /* static_map */ = {isa = PBXFileReference; lastKnownFileType = folder; path = static_map; sourceTree = "<group>"; };
 		7C152D671DFFA70000E6C1BB /* APPConstants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = APPConstants.cpp; sourceTree = "<group>"; };
 		7C152D681DFFA70000E6C1BB /* APPConstants.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = APPConstants.hpp; sourceTree = "<group>"; };
 		7C1CFE941E3211A600095E64 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -559,6 +561,7 @@
 		46880B7519C43A67006E1F66 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7C0AC03B1E53369100B79541 /* static_map */,
 				7C4384CB1E28BE9B004B900E /* common_anim */,
 				7C4DA6AE1DE6A7EB001CC255 /* deault_avatar.png */,
 				7C4DA6A71DE43C1B001CC255 /* green_edit.png */,
@@ -1022,6 +1025,7 @@
 				5087E77E17EB970100C73F5D /* Default.png in Resources */,
 				7C6E80061DD9687D00C5E374 /* history_sel.png in Resources */,
 				7C82E42A1DD581610019C8CF /* online_battle_sel.png in Resources */,
+				7C0AC03C1E53369100B79541 /* static_map in Resources */,
 				7C4384CC1E28BE9B004B900E /* common_anim in Resources */,
 				521A8E6419F0C34300D177D7 /* Default-667h@2x.png in Resources */,
 				7C4BA1CB1DDEA0D2004F9770 /* search_oppent_sel.png in Resources */,

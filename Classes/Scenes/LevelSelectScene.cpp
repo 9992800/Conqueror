@@ -20,6 +20,7 @@
 #include "AchievementEngine.hpp"
 #include "CommonTipsDialog.hpp"
 #include "ui/CocosGUI.h"
+#include "GameBattleScene.hpp"
 #include "Cocos2dx/Common/CCUMSocialSDK.h"
 USING_NS_UM_SOCIAL;
 
@@ -429,7 +430,7 @@ void LevelSelect::initButtons(Vec2 origin, Size visibleSize){
         
         
         auto menu = Menu::create(_soundCtrl, system_setting, start_game,
-                                 _achievementCtrl, NULL);
+                                 _achievementCtrl, online_game, NULL);
         menu->setPosition(Vec2::ZERO);
         this->addChild(menu, ZORDER_ITEM_CONTROL);
 }
@@ -475,7 +476,7 @@ void LevelSelect::pageViewEvent(Ref *pSender, PageView::EventType type)
 
 void LevelSelect::menuOnlineBattle(Ref* btn){
         if (_soundTotalOn) _soundEngine->playEffect(EFFECT_FILE_SELECTED);
-        Scene* scene = FindPlayer::createScene();
+        Scene* scene = GameBattle::createScene();
         Director::getInstance()->pushScene(scene);
 }
 void LevelSelect::menuStartGame(Ref* btn){

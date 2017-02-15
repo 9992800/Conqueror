@@ -23,17 +23,37 @@ THE SOFTWARE.
 ****************************************************************************/
 package org.cocos2dx.cpp;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+
+import com.umeng.social.CCUMSocialController;
+import com.umeng.socialize.Config;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
 public class AppActivity extends Cocos2dxActivity {
+    private Activity mActivity = null;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TelephonyManager tManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         String uuid = tManager.getDeviceId();
+
+        mActivity = this;
+        CCUMSocialController.initSocialSDK(mActivity, "com.umeng.social");
+        Config.shareType = "cocos2dx";
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        // 授权回调
+        CCUMSocialController.onActivityResult(requestCode, resultCode, data);
+
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

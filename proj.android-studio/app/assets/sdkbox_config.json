@@ -1,10 +1,5 @@
 {
         "ios" : {
-                "Facebook" : {
-                        "debug" : false,
-                        "app_id" : "608545899354118",
-                        "url_scheme_suffix" : ""
-                },
                 "iap" : {
                         "items" : {
                                 "coins_10" : {
@@ -31,9 +26,6 @@
                 }
         },
         "android" : {
-                "Facebook" : {
-                        "debug" : false
-                },
                 "iap" : {
                         "key" : "iLGKOXzrWf0i+iNudibv+zAM6mk=",
                         "items" : {

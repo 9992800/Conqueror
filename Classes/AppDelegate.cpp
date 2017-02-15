@@ -3,7 +3,6 @@
 #include "AppMacros.hpp"
 #include "MapBasicInfo.hpp" 
 #include "audio/include/SimpleAudioEngine.h"
-#include "Sdkbox/Sdkbox.h" 
 using namespace CocosDenshion;
 AppDelegate::AppDelegate()
 {

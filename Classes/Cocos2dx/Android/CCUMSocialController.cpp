@@ -159,7 +159,7 @@ void setUmengAppkey(const char* appkey) {
 void doAuthorize(int platform, AuthEventHandler callback) {
 	authCallback = callback;
 	if (authCallback != NULL) {
-		CCLog("#### 授权回调不为NULL");
+		log("#### 授权回调不为NULL");
 
 	}
 	JniMethodInfo mi;
@@ -218,7 +218,7 @@ void getPlatformInfos(int platform,AuthEventHandler callback) {
 void doOpenShare(vector<int>* platforms,const char* text, const char* title,const char* imgName,const char* targeturl,ShareEventHandler callback) {
 	shareCallback = callback;
 	if (shareCallback != NULL) {
-		CCLog("#### 分享回调不为NULL");
+		log("#### 分享回调不为NULL");
 
 	}
 	JniMethodInfo mi;
@@ -252,7 +252,7 @@ void setDismissCallback(BoardDismissEventHandler callback) {
 void doCutomOpenShare(vector<int>* platforms,BoardEventHandler callback) {
 	boardCallback = callback;
 	if (boardCallback != NULL) {
-		CCLog("#### 分享回调不为NULL");
+		log("#### 分享回调不为NULL");
 
 	}
 	JniMethodInfo mi;
@@ -279,7 +279,7 @@ void doCutomOpenShare(vector<int>* platforms,BoardEventHandler callback) {
 			const char* imgName,int platform, ShareEventHandler callback) {
 	shareCallback = callback;
 	if (shareCallback != NULL) {
-		CCLog("#### 授权回调不为NULL");
+		log("#### 授权回调不为NULL");
 
 	}
 	JniMethodInfo mi;
@@ -307,7 +307,7 @@ void doCutomOpenShare(vector<int>* platforms,BoardEventHandler callback) {
  */
 void setShareTextContent(const char* text) {
 	if (text == NULL) {
-		CCLog("#### share text is null.");
+		log("#### share text is null.");
 		return;
 	}
 	JniMethodInfo mi;
@@ -318,7 +318,7 @@ void setShareTextContent(const char* text) {
 		mi.env->DeleteLocalRef(content);
 		releaseMethod(mi);
 	}
-	CCLog("#### setShareTextContent");
+	log("#### setShareTextContent");
 }
 
 /*
@@ -327,7 +327,7 @@ void setShareTextContent(const char* text) {
  */
 void setShareImagePath(const char* path) {
 	if (path == NULL) {
-		CCLog("#### image path is null.");
+		log("#### image path is null.");
 		return;
 	}
 	JniMethodInfo mi;
@@ -338,7 +338,7 @@ void setShareImagePath(const char* path) {
 		mi.env->DeleteLocalRef(imgPath);
 		releaseMethod(mi);
 	}
-	CCLog("#### setShareImageName");
+	log("#### setShareImageName");
 }
 
 /*
@@ -394,7 +394,7 @@ void initCocos2dxSDKFromJni(const char* type, const char* version) {
 		mi.env->DeleteLocalRef(sdkVersion);
 		releaseMethod(mi);
 	}
-	CCLog("#### setQQConnectPlatformAppId");
+	log("#### setQQConnectPlatformAppId");
 }
 
 /**
@@ -414,7 +414,7 @@ void setQQAndQzoneAppIdWithAppKey(const char* appid, const char* appKey) {
 		mi.env->DeleteLocalRef(jAppKey);
 		releaseMethod(mi);
 	}
-	CCLog("#### setQQAndQzoneAppIdAndAppKey");
+	log("#### setQQAndQzoneAppIdAndAppKey");
 }
 
 /**
@@ -435,7 +435,7 @@ void setWeiXinPlatformInfo(const char* appid, const char* appsecret) {
 		mi.env->DeleteLocalRef(jAppSecret);
 		releaseMethod(mi);
 	}
-	CCLog("#### setWeiXinPlatformAppid");
+	log("#### setWeiXinPlatformAppid");
 }
 
 /**
@@ -478,7 +478,7 @@ void setYiXinPlatformAppKey(const char* appid) {
 		mi.env->DeleteLocalRef(jAppKey);
 		releaseMethod(mi);
 	}
-	CCLog("#### setYiXinPlatformAppKey");
+	log("#### setYiXinPlatformAppKey");
 
 }
 
@@ -496,7 +496,7 @@ void setLaiwangPlatformAppId(const char* appid) {
 		mi.env->DeleteLocalRef(jAppid);
 		releaseMethod(mi);
 	}
-	CCLog("#### setLaiwangPlatformAppid");
+	log("#### setLaiwangPlatformAppid");
 }
 
 /**
@@ -513,7 +513,7 @@ void setLaiwangPlatformAppKey(const char* appkey) {
 		mi.env->DeleteLocalRef(jAppKey);
 		releaseMethod(mi);
 	}
-	CCLog("#### setLaiwangPlatformAppKey   jni");
+	log("#### setLaiwangPlatformAppKey   jni");
 }
 
 /**
@@ -530,7 +530,7 @@ void setLaiwangPlatformAppName(const char* appName) {
 		mi.env->DeleteLocalRef(jAppName);
 		releaseMethod(mi);
 	}
-	CCLog("#### setLaiwangPlatformAppName jni ");
+	log("#### setLaiwangPlatformAppName jni ");
 }
 
 /**
@@ -547,7 +547,7 @@ void setFacebookPlatformAppId(const char* appid) {
 		mi.env->DeleteLocalRef(jAppId);
 		releaseMethod(mi);
 	}
-	CCLog("#### setFacebookPlatformAppId  jni ");
+	log("#### setFacebookPlatformAppId  jni ");
 
 }
 
@@ -564,7 +564,7 @@ void setShareTargetUrl(const char* url) {
 		mi.env->DeleteLocalRef(targetUrl);
 		releaseMethod(mi);
 	}
-	CCLog("#### setShareTargetUrl");
+	log("#### setShareTargetUrl");
 }
 
 /**
@@ -583,7 +583,7 @@ void supportSsoAuthorization(int platform, const char* redirectURL) {
 		mi.env->DeleteLocalRef(callbackUrl);
 		releaseMethod(mi);
 	}
-	CCLog("#### supportSsoAuthorization");
+	log("#### supportSsoAuthorization");
 }
 
 /**
@@ -608,7 +608,7 @@ void setPlatformDepShareContent(int platform, const char* text,
 		mi.env->DeleteLocalRef(share_target_url);
 		releaseMethod(mi);
 	}
-	CCLog("#### setPlatformDepShareContent");
+	log("#### setPlatformDepShareContent");
 
 }
 /**
@@ -622,7 +622,7 @@ void setAndroidLogEnable(bool flag) {
 		mi.env->CallStaticVoidMethod(mi.classID, mi.methodID, flag);
 		releaseMethod(mi);
 	}
-	CCLog("#### setAndroidLogEnable");
+	log("#### setAndroidLogEnable");
 
 }
 

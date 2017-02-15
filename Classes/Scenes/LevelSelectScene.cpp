@@ -678,13 +678,23 @@ void LevelSelect::menuShareGame(Ref* btn){
         platforms->push_back(FACEBOOK);
         sdk->setBoardDismissCallback(boarddismiss_selector(boardDismissCallback2));
         
-        std::string image_path = FileUtils::getInstance()->fullPathForFilename("fb_used_toshare.png");
         Value v = LOCALIZED_STRING_MAP.find("share_tittle")->second;
         Value v2 = LOCALIZED_STRING_MAP.find("share_details")->second;
+        
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         sdk->openShare(platforms, v.asString().c_str(),
-                       v.asString().c_str() ,image_path.c_str(),
+                       v.asString().c_str() ,
+                       "assets/common_anim/fb_used_toshare.png",
                        "https://itunes.apple.com/cn/app/dao-yu-xiao-zhan-zheng/id1172744843?mt=8",
                        share_selector(shareCallback2));
+        
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        sdk->openShare(platforms, v.asString().c_str(),
+                       v.asString().c_str(),
+                       "common_anim/fb_used_toshare.png",
+                       "https://itunes.apple.com/cn/app/dao-yu-xiao-zhan-zheng/id1172744843?mt=8",
+                       share_selector(shareCallback2));
+#endif
 }
 
 void LevelSelect::menuSoundControl(Ref* btn){

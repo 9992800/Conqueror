@@ -47,18 +47,24 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../../Classes/Common/WebSocktUtil.cpp \
                    ../../../Classes/Common/ModalDialog.cpp \
                    ../../../Classes/Common/CommonTipsDialog.cpp \
+                   ../../../Classes/TollGateScenes/GameBattleScene.cpp \
+                   ../../../Classes/TollGateScenes/GameTreeData.cpp \
+                   ../../../Classes/TollGateScenes/TollGateTreeMainScene.cpp \
                    ../../../Classes/Network/FindPlayerScene.cpp \
                    ../../../Classes/Network/BattleFieldScene.cpp \
                    ../../../Classes/Network/UserSessionBean.cpp \
                    ../../../Classes/Network/OnlineGameData.cpp \
                    ../../../Classes/Network/OnlineGameEngine.cpp \
-                   ../../../Classes/Network/BattleFieldBean.cpp
+                   ../../../Classes/Network/BattleFieldBean.cpp \
+                   ../../../Classes/Cocos2dx/Android/CCUMSocialController.cpp \
+                   ../../../Classes/Cocos2dx/Common/CCUMSocialSDK.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes \
 					$(LOCAL_PATH)/../../../Classes/Common \
 					$(LOCAL_PATH)/../../../Classes/GameLogic \
 					$(LOCAL_PATH)/../../../Classes/RandomMap \
 					$(LOCAL_PATH)/../../../Classes/Scenes \
+					$(LOCAL_PATH)/../../../Classes/TollGateScenes \
 					$(LOCAL_PATH)/../../../Classes/Network
 
 # _COCOS_HEADER_ANDROID_BEGIN

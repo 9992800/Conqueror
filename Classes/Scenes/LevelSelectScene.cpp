@@ -684,7 +684,7 @@ void LevelSelect::menuShareGame(Ref* btn){
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         sdk->openShare(platforms, v.asString().c_str(),
                        v.asString().c_str() ,
-                       "assets/common_anim/fb_used_toshare.png",
+                       "https://mmbiz.qlogo.cn/mmbiz_png/I1DHhSwFUfyMYwu0AgiafuN4ciay7zVpN8A36KiaWic921MevzxKhvicoNFyNCMn1qMTnokeRV1eTdDW7BiaZic55Mk4w/0?wx_fmt=png",//"assets/common_anim/fb_used_toshare.png",
                        "https://itunes.apple.com/cn/app/dao-yu-xiao-zhan-zheng/id1172744843?mt=8",
                        share_selector(shareCallback2));
         
